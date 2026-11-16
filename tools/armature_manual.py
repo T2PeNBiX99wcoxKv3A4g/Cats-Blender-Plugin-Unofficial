@@ -185,7 +185,7 @@ def start_pose_mode(reset_pose=True):
         for index, pb in enumerate(armature.pose.bones):
             if index != 0:
                 pb.select = False
-        bpy.ops.wm.tool_set_by_id(name="builtin.rotate")
+        bpy.ops.wm.tool_set_by_id(name="builtin.rotate", space_type='VIEW_3D')
 
     saved_data.load(hide_only=True)
     Common.hide(armature, False)
@@ -232,11 +232,17 @@ def stop_pose_mode(reset_pose=True):
     armature = Common.get_armature()
     Common.set_active(armature)
 
-    # Make all objects visible
-    bpy.ops.object.hide_view_clear()
+    # Make all objects visible. bpy.ops.object.hide_view_clear() only polls in
+    # Object Mode, but this function is normally reached from Pose Mode, so the
+    # view-layer hide flags are cleared through the data API instead.
+    for obj in bpy.context.view_layer.objects:
+        obj.hide_set(False)
 
     for pb in armature.pose.bones:
-        pb.hide = False
+        # PoseBone.hide only exists from Blender 5.0; the underlying Bone.hide
+        # property is the one that actually toggles pose-mode visibility and is
+        # available on every supported version.
+        pb.bone.hide = False
         pb.select = True
 
     if reset_pose:
@@ -257,7 +263,7 @@ def stop_pose_mode(reset_pose=True):
                 for shape_key in mesh.data.shape_keys.key_blocks:
                     shape_key.value = 0
 
-    bpy.ops.wm.tool_set_by_id(name="builtin.select_box")
+    bpy.ops.wm.tool_set_by_id(name="builtin.select_box", space_type='VIEW_3D')
 
     Eyetracking.eye_left = None
 
