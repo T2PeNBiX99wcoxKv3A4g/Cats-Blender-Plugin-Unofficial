@@ -70,6 +70,17 @@ dictionary_download_link = f"https://raw.githubusercontent.com/T2PeNBiX99wcoxKv3
 DOWNLOAD_TIMEOUT = 15
 _addon_startup_time = None
 
+# Blender locale -> translation file code, for locales whose script variant is
+# spelled differently by Blender than by the translation file name.
+LOCALE_CODE_ALIASES = {
+    "zh_hans": "zh_CN",
+    "zh_hant": "zh_TW",
+    "zh_sg": "zh_CN",
+    "zh_cn": "zh_CN",
+    "zh_tw": "zh_TW",
+    "zh_hk": "zh_TW",
+}
+
 def load_translations(override_language=None):
     global dictionary, languages, last_loaded_language, _addon_startup_time
     import time
@@ -245,16 +256,26 @@ def convert_locale_to_language_code(blender_locale):
 
     # Blender locale is already in the format we need (e.g., 'en_US')
     locale_str = str(blender_locale)
+    available = list_language_codes()
+
+    # Chinese script variants: Blender reports zh_HANS / zh_HANT while the
+    # translation files are named zh_CN / zh_TW. Resolve these explicitly,
+    # otherwise the prefix fallback below would return whichever Chinese file
+    # os.listdir() happened to list first.
+    alias = LOCALE_CODE_ALIASES.get(locale_str.lower())
+    if alias and alias in available:
+        print(f"Found locale alias: {locale_str} -> {alias}")
+        return alias
 
     # Check if exact match exists in available languages
-    for lang_code in list_language_codes():
+    for lang_code in available:
         if locale_str == lang_code:
             print(f"Found exact locale match: {lang_code}")
             return lang_code
 
     # Try to match by language code (first part before underscore)
     language_only = locale_str.split("_")[0].lower() if "_" in locale_str else locale_str.lower()
-    for lang_code in list_language_codes():
+    for lang_code in available:
         if lang_code.lower().startswith(language_only):
             print(f"Found language match: {lang_code}")
             return lang_code
