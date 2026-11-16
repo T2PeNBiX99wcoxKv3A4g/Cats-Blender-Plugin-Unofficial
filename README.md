@@ -27,17 +27,46 @@ The code base is MIT licensed, so continuing it is permitted by the licence.
 
 | Blender | Status |
 |---|---|
+| **4.2 LTS** | Supported (minimum) |
+| **4.5 LTS** | Supported |
+| **5.0** | Supported |
+| **5.1** | Supported |
 | **5.2 LTS** | Supported |
 | **5.3** | Supported |
 | **5.4** | Supported (alpha builds only — 5.4 has not been released yet) |
-| 5.1 and older | Not supported |
+| 4.1 and older | Not supported |
+
+Blender 4.2 is the floor because the add-on is a Blender **extension**, and the
+extension system only exists from 4.2 onwards.
 
 Blender 5.4 stable is expected around May 2027. Until then, 5.4 support is verified
 against `main` daily builds only, so breakage on unreleased snapshots is possible.
 
+Verified with the same code base on 4.2.23 LTS, 4.5.16 LTS, 5.0.1, 5.1.2, 5.2.4 LTS,
+5.3.0 and 5.4.0 alpha: install, enable, restart, translation loading, settings
+persistence, shape key tools and the bundled MMD Tools all register and run.
+
 If you need to force-load Cats on an untested Blender version for diagnostics, set the
 `CATS_ALLOW_UNSUPPORTED_BLENDER` environment variable. Expect breakage; this is a
 debugging escape hatch, not a supported mode.
+
+---
+
+## Features
+
+- **Import / export:** MMD, XNALara/XPS, VRM, FBX, Source Engine, glTF/GLB and DAE.
+- **Model optimisation:** material combining, a built-in atlas generator (albedo, normal,
+  emission, roughness, metallic, AO and height maps, with optional Cycles baking), bone
+  and weight merging, mesh cleanup.
+- **Eye tracking and visemes** for VRChat.
+- **Armature tools:** Fix Model, merge armatures, attach meshes, root bones, twist bones,
+  digitigrade legs and Rigify conversion.
+- **Shape key tools:** remove unused keys, repair broken keys, prune zero-movement keys.
+- **Translation tools:** Japanese to English bone, shape key, material and object names,
+  using a bundled dictionary plus Google, DeepL, LibreTranslate and MyMemory.
+- **Extras:** avatar scaling, finger spreading and UV tools.
+- **UI languages:** English, Japanese, Korean, Simplified Chinese and Traditional
+  Chinese.
 
 ---
 
@@ -81,8 +110,13 @@ therefore gets the bundled Python wheels installed.
 - **New extension identity.** `id`, `name`, `maintainer` and `website` were changed so
   this fork is a separate Blender extension instead of competing with an installed copy
   of the archived add-on.
-- **Blender 5.4 support.** The upper version guard no longer blocks 5.4, and
-  `blender_version_max` was raised to 5.5.0.
+- **Wider Blender support.** `blender_version_min` was lowered from 5.2.0 to 4.2.0 and
+  the upper guard no longer blocks 5.4 (`blender_version_max` raised to 5.5.0).
+- **Traditional Chinese translation.** Added `zh_TW`, converted from the existing
+  `zh_CN` strings. Blender reports Chinese script variants as `zh_HANS` / `zh_HANT`
+  while the files are named `zh_CN` / `zh_TW`, so an explicit locale alias table was
+  added; previously the "auto" language mode picked whichever Chinese file the
+  directory listing returned first.
 - **Manifest brought up to the current schema.** Blender 5.4's manifest validator
   rejects `tagline` values longer than 64 characters and requires `permissions` to be a
   table instead of a list. Both were fixed, which is required to even build the
@@ -95,6 +129,8 @@ therefore gets the bundled Python wheels installed.
   the changelog panel assumed CRLF, which collapsed notes into a single line.
 - **Translation download source changed.** Translation and dictionary updates are
   fetched from this repository's `main` branch instead of per-Blender-version branches.
+- **Unsupported-version message updated.** It now states the supported range instead of
+  naming a single Blender version.
 
 Wiki links inside the add-on still point at the archived upstream wiki. That
 documentation remains online and accurate for the current feature set; it will be
