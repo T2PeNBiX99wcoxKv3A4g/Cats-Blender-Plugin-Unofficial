@@ -1,0 +1,39 @@
+name: Build extension
+
+# Builds the Blender extension ZIP. Tag pushes also publish it as a GitHub
+# release, which is what the add-on's built-in updater reads.
+
+on:
+  push:
+    tags: ["[0-9]*"]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Blender
+        run: |
+          curl -fsSL -o blender.tar.xz \
+            https://download.blender.org/release/Blender5.3/blender-5.3.0-linux-x64.tar.xz
+          tar -xf blender.tar.xz
+          echo "BLENDER_BIN=$PWD/blender-5.3.0-linux-x64/blender" >> "$GITHUB_ENV"
+
+      - name: Build extension
+        run: |
+          "$BLENDER_BIN" --command extension build --source-dir . --output-dir dist
+          ls -l dist
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cats-extension
+          path: dist/*.zip
+
+      - name: Publish release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*.zip
+          fail_on_unmatched_files: true
