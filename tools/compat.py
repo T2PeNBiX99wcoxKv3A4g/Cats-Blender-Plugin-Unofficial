@@ -33,6 +33,22 @@ def before(major, minor=0):
 # ``collada_export``) were removed in Blender 5.0.
 HAS_COLLADA = before(5, 0)
 
+# ``PoseBone.hide`` was added in Blender 5.0. It is the property the base logic
+# uses; 4.2-4.5 only expose the same flag on ``Bone.hide``.
+HAS_POSE_BONE_HIDE = at_least(5, 0)
+
+
+def set_pose_bone_hidden(pose_bone, hidden):
+    """Hide or show a pose bone in the viewport.
+
+    Uses the modern ``PoseBone.hide`` wherever it exists. The ``Bone.hide``
+    fallback is only for versions that predate it.
+    """
+    if HAS_POSE_BONE_HIDE:
+        pose_bone.hide = hidden
+    else:
+        pose_bone.bone.hide = hidden
+
 
 # --- Deferred optional dependencies ------------------------------------------
 

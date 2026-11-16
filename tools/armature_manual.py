@@ -9,6 +9,7 @@ import bmesh
 from mathutils.geometry import intersect_point_line
 
 from . import common as Common
+from . import compat as Compat
 from . import eyetracking as Eyetracking
 from .register import register_wrap
 from .translations import t
@@ -239,10 +240,7 @@ def stop_pose_mode(reset_pose=True):
         obj.hide_set(False)
 
     for pb in armature.pose.bones:
-        # PoseBone.hide only exists from Blender 5.0; the underlying Bone.hide
-        # property is the one that actually toggles pose-mode visibility and is
-        # available on every supported version.
-        pb.bone.hide = False
+        Compat.set_pose_bone_hidden(pb, False)
         pb.select = True
 
     if reset_pose:

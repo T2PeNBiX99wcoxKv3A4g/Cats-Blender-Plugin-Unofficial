@@ -14,6 +14,7 @@ from random import random
 from itertools import chain
 
 from . import common as Common
+from . import compat as Compat
 from . import armature as Armature
 from .register import register_wrap
 from .translations import t
@@ -792,7 +793,7 @@ class StartTestingButton(bpy.types.Operator):
         bpy.ops.pose.transforms_clear()
         for pb in armature_obj.pose.bones:
             pb.select = False
-            pb.hide = True
+            Compat.set_pose_bone_hidden(pb, True)
 
         # eye_left.select = True
         # eye_right.select = True
@@ -825,7 +826,7 @@ class StopTestingButton(bpy.types.Operator):
 
         armature_obj = Common.get_armature()
         for pb in armature_obj.pose.bones:
-            pb.hide = False
+            Compat.set_pose_bone_hidden(pb, False)
             pb.select = True
         bpy.ops.pose.rot_clear()
         bpy.ops.pose.scale_clear()
