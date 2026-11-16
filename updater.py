@@ -44,7 +44,7 @@ resources_dir = os.path.join(main_dir, "resources")
 ignore_ver_file = os.path.join(resources_dir, "ignore_version.txt")
 no_auto_ver_check_file = os.path.join(resources_dir, "no_auto_ver_check.txt")
 
-RELEASES_API_URL = 'https://git.neoneko.org/api/v1/repos/NeoNeko/Cats-Blender-Plugin/releases'
+RELEASES_API_URL = 'https://api.github.com/repos/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/releases'
 
 package_name = __package__
 
@@ -173,7 +173,9 @@ class ShowPatchnotesPanel(bpy.types.Operator):
             row.label(text=t('ShowPatchnotesPanel.releaseDate', date=version[2]))
 
             col.separator()
-            for line in version[1].replace('**', '').split('\r\n'):
+            # GitHub release notes use LF, Gitea uses CRLF. Normalise both.
+            notes = version[1].replace('**', '').replace('\r\n', '\n')
+            for line in notes.split('\n'):
                 row = col.row(align=True)
                 row.scale_y = 0.75
                 row.label(text=line)
@@ -413,10 +415,21 @@ def get_github_releases():
         if not full_tag:
             continue
 
+        # Prefer a packaged .zip release asset. The source zipball never goes
+        # through Blender's extension installer, so a self-update from the
+        # zipball would leave the bundled wheels (see `wheels` in
+        # blender_manifest.toml) uninstalled.
+        download_url = version.get('zipball_url') or ''
+        for asset in version.get('assets') or []:
+            asset_name = asset.get('name') or ''
+            if asset_name.endswith('.zip'):
+                download_url = asset.get('browser_download_url') or download_url
+                break
+
         version_list[full_tag] = [
-            version['zipball_url'],
-            version['body'],
-            version['published_at'].split('T')[0]
+            download_url,
+            version.get('body') or '',
+            (version.get('published_at') or '').split('T')[0]
         ]
 
     return True
