@@ -1134,6 +1134,7 @@
         "OptimizePanel.builtinBake.hint": "Enable per material in the list.",
         "OptimizePanel.bakeOverlapWarn1": "Baking uses existing UV layout.",
         "OptimizePanel.bakeOverlapWarn2": "Overlapping islands, other than",
-        "OptimizePanel.bakeOverlapWarn3": "mirrors, will fight for pixels."
+        "OptimizePanel.bakeOverlapWarn3": "mirrors, will fight for pixels.",
+        "ImportAnyModel.error.colladaRemoved": "Blender 5.0 已移除 Collada（.dae）匯入。\n請先用 Blender 4.5 或更早版本匯入並另存為 .blend，或先轉換為 glTF/FBX。"
     }
 }

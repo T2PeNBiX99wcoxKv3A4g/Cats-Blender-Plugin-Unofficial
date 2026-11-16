@@ -132,6 +132,39 @@ therefore gets the bundled Python wheels installed.
 - **Unsupported-version message updated.** It now states the supported range instead of
   naming a single Blender version.
 
+### Version compatibility layer
+
+`tools/compat.py` collects everything that differs across the supported Blender range, so
+feature code asks a question instead of hard-coding a version number.
+
+The 4.2 → 5.4 range was audited against real builds: every operator the add-on calls, the
+keyword arguments it passes, the data-model properties it reads (mesh, armature, material,
+Principled BSDF sockets, colour spaces, icons, node types) and the UI icon names it uses.
+Only one real difference was found:
+
+| API | 4.2 LTS | 4.5 LTS | 5.0+ |
+|---|---|---|---|
+| `bpy.ops.wm.collada_import` / `collada_export` | available | available | **removed** |
+
+Collada is therefore hidden from the import file filter on 5.0 and newer, and picking a
+`.dae` file there reports a clear message instead of raising `AttributeError`.
+
+### Start-up optimisation
+
+Blender runs `register()` on every launch, so the add-on's import cost is paid every time.
+Two imports are now deferred until they are actually needed:
+
+| Change | Saved |
+|---|---|
+| `requests` is imported on first online use (`tools/compat.py`) | ~85 ms |
+| MMD Tools' OpenCC dictionaries are created on first validation | ~50 ms |
+
+Measured on Blender 5.4: `register()` dropped from 0.341 s to 0.183 s, and the total
+start-up overhead of having Cats enabled dropped from 0.228 s to 0.147 s.
+
+The OpenCC change touches vendored MMD Tools, so `scripts/vendor_mmd_tools.py` re-applies
+it automatically when MMD Tools is re-vendored.
+
 Wiki links inside the add-on still point at the archived upstream wiki. That
 documentation remains online and accurate for the current feature set; it will be
 replaced if this project gets its own wiki.

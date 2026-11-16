@@ -1132,6 +1132,7 @@
         "OptimizePanel.builtinBake.hint": "Enable per material in the list.",
         "OptimizePanel.bakeOverlapWarn1": "Baking uses existing UV layout.",
         "OptimizePanel.bakeOverlapWarn2": "Overlapping islands, other than",
-        "OptimizePanel.bakeOverlapWarn3": "mirrors, will fight for pixels."
+        "OptimizePanel.bakeOverlapWarn3": "mirrors, will fight for pixels.",
+        "ImportAnyModel.error.colladaRemoved": "Blender 5.0 では Collada (.dae) のインポートが削除されました。\nBlender 4.5 以前で読み込み .blend として保存するか、先に glTF/FBX に変換してください。"
     }
 }
