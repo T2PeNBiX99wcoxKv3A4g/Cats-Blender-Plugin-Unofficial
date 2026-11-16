@@ -17,27 +17,32 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Blender is unpacked outside the checkout on purpose: anything inside
+      # the workspace would be picked up as part of the extension payload.
       - name: Download Blender
         run: |
-          curl -fsSL -o blender.tar.xz \
+          mkdir -p "$RUNNER_TEMP/blender"
+          curl -fsSL -o "$RUNNER_TEMP/blender.tar.xz" \
             https://download.blender.org/release/Blender5.3/blender-5.3.0-linux-x64.tar.xz
-          tar -xf blender.tar.xz
-          echo "BLENDER_BIN=$PWD/blender-5.3.0-linux-x64/blender" >> "$GITHUB_ENV"
+          tar -xf "$RUNNER_TEMP/blender.tar.xz" -C "$RUNNER_TEMP/blender"
+          echo "BLENDER_BIN=$RUNNER_TEMP/blender/blender-5.3.0-linux-x64/blender" >> "$GITHUB_ENV"
 
       - name: Build extension
         run: |
-          mkdir -p dist
-          "$BLENDER_BIN" --command extension build --source-dir . --output-dir dist
-          ls -l dist
+          mkdir -p "$RUNNER_TEMP/dist"
+          "$BLENDER_BIN" --command extension build \
+            --source-dir "$GITHUB_WORKSPACE" \
+            --output-dir "$RUNNER_TEMP/dist"
+          ls -l "$RUNNER_TEMP/dist"
 
       - uses: actions/upload-artifact@v4
         with:
           name: cats-extension
-          path: dist/*.zip
+          path: ${{ runner.temp }}/dist/*.zip
 
       - name: Publish release
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/*.zip
+          files: ${{ runner.temp }}/dist/*.zip
           fail_on_unmatched_files: true
