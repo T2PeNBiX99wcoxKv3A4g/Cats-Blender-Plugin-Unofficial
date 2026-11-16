@@ -1,6 +1,6 @@
 # MIT License
 
-CATS_VERSION = "5.3.1.0"
+CATS_VERSION = "5.3.2"
 dev_branch = False
 
 import os
@@ -180,7 +180,7 @@ def check_unsupported_blender_versions():
         return
 
     # Don't allow Blender versions newer than the current supported series
-    if bpy.app.version >= (5, 4):
+    if bpy.app.version >= (5, 5):
         sys.tracebacklimit = 0
         raise ImportError(t('Main.error.40unsupportedVersion'))
 
