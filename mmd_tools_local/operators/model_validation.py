@@ -8,7 +8,11 @@ import shutil
 
 import bpy
 from bpy.types import Operator
-from opencc import OpenCC
+
+try:
+    from opencc import OpenCC
+except ImportError:  # bundled wheel missing, e.g. a manual installation
+    OpenCC = None
 
 from ..core.material import FnMaterial
 from ..core.model import FnModel
@@ -16,31 +20,47 @@ from ..preferences import get_additional_unallowed_chars, get_replacement_char
 
 _T2JP_CONFIG_PATH = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", "data", "opencc", "t2jp"))
 
-# Local patch (Cats): the two OpenCC instances below used to be created at
-# import time, which loads their dictionaries and costs ~50 ms on every Blender
-# start-up even though validation may never be used. They are created on first
-# use instead. scripts/vendor_mmd_tools.py re-applies this patch when MMD Tools
-# is vendored again.
-_cc_s2t = None
-_cc_t2jp = None
+# Local patch (Cats): the converters used to be built at import time, which
+# loads their dictionaries and costs ~50 ms on every Blender start-up even
+# though a name may never need converting. They are created on first use, and a
+# missing or broken OpenCC only disables the conversion instead of stopping MMD
+# Tools from registering. scripts/vendor_mmd_tools.py re-applies this patch when
+# MMD Tools is vendored again.
+_converters = None
+_converters_loaded = False
 
 
-def _get_cc_s2t():
-    global _cc_s2t
-    if _cc_s2t is None:
-        _cc_s2t = OpenCC("s2t")
-    return _cc_s2t
+def _get_converters():
+    """The ``(s2t, t2jp)`` converter pair, or an empty tuple when unavailable."""
+    global _converters, _converters_loaded
+    if not _converters_loaded:
+        _converters_loaded = True
+        if OpenCC is None:
+            print("MMD Tools: OpenCC is not installed, name conversion is disabled")
+            _converters = ()
+        else:
+            try:
+                # The opencc-python-reimplemented wheel ships the JPVariants
+                # dictionary but not the t2jp configuration, so load the bundled
+                # configuration by absolute path. OpenCC appends ".json" to the
+                # given name, so the path is passed without the extension.
+                _converters = (OpenCC("s2t"), OpenCC(_T2JP_CONFIG_PATH))
+            except Exception as e:  # noqa: BLE001 - any failure means "unavailable"
+                print("MMD Tools: OpenCC could not be loaded (%s), name conversion is disabled" % e)
+                _converters = ()
+    return _converters
 
 
-def _get_cc_t2jp():
-    global _cc_t2jp
-    if _cc_t2jp is None:
-        # The opencc-python-reimplemented wheel ships the JPVariants dictionary
-        # but not the t2jp configuration, so load the bundled configuration by
-        # absolute path. OpenCC appends ".json" to the given name, so the path
-        # is passed without the extension.
-        _cc_t2jp = OpenCC(_T2JP_CONFIG_PATH)
-    return _cc_t2jp
+def _normalize_name(text):
+    """Map Chinese character variants to their Japanese kanji equivalents.
+
+    Returns ``text`` unchanged when OpenCC is unavailable.
+    """
+    converters = _get_converters()
+    if not converters:
+        return text
+    s2t, t2jp = converters
+    return t2jp.convert(s2t.convert(text))
 
 
 def _find_additional_unallowed_chars(name: str, unallowed: str) -> list[str]:
@@ -395,8 +415,7 @@ class MMDModelFixModelIssues(Operator):
             pass
 
         # Convert/remove non-Japanese characters
-        converted_name = _get_cc_s2t().convert(text)
-        converted_name = _get_cc_t2jp().convert(converted_name)
+        converted_name = _normalize_name(text)
 
         new_name = ""
         for char in converted_name:
@@ -512,8 +531,7 @@ class MMDModelFixBoneIssues(Operator):
                 continue
 
             # First convert/remove non-Japanese characters
-            converted_name = _get_cc_s2t().convert(original_name)
-            converted_name = _get_cc_t2jp().convert(converted_name)
+            converted_name = _normalize_name(original_name)
 
             new_name = ""
             for char in converted_name:
@@ -634,8 +652,7 @@ class MMDModelFixMorphIssues(Operator):
                     continue
 
                 # First convert/remove non-Japanese characters
-                converted_name = _get_cc_s2t().convert(original_name)
-                converted_name = _get_cc_t2jp().convert(converted_name)
+                converted_name = _normalize_name(original_name)
 
                 new_name = ""
                 for char in converted_name:

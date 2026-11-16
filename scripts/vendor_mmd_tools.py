@@ -139,43 +139,87 @@ _OPENCC_INIT_BLOCK = re.compile(
     re.S,
 )
 
-_LAZY_OPENCC_INIT = '''# Local patch (Cats): the two OpenCC instances below used to be created at
-# import time, which loads their dictionaries and costs ~50 ms on every Blender
-# start-up even though validation may never be used. They are created on first
-# use instead. scripts/vendor_mmd_tools.py re-applies this patch when MMD Tools
-# is vendored again.
-_cc_s2t = None
-_cc_t2jp = None
+_OPENCC_IMPORT_LINE = re.compile(r'^from opencc import OpenCC$', re.M)
+
+_OPENCC_IMPORT_GUARDED = '''
+try:
+    from opencc import OpenCC
+except ImportError:  # bundled wheel missing, e.g. a manual installation
+    OpenCC = None'''
+
+_LAZY_OPENCC_INIT = '''_T2JP_CONFIG_PATH = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", "data", "opencc", "t2jp"))
+
+# Local patch (Cats): the converters used to be built at import time, which
+# loads their dictionaries and costs ~50 ms on every Blender start-up even
+# though a name may never need converting. They are created on first use, and a
+# missing or broken OpenCC only disables the conversion instead of stopping MMD
+# Tools from registering. scripts/vendor_mmd_tools.py re-applies this patch when
+# MMD Tools is vendored again.
+_converters = None
+_converters_loaded = False
 
 
-def _get_cc_s2t():
-    global _cc_s2t
-    if _cc_s2t is None:
-        _cc_s2t = OpenCC("s2t")
-    return _cc_s2t
+def _get_converters():
+    """The ``(s2t, t2jp)`` converter pair, or an empty tuple when unavailable."""
+    global _converters, _converters_loaded
+    if not _converters_loaded:
+        _converters_loaded = True
+        if OpenCC is None:
+            print("MMD Tools: OpenCC is not installed, name conversion is disabled")
+            _converters = ()
+        else:
+            try:
+                # The opencc-python-reimplemented wheel ships the JPVariants
+                # dictionary but not the t2jp configuration, so load the bundled
+                # configuration by absolute path. OpenCC appends ".json" to the
+                # given name, so the path is passed without the extension.
+                _converters = (OpenCC("s2t"), OpenCC(_T2JP_CONFIG_PATH))
+            except Exception as e:  # noqa: BLE001 - any failure means "unavailable"
+                print("MMD Tools: OpenCC could not be loaded (%s), name conversion is disabled" % e)
+                _converters = ()
+    return _converters
 
 
-def _get_cc_t2jp():
-    global _cc_t2jp
-    if _cc_t2jp is None:
-        # The opencc-python-reimplemented wheel ships the JPVariants dictionary
-        # but not the t2jp configuration, so load the bundled configuration by
-        # absolute path. OpenCC appends ".json" to the given name, so the path
-        # is passed without the extension.
-        _cc_t2jp = OpenCC(_T2JP_CONFIG_PATH)
-    return _cc_t2jp'''
+def _normalize_name(text):
+    """Map Chinese character variants to their Japanese kanji equivalents.
+
+    Returns ``text`` unchanged when OpenCC is unavailable.
+    """
+    converters = _get_converters()
+    if not converters:
+        return text
+    s2t, t2jp = converters
+    return t2jp.convert(s2t.convert(text))'''
+
+# The two-step conversion is collapsed into the _normalize_name() helper.
+_OPENCC_CONVERT_CALL = re.compile(
+    r'(?P<indent>[ \t]*)converted_name = cc_s2t\.convert\((?P<arg>[A-Za-z_][A-Za-z0-9_]*)\)'
+    r'(\r?\n)[ \t]*converted_name = cc_t2jp\.convert\(converted_name\)'
+)
 
 
 def apply_local_patches(rel_path: str, text: str) -> str:
     """Re-apply Cats' changes to a vendored file. ``rel_path`` uses '/'."""
     if rel_path == "operators/model_validation.py":
+        text, import_count = _OPENCC_IMPORT_LINE.subn(_OPENCC_IMPORT_GUARDED, text)
+        if import_count == 0 and "except ImportError:  # bundled wheel missing" not in text:
+            log("WARNING: optional-OpenCC import patch did not apply to "
+                "operators/model_validation.py -- upstream layout changed, "
+                "re-apply it by hand.")
+
         text, count = _OPENCC_INIT_BLOCK.subn(_LAZY_OPENCC_INIT, text)
         if count == 0:
             log("WARNING: lazy-OpenCC patch did not apply to "
                 "operators/model_validation.py -- upstream layout changed, "
                 "re-apply it by hand.")
-        text = text.replace("cc_s2t.convert(", "_get_cc_s2t().convert(")
-        text = text.replace("cc_t2jp.convert(", "_get_cc_t2jp().convert(")
+
+        text, call_count = _OPENCC_CONVERT_CALL.subn(
+            lambda m: "%sconverted_name = _normalize_name(%s)" % (m.group("indent"), m.group("arg")),
+            text,
+        )
+        if call_count == 0:
+            log("WARNING: OpenCC call sites were not rewritten in "
+                "operators/model_validation.py -- check the conversion logic by hand.")
     return text
 
 
