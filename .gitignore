@@ -23,7 +23,6 @@ resources/supporters.json
 .coverage.*
 htmlcov
 mmd_tools_local2
-README.md
 !tests/README.md
 README
 readme.md
