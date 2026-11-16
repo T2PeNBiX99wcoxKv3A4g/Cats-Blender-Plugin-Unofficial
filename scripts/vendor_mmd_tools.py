@@ -129,6 +129,56 @@ def check_absolute_imports(src: str) -> list[str]:
     return offenders
 
 
+# --- Local patches applied to vendored files --------------------------------
+#
+# Cats-specific changes layered on top of upstream MMD Tools. They are applied
+# here so re-vendoring a newer release does not silently drop them.
+
+_OPENCC_INIT_BLOCK = re.compile(
+    r'cc_s2t = OpenCC\("s2t"\).*?cc_t2jp = OpenCC\(_T2JP_CONFIG_PATH\)',
+    re.S,
+)
+
+_LAZY_OPENCC_INIT = '''# Local patch (Cats): the two OpenCC instances below used to be created at
+# import time, which loads their dictionaries and costs ~50 ms on every Blender
+# start-up even though validation may never be used. They are created on first
+# use instead. scripts/vendor_mmd_tools.py re-applies this patch when MMD Tools
+# is vendored again.
+_cc_s2t = None
+_cc_t2jp = None
+
+
+def _get_cc_s2t():
+    global _cc_s2t
+    if _cc_s2t is None:
+        _cc_s2t = OpenCC("s2t")
+    return _cc_s2t
+
+
+def _get_cc_t2jp():
+    global _cc_t2jp
+    if _cc_t2jp is None:
+        # The opencc-python-reimplemented wheel ships the JPVariants dictionary
+        # but not the t2jp configuration, so load the bundled configuration by
+        # absolute path. OpenCC appends ".json" to the given name, so the path
+        # is passed without the extension.
+        _cc_t2jp = OpenCC(_T2JP_CONFIG_PATH)
+    return _cc_t2jp'''
+
+
+def apply_local_patches(rel_path: str, text: str) -> str:
+    """Re-apply Cats' changes to a vendored file. ``rel_path`` uses '/'."""
+    if rel_path == "operators/model_validation.py":
+        text, count = _OPENCC_INIT_BLOCK.subn(_LAZY_OPENCC_INIT, text)
+        if count == 0:
+            log("WARNING: lazy-OpenCC patch did not apply to "
+                "operators/model_validation.py -- upstream layout changed, "
+                "re-apply it by hand.")
+        text = text.replace("cc_s2t.convert(", "_get_cc_s2t().convert(")
+        text = text.replace("cc_t2jp.convert(", "_get_cc_t2jp().convert(")
+    return text
+
+
 def transform_python(text: str, is_init: bool, version: str) -> str:
     # Operator namespace: mmd_tools.<x> -> mmd_tools_local.<x>. Dot-anchored so
     # interop keys like mmd_tools_version / "mmd_tools" are left alone.
@@ -192,6 +242,8 @@ def vendor(src: str, version: str) -> None:
             if name.endswith(".py"):
                 text = open(src_file, encoding="utf-8").read()
                 text = transform_python(text, is_init=(rel == "." and name == "__init__.py"), version=version)
+                rel_file = name if rel == "." else os.path.join(rel, name)
+                text = apply_local_patches(rel_file.replace(os.sep, "/"), text)
                 with open(out_file, "w", encoding="utf-8", newline="\n") as f:
                     f.write(text)
                 py_count += 1

@@ -14,13 +14,33 @@ from ..core.material import FnMaterial
 from ..core.model import FnModel
 from ..preferences import get_additional_unallowed_chars, get_replacement_char
 
-cc_s2t = OpenCC("s2t")
-
-# The opencc-python-reimplemented wheel ships the JPVariants dictionary but not the t2jp
-# configuration, so load the bundled configuration by absolute path. OpenCC appends ".json"
-# to the given name, so the path is passed without the extension.
 _T2JP_CONFIG_PATH = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", "data", "opencc", "t2jp"))
-cc_t2jp = OpenCC(_T2JP_CONFIG_PATH)
+
+# Local patch (Cats): the two OpenCC instances below used to be created at
+# import time, which loads their dictionaries and costs ~50 ms on every Blender
+# start-up even though validation may never be used. They are created on first
+# use instead. scripts/vendor_mmd_tools.py re-applies this patch when MMD Tools
+# is vendored again.
+_cc_s2t = None
+_cc_t2jp = None
+
+
+def _get_cc_s2t():
+    global _cc_s2t
+    if _cc_s2t is None:
+        _cc_s2t = OpenCC("s2t")
+    return _cc_s2t
+
+
+def _get_cc_t2jp():
+    global _cc_t2jp
+    if _cc_t2jp is None:
+        # The opencc-python-reimplemented wheel ships the JPVariants dictionary
+        # but not the t2jp configuration, so load the bundled configuration by
+        # absolute path. OpenCC appends ".json" to the given name, so the path
+        # is passed without the extension.
+        _cc_t2jp = OpenCC(_T2JP_CONFIG_PATH)
+    return _cc_t2jp
 
 
 def _find_additional_unallowed_chars(name: str, unallowed: str) -> list[str]:
@@ -375,8 +395,8 @@ class MMDModelFixModelIssues(Operator):
             pass
 
         # Convert/remove non-Japanese characters
-        converted_name = cc_s2t.convert(text)
-        converted_name = cc_t2jp.convert(converted_name)
+        converted_name = _get_cc_s2t().convert(text)
+        converted_name = _get_cc_t2jp().convert(converted_name)
 
         new_name = ""
         for char in converted_name:
@@ -492,8 +512,8 @@ class MMDModelFixBoneIssues(Operator):
                 continue
 
             # First convert/remove non-Japanese characters
-            converted_name = cc_s2t.convert(original_name)
-            converted_name = cc_t2jp.convert(converted_name)
+            converted_name = _get_cc_s2t().convert(original_name)
+            converted_name = _get_cc_t2jp().convert(converted_name)
 
             new_name = ""
             for char in converted_name:
@@ -614,8 +634,8 @@ class MMDModelFixMorphIssues(Operator):
                     continue
 
                 # First convert/remove non-Japanese characters
-                converted_name = cc_s2t.convert(original_name)
-                converted_name = cc_t2jp.convert(converted_name)
+                converted_name = _get_cc_s2t().convert(original_name)
+                converted_name = _get_cc_t2jp().convert(converted_name)
 
                 new_name = ""
                 for char in converted_name:

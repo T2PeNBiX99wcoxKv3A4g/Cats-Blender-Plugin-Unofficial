@@ -1,6 +1,6 @@
 # MIT License
 
-CATS_VERSION = "5.3.3"
+CATS_VERSION = "5.3.4"
 dev_branch = False
 
 import os
@@ -13,16 +13,9 @@ import pathlib
 # from registering, the core rig tools don't need it. Only the network features do (This should not
 # happen with Downloaded versions of Blender from blender.org, This is mainly for Linux Users who use
 # There distros blender from the package manager.)
-try:
-    import requests
-    _requests_available = True
-except ImportError:
-    requests = None
-    _requests_available = False
-
+# It is imported on first use instead of at start-up, because the import costs
+# about 85 ms (see tools/compat.py).
 from . import globs
-
-globs.requests_available = _requests_available
 
 # Check if cats is reloading or started fresh
 if "bpy" not in locals():
@@ -266,9 +259,8 @@ def register():
     # Add shapekey button to shapekey menu
     bpy.types.MESH_MT_shape_key_context_menu.append(tools.shapekey.addToShapekeyMenu)
 
-    # Disable request warning when using google translate
-    if globs.requests_available:
-        requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
+    # Feature availability that other modules read through globs.
+    globs.requests_available = tools.compat.requests_available()
 
     # Apply the settings after a short time, because you can't change checkboxes during register process
     tools.settings.start_apply_settings_timer()
