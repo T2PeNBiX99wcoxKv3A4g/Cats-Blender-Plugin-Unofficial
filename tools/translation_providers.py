@@ -19,12 +19,10 @@ import json
 import concurrent.futures
 
 # ``requests`` ships with Blender's Python but is not guaranteed in a stripped
-# build. Guard the import so a missing module disables online translation
-# instead of stopping the add-on from registering (see test_requests_optional).
-try:
-    import requests
-except ImportError:
-    requests = None
+# build, and importing it costs ~85 ms. It is resolved on first use through
+# tools/compat.py so a missing copy disables online translation instead of
+# stopping the add-on from registering.
+from .compat import get_requests
 
 
 # Service ids stored in settings / shown in the UI enum.
@@ -106,7 +104,7 @@ class TranslationProvider:
 
     def is_available(self):
         """Whether this provider can be used right now (module + config present)."""
-        if self.requires_requests and (requests is None or not online_access_allowed()):
+        if self.requires_requests and (get_requests() is None or not online_access_allowed()):
             return False
         return True
 
@@ -154,6 +152,7 @@ class GoogleProvider(TranslationProvider):
     _endpoint = "https://translate.googleapis.com/translate_a/single"
 
     def translate_text(self, text, source_lang="ja", target_lang="en"):
+        requests = get_requests()
         params = {
             "client": "gtx",
             "sl": source_lang,
@@ -218,6 +217,8 @@ class DeepLProvider(TranslationProvider):
             print("CATS translate: DeepL API key missing; keeping originals")
             return list(texts)
 
+        requests = get_requests()
+
         source = self._lang_map.get(source_lang, source_lang.upper())
         target = self._lang_map.get(target_lang, target_lang.upper())
         endpoint = f"{self._base_url}/v2/translate"
@@ -262,6 +263,7 @@ class LibreTranslateProvider(TranslationProvider):
         self.api_key = api_key
 
     def translate_text(self, text, source_lang="ja", target_lang="en"):
+        requests = get_requests()
         payload = {"q": text, "source": source_lang, "target": target_lang, "format": "text"}
         if self.api_key:
             payload["api_key"] = self.api_key
@@ -291,6 +293,7 @@ class MyMemoryProvider(TranslationProvider):
         self.email = email
 
     def translate_text(self, text, source_lang="ja", target_lang="en"):
+        requests = get_requests()
         params = {"q": text, "langpair": f"{source_lang}|{target_lang}"}
         if self.email:
             params["de"] = self.email
@@ -317,7 +320,7 @@ def get_active_provider():
 
     service = Settings.get_translation_service() or SERVICE_GOOGLE
 
-    if service == SERVICE_INTERNAL or requests is None:
+    if service == SERVICE_INTERNAL or get_requests() is None:
         return NullProvider()
     if service == SERVICE_GOOGLE:
         return GoogleProvider()

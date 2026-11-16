@@ -3,6 +3,7 @@
 if "bpy" not in locals():
     # print('STARTUP TOOLS!!')
     import bpy
+    from . import compat
     from . import register
     from . import armature
     from . import armature_bones
@@ -30,6 +31,7 @@ if "bpy" not in locals():
 else:
     # print('RELOAD TOOLS!!')
     import importlib
+    importlib.reload(compat)
     importlib.reload(register)  # Has to be first
     importlib.reload(armature)
     importlib.reload(armature_bones)

@@ -6,11 +6,8 @@ import os
 import bpy
 import json
 import pathlib
-try:
-    import requests
-except ImportError:
-    requests = None
 
+from .compat import get_requests
 from .register import register_wrap
 from . import user_data
 
@@ -295,6 +292,7 @@ class DownloadTranslations(bpy.types.Operator):
     bl_options = {'INTERNAL'}
 
     def execute(self, context):
+        requests = get_requests()
         if requests is None:
             self.report({'ERROR'}, t('DownloadTranslations.error.noRequests'))
             return {'CANCELLED'}

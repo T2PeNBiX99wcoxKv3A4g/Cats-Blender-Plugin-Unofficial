@@ -14,6 +14,7 @@ from mathutils import Matrix
 from math import sqrt
 
 from .. import globs
+from . import compat as Compat
 from . import armature_manual
 from . import common as Common
 from . import settings as Settings
@@ -31,8 +32,15 @@ try:
 except ImportError:
     pass
 
-formats = '*.pmx;*.pmd;*.xps;*.mesh;*.ascii;*.smd;*.qc;*.qci;*.vta;*.dmx;*.fbx;*.dae;*.vrm;*.gltf;*.glb;*.zip'
-format_list = formats.replace('*.', '').split(';')
+# Collada support was removed from Blender in 5.0, so the file browser must not
+# offer .dae files on versions that cannot import them.
+_model_formats = ['pmx', 'pmd', 'xps', 'mesh', 'ascii', 'smd', 'qc', 'qci', 'vta',
+                  'dmx', 'fbx', 'vrm', 'gltf', 'glb', 'zip']
+if Compat.HAS_COLLADA:
+    _model_formats.insert(_model_formats.index('fbx') + 1, 'dae')
+
+format_list = _model_formats
+formats = ';'.join('*.' + f for f in format_list)
 zip_files = {}
 
 
@@ -212,6 +220,9 @@ class ImportAnyModel(bpy.types.Operator, bpy_extras.io_utils.ImportHelper):
 
         # DAE
         elif file_ending == 'dae':
+            if not Compat.HAS_COLLADA:
+                Common.show_error(9.4, [t('ImportAnyModel.error.colladaRemoved')])
+                return
             try:
                 bpy.ops.wm.collada_import('EXEC_DEFAULT',
                                           filepath=file_path,
