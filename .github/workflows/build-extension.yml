@@ -23,6 +23,7 @@ jobs:
 
       - name: Build extension
         run: |
+          mkdir -p dist
           "$BLENDER_BIN" --command extension build --source-dir . --output-dir dist
           ls -l dist
 
