@@ -1,6 +1,6 @@
 # MIT License
 
-CATS_VERSION = "5.3.2"
+CATS_VERSION = "5.3.3"
 dev_branch = False
 
 import os

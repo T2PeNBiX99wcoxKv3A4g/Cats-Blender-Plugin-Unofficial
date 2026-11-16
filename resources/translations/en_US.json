@@ -34,7 +34,7 @@
         "Main.error.deleteFollowing": "\n\nFaulty CATS installation found!\nTo fix this delete the following files and folders inside your addons folder:\n",
         "Main.error.installViaPreferences": "\n\nFaulty CATS installation found!\nPlease install CATS via User Preferences and restart Blender!\n",
         "Main.error.restartAndEnable": "\n\nFaulty CATS installation was found and fixed!\nPlease restart Blender and enable CATS again!\n",
-        "Main.error.40unsupportedVersion": "\n\nThis version of Blender is not supported by this version of Cats.\nPlease use Blender 5.3.\n",
+        "Main.error.40unsupportedVersion": "\n\nThis version of Blender is not supported by this version of Cats.\nSupported versions: Blender 4.2 LTS to 5.4.\n\n",
         "Main.error.restartAndEnable_alt": "\n\nPlease restart Blender and enable CATS again!\n",
         "ToolPanel.label": "Cats Blender Plugin",
         "ToolPanel.category": "CATS",

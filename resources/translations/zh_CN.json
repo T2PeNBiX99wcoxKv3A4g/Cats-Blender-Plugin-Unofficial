@@ -105,7 +105,7 @@
         "Main.error.deleteFollowing": "\n\n检测到 CATS 安装存在问题！\n请删除插件文件夹中的以下文件和文件夹以修复：\n",
         "Main.error.installViaPreferences": "\n\n检测到 CATS 安装存在问题！\n请通过用户设置安装 CATS 并重启 Blender！\n",
         "Main.error.restartAndEnable": "\n\nCATS 安装问题已修复！\n请重启 Blender 并启用 CATS！\n",
-        "Main.error.40unsupportedVersion": "\n\n当前 Blender 版本不受此版本 CATS 支持。\n请使用 Blender 5.3。\n",
+        "Main.error.40unsupportedVersion": "\n\n此版本的 Blender 不受此版本 CATS 支持。\n支持版本：Blender 4.2 LTS 至 5.4\n\n",
         "Main.error.restartAndEnable_alt": "\n\n请重启 Blender 并启用 CATS！\n",
         "ToolPanel.label": "Cats Blender 插件",
         "ToolPanel.category": "CATS",
