@@ -1119,6 +1119,26 @@
         "CreditsPanel.previousMaintainers2": "Yusarina (2023-2026)",
         "UpdaterPanel.githubTokenWarn3": "Encrypted with your account.",
         "UpdaterPanel.githubTokenRejected": "This token was rejected.",
-        "UpdaterPanel.githubTokenRejected2": "Replace or clear it."
+        "UpdaterPanel.githubTokenRejected2": "Replace or clear it.",
+        "Language.en_US": "English",
+        "Language.ja_JP": "Japanese",
+        "Language.ko_KR": "Korean",
+        "Language.zh_CN": "Chinese (Simplified)",
+        "Language.zh_TW": "Chinese (Traditional)",
+        "Language.auto": "Automatic",
+        "FbxExport.section": "FBX Export",
+        "FbxExport.preset": "Preset",
+        "FbxExport.apply": "Apply now",
+        "FbxExport.applyDesc": "Write the preset into Blender's FBX export options",
+        "FbxExport.setPreset": "Select FBX preset",
+        "FbxExport.applied": "Applied {0} FBX options",
+        "FbxExport.off": "Do not apply",
+        "FbxExport.offNow": "Cats no longer applies an FBX preset",
+        "FbxExport.defaultPreset": "Cats default",
+        "FbxExport.note1": "Forgotten on every restart;",
+        "FbxExport.note2": "Cats applies them for you.",
+        "FbxExport.exportButton": "Export FBX (preset)",
+        "FbxExport.exportDesc": "Open the FBX export dialog with the saved preset",
+        "FbxExport.noExporter": "The FBX exporter is not enabled"
     }
 }

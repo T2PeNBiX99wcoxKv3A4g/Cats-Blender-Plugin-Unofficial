@@ -1156,6 +1156,26 @@
         "CreditsPanel.previousMaintainers2": "Yusarina（2023-2026）",
         "UpdaterPanel.githubTokenWarn3": "以系統帳戶加密保存。",
         "UpdaterPanel.githubTokenRejected": "此權杖已被拒絕。",
-        "UpdaterPanel.githubTokenRejected2": "請更換或清空。"
+        "UpdaterPanel.githubTokenRejected2": "請更換或清空。",
+        "Language.en_US": "英語",
+        "Language.ja_JP": "日語",
+        "Language.ko_KR": "韓語",
+        "Language.zh_CN": "簡體中文",
+        "Language.zh_TW": "繁體中文",
+        "Language.auto": "自動",
+        "FbxExport.section": "FBX 匯出",
+        "FbxExport.preset": "預設組",
+        "FbxExport.apply": "立即套用",
+        "FbxExport.applyDesc": "將預設組寫入 Blender 的 FBX 匯出設定",
+        "FbxExport.setPreset": "選擇 FBX 預設組",
+        "FbxExport.applied": "已套用 {0} 項 FBX 設定",
+        "FbxExport.off": "不套用",
+        "FbxExport.offNow": "已停止自動套用 FBX 預設組",
+        "FbxExport.defaultPreset": "Cats 預設值",
+        "FbxExport.note1": "Blender 重新啟動後會忘記這些設定。",
+        "FbxExport.note2": "Cats 會自動套用。",
+        "FbxExport.exportButton": "匯出 FBX（預設組）",
+        "FbxExport.exportDesc": "使用已儲存的預設組開啟 FBX 匯出視窗",
+        "FbxExport.noExporter": "FBX 匯出器未啟用"
     }
 }

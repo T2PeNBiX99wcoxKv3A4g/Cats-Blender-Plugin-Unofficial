@@ -1154,6 +1154,26 @@
         "CreditsPanel.previousMaintainers2": "Yusarina（2023-2026）",
         "UpdaterPanel.githubTokenWarn3": "以系统账户加密保存。",
         "UpdaterPanel.githubTokenRejected": "此令牌已被拒绝。",
-        "UpdaterPanel.githubTokenRejected2": "请更换或清空。"
+        "UpdaterPanel.githubTokenRejected2": "请更换或清空。",
+        "Language.en_US": "英语",
+        "Language.ja_JP": "日语",
+        "Language.ko_KR": "韩语",
+        "Language.zh_CN": "简体中文",
+        "Language.zh_TW": "繁体中文",
+        "Language.auto": "自动",
+        "FbxExport.section": "FBX 导出",
+        "FbxExport.preset": "预设",
+        "FbxExport.apply": "立即应用",
+        "FbxExport.applyDesc": "将预设写入 Blender 的 FBX 导出设置",
+        "FbxExport.setPreset": "选择 FBX 预设",
+        "FbxExport.applied": "已应用 {0} 项 FBX 设置",
+        "FbxExport.off": "不应用",
+        "FbxExport.offNow": "已停止自动应用 FBX 预设",
+        "FbxExport.defaultPreset": "Cats 默认值",
+        "FbxExport.note1": "Blender 重启后会忘记这些设置。",
+        "FbxExport.note2": "Cats 会自动应用。",
+        "FbxExport.exportButton": "导出 FBX（预设）",
+        "FbxExport.exportDesc": "使用已保存的预设打开 FBX 导出窗口",
+        "FbxExport.noExporter": "FBX 导出器未启用"
     }
 }

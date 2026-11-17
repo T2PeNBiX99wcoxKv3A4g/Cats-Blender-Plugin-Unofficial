@@ -1154,6 +1154,26 @@
         "CreditsPanel.previousMaintainers2": "Yusarina (2023-2026)",
         "UpdaterPanel.githubTokenWarn3": "OS アカウントで暗号化されます。",
         "UpdaterPanel.githubTokenRejected": "このトークンは拒否されました。",
-        "UpdaterPanel.githubTokenRejected2": "交換または削除してください。"
+        "UpdaterPanel.githubTokenRejected2": "交換または削除してください。",
+        "Language.en_US": "英語",
+        "Language.ja_JP": "日本語",
+        "Language.ko_KR": "韓国語",
+        "Language.zh_CN": "中国語（簡体字）",
+        "Language.zh_TW": "中国語（繁体字）",
+        "Language.auto": "自動",
+        "FbxExport.section": "FBX エクスポート",
+        "FbxExport.preset": "プリセット",
+        "FbxExport.apply": "今すぐ適用",
+        "FbxExport.applyDesc": "プリセットを Blender の FBX 設定に書き込みます",
+        "FbxExport.setPreset": "FBX プリセットを選択",
+        "FbxExport.applied": "{0} 件の FBX 設定を適用しました",
+        "FbxExport.off": "適用しない",
+        "FbxExport.offNow": "FBX プリセットの自動適用を停止しました",
+        "FbxExport.defaultPreset": "Cats の既定値",
+        "FbxExport.note1": "Blender は再起動で設定を忘れます。",
+        "FbxExport.note2": "Cats が自動で適用します。",
+        "FbxExport.exportButton": "FBX を書き出す（プリセット）",
+        "FbxExport.exportDesc": "保存したプリセットで FBX 書き出し画面を開きます",
+        "FbxExport.noExporter": "FBX エクスポーターが有効ではありません"
     }
 }

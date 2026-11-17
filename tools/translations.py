@@ -99,7 +99,7 @@ def load_translations(override_language=None):
     else:
         language = get_language_from_settings()
         print(f"Selected language: {language}")
-    for code in list_language_codes():
+    for code in sort_language_codes(list_language_codes()):
         languages.append(code)
     print(f"Available languages: {languages}")
 
@@ -152,11 +152,59 @@ def get_languages_list(self, context):
 
     for language in languages:
         # 1. Will be returned by context.scene
-        # 2. Will be shown in lists
-        # 3. will be shown in the hover description (below description)
-        choices.append((language, language, language))
+        # 2. Will be shown in lists (translated name, plus the native name when it differs)
+        # 3. Will be shown in the hover description (below description)
+        label = language_display_name(language)
+        choices.append((language, label, language if language != 'auto' else ''))
 
     return choices
+
+
+# How each language names itself. Shown in parentheses after the translated name so a
+# user looking for their own language can find it even when the UI is in another one.
+LANGUAGE_ENDONYMS = {
+    'en_US': 'English',
+    'ja_JP': '日本語',
+    'ko_KR': '한국어',
+    'zh_CN': '简体中文',
+    'zh_TW': '繁體中文',
+}
+
+# Preferred order: English first, then by language, so the list does not depend on the
+# order the files happen to be listed in.
+_LANGUAGE_ORDER = ['auto', 'en_US', 'ja_JP', 'ko_KR', 'zh_CN', 'zh_TW']
+
+
+def language_display_name(language):
+    """Name of a language in the current UI language, with its native name when different."""
+    if language == 'auto':
+        from bpy.app.translations import locale
+        detected = convert_locale_to_language_code(locale)
+        return t('Language.auto') + (f' ({_native_name(detected)})' if detected else '')
+
+    translated = t('Language.' + language)
+    native = _native_name(language)
+    if translated == 'Language.' + language:  # No translation for this language code
+        translated = native
+
+    if native and native != translated:
+        return f'{translated} ({native})'
+    return translated
+
+
+def _native_name(language):
+    """How the language names itself, falling back to the code."""
+    return LANGUAGE_ENDONYMS.get(language) or language
+
+
+def sort_language_codes(codes):
+    """Order language codes by preference, then alphabetically for unknown files."""
+    def key(code):
+        if code in _LANGUAGE_ORDER:
+            return (_LANGUAGE_ORDER.index(code), '')
+        return (len(_LANGUAGE_ORDER), code.lower())
+
+    return sorted(codes, key=key)
 
 
 def update_ui(self, context):
@@ -192,7 +240,11 @@ def update_ui(self, context):
 
         load_translations()
 
-        bpy.app.timers.register(reload_cats, first_interval=2.0)
+        # Re-registering only takes ~60 ms, so wait just long enough to get out of the
+        # property update callback. The old 2 s delay made the switch feel broken.
+        if bpy.app.timers.is_registered(reload_cats):
+            bpy.app.timers.unregister(reload_cats)
+        bpy.app.timers.register(reload_cats, first_interval=0.05)
     else:
         print("Language unchanged, no reload needed")
 

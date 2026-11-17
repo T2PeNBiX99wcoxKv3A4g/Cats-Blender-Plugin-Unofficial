@@ -1154,6 +1154,26 @@
         "CreditsPanel.previousMaintainers2": "Yusarina (2023-2026)",
         "UpdaterPanel.githubTokenWarn3": "OS 계정으로 암호화됩니다.",
         "UpdaterPanel.githubTokenRejected": "이 토큰은 거부되었습니다.",
-        "UpdaterPanel.githubTokenRejected2": "교체하거나 지우세요."
+        "UpdaterPanel.githubTokenRejected2": "교체하거나 지우세요.",
+        "Language.en_US": "영어",
+        "Language.ja_JP": "일본어",
+        "Language.ko_KR": "한국어",
+        "Language.zh_CN": "중국어(간체)",
+        "Language.zh_TW": "중국어(번체)",
+        "Language.auto": "자동",
+        "FbxExport.section": "FBX 내보내기",
+        "FbxExport.preset": "프리셋",
+        "FbxExport.apply": "지금 적용",
+        "FbxExport.applyDesc": "프리셋을 Blender 의 FBX 설정에 기록합니다",
+        "FbxExport.setPreset": "FBX 프리셋 선택",
+        "FbxExport.applied": "FBX 설정 {0}개를 적용했습니다",
+        "FbxExport.off": "적용 안 함",
+        "FbxExport.offNow": "FBX 프리셋 자동 적용을 껐습니다",
+        "FbxExport.defaultPreset": "Cats 기본값",
+        "FbxExport.note1": "Blender 는 재시작하면 설정을 잊습니다.",
+        "FbxExport.note2": "Cats 가 자동으로 적용합니다.",
+        "FbxExport.exportButton": "FBX 내보내기 (프리셋)",
+        "FbxExport.exportDesc": "저장한 프리셋으로 FBX 내보내기 창을 엽니다",
+        "FbxExport.noExporter": "FBX 내보내기 기능이 꺼져 있습니다"
     }
 }
