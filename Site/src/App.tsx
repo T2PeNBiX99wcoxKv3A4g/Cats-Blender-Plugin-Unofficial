@@ -136,18 +136,27 @@ export default function App() {
                 </a>
 
                 <nav className="topnav">
-                    <a href="#/">{t("nav.home")}</a>
-                    <a href="#/docs">{t("nav.docs")}</a>
+                    <a href="#/">
+                        <span className="icon icon-home" aria-hidden="true"/>
+                        {t("nav.home")}
+                    </a>
+                    <a href="#/docs">
+                        <span className="icon icon-docs" aria-hidden="true"/>
+                        {t("nav.docs")}
+                    </a>
                     <a href={site.releases} target="_blank" rel="noreferrer noopener">
+                        <span className="icon icon-releases" aria-hidden="true"/>
                         {t("nav.releases")}
                     </a>
                     <a href={site.repository} target="_blank" rel="noreferrer noopener">
+                        <span className="icon icon-github" aria-hidden="true"/>
                         {t("nav.github")}
                     </a>
                 </nav>
 
                 <div className="controls">
                     <label className="language">
+                        <span className="icon icon-language" aria-hidden="true"/>
                         <span className="visually-hidden">{t("language.label")}</span>
                         <select
                             value={language}
@@ -167,6 +176,7 @@ export default function App() {
                         onClick={() => setNavOpen((open) => !open)}
                         aria-expanded={navOpen}
                     >
+                        <span className="icon icon-menu" aria-hidden="true"/>
                         {t("nav.menu")}
                     </button>
                 </div>
@@ -174,6 +184,16 @@ export default function App() {
 
             <div className="layout">
                 <aside className={navOpen ? "sidebar open" : "sidebar"}>
+                    <a
+                        href="#/"
+                        className={
+                            route.name === "home" ? "nav-home active" : "nav-home"
+                        }
+                    >
+                        <span className="icon icon-home" aria-hidden="true"/>
+                        {t("nav.home")}
+                    </a>
+
                     {groups.map((group) => (
                         <section key={group.id} className="nav-group">
                             <h2>{t(`group.${group.id}`)}</h2>

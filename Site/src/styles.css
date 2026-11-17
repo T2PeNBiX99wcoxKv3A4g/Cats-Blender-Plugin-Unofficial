@@ -103,6 +103,9 @@ a:hover {
 }
 
 .topnav a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
     color: var(--text);
 }
 
@@ -110,11 +113,64 @@ a:hover {
     color: var(--accent-strong);
 }
 
+/* Icons are plain .svg files, masked so they inherit the surrounding text colour. */
+.icon {
+    display: inline-block;
+    width: 1.05em;
+    height: 1.05em;
+    flex: none;
+    vertical-align: -0.15em;
+    background-color: currentColor;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+}
+
+.icon-home {
+    -webkit-mask-image: url("./icons/home.svg");
+    mask-image: url("./icons/home.svg");
+}
+
+.icon-docs {
+    -webkit-mask-image: url("./icons/docs.svg");
+    mask-image: url("./icons/docs.svg");
+}
+
+.icon-releases {
+    -webkit-mask-image: url("./icons/releases.svg");
+    mask-image: url("./icons/releases.svg");
+}
+
+.icon-github {
+    -webkit-mask-image: url("./icons/github.svg");
+    mask-image: url("./icons/github.svg");
+}
+
+.icon-language {
+    -webkit-mask-image: url("./icons/language.svg");
+    mask-image: url("./icons/language.svg");
+}
+
+.icon-menu {
+    -webkit-mask-image: url("./icons/menu.svg");
+    mask-image: url("./icons/menu.svg");
+}
+
 .controls {
     margin-left: auto;
     display: flex;
     align-items: center;
     gap: 0.6rem;
+}
+
+.language {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--text-muted);
 }
 
 .language select {
@@ -128,6 +184,8 @@ a:hover {
 
 .nav-toggle {
     display: none;
+    align-items: center;
+    gap: 0.35rem;
     padding: 0.35rem 0.7rem;
     border-radius: 0.5rem;
     border: 1px solid var(--border);
@@ -157,6 +215,29 @@ a:hover {
     max-height: calc(100vh - 6rem);
     overflow-y: auto;
     font-size: 0.9rem;
+}
+
+.nav-home {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-bottom: 1.4rem;
+    padding: 0.35rem 0.55rem;
+    border-radius: 0.45rem;
+    border-left: 2px solid transparent;
+    color: var(--text);
+    font-weight: 600;
+}
+
+.nav-home:hover {
+    background: var(--surface);
+    text-decoration: none;
+}
+
+.nav-home.active {
+    border-left-color: var(--accent);
+    background: var(--surface);
+    color: var(--accent-strong);
 }
 
 .nav-group + .nav-group {

@@ -9,5 +9,7 @@ export default defineConfig({
     build: {
         outDir: "dist",
         emptyOutDir: true,
+        // Keep the icon SVGs as real files instead of inlining them into the CSS.
+        assetsInlineLimit: 0,
     },
 });
