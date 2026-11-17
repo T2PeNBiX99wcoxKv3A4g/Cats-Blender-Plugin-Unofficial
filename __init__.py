@@ -1,6 +1,6 @@
 # MIT License
 
-CATS_VERSION = "5.8.0"
+CATS_VERSION = "5.8.1"
 dev_branch = False
 
 import os
@@ -273,6 +273,7 @@ def register():
     # back into the exporter and repeat that whenever a file is opened.
     tools.fbx_export.apply_stored()
     tools.fbx_export.register_apply_on_load()
+    tools.fbx_export.start_apply_timer()
 
     # Kick off the background update check once at startup instead of on every
     # panel redraw.
@@ -331,6 +332,7 @@ def unregister():
     tools.settings.stop_apply_settings_timer()
     tools.settings.unregister_load_post_handler()
     tools.fbx_export.unregister_apply_on_load()
+    tools.fbx_export.stop_apply_timer()
 
     print("### Unloaded CATS successfully!\n")
 

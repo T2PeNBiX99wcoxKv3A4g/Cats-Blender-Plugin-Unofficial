@@ -206,6 +206,30 @@ def apply_on_load(_dummy=None):
     apply_stored()
 
 
+def _apply_once():
+    apply_stored()
+    return None
+
+
+def start_apply_timer():
+    """Apply once Blender has finished starting up.
+
+    Add-ons are registered while Blender is still enabling the built-in ones, so the
+    export operator may not exist yet during register().
+    """
+    try:
+        if bpy.app.timers.is_registered(_apply_once):
+            bpy.app.timers.unregister(_apply_once)
+        bpy.app.timers.register(_apply_once, first_interval=1.0)
+    except (AttributeError, ValueError) as e:
+        print('CATS: could not schedule the FBX settings:', e)
+
+
+def stop_apply_timer():
+    if bpy.app.timers.is_registered(_apply_once):
+        bpy.app.timers.unregister(_apply_once)
+
+
 def register_apply_on_load():
     if apply_on_load not in bpy.app.handlers.load_post:
         bpy.app.handlers.load_post.append(apply_on_load)
