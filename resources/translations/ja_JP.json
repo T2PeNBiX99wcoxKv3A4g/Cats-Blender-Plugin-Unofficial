@@ -1146,11 +1146,14 @@
         "Scene.qa_show_pose.desc": "Quick Access にこのセクションを表示します。",
         "UpdaterPanel.quickAccessSections": "Quick Access のセクション",
         "UpdaterPanel.githubToken": "GitHub トークン（任意）",
-        "UpdaterPanel.githubTokenWarn1": "更新確認がレート制限エラーで失敗する場合のみ必要です。",
-        "UpdaterPanel.githubTokenWarn2": "スコープなしの読み取り専用トークンを使用してください。Cats の設定ファイルに平文で保存されます。",
+        "UpdaterPanel.githubTokenWarn1": "レート制限エラー時のみ必要です。",
+        "UpdaterPanel.githubTokenWarn2": "読み取り専用トークンを使用。",
         "check_for_update.rateLimited": "GitHub API のレート制限に達しました。\n設定で GitHub トークンを追加するか、時間をおいて再試行してください。",
         "CreditsPanel.previousMaintainers": "以前のメンテナー:",
         "check_for_update.unauthorized": "GitHub がトークンを拒否しました。\n設定で削除するか、有効なトークンに置き換えてください。",
-        "CreditsPanel.previousMaintainers2": "Yusarina (2023-2026)"
+        "CreditsPanel.previousMaintainers2": "Yusarina (2023-2026)",
+        "UpdaterPanel.githubTokenWarn3": "OS アカウントで暗号化されます。",
+        "UpdaterPanel.githubTokenRejected": "このトークンは拒否されました。",
+        "UpdaterPanel.githubTokenRejected2": "交換または削除してください。"
     }
 }

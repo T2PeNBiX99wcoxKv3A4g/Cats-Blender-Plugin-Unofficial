@@ -1111,11 +1111,14 @@
         "Scene.qa_show_pose.desc": "Show this section in Quick Access.",
         "UpdaterPanel.quickAccessSections": "Quick Access Sections",
         "UpdaterPanel.githubToken": "GitHub Token (optional)",
-        "UpdaterPanel.githubTokenWarn1": "Only needed when update checks fail with a rate limit error.",
-        "UpdaterPanel.githubTokenWarn2": "Use a read-only token with no scopes. It is stored in plain text in Cats' settings file.",
+        "UpdaterPanel.githubTokenWarn1": "Only for rate limit errors.",
+        "UpdaterPanel.githubTokenWarn2": "Use a read-only token.",
         "check_for_update.rateLimited": "GitHub's API rate limit was reached.\nAdd a GitHub token in Settings, or try again later.",
         "CreditsPanel.previousMaintainers": "Previously maintained by",
         "check_for_update.unauthorized": "GitHub rejected the token.\nRemove it in Settings, or replace it with a valid token.",
-        "CreditsPanel.previousMaintainers2": "Yusarina (2023-2026)"
+        "CreditsPanel.previousMaintainers2": "Yusarina (2023-2026)",
+        "UpdaterPanel.githubTokenWarn3": "Encrypted with your account.",
+        "UpdaterPanel.githubTokenRejected": "This token was rejected.",
+        "UpdaterPanel.githubTokenRejected2": "Replace or clear it."
     }
 }

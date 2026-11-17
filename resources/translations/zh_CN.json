@@ -1146,11 +1146,14 @@
         "Scene.qa_show_pose.desc": "在 Quick Access 中显示此区块。",
         "UpdaterPanel.quickAccessSections": "Quick Access 区块",
         "UpdaterPanel.githubToken": "GitHub 令牌（可选）",
-        "UpdaterPanel.githubTokenWarn1": "仅在更新检查因速率限制失败时需要。",
-        "UpdaterPanel.githubTokenWarn2": "请使用不含任何权限范围的只读令牌。它以明文保存在 Cats 的设置文件中。",
+        "UpdaterPanel.githubTokenWarn1": "仅用于速率限制错误。",
+        "UpdaterPanel.githubTokenWarn2": "请使用只读令牌。",
         "check_for_update.rateLimited": "已达到 GitHub API 速率限制。\n请在设置中添加 GitHub 令牌，或稍后再试。",
         "CreditsPanel.previousMaintainers": "此前的维护者：",
         "check_for_update.unauthorized": "GitHub 拒绝了该令牌。\n请在设置中移除，或换成有效令牌。",
-        "CreditsPanel.previousMaintainers2": "Yusarina（2023-2026）"
+        "CreditsPanel.previousMaintainers2": "Yusarina（2023-2026）",
+        "UpdaterPanel.githubTokenWarn3": "以系统账户加密保存。",
+        "UpdaterPanel.githubTokenRejected": "此令牌已被拒绝。",
+        "UpdaterPanel.githubTokenRejected2": "请更换或清空。"
     }
 }

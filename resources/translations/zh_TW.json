@@ -1148,11 +1148,14 @@
         "Scene.qa_show_pose.desc": "在 Quick Access 中顯示此區塊。",
         "UpdaterPanel.quickAccessSections": "Quick Access 區塊",
         "UpdaterPanel.githubToken": "GitHub 權杖（選用）",
-        "UpdaterPanel.githubTokenWarn1": "僅在更新檢查因速率限制失敗時才需要。",
-        "UpdaterPanel.githubTokenWarn2": "請使用不含任何權限範圍的唯讀權杖。它以明文保存在 Cats 的設定檔中。",
+        "UpdaterPanel.githubTokenWarn1": "僅用於速率限制錯誤。",
+        "UpdaterPanel.githubTokenWarn2": "請使用唯讀權杖。",
         "check_for_update.rateLimited": "已達到 GitHub API 速率限制。\n請在設定中新增 GitHub 權杖，或稍後再試。",
         "CreditsPanel.previousMaintainers": "先前的維護者：",
         "check_for_update.unauthorized": "GitHub 拒絕了該權杖。\n請在設定中移除，或換成有效權杖。",
-        "CreditsPanel.previousMaintainers2": "Yusarina（2023-2026）"
+        "CreditsPanel.previousMaintainers2": "Yusarina（2023-2026）",
+        "UpdaterPanel.githubTokenWarn3": "以系統帳戶加密保存。",
+        "UpdaterPanel.githubTokenRejected": "此權杖已被拒絕。",
+        "UpdaterPanel.githubTokenRejected2": "請更換或清空。"
     }
 }

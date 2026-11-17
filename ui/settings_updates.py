@@ -72,6 +72,14 @@ class UpdaterPanel(ToolPanel, bpy.types.Panel):
         gh_warn.scale_y = 0.7
         gh_warn.label(text=t('UpdaterPanel.githubTokenWarn1'), icon='INFO')
         gh_warn.label(text=t('UpdaterPanel.githubTokenWarn2'), icon='BLANK1')
+        gh_warn.label(text=t('UpdaterPanel.githubTokenWarn3'), icon='BLANK1')
+
+        # Shown after a check that had to fall back to an anonymous request.
+        if updater.token_rejected:
+            gh_rejected = gh_col.column(align=True)
+            gh_rejected.scale_y = 0.7
+            gh_rejected.label(text=t('UpdaterPanel.githubTokenRejected'), icon='ERROR')
+            gh_rejected.label(text=t('UpdaterPanel.githubTokenRejected2'), icon='BLANK1')
 
         settings_col.separator()
 

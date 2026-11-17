@@ -50,6 +50,9 @@ RELEASES_API_URL = 'https://api.github.com/repos/T2PeNBiX99wcoxKv3A4g/Cats-Blend
 # Set when the last fetch failed because the API rate limit was hit.
 last_error_kind = ''
 
+# Set when GitHub rejected the configured token but an anonymous retry succeeded.
+token_rejected = False
+
 package_name = __package__
 
 # Icons for UI
@@ -393,11 +396,12 @@ def poll_update_fetch():
     return None
 
 
-def _release_request():
+def _release_request(use_token=True):
     """Request for the releases API, authenticated when a token is configured.
 
     Unauthenticated GitHub API calls are limited per IP (60 requests per hour), which
     a shared connection can exhaust, so a token is optional but recommended.
+    ``use_token=False`` builds the anonymous request used when a token is rejected.
     """
     # Imported here: tools/settings imports most of the tools package.
     from .tools import settings as Settings
@@ -405,17 +409,45 @@ def _release_request():
     request = urllib.request.Request(RELEASES_API_URL)
     request.add_header('Accept', 'application/vnd.github+json')
 
-    token = (Settings.get_github_token() or '').strip()
+    token = (Settings.get_github_token() or '').strip() if use_token else ''
     if token:
         request.add_header('Authorization', 'Bearer ' + token)
 
     return request
 
 
+def _configured_token():
+    from .tools import settings as Settings
+
+    return (Settings.get_github_token() or '').strip()
+
+
+def _fetch_releases(use_token):
+    """Parsed release list, or None with last_error_kind describing the failure."""
+    global last_error_kind
+
+    try:
+        with urllib.request.urlopen(_release_request(use_token), timeout=15) as url:
+            return json.loads(url.read().decode())
+    except urllib.error.HTTPError as error:
+        print('HTTP ERROR', error.code)
+        if error.code == 401:
+            last_error_kind = 'unauthorized'
+            print('GitHub rejected the token. Check the token in the Cats settings.')
+        elif error.code in (403, 429):
+            last_error_kind = 'rate_limited'
+            print('GitHub API rate limit reached. Add a token in the Cats settings.')
+        return None
+    except urllib.error.URLError:
+        print('URL ERROR')
+        return None
+
+
 def get_github_releases():
-    global version_list, last_error_kind
+    global version_list, last_error_kind, token_rejected
     version_list = OrderedDict()
     last_error_kind = ''
+    token_rejected = False
 
     if fake_update:
         print('FAKE INSTALL!')
@@ -431,23 +463,19 @@ def get_github_releases():
         version_list['12.34.56.78'] = ['', 'Nothing new to see', 'A week ago probably']
         return True
 
-    try:
-        with urllib.request.urlopen(_release_request(), timeout=15) as url:
-            data = json.loads(url.read().decode())
-    except urllib.error.HTTPError as error:
-        print('HTTP ERROR', error.code)
-        if error.code == 401:
-            last_error_kind = 'unauthorized'
-            print('GitHub rejected the token. Check the token in the Cats settings.')
-        elif error.code in (403, 429):
-            last_error_kind = 'rate_limited'
-            print('GitHub API rate limit reached. Add a token in the Cats settings.')
+    data = _fetch_releases(use_token=True)
+
+    # A rejected token would otherwise disable the update check entirely; retry without
+    # it so the check still works, and remember to tell the user the token is useless.
+    if data is None and last_error_kind == 'unauthorized' and _configured_token():
+        print('CATS: the configured GitHub token was rejected, retrying anonymously')
+        last_error_kind = ''
+        data = _fetch_releases(use_token=False)
+        if data is not None:
+            token_rejected = True
+
+    if data is None:
         return False
-    except urllib.error.URLError:
-        print('URL ERROR')
-        return False
-    if not data:
-        return True
 
     for version in data:
         full_tag = version.get('tag_name')
