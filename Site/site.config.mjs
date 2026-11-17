@@ -14,7 +14,7 @@ export const site = {
     upstream: "https://github.com/teamneoneko/Cats-Blender-Plugin",
     wikiSource: "https://git.neoneko.org/NeoNeko/Cats-Blender-Plugin/wiki",
     icon: "https://raw.githubusercontent.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/main/resources/icons/cats.png",
-    languages: ["en", "zh-TW"],
+    languages: ["en", "ja", "ko", "zh-CN", "zh-TW"],
     defaultLanguage: "en",
     // Sidebar order and grouping for the wiki pages under docs/<language>/.
     groups: [

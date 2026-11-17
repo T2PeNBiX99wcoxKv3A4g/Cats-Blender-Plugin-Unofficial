@@ -1,0 +1,22 @@
+{
+  "nav.home": "홈",
+  "nav.docs": "문서",
+  "nav.releases": "릴리스",
+  "nav.github": "GitHub",
+  "nav.menu": "메뉴",
+  "language.label": "언어",
+  "home.readmeNote": "이 페이지는 저장소의 README에서 생성됩니다.",
+  "docs.title": "문서",
+  "docs.subtitle": "업스트림 Cats 위키에서 가져왔습니다.",
+  "docs.importedNotice": "이 페이지는 보관된 업스트림 위키에서 가져온 것입니다. 버전 번호와 링크는 이 포크보다 오래되었을 수 있습니다. 실제 지원 범위는 홈 페이지를 참고하세요.",
+  "docs.untranslated": "이 페이지는 아직 번역되지 않아 영어로 표시됩니다.",
+  "docs.notFound": "페이지를 찾을 수 없습니다.",
+  "docs.backHome": "홈으로 돌아가기",
+  "group.getting-started": "시작하기",
+  "group.workflow": "워크플로",
+  "group.help": "도움말",
+  "footer.license": "MIT 라이선스.",
+  "footer.source": "소스 코드",
+  "footer.wiki": "업스트림 위키",
+  "footer.unofficial": "비공식 후속 버전이며 원래 Cats 개발자와 관련이 없습니다."
+}

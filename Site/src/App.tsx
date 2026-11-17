@@ -24,6 +24,16 @@ function parseRoute(hash: string): Route {
     return {name: "home"};
 }
 
+/** `?lang=ja` wins over the stored preference, so a language can be linked directly. */
+function initialLanguage(): string {
+    const requested = new URLSearchParams(window.location.search).get("lang")?.toLowerCase();
+    if (requested) {
+        const match = languages.find((language) => language.id.toLowerCase() === requested);
+        if (match) return match.id;
+    }
+    return detectLanguage(localStorage.getItem("cats-site-language"), navigator.language);
+}
+
 function toText(node: ReactNode): string {
     if (node === null || node === undefined || typeof node === "boolean") return "";
     if (typeof node === "string" || typeof node === "number") return String(node);
@@ -81,9 +91,7 @@ function Markdown({source}: {source: string}) {
 
 export default function App() {
     const [route, setRoute] = useState<Route>(() => parseRoute(window.location.hash));
-    const [language, setLanguage] = useState(() =>
-        detectLanguage(localStorage.getItem("cats-site-language"), navigator.language),
-    );
+    const [language, setLanguage] = useState(initialLanguage);
     const [navOpen, setNavOpen] = useState(false);
 
     useEffect(() => {
