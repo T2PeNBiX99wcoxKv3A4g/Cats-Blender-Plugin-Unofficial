@@ -1,5 +1,16 @@
 # Changelog
 
+## [5.4.0](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/compare/v5.3.10..v5.4.0) - 2026-11-17
+
+### ⛰️  Features
+
+- *(site)* Add a documentation site generated from the README and the imported wiki - ([3a02087](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/commit/3a020870faa4d651d9327b5e4a4283bc1da1db80))
+
+### Action
+
+- Update version in `blender_manifest.toml` and update `CHANGELOG.md` - ([40a579f](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/commit/40a579f760c97f08bd06cdb329b2fe6580d6e045))
+
+
 ## [5.3.10](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/compare/v5.3.9..v5.3.10) - 2026-11-17
 
 ### 📚 Documentation
