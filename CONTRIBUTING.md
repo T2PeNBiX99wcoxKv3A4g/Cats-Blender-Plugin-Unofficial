@@ -104,11 +104,30 @@ Cats-specific patches to it must be added to `scripts/vendor_mmd_tools.py`
 
 ## Release checklist
 
-1. Bump `version` in `blender_manifest.toml` and `CATS_VERSION` in `__init__.py`. They
-   must match.
-2. Build: `blender --command extension build --source-dir . --output-dir dist`.
-3. Install the built ZIP and run the feature checks on several supported versions.
-4. Commit, then push a tag (`git push origin <version>`). The `Build extension` workflow
-   publishes the tagged ZIP as a GitHub Release, which is what the built-in updater
-   reads.
-5. Write release notes: the updater shows them in the "show patchnotes" panel.
+Releases are automated. Pushing to `main` runs `.github/workflows/release.yml`, which
+calls the shared [`blender_extension_release.yml`](https://github.com/T2PeNBiX99wcoxKv3A4g/Release-Workflows)
+workflow:
+
+1. The version is bumped from the conventional commit messages since the last `v` tag
+   and written to `blender_manifest.toml` and `__init__.py` (`CATS_VERSION`). The two
+   must stay in sync; the workflow does that automatically.
+2. `CHANGELOG.md` is regenerated and both files are committed.
+3. The extension is built and the manifest version is asserted against the new tag, so a
+   stale checkout cannot ship the previous version number.
+4. A GitHub Release is created with the ZIP attached and the changelog as its body. The
+   built-in updater reads those releases.
+
+Pushing to a `dev/**` branch runs `.github/workflows/pre-release.yml` instead, which
+marks the release as a pre-release.
+
+What you still do by hand:
+
+- Test a build before merging to `main`: `blender --command extension build --source-dir . --output-dir dist`,
+  then install the ZIP and run the checks against several supported versions.
+- Write commit messages as conventional commits (`feat:`, `fix:`, `perf:`, ...). The
+  version bump and the changelog are generated from them, and non-conventional commits
+  are dropped from the changelog.
+- Tag numbering uses a `v` prefix (`v5.3.9`). The shared changelog template only
+  recognises `v`-prefixed tags, and Blender itself only accepts plain semantic versions
+  inside `blender_manifest.toml`, so the prefix is dropped when the version is written
+  into the manifest.
