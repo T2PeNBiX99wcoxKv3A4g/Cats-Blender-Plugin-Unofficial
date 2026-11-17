@@ -6,6 +6,7 @@ from .. import globs
 from .. import updater
 from .main import ToolPanel, draw_error_box, draw_warning_box, draw_section, draw_wiki_button
 from ..tools import common as Common
+from ..tools import fbx_export as FbxExport
 from ..tools import importer as Importer
 from ..tools import iconloader as Iconloader
 from ..tools import material as Material
@@ -61,6 +62,13 @@ class QuickAccessPanel(ToolPanel, bpy.types.Panel):
                 sub_row.operator(Importer.ExporterModelsPopup.bl_idname,
                                icon='ARMATURE_DATA')
             split.operator(Importer.ModelsPopup.bl_idname, text="", icon='COLLAPSEMENU')
+
+            # Export with the saved FBX preset instead of Blender's defaults, which are
+            # forgotten on every restart.
+            fbx_row = import_col.row(align=True)
+            fbx_row.scale_y = 1.1
+            fbx_row.operator(FbxExport.ExportFbxWithPreset.bl_idname,
+                             text=t('FbxExport.exportButton'), icon='EXPORT')
 
         # Armature selector
         if len(Common.get_armature_objects()) > 1:

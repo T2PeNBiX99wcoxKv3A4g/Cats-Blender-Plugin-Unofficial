@@ -28,6 +28,8 @@ if "bpy" not in locals():
     from . import uv_tools
     from . import viseme
     from . import iconloader
+    # After translations: it uses t() for its operator labels.
+    from . import fbx_export
 else:
     # print('RELOAD TOOLS!!')
     import importlib
@@ -56,3 +58,4 @@ else:
     importlib.reload(uv_tools)
     importlib.reload(viseme)
     importlib.reload(iconloader)
+    importlib.reload(fbx_export)

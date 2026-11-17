@@ -8,6 +8,7 @@ from .main import ToolPanel, layout_split, draw_section, draw_wiki_button
 from ..tools import settings as Settings
 from ..tools.register import register_wrap
 from ..tools.translations import t, DownloadTranslations
+from ..tools.fbx_export import ApplyFbxSettings, FbxPresetMenu, stored_preset_name
 
 WIKI = 'UpdaterPanel.wikiURL'
 
@@ -88,6 +89,21 @@ class UpdaterPanel(ToolPanel, bpy.types.Panel):
         lang_split = layout_split(lang_row, factor=0.56)
         lang_split.label(text=t('Scene.ui_lang.label') + ':')
         lang_split.prop(context.scene, 'ui_lang', text='')
+
+        box.separator()
+
+        # FBX export settings. Blender keeps the exporter's options in memory only, so
+        # Cats stores a preset and writes it back after every restart.
+        fbx_col = draw_section(box, t('FbxExport.section'), 'EXPORT')
+        preset_row = fbx_col.row(align=True)
+        preset_row.label(text=t('FbxExport.preset') + ':')
+        preset_row.menu(FbxPresetMenu.bl_idname, text=stored_preset_name() or t('FbxExport.off'))
+        preset_row.operator(ApplyFbxSettings.bl_idname, text='', icon='FILE_REFRESH')
+
+        fbx_note = fbx_col.column(align=True)
+        fbx_note.scale_y = 0.7
+        fbx_note.label(text=t('FbxExport.note1'), icon='INFO')
+        fbx_note.label(text=t('FbxExport.note2'), icon='BLANK1')
 
         # Dev branch options
         if globs.dev_branch:

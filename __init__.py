@@ -1,6 +1,6 @@
 # MIT License
 
-CATS_VERSION = "5.7.1"
+CATS_VERSION = "5.8.0"
 dev_branch = False
 
 import os
@@ -269,6 +269,11 @@ def register():
     # per-file, so a freshly opened file would otherwise override them).
     tools.settings.register_load_post_handler()
 
+    # Blender drops the FBX exporter's options on every restart. Put the saved preset
+    # back into the exporter and repeat that whenever a file is opened.
+    tools.fbx_export.apply_stored()
+    tools.fbx_export.register_apply_on_load()
+
     # Kick off the background update check once at startup instead of on every
     # panel redraw.
     updater.check_for_update_background(check_on_startup=True)
@@ -325,6 +330,7 @@ def unregister():
 
     tools.settings.stop_apply_settings_timer()
     tools.settings.unregister_load_post_handler()
+    tools.fbx_export.unregister_apply_on_load()
 
     print("### Unloaded CATS successfully!\n")
 
