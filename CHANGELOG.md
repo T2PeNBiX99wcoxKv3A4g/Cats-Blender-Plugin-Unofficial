@@ -1,5 +1,16 @@
 # Changelog
 
+## [5.7.1](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/compare/v5.7.0..v5.7.1) - 2026-11-17
+
+### 🐛 Bug Fixes
+
+- Decrypt stored credentials when they are read - ([e521a6f](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/commit/e521a6f2ad92e0cd3cd4cb3dce45b61ed5606bc7))
+
+### Action
+
+- Update version in `blender_manifest.toml` and update `CHANGELOG.md` - ([e2025f0](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/commit/e2025f05c3df7f3e90178394f50cd092f457bb89))
+
+
 ## [5.7.0](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/compare/v5.6.1..v5.7.0) - 2026-11-17
 
 ### ⛰️  Features
