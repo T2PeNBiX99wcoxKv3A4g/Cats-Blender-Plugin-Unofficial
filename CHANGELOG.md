@@ -1,5 +1,17 @@
 # Changelog
 
+## [5.8.0](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/compare/v5.7.1..v5.8.0) - 2026-11-17
+
+### ⛰️  Features
+
+- Keep FBX export options by restoring a preset at startup - ([3288cf4](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/commit/3288cf4b6b8b0b1ecc33191cbfc4dc060b242b46))
+- Show readable bilingual language names and switch languages instantly - ([a5f96ed](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/commit/a5f96eda68c6754eeb4f6f2a7d6f8147b6ec6393))
+
+### Action
+
+- Update version in `blender_manifest.toml` and update `CHANGELOG.md` - ([8b172d4](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/commit/8b172d4d410ff42641f2c6c46e2b128260156790))
+
+
 ## [5.7.1](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/compare/v5.7.0..v5.7.1) - 2026-11-17
 
 ### 🐛 Bug Fixes
