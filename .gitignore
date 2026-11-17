@@ -32,3 +32,5 @@ README.text
 crashlog.txt
 ssh.txt
 ssh.txt.pub
+# Index created by the local file tooling
+.yafm-index.db*

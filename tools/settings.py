@@ -42,8 +42,19 @@ settings_default['deepl_api_key'] = ["", False]
 settings_default['libretranslate_url'] = ["https://libretranslate.com", False]
 settings_default['libretranslate_api_key'] = ["", False]
 settings_default['mymemory_email'] = ["", False]
+# Optional GitHub token for the update check. Unauthenticated requests to the GitHub
+# API are rate limited per IP, which a shared connection can exhaust.
+# Blender has no encrypted secret storage, so this is kept in Cats' own settings file
+# in plain text and should be a token with no scopes at all.
+settings_default['github_token'] = ["", False]
+# Quick Access section visibility, so unused tools can be hidden.
+settings_default['qa_show_import'] = [True, False]
+settings_default['qa_show_actions'] = [True, False]
+settings_default['qa_show_fix_model'] = [True, False]
+settings_default['qa_show_pose'] = [True, False]
 
-CREDENTIAL_SETTINGS = ('deepl_api_key', 'libretranslate_url', 'libretranslate_api_key', 'mymemory_email')
+CREDENTIAL_SETTINGS = ('deepl_api_key', 'libretranslate_url', 'libretranslate_api_key',
+                       'mymemory_email', 'github_token')
 
 lock_settings = False
 
@@ -381,3 +392,19 @@ def get_libretranslate_api_key():
 
 def get_mymemory_email():
     return settings_data.get('mymemory_email', "") if settings_data else ""
+
+
+def get_github_token():
+    return (settings_data.get('github_token') or "") if settings_data else ""
+
+
+def get_quick_access_visibility():
+    """Which Quick Access sections are shown, as booleans."""
+    if not settings_data:
+        return {'import': True, 'actions': True, 'fix_model': True, 'pose': True}
+    return {
+        'import': settings_data.get('qa_show_import', True),
+        'actions': settings_data.get('qa_show_actions', True),
+        'fix_model': settings_data.get('qa_show_fix_model', True),
+        'pose': settings_data.get('qa_show_pose', True),
+    }

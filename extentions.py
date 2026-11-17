@@ -806,6 +806,43 @@ def _register_properties():
         get=mymemory_email_get,
         set=mymemory_email_set
     )
+
+    # Optional GitHub token for the update check (unauthenticated API calls are rate
+    # limited). Stored outside the .blend like the other credentials.
+    github_token_get, github_token_set = Settings.credential_accessors('github_token')
+    Scene.github_token = StringProperty(
+        name=t('Scene.github_token.label'),
+        description=t('Scene.github_token.desc'),
+        subtype='PASSWORD',
+        get=github_token_get,
+        set=github_token_set
+    )
+
+    # Quick Access section visibility.
+    Scene.qa_show_import = BoolProperty(
+        name=t('Scene.qa_show_import.label'),
+        description=t('Scene.qa_show_import.desc'),
+        default=True,
+        update=Settings.update_settings
+    )
+    Scene.qa_show_actions = BoolProperty(
+        name=t('Scene.qa_show_actions.label'),
+        description=t('Scene.qa_show_actions.desc'),
+        default=True,
+        update=Settings.update_settings
+    )
+    Scene.qa_show_fix_model = BoolProperty(
+        name=t('Scene.qa_show_fix_model.label'),
+        description=t('Scene.qa_show_fix_model.desc'),
+        default=True,
+        update=Settings.update_settings
+    )
+    Scene.qa_show_pose = BoolProperty(
+        name=t('Scene.qa_show_pose.label'),
+        description=t('Scene.qa_show_pose.desc'),
+        default=True,
+        update=Settings.update_settings
+    )
     Scene.ui_lang = EnumProperty(
         name=t('Scene.ui_lang.label'),
         description=t('Scene.ui_lang.desc'),

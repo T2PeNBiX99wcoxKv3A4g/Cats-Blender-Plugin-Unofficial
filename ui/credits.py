@@ -50,6 +50,7 @@ class CreditsPanel(ToolPanel, bpy.types.Panel):
         desc_col.scale_y = 0.85
         desc_col.label(text=t('CreditsPanel.originalCreators'))
         desc_col.label(text=t('CreditsPanel.originalCreators2'))
+        desc_col.label(text=t('CreditsPanel.previousMaintainers'))
 
         col.separator()
 

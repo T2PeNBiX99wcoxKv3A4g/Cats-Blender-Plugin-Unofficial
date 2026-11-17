@@ -47,6 +47,9 @@ no_auto_ver_check_file = os.path.join(resources_dir, "no_auto_ver_check.txt")
 
 RELEASES_API_URL = 'https://api.github.com/repos/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/releases'
 
+# Set when the last fetch failed because the API rate limit was hit.
+last_error_kind = ''
+
 package_name = __package__
 
 # Icons for UI
@@ -364,7 +367,12 @@ def poll_update_fetch():
     print('Checking for Cats update...')
 
     if not _fetch_success:
-        finish_update_checking(error=t('check_for_update.cantCheck'))
+        if last_error_kind == 'rate_limited':
+            finish_update_checking(error=t('check_for_update.rateLimited'))
+        elif last_error_kind == 'unauthorized':
+            finish_update_checking(error=t('check_for_update.unauthorized'))
+        else:
+            finish_update_checking(error=t('check_for_update.cantCheck'))
         return None
 
     # Check if an update is needed
@@ -385,9 +393,29 @@ def poll_update_fetch():
     return None
 
 
+def _release_request():
+    """Request for the releases API, authenticated when a token is configured.
+
+    Unauthenticated GitHub API calls are limited per IP (60 requests per hour), which
+    a shared connection can exhaust, so a token is optional but recommended.
+    """
+    # Imported here: tools/settings imports most of the tools package.
+    from .tools import settings as Settings
+
+    request = urllib.request.Request(RELEASES_API_URL)
+    request.add_header('Accept', 'application/vnd.github+json')
+
+    token = (Settings.get_github_token() or '').strip()
+    if token:
+        request.add_header('Authorization', 'Bearer ' + token)
+
+    return request
+
+
 def get_github_releases():
-    global version_list
+    global version_list, last_error_kind
     version_list = OrderedDict()
+    last_error_kind = ''
 
     if fake_update:
         print('FAKE INSTALL!')
@@ -404,8 +432,17 @@ def get_github_releases():
         return True
 
     try:
-        with urllib.request.urlopen(RELEASES_API_URL, timeout=15) as url:
+        with urllib.request.urlopen(_release_request(), timeout=15) as url:
             data = json.loads(url.read().decode())
+    except urllib.error.HTTPError as error:
+        print('HTTP ERROR', error.code)
+        if error.code == 401:
+            last_error_kind = 'unauthorized'
+            print('GitHub rejected the token. Check the token in the Cats settings.')
+        elif error.code in (403, 429):
+            last_error_kind = 'rate_limited'
+            print('GitHub API rate limit reached. Add a token in the Cats settings.')
+        return False
     except urllib.error.URLError:
         print('URL ERROR')
         return False

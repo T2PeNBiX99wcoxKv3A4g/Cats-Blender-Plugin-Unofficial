@@ -50,6 +50,31 @@ class UpdaterPanel(ToolPanel, bpy.types.Panel):
 
         settings_col.separator()
 
+        # Quick Access section visibility
+        qa_col = settings_col.column(align=True)
+        qa_label = qa_col.row(align=True)
+        qa_label.scale_y = 0.75
+        qa_label.label(text=t('UpdaterPanel.quickAccessSections'), icon='OPTIONS')
+        qa_col.prop(context.scene, 'qa_show_import')
+        qa_col.prop(context.scene, 'qa_show_actions')
+        qa_col.prop(context.scene, 'qa_show_fix_model')
+        qa_col.prop(context.scene, 'qa_show_pose')
+
+        settings_col.separator()
+
+        # Optional GitHub token for the update check
+        gh_col = settings_col.column(align=True)
+        gh_label = gh_col.row(align=True)
+        gh_label.scale_y = 0.75
+        gh_label.label(text=t('UpdaterPanel.githubToken'), icon='URL')
+        gh_col.prop(context.scene, 'github_token', text='')
+        gh_warn = gh_col.column(align=True)
+        gh_warn.scale_y = 0.7
+        gh_warn.label(text=t('UpdaterPanel.githubTokenWarn1'), icon='INFO')
+        gh_warn.label(text=t('UpdaterPanel.githubTokenWarn2'), icon='BLANK1')
+
+        settings_col.separator()
+
         # Language settings
         lang_row = settings_col.row(align=True)
         lang_split = layout_split(lang_row, factor=0.56)

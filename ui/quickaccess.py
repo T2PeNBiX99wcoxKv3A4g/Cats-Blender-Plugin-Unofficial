@@ -9,6 +9,7 @@ from ..tools import common as Common
 from ..tools import importer as Importer
 from ..tools import iconloader as Iconloader
 from ..tools import material as Material
+from ..tools import settings as Settings
 from ..tools import armature as Armature
 from ..tools import armature_manual as Armature_manual
 from ..tools.register import register_wrap
@@ -29,6 +30,7 @@ class QuickAccessPanel(ToolPanel, bpy.types.Panel):
     def draw(self, context):
         layout = self.layout
         col = layout.column(align=True)
+        visible = Settings.get_quick_access_visibility()
 
         # Validate armature selection in case one was deleted
         Common.validate_armature_selection()
@@ -41,24 +43,24 @@ class QuickAccessPanel(ToolPanel, bpy.types.Panel):
             col.separator()
             self.draw_version_warnings(col, context)
 
-        col.separator()
-
         # Import/Export section
-        import_col = draw_section(col, t('QuickAccess.importSection'), 'IMPORT',
-                                  WIKI, 'import-model')
+        if visible['import']:
+            col.separator()
+            import_col = draw_section(col, t('QuickAccess.importSection'), 'IMPORT',
+                                      WIKI, 'import-model')
 
-        # Main import/export row
-        row = import_col.row(align=True)
-        row.scale_y = 1.3
-        split = row.split(factor=0.85, align=True)
-        sub_row = split.row(align=True)
-        sub_row.operator(Importer.ImportAnyModel.bl_idname,
-                        text=t('QuickAccess.ImportAnyModel.label'),
-                        icon='ARMATURE_DATA')
-        if len(Common.get_armature_objects()) > 0:
-            sub_row.operator(Importer.ExporterModelsPopup.bl_idname,
-                           icon='ARMATURE_DATA')
-        split.operator(Importer.ModelsPopup.bl_idname, text="", icon='COLLAPSEMENU')
+            # Main import/export row
+            row = import_col.row(align=True)
+            row.scale_y = 1.3
+            split = row.split(factor=0.85, align=True)
+            sub_row = split.row(align=True)
+            sub_row.operator(Importer.ImportAnyModel.bl_idname,
+                            text=t('QuickAccess.ImportAnyModel.label'),
+                            icon='ARMATURE_DATA')
+            if len(Common.get_armature_objects()) > 0:
+                sub_row.operator(Importer.ExporterModelsPopup.bl_idname,
+                               icon='ARMATURE_DATA')
+            split.operator(Importer.ModelsPopup.bl_idname, text="", icon='COLLAPSEMENU')
 
         # Armature selector
         if len(Common.get_armature_objects()) > 1:
@@ -68,42 +70,45 @@ class QuickAccessPanel(ToolPanel, bpy.types.Panel):
             row.prop(context.scene, 'armature', icon='ARMATURE_DATA')
 
         # Quick actions section
-        col.separator()
-        quick_col = draw_section(col, t('QuickAccess.actionsSection'), 'SHADERFX',
-                                 WIKI, 'quick-actions')
+        if visible['actions']:
+            col.separator()
+            quick_col = draw_section(col, t('QuickAccess.actionsSection'), 'SHADERFX',
+                                     WIKI, 'quick-actions')
 
-        # Material and mesh buttons
-        row = quick_col.row(align=True)
-        row.scale_y = 1.3
-        row.operator(Material.CombineMaterialsButton.bl_idname,
-                    text=t('QuickAccess.CombineMats.label'),
-                    icon='MATERIAL')
-        row.operator(Armature_manual.JoinMeshes.bl_idname,
-                    text=t('QuickAccess.JoinMeshes.label'),
-                    icon_value=Iconloader.preview_collections["custom_icons"]["mesh"].icon_id)
+            # Material and mesh buttons
+            row = quick_col.row(align=True)
+            row.scale_y = 1.3
+            row.operator(Material.CombineMaterialsButton.bl_idname,
+                        text=t('QuickAccess.CombineMats.label'),
+                        icon='MATERIAL')
+            row.operator(Armature_manual.JoinMeshes.bl_idname,
+                        text=t('QuickAccess.JoinMeshes.label'),
+                        icon_value=Iconloader.preview_collections["custom_icons"]["mesh"].icon_id)
 
         # Fix MMD Model section, only for freshly imported MMD / VRM models
-        col.separator()
-        fix_col = draw_section(col, t('FixArmature.label'), globs.ICON_FIX_MODEL,
-                               WIKI, 'fix-mmd-model')
-        warn_col = fix_col.column(align=True)
-        warn_col.scale_y = 0.7
-        warn_col.label(text=t('FixArmature.warnMMDVRM1'), icon='ERROR')
-        warn_col.label(text=t('FixArmature.warnMMDVRM2'), icon='BLANK1')
-        warn_col.label(text=t('FixArmature.warnMMDVRM3'), icon='BLANK1')
-        fix_col.separator(factor=0.5)
-        row = fix_col.row(align=True)
-        row.scale_y = 1.4
-        split = row.split(factor=0.85, align=True)
-        split.operator(FixArmatureWarning.bl_idname, icon=globs.ICON_FIX_MODEL)
-        split.operator(ModelSettings.bl_idname, text="", icon='MODIFIER')
+        if visible['fix_model']:
+            col.separator()
+            fix_col = draw_section(col, t('FixArmature.label'), globs.ICON_FIX_MODEL,
+                                   WIKI, 'fix-mmd-model')
+            warn_col = fix_col.column(align=True)
+            warn_col.scale_y = 0.7
+            warn_col.label(text=t('FixArmature.warnMMDVRM1'), icon='ERROR')
+            warn_col.label(text=t('FixArmature.warnMMDVRM2'), icon='BLANK1')
+            warn_col.label(text=t('FixArmature.warnMMDVRM3'), icon='BLANK1')
+            fix_col.separator(factor=0.5)
+            row = fix_col.row(align=True)
+            row.scale_y = 1.4
+            split = row.split(factor=0.85, align=True)
+            split.operator(FixArmatureWarning.bl_idname, icon=globs.ICON_FIX_MODEL)
+            split.operator(ModelSettings.bl_idname, text="", icon='MODIFIER')
 
         # Pose mode section
-        col.separator()
-        pose_col = draw_section(col, t('QuickAccess.poseSection'), 'POSE_HLT',
-                                WIKI, 'pose-mode')
+        if visible['pose']:
+            col.separator()
+            pose_col = draw_section(col, t('QuickAccess.poseSection'), 'POSE_HLT',
+                                    WIKI, 'pose-mode')
 
-        self.draw_pose_section(pose_col, context)
+            self.draw_pose_section(pose_col, context)
 
     def draw_version_warnings(self, col, context):
         # Blender 5.0+ only - just check for dictionary
