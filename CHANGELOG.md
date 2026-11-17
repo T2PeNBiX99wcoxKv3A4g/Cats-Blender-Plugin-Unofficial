@@ -1,5 +1,24 @@
 # Changelog
 
+## [5.6.0](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/compare/v5.5.0..v5.6.0) - 2026-11-17
+
+### ⛰️  Features
+
+- *(site)* Trim the top bar to the external links and icon the hero buttons - ([17aa827](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/commit/17aa8272d8883b96a3fc29e4b0c9737c6efe6a27))
+- *(site)* Add a home link to the sidebar and file-based icons to the top bar - ([5e032af](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/commit/5e032af0190e5637fd659b23fca9f3f791e84ddf))
+- Add an optional GitHub token, hideable Quick Access sections and new docs links - ([dbcbd45](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/commit/dbcbd4509a04cbc97801da72b4c97fa987260aed))
+
+### 📚 Documentation
+
+- *(site)* Translate the documentation into every supported language - ([77ab460](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/commit/77ab4602fc30f896f952a311ed5850218acf11f1))
+- *(site)* Add Simplified Chinese translations for all wiki pages - ([83db11d](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/commit/83db11df482bd2361ad29a67b5a7cf207c95ad40))
+- *(site)* Generate the last-updated line and refresh outdated content - ([8670b6e](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/commit/8670b6e076139b561f725f3d2ba27e56611e307a))
+
+### Action
+
+- Update version in `blender_manifest.toml` and update `CHANGELOG.md` - ([4e75c00](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/commit/4e75c00b3287043174f6cff8e83065fd4379124c))
+
+
 ## [5.5.0](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/compare/v5.4.0..v5.5.0) - 2026-11-17
 
 ### ⛰️  Features
