@@ -5,6 +5,7 @@ import remarkGfm from "remark-gfm";
 
 import {site} from "./generated/site";
 import {readme} from "./generated/readme";
+import {docDates} from "./generated/doc-dates";
 import {hasDoc, loadDoc, rewriteLinks} from "./docs";
 import {detectLanguage, languages, translate} from "./i18n";
 
@@ -117,7 +118,7 @@ export default function App() {
         window.scrollTo(0, 0);
     }, [route]);
 
-    const t = (key: string) => translate(language, key);
+    const t = (key: string, vars?: Record<string, string>) => translate(language, key, vars);
 
     const groups = site.groups
         .map((group) => ({
@@ -261,6 +262,10 @@ export default function App() {
                 );
             }
 
+            const updated =
+                docDates[`${language}/${entry.slug}`] ??
+                docDates[`${site.defaultLanguage}/${entry.slug}`];
+
             return (
                 <>
                     {!entry.translated && language !== site.defaultLanguage ? (
@@ -268,6 +273,9 @@ export default function App() {
                     ) : null}
                     <p className="notice subtle">{t("docs.importedNotice")}</p>
                     <Markdown source={entry.markdown} />
+                    {updated ? (
+                        <p className="doc-meta">{t("docs.lastUpdated", {date: updated})}</p>
+                    ) : null}
                 </>
             );
         }

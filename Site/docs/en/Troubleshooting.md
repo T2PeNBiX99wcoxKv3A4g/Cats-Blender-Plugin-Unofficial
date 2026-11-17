@@ -5,7 +5,7 @@ Common issues and solutions for Cats Blender Plugin.
 ## Quick Troubleshooting
 
 > 💡 **First Steps:** Before diving into specific issues:
-> 1. Make sure you're using **Blender 5.2 or above**
+> 1. Make sure you're using **Blender 4.2 LTS or newer**
 > 2. Verify you have the **latest version of Cats**
 > 3. **Restart Blender** after installing/updating Cats
 > 4. Check that Cats is **enabled** in Extensions preferences
@@ -40,7 +40,7 @@ Common issues and solutions for Cats Blender Plugin.
 
 4. **Check Blender Version:**
    - Help > About Blender
-   - Must be 5.2 or above
+   - Must be 4.2 LTS or newer
    - Download correct Cats version for your Blender
 
 5: **Ensure the sidebar is open by pressing N**
@@ -56,7 +56,7 @@ Common issues and solutions for Cats Blender Plugin.
 **Solutions:**
 
 1. **Verify Version Match:**
-   - Blender 5.2 / 5.3 needs Cats 5.3.1.0 or newer; Blender 5.1 needs Cats 5.3.0.0 or earlier from [Releases](https://git.neoneko.org/Yusarina/Cats-Blender-Plugin/releases)
+   - Blender 4.2 LTS through 5.4 all run the current Cats release; Blender 4.1 and older cannot load the extension
    - Match your Cats version to your Blender version (see [Version Support](Version-Support))
 
 2. **Re-download:**
@@ -495,4 +495,3 @@ my_model_05_final.blend
 
 ---
 
-**Last Updated:** November 10, 2026 |  **Plugin Version:** 5.3.1.0 | **Blender:** 5.2 and 5.3 (5.2 LTS recommended)

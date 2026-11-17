@@ -18,5 +18,6 @@
   "footer.license": "MIT 授權。",
   "footer.source": "原始碼",
   "footer.wiki": "上游 wiki",
-  "footer.unofficial": "非官方延續版本，與原始 Cats 開發者無隸屬關係。"
+  "footer.unofficial": "非官方延續版本，與原始 Cats 開發者無隸屬關係。",
+  "docs.lastUpdated": "最後更新：{date}"
 }

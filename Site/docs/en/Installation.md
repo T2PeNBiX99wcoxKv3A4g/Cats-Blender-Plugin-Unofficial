@@ -1,17 +1,18 @@
 # Installation Guide
 
-This guide covers installing Cats Blender Plugin for **Blender 5.2 and 5.3** (5.2 LTS recommended).
+This guide covers installing Cats Blender Plugin for **Blender 4.2 LTS through 5.4** (5.2 LTS recommended).
 
 > #### If you were told to follow these instructions and clearly have not, your issue will be closed no ifs, no buts.
 
 ## Requirements
 
 ### Required Software
-- **Blender 5.2 or 5.3** (we recommend **Blender 5.2 LTS**)
+- **Blender 4.2 LTS or newer** (through 5.4; we recommend **Blender 5.2 LTS**)
   - Download from [blender.org](https://www.blender.org/download/)
   - Use the official build from blender.org or the Steam version. Other builds are not supported.
 
-> ⚠ **Blender 5.1 and below are not supported.** Blender will refuse to install this version on 5.1. On Blender 5.1, use Cats `5.3.0.0` or earlier from [Releases](https://git.neoneko.org/Yusarina/Cats-Blender-Plugin/releases); for Blender 5.0 and below, use an older (unsupported) Cats release from the [legacy releases](https://git.disroot.org/Neoneko/Cats-Blender-Plugin/releases).
+> ⚠ **Blender 4.1 and below are not supported.** The add-on ships as a Blender extension, and the extension system only exists from 4.2 onwards.
+
 
 ### Python Dependencies
 - If Blender uses a custom Python install, ensure **NumPy** is available.
@@ -31,7 +32,7 @@ This guide covers installing Cats Blender Plugin for **Blender 5.2 and 5.3** (5.
 ### Step 1: Download Cats
 
 Get the latest release from the repository:
-- **Releases:** [git.neoneko.org/Yusarina/Cats-Blender-Plugin](https://git.neoneko.org/Yusarina/Cats-Blender-Plugin/releases)
+- **Releases:** [GitHub](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/releases)
 
 > 📝 Download the ZIP and **do NOT extract it** Blender's extension system needs the original ZIP.
 
@@ -67,9 +68,9 @@ No longer needed. The [Scaling](Scaling) panel used to require the separate Imme
 
 ## Troubleshooting Installation
 
-**Extension doesn't appear** - check it's enabled in Extensions preferences, confirm you downloaded a build for Blender 5.2/5.3, and **restart Blender completely**.
+**Extension doesn't appear** - check it's enabled in Extensions preferences, confirm your Blender version is supported (4.2 LTS through 5.4), and **restart Blender completely**.
 
-**Errors during install** - confirm you're on Blender 5.2/5.3, re-download in case the ZIP is corrupt, and check you have write permission to the extensions folder.
+**Errors during install** - confirm your Blender version is supported (4.2 LTS through 5.4), re-download in case the ZIP is corrupt, and check you have write permission to the extensions folder.
 
 **Cats tab missing** - press **N**, confirm the extension is enabled, and check the console (Window > Toggle System Console) for errors.
 
@@ -85,8 +86,7 @@ No longer needed. The [Scaling](Scaling) panel used to require the separate Imme
 
 ---
 
-**Need help?** See the [Troubleshooting](Troubleshooting) page, or open an issue on the [repository](https://git.neoneko.org/Yusarina/Cats-Blender-Plugin).
+**Need help?** See the [Troubleshooting](Troubleshooting) page, or open an issue on the [repository](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial).
 
 ---
 
-**Last Updated:** November 10, 2026 |  **Plugin Version:** 5.3.1.0 | **Blender:** 5.2 and 5.3 (5.2 LTS recommended)

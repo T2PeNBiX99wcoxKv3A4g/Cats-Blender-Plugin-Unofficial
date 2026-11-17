@@ -464,4 +464,3 @@ Atlas **before** eye tracking and visemes. Atlassing changes materials and UVs, 
 
 ---
 
-**Last Updated:** November 10, 2026 |  **Plugin Version:** 5.3.1.0 | **Blender:** 5.2 and 5.3 (5.2 LTS recommended)

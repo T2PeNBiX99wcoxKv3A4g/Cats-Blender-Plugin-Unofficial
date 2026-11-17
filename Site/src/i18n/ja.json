@@ -18,5 +18,6 @@
   "footer.license": "MIT ライセンス。",
   "footer.source": "ソースコード",
   "footer.wiki": "上流 wiki",
-  "footer.unofficial": "非公式の継続版です。元の Cats 開発者とは関係ありません。"
+  "footer.unofficial": "非公式の継続版です。元の Cats 開発者とは関係ありません。",
+  "docs.lastUpdated": "最終更新: {date}"
 }

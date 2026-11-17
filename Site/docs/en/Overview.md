@@ -1,10 +1,9 @@
-> ⚠ **Heads up: this wiki is for Cats `5.3.1.*`**
+> ℹ **These pages document the Cats Blender Plugin feature set.** They were written for the upstream release this fork continues from; this build supports Blender 4.2 LTS through 5.4.
 >
-> Version `5.2.3.*` completely reworked the interface and every release since builds on it, so this documentation **does not apply to `5.2.2.0` or earlier**. If you're running an older release, please use the **[legacy wiki](https://git.disroot.org/Neoneko/Cats-Blender-Plugin/wiki)** instead.
 
 # Cats Blender Plugin - Wiki
 
-Welcome to the official documentation for the **Cats Blender Plugin**.
+Welcome to the documentation for the **Cats Blender Plugin**, maintained as an unofficial community continuation.
 
 Cats is a tool designed to shorten the steps needed to import and optimize models for VRChat and other platforms. It supports a wide range of formats including MMD, XNALara, Mixamo, Source Engine, VRM, glTF/GLB, FBX, DAE and more.
 
@@ -12,11 +11,9 @@ Cats is a tool designed to shorten the steps needed to import and optimize model
 
 | | |
 |---|---|
-| **Plugin version** | `5.3.1.*` |
-| **Supported Blender** | **5.2** and **5.3** |
+| **Supported Blender** | **4.2 LTS** through **5.4** |
 | **Recommended** | **Blender 5.2 LTS** |
 
-> ⚠ **Blender 5.1 and below are not supported.** On Blender 5.1, use Cats `5.3.0.0` or earlier from **[Releases](https://git.neoneko.org/Yusarina/Cats-Blender-Plugin/releases)**; for Blender 5.0 and below, download an older Cats version from the **[legacy releases](https://git.disroot.org/Neoneko/Cats-Blender-Plugin/releases)** (both unsupported).
 
 ## Quick Links
 
@@ -44,7 +41,7 @@ Cats is a tool designed to shorten the steps needed to import and optimize model
 
 ## What's New in 5.3.1.0
 
-- **Blender 5.2 and 5.3 only** - Blender 5.1 is no longer supported. See [Version Support](Version-Support).
+- **Blender 4.2 LTS and newer** - 4.2 LTS through 5.4 are supported. See [Version Support](Version-Support).
 - **Material Combiner removed** - the *Atlas Generator (Legacy)* panel is gone. The built-in tool is now simply **[Atlas Generator](Optimization#atlas-generator)**; **Import Material Combiner Settings** still copies your old settings across if Material Combiner is installed.
 - **Atlas fixes** - each build gets its own names, so atlassing a second avatar no longer overwrites the first one's atlas (and saving to a folder never overwrites existing PNGs). Flat-colour and tinted materials now come out in the right colours instead of too dark. Linked-duplicate meshes are no longer remapped twice, baked materials shared between objects keep every object's faces, baking always targets image textures (never your vertex colours) and a failed save to folder packs the atlas into the .blend instead of losing it. Large builds use much less memory and downscaled textures alias less.
 - **API keys stay out of your .blend files** - DeepL / LibreTranslate keys, the LibreTranslate URL and the MyMemory email are only kept in Cats' own settings file, and keys saved into older files are removed when the file is opened. See [Translation](Translation).
@@ -83,15 +80,13 @@ Cats is a tool designed to shorten the steps needed to import and optimize model
 
 ## Community & Support
 
-- **Source & Releases:** [git.neoneko.org/Yusarina/Cats-Blender-Plugin](https://git.neoneko.org/Yusarina/Cats-Blender-Plugin)
-- **Older Cats versions:** Blender 5.1 users can use an older release from [Releases](https://git.neoneko.org/Yusarina/Cats-Blender-Plugin/releases); Blender 5.0 and below: [Legacy releases on Disroot](https://git.disroot.org/Neoneko/Cats-Blender-Plugin/releases)
+- **Source & Releases:** [GitHub](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial)
 
 > We no longer run a Discord server or website. All support, bug reports and discussion happen on the Git repository above.
 
 ## Contributing
 
-We welcome contributions! If you'd like to help improve Cats, feel free to open a pull request on the [repository](https://git.neoneko.org/Yusarina/Cats-Blender-Plugin).
+We welcome contributions! If you'd like to help improve Cats, feel free to open a pull request on the [repository](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial).
 
 ---
 
-**Last Updated:** November 10, 2026 |  **Plugin Version:** 5.3.1.0 | **Blender:** 5.2 and 5.3 (5.2 LTS recommended)

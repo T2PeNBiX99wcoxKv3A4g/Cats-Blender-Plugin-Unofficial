@@ -148,4 +148,3 @@ Cats works alongside the **VRM Add-on for Blender** use it to import `.vrm`, the
 
 ---
 
-**Last Updated:** September 12, 2026 |  **Plugin Version:** 5.3.1.0 | **Blender:** 5.2 and 5.3 (5.2 LTS recommended)

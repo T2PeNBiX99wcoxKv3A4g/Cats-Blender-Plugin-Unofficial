@@ -18,5 +18,6 @@
   "footer.license": "MIT licensed.",
   "footer.source": "Source code",
   "footer.wiki": "Upstream wiki",
-  "footer.unofficial": "Unofficial continuation, not affiliated with the original Cats developers."
+  "footer.unofficial": "Unofficial continuation, not affiliated with the original Cats developers.",
+  "docs.lastUpdated": "Last updated {date}"
 }

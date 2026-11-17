@@ -1,65 +1,73 @@
 # Version Support
 
-Which Blender versions Cats supports, and where to get older releases.
+Which Blender versions this build of Cats supports.
 
-## Currently Supported
+## Supported Versions
 
-| Blender | Status | End of Life |
-|---|---|---|
-| **5.2 LTS** | ✅ Supported (recommended) | 1 month after the next Blender LTS is released (no date set yet) |
-| **5.3** | ✅ Supported | When Blender 5.4 is released |
+| Blender | Status |
+|---|---|
+| **4.2 LTS** | ✅ Supported (minimum) |
+| **4.5 LTS** | ✅ Supported |
+| **5.0** | ✅ Supported |
+| **5.1** | ✅ Supported |
+| **5.2 LTS** | ✅ Supported (recommended) |
+| **5.3** | ✅ Supported |
+| **5.4** | ✅ Supported (alpha builds only) |
 
-The current Cats release is **`5.3.1.0`** and runs on both Blender 5.2 and 5.3.
+One build covers all of them. The same ZIP installs on every version in the table, so you do
+not have to match a Cats release to a Blender release.
 
-> ⚠ **Blender 5.1 and below are not supported.** See [End of Life](#end-of-life-versions) below.
+## Unsupported Versions
 
-## End of Life Versions
+> ⚠ **Blender 4.1 and older are not supported.**
 
-> ⚠ **Do not report issues for these versions, they are no longer supported.**
+Cats ships as a Blender **extension**, and the extension system only exists from Blender 4.2
+onwards. Older versions cannot install it at all, with or without a warning.
 
-Cats for Blender **5.1 and every earlier version** is end of life. No new features, no bug fixes, and issues will be closed with a "please upgrade" response.
+## Why 4.2 Is the Floor
 
-| Blender | Support ended | Last Cats release for it |
-|---|---|---|
-| **5.1** | November 2026 (Cats `5.3.1.0`) | `5.3.0.0` |
+Blender 4.2 introduced extensions: a manifest, an install dialog, and automatic installation
+of bundled Python wheels. This add-on uses all three, so there is no way to load it on an
+older Blender without rewriting it as a legacy add-on.
 
-Older, unsupported Cats releases are archived here:
-- **[Releases](https://git.neoneko.org/Yusarina/Cats-Blender-Plugin/releases)** - Cats `5.3.0.0` and earlier, the last releases that install on Blender 5.1
-- **[Legacy releases Blender 3.6 - 5.0 (Disroot)](https://git.disroot.org/Neoneko/Cats-Blender-Plugin/releases)**
-- **[Legacy wiki (Disroot)](https://git.disroot.org/Neoneko/Cats-Blender-Plugin/wiki)** - documentation for those older versions
--  **[Original Cats Blender Plugin Blender 3.5 and Below (GitHub)](https://github.com/absolute-quantum/cats-blender-plugin)**
-
-If you must stay on an older Blender, download the matching legacy Cats release from the link above and understand it is unsupported.
+If you need to run Cats on something older than 4.2, the last release that still worked
+there is the original project, which is no longer maintained.
 
 ## Support Policy
 
-We support **two Blender versions at a time: one current minor release and one LTS.** Right now that's **Blender 5.3** (minor) and **Blender 5.2 LTS**.
+Cats is an unofficial community continuation. Support is best effort:
 
-- **Minor releases:** when a new minor version of Blender is released, we drop support for the previous minor, usually within about a week of the new release.
-- **LTS releases:** when a new LTS is released, we keep supporting the previous LTS for **one month** alongside the new one, after which it becomes end of life.
-- **Older versions** may still receive occasional bug patches when new versions are released, but no new features.
+- Issues and questions go to the [GitHub repository](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/issues).
+- Every Blender version in the table above is tested before a release.
+- There is no end-of-life schedule. When a Blender release drops out of support, the release
+  notes say so.
+- Releases are cut from `main` automatically, so the newest build is always the one on the
+  [releases page](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/releases).
 
-## Upgrading Blender
+## Upgrading
 
-1. **Download** Blender 5.2 LTS from [blender.org](https://www.blender.org/download/) (it can coexist with older installs).
-2. **Install Cats** - remove any old Cats version first, then follow the [Installation](Installation) guide.
-3. **Migrate projects** - open your `.blend` files in the new Blender, test, and keep backups.
+1. **Download** the newest release from the [releases page](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/releases).
+2. **Install Cats** - follow the [Installation](Installation) guide. Blender replaces the
+   previous version in place.
+3. **Restart Blender** so the new code is loaded.
+4. **Migrate projects** - open your `.blend` files, check the result, and keep backups.
 
-> 📝 Blender opens files from older versions, but files saved in a newer Blender may not open correctly in older ones. Migrating from 3.x may require opening/saving in 4.x first.
+> 📝 Blender opens files from older versions, but files saved in a newer Blender may not open
+> correctly in older ones.
 
 ## Checking Your Versions
 
-**Cats version:** Edit > Preferences > Extensions > "Cats Blender Plugin".
-**Blender version:** Help > About Blender.
+- **Cats version:** Edit > Preferences > Get Extensions, then look at *Cats Blender Plugin
+  (Unofficial)*.
+- **Blender version:** Help > About Blender.
 
-**Updating Cats:** watch for update notices in the [Settings](Settings) panel, grab the latest from [Releases](https://git.neoneko.org/Yusarina/Cats-Blender-Plugin/releases), follow the [Installation](Installation) guide, and restart Blender.
+**Updating Cats:** the built-in updater in the [Settings](Settings) panel lists every
+release; Blender refuses to install one your Blender cannot run.
 
 ## Getting Help
 
-- **Supported (Blender 5.2 / 5.3):** open an issue on the [repository](https://git.neoneko.org/Yusarina/Cats-Blender-Plugin) or check this wiki.
-- **Unsupported versions:** no official support, issues will be closed. Please upgrade to a supported Blender.
-
-> We no longer run a Discord server or website all support happens on the Git repository.
+- Open an issue on the [repository](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/issues).
+- Check [Troubleshooting](Troubleshooting) and the [FAQ](FAQ) first.
 
 ---
 
@@ -68,7 +76,3 @@ We support **two Blender versions at a time: one current minor release and one L
 - [Settings](Settings) - Update management
 - [FAQ](FAQ) - Common questions
 - [Troubleshooting](Troubleshooting) - Solving issues
-
----
-
-**Last Updated:** November 10, 2026 |  **Plugin Version:** 5.3.1.0 | **Blender:** 5.2 and 5.3 (5.2 LTS recommended)

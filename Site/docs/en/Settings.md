@@ -174,14 +174,14 @@ Cats supports custom translation files:
 
 #### Automatic Update Checks
 - Runs once in the background when Cats loads
-- Checks the releases on [git.neoneko.org](https://git.neoneko.org/NeoNeko/Cats-Blender-Plugin/releases)
+- Checks the releases on [GitHub](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/releases)
 - Compares with installed version
 - Shows update button when available
 
 Since `5.3.1.0` the updater lists every Cats release, not only the ones made for your Blender version, because one release can support more than one Blender version. Blender itself checks each release's supported Blender range and refuses to install one your Blender can't run.
 
 **How it works:**
-1. Cats checks the release list on git.neoneko.org
+1. Cats checks the release list on GitHub
 2. Compares version numbers
 3. Notifies if newer version exists
 4. Provides download link
@@ -225,16 +225,17 @@ Since `5.3.1.0` the updater lists every Cats release, not only the ones made for
 
 #### Understanding Version Numbers
 
-Cats uses semantic versioning:
-- **Major.Minor.Patch.Build** (e.g., 5.3.1.0)
-- **Major.Minor:** the newest Blender series the release is made for (5.3 = Blender 5.3). A release can support more than one Blender version: `5.3.1.0` runs on Blender 5.2 and 5.3
-- **Patch:** Feature updates
-- **Build:** Bug fixes
+Cats uses semantic versioning with three parts:
+
+- **Major.Minor.Patch** (for example `5.5.0`)
+- **Major.Minor** tracks the Blender series this continuation started from; the same build still installs on every supported Blender version
+- **Patch** counts releases, features and fixes together
 
 Examples:
-- `5.3.0.0` - first release for Blender 5.3
-- `5.3.1.0` - first feature update for Blender 5.3
-- `5.3.1.2` - first feature update, second bug fix
+
+- `5.3.9` - a patch release
+- `5.4.0` - the release that added the documentation site
+- `5.5.0` - the release that added every UI language to the site
 
 See [Version Support](Version-Support) for which Blender versions each release supports.
 
@@ -295,7 +296,7 @@ See [Version Support](Version-Support) for which Blender versions each release s
 - Blender's **Allow Online Access** is turned off
 - Update check disabled
 - No internet connection
-- Firewall blocking git.neoneko.org
+- Firewall blocking github.com
 - VPN interfering
 - A proxy or security software replacing HTTPS certificates (Cats verifies the update server's certificate)
 
@@ -303,7 +304,7 @@ See [Version Support](Version-Support) for which Blender versions each release s
 - Turn on **Edit > Preferences > System > Network > Allow Online Access**
 - Enable update checks
 - Check internet connection
-- Allow git.neoneko.org in firewall
+- Allow github.com in firewall
 - Temporarily disable VPN
 - Check the System Console: `URL ERROR` means Cats could not reach the update server or its certificate was not trusted
 
@@ -368,4 +369,3 @@ Some settings require Blender restart:
 
 ---
 
-**Last Updated:** November 10, 2026 |  **Plugin Version:** 5.3.1.0 | **Blender:** 5.2 and 5.3 (5.2 LTS recommended)

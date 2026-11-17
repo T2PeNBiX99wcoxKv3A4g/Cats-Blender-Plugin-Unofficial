@@ -18,5 +18,6 @@
   "footer.license": "MIT 라이선스.",
   "footer.source": "소스 코드",
   "footer.wiki": "업스트림 위키",
-  "footer.unofficial": "비공식 후속 버전이며 원래 Cats 개발자와 관련이 없습니다."
+  "footer.unofficial": "비공식 후속 버전이며 원래 Cats 개발자와 관련이 없습니다.",
+  "docs.lastUpdated": "마지막 업데이트: {date}"
 }

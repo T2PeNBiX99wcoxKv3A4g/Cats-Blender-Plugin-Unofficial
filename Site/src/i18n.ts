@@ -25,8 +25,12 @@ export const languages: Language[] = [
 ];
 
 /** Site text for the given language, falling back to English per key. */
-export function translate(language: string, key: string): string {
-    return copy[language]?.[key] ?? en[key as keyof typeof en] ?? key;
+export function translate(language: string, key: string, vars?: Record<string, string>): string {
+    let text = copy[language]?.[key] ?? en[key as keyof typeof en] ?? key;
+    for (const [name, value] of Object.entries(vars ?? {})) {
+        text = text.replaceAll(`{${name}}`, value);
+    }
+    return text;
 }
 
 export function detectLanguage(stored: string | null, browser: string): string {

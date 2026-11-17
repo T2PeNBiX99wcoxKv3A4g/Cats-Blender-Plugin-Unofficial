@@ -62,4 +62,3 @@ Run these **after** your rig is fixed and translated, and **before** final weigh
 
 ---
 
-**Last Updated:** July 29, 2026 |  **Plugin Version:** 5.3.1.0 | **Blender:** 5.2 and 5.3 (5.2 LTS recommended)

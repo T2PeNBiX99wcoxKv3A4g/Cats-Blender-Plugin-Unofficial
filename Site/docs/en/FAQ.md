@@ -1,6 +1,6 @@
 # Frequently Asked Questions (FAQ)
 
-Common questions about Cats Blender Plugin for Blender 5.2 and 5.3.
+Common questions about Cats Blender Plugin for Blender 4.2 LTS through 5.4.
 
 ## General Questions
 
@@ -16,7 +16,7 @@ For more information, see [What is the status of Official Cats?](#what-is-the-st
 
 ### What Blender version do I need?
 
-Cats 5.3.x requires **Blender 5.2 or above** (5.2 and 5.3 are supported). Older Blender versions are no longer supported. See [Version Support](Version-Support) for details.
+Cats requires **Blender 4.2 LTS or newer**; 4.2 LTS through 5.4 are supported. Blender 4.1 and older cannot load the extension. See [Version Support](Version-Support) for details.
 
 We also only support the steam version and the blender.org version. Windows Store, Linux Package managers version of blender, snap store and the flatpack version are not supported.
 
@@ -26,9 +26,7 @@ Yes, Cats is completely free and open source under the MIT License.
 
 ### Where can I download Cats?
 
-- **Repository & Releases:** [git.neoneko.org/Yusarina/Cats-Blender-Plugin](https://git.neoneko.org/Yusarina/Cats-Blender-Plugin/releases)
-- **Blender 5.1:** Cats `5.3.0.0` or earlier from [Releases](https://git.neoneko.org/Yusarina/Cats-Blender-Plugin/releases) (unsupported)
-- **Older versions (Blender 5.0 and below):** [Legacy releases (Disroot)](https://git.disroot.org/Neoneko/Cats-Blender-Plugin/releases)
+- **Repository & Releases:** [GitHub](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/releases)
 
 ---
 
@@ -62,7 +60,7 @@ Settings are stored in Cats' own user data folder, not in your `.blend` files, s
 
 ### Does Cats work on Blender 4.x?
 
-Cats 5.3.x only works on Blender 5.2+. For Blender 5.1, use Cats `5.3.0.0` or earlier. For Blender 4.x, you would need an older version of Cats (which is now end-of-life and unsupported).
+Cats works on Blender 4.2 LTS through 5.4. Blender 4.1 and older cannot load the extension, and there is no alternative build for them.
 
 ### Can I open Blender 5.2 / 5.3 files in older Blender versions?
 
@@ -249,7 +247,7 @@ Cats follows Blender's **Edit > Preferences > System > Network > Allow Online Ac
 No. Cats doesn't collect, transmit, or store any user data. The only network connections are:
 - The online translation service you select (only when you use the translation feature) - see [Translation](Translation)
 - The update server (when checking for updates)
-- The translation files on git.neoneko.org (only when you click to download the latest translations)
+- The translation files in this repository (only when you click to download the latest translations)
 
 None of these happen while Blender's **Allow Online Access** is turned off.
 
@@ -259,7 +257,7 @@ No. Since `5.3.1.0` your DeepL / LibreTranslate API keys, LibreTranslate URL and
 
 ### Is Cats still maintained?
 
-Yes. Cats is actively maintained and supports **Blender 5.2 and 5.3** (5.2 LTS recommended). Development happens on the [repository](https://git.neoneko.org/Yusarina/Cats-Blender-Plugin).
+Yes. Cats is maintained by the community and supports **Blender 4.2 LTS through 5.4** (5.2 LTS recommended). Development happens on the [repository](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial).
 
 ---
 
@@ -267,7 +265,7 @@ Yes. Cats is actively maintained and supports **Blender 5.2 and 5.3** (5.2 LTS r
 
 ### How do I update Cats?
 
-1. Download the new version from the [repository releases](https://git.neoneko.org/Yusarina/Cats-Blender-Plugin/releases)
+1. Download the new version from the [repository releases](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/releases)
 2. Close Blender
 3. Remove old Cats version (Preferences > Extensions)
 4. Restart Blender
@@ -312,7 +310,7 @@ Usually no, but:
 - No support or communication
 
 **Unofficial Cats:**
-- Actively maintained by Team Neoneko
+- Maintained by the community
 - Supports latest Blender versions
 - Regular updates and bug fixes
 - Active community support
@@ -410,11 +408,11 @@ Several ways to contribute:
 - Help with translations
 - Write documentation
 
-Everything happens on the [repository](https://git.neoneko.org/Yusarina/Cats-Blender-Plugin).
+Everything happens on the [repository](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial).
 
 ### Where can I request features?
 
-1. Open an issue on the [repository](https://git.neoneko.org/Yusarina/Cats-Blender-Plugin/issues)
+1. Open an issue on the [repository](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/issues)
 2. Check if the feature is already planned
 3. Be specific about your use case
 4. Understand it may not be implemented
@@ -426,7 +424,7 @@ Everything happens on the [repository](https://git.neoneko.org/Yusarina/Cats-Ble
 ### Where can I ask questions?
 
 - **This Wiki** - feature guides and troubleshooting
-- **[Repository issues](https://git.neoneko.org/Yusarina/Cats-Blender-Plugin/issues)** - bug reports and questions
+- **[Repository issues](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/issues)** - bug reports and questions
 
 > We no longer run a Discord server or website. All support happens on the repository.
 
@@ -445,7 +443,7 @@ Everything happens on the [repository](https://git.neoneko.org/Yusarina/Cats-Ble
 Check:
 1. Relevant feature pages in this wiki
 2. [Troubleshooting](Troubleshooting) page
-3. Search existing issues on the [repository](https://git.neoneko.org/Yusarina/Cats-Blender-Plugin/issues)
+3. Search existing issues on the [repository](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/issues)
 4. Open a new issue if it isn't already documented
 
 ---
@@ -458,4 +456,3 @@ Check:
 
 ---
 
-**Last Updated:** November 10, 2026 |  **Plugin Version:** 5.3.1.0 | **Blender:** 5.2 and 5.3 (5.2 LTS recommended)
