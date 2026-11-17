@@ -1,5 +1,16 @@
 # Changelog
 
+## [5.6.1](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/compare/v5.6.0..v5.6.1) - 2026-11-17
+
+### 🐛 Bug Fixes
+
+- Compare release tags without their v prefix, and split the long credits line - ([2e2b86d](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/commit/2e2b86d8403f21b8bb618dd319fbb9a84954018b))
+
+### Action
+
+- Update version in `blender_manifest.toml` and update `CHANGELOG.md` - ([15afaab](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/commit/15afaab35c2fc3e7ce7508277f6213919aad13af))
+
+
 ## [5.6.0](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/compare/v5.5.0..v5.6.0) - 2026-11-17
 
 ### ⛰️  Features
