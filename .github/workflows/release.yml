@@ -15,6 +15,7 @@ on:
       - "Site/**"
       - ".github/workflows/site.yml"
       - ".github/workflows/dependabot-auto-merge.yml"
+      - ".github/dependabot.yml"
 
 permissions:
   contents: write
