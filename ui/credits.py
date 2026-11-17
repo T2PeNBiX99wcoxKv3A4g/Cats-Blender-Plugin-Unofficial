@@ -51,6 +51,7 @@ class CreditsPanel(ToolPanel, bpy.types.Panel):
         desc_col.label(text=t('CreditsPanel.originalCreators'))
         desc_col.label(text=t('CreditsPanel.originalCreators2'))
         desc_col.label(text=t('CreditsPanel.previousMaintainers'))
+        desc_col.label(text=t('CreditsPanel.previousMaintainers2'))
 
         col.separator()
 

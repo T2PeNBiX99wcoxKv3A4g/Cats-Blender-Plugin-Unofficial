@@ -1151,7 +1151,8 @@
         "UpdaterPanel.githubTokenWarn1": "僅在更新檢查因速率限制失敗時才需要。",
         "UpdaterPanel.githubTokenWarn2": "請使用不含任何權限範圍的唯讀權杖。它以明文保存在 Cats 的設定檔中。",
         "check_for_update.rateLimited": "已達到 GitHub API 速率限制。\n請在設定中新增 GitHub 權杖，或稍後再試。",
-        "CreditsPanel.previousMaintainers": "2023-2026 年由 Yusarina 維護",
-        "check_for_update.unauthorized": "GitHub 拒絕了該權杖。\n請在設定中移除，或換成有效權杖。"
+        "CreditsPanel.previousMaintainers": "先前的維護者：",
+        "check_for_update.unauthorized": "GitHub 拒絕了該權杖。\n請在設定中移除，或換成有效權杖。",
+        "CreditsPanel.previousMaintainers2": "Yusarina（2023-2026）"
     }
 }

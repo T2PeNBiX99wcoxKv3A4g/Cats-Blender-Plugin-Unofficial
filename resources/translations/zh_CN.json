@@ -1149,7 +1149,8 @@
         "UpdaterPanel.githubTokenWarn1": "仅在更新检查因速率限制失败时需要。",
         "UpdaterPanel.githubTokenWarn2": "请使用不含任何权限范围的只读令牌。它以明文保存在 Cats 的设置文件中。",
         "check_for_update.rateLimited": "已达到 GitHub API 速率限制。\n请在设置中添加 GitHub 令牌，或稍后再试。",
-        "CreditsPanel.previousMaintainers": "2023-2026 年由 Yusarina 维护",
-        "check_for_update.unauthorized": "GitHub 拒绝了该令牌。\n请在设置中移除，或换成有效令牌。"
+        "CreditsPanel.previousMaintainers": "此前的维护者：",
+        "check_for_update.unauthorized": "GitHub 拒绝了该令牌。\n请在设置中移除，或换成有效令牌。",
+        "CreditsPanel.previousMaintainers2": "Yusarina（2023-2026）"
     }
 }

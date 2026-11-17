@@ -475,8 +475,15 @@ def get_github_releases():
 
 
 def _parse_version_tag(tag):
-    """Parse a release tag like '5.3.0.0' into a list of ints for comparison."""
-    return [int(piece) for piece in tag.split('.') if piece.isdigit()]
+    """Parse a release tag into a list of ints for comparison.
+
+    Handles the ``v`` prefix (`v5.6.0`), plain versions (`5.3.8`) and pre-release
+    suffixes (`v5.6.1-beta.2` -> 5.6.1). Dropping the prefix matters: without it
+    `v5.6.0` parses as `[6, 0]`, which compares larger than `5.6.0`.
+    """
+    cleaned = tag.strip().lstrip('vV')
+    numeric = cleaned.split('-')[0]
+    return [int(piece) for piece in numeric.split('.') if piece.isdigit()]
 
 
 def check_for_update_available():

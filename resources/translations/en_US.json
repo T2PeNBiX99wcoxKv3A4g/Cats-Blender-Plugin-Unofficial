@@ -1114,7 +1114,8 @@
         "UpdaterPanel.githubTokenWarn1": "Only needed when update checks fail with a rate limit error.",
         "UpdaterPanel.githubTokenWarn2": "Use a read-only token with no scopes. It is stored in plain text in Cats' settings file.",
         "check_for_update.rateLimited": "GitHub's API rate limit was reached.\nAdd a GitHub token in Settings, or try again later.",
-        "CreditsPanel.previousMaintainers": "Previously maintained by Yusarina (2023-2026)",
-        "check_for_update.unauthorized": "GitHub rejected the token.\nRemove it in Settings, or replace it with a valid token."
+        "CreditsPanel.previousMaintainers": "Previously maintained by",
+        "check_for_update.unauthorized": "GitHub rejected the token.\nRemove it in Settings, or replace it with a valid token.",
+        "CreditsPanel.previousMaintainers2": "Yusarina (2023-2026)"
     }
 }

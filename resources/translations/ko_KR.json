@@ -1149,7 +1149,8 @@
         "UpdaterPanel.githubTokenWarn1": "업데이트 확인이 요청 제한 오류로 실패할 때만 필요합니다.",
         "UpdaterPanel.githubTokenWarn2": "범위가 없는 읽기 전용 토큰을 사용하세요. Cats 설정 파일에 평문으로 저장됩니다.",
         "check_for_update.rateLimited": "GitHub API 요청 제한에 도달했습니다.\n설정에서 GitHub 토큰을 추가하거나 나중에 다시 시도하세요.",
-        "CreditsPanel.previousMaintainers": "이전에는 Yusarina가 유지 관리했습니다 (2023-2026)",
-        "check_for_update.unauthorized": "GitHub가 토큰을 거부했습니다.\n설정에서 제거하거나 올바른 토큰으로 교체하세요."
+        "CreditsPanel.previousMaintainers": "이전 유지 관리자:",
+        "check_for_update.unauthorized": "GitHub가 토큰을 거부했습니다.\n설정에서 제거하거나 올바른 토큰으로 교체하세요.",
+        "CreditsPanel.previousMaintainers2": "Yusarina (2023-2026)"
     }
 }
