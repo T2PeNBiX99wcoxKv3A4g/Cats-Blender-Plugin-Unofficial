@@ -1,5 +1,21 @@
 # Changelog
 
+## [5.7.0](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/compare/v5.6.1..v5.7.0) - 2026-11-17
+
+### ⛰️  Features
+
+- *(settings)* Encrypt stored credentials with DPAPI - ([259bc3f](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/commit/259bc3f2cb8d95ffb356cef420ac0227aa143412))
+- Recover from a rejected GitHub token and split the token hints - ([ef99a03](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/commit/ef99a03ad11ec4aee85f651ed8828e2bd7ab205d))
+
+### 🐛 Bug Fixes
+
+- *(site)* Drop the duplicated rule at the end of wiki pages - ([77cccc2](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/commit/77cccc2044bc228db47390b9fedef2a8fc89d6ca))
+
+### Action
+
+- Update version in `blender_manifest.toml` and update `CHANGELOG.md` - ([0466c80](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/commit/0466c80090c382c7032e3d7265782ebda91698a4))
+
+
 ## [5.6.1](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/compare/v5.6.0..v5.6.1) - 2026-11-17
 
 ### 🐛 Bug Fixes
