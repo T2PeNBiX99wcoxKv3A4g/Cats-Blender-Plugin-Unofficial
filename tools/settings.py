@@ -617,24 +617,31 @@ def get_translation_service():
     return settings_data.get('translation_service') if settings_data else None
 
 
+def _read_credential(setting):
+    """Readable value of a stored credential (the stored form may be encrypted)."""
+    if not settings_data:
+        return ""
+    return unprotect_secret(settings_data.get(setting) or "")
+
+
 def get_deepl_api_key():
-    return settings_data.get('deepl_api_key', "") if settings_data else ""
+    return _read_credential('deepl_api_key')
 
 
 def get_libretranslate_url():
-    return settings_data.get('libretranslate_url', "") if settings_data else ""
+    return _read_credential('libretranslate_url')
 
 
 def get_libretranslate_api_key():
-    return settings_data.get('libretranslate_api_key', "") if settings_data else ""
+    return _read_credential('libretranslate_api_key')
 
 
 def get_mymemory_email():
-    return settings_data.get('mymemory_email', "") if settings_data else ""
+    return _read_credential('mymemory_email')
 
 
 def get_github_token():
-    return (settings_data.get('github_token') or "") if settings_data else ""
+    return _read_credential('github_token')
 
 
 def get_quick_access_visibility():
