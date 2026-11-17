@@ -136,14 +136,6 @@ export default function App() {
                 </a>
 
                 <nav className="topnav">
-                    <a href="#/">
-                        <span className="icon icon-home" aria-hidden="true"/>
-                        {t("nav.home")}
-                    </a>
-                    <a href="#/docs">
-                        <span className="icon icon-docs" aria-hidden="true"/>
-                        {t("nav.docs")}
-                    </a>
                     <a href={site.releases} target="_blank" rel="noreferrer noopener">
                         <span className="icon icon-releases" aria-hidden="true"/>
                         {t("nav.releases")}
@@ -309,6 +301,7 @@ export default function App() {
                     <p className="tagline">{site.tagline}</p>
                     <div className="hero-actions">
                         <a className="button primary" href="#/docs">
+                            <span className="icon icon-docs" aria-hidden="true"/>
                             {t("nav.docs")}
                         </a>
                         <a
@@ -317,6 +310,7 @@ export default function App() {
                             target="_blank"
                             rel="noreferrer noopener"
                         >
+                            <span className="icon icon-releases" aria-hidden="true"/>
                             {t("nav.releases")}
                         </a>
                     </div>

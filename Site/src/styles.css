@@ -329,7 +329,9 @@ a:hover {
 }
 
 .button {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
     padding: 0.55rem 1.1rem;
     border-radius: 0.6rem;
     border: 1px solid var(--border-strong);
