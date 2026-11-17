@@ -5,6 +5,8 @@ export type DocEntry = {
     title: string;
     markdown: string;
     translated: boolean;
+    /** Heading ids taken from the English source, so anchors work in every language. */
+    anchorIds: string[];
 };
 
 const rawDocs = import.meta.glob("../docs/*/*.md", {
@@ -26,6 +28,22 @@ function titleOf(markdown: string, fallback: string): string {
     return heading ? heading.replace(/^#\s+/, "").trim() : fallback;
 }
 
+export function slugifyHeading(text: string): string {
+    return text
+        .toLowerCase()
+        .trim()
+        .replace(/[^\p{L}\p{N}\s-]/gu, "")
+        .replace(/\s+/g, "-");
+}
+
+/** Ids for every rendered heading (h1-h4) in document order, used as link anchors. */
+function headingIds(markdown: string): string[] {
+    return markdown
+        .split("\n")
+        .filter((line) => /^#{1,4}\s+\S/.test(line))
+        .map((line) => slugifyHeading(line.replace(/^#{1,4}\s+/, "")));
+}
+
 /** Pages that exist for the given language, falling back to the default language. */
 export function loadDoc(slug: string, language: string): DocEntry | null {
     const localised = docs.get(`${language}/${slug}`);
@@ -38,6 +56,9 @@ export function loadDoc(slug: string, language: string): DocEntry | null {
         title: titleOf(markdown, slug),
         markdown,
         translated: localised !== undefined,
+        // Always taken from the default language: translations render the same anchors,
+        // so `#some-heading` links keep working after the headings are translated.
+        anchorIds: headingIds(fallback ?? markdown),
     };
 }
 

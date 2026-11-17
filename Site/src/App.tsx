@@ -6,7 +6,7 @@ import remarkGfm from "remark-gfm";
 import {site} from "./generated/site";
 import {readme} from "./generated/readme";
 import {docDates} from "./generated/doc-dates";
-import {hasDoc, loadDoc, rewriteLinks} from "./docs";
+import {hasDoc, loadDoc, rewriteLinks, slugifyHeading} from "./docs";
 import {detectLanguage, languages, translate} from "./i18n";
 
 type Route =
@@ -44,24 +44,24 @@ function toText(node: ReactNode): string {
 }
 
 function slugify(text: string): string {
-    return text
-        .toLowerCase()
-        .trim()
-        .replace(/[^\p{L}\p{N}\s-]/gu, "")
-        .replace(/\s+/g, "-");
+    return slugifyHeading(text);
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function heading(level: 1 | 2 | 3 | 4) {
-    return function Heading({children}: {children?: ReactNode}) {
-        const text = toText(children);
-        const id = slugify(text);
-        const Tag = `h${level}` as const;
-        return <Tag id={id}>{children}</Tag>;
-    };
-}
+/**
+ * Heading ids come from the English source (`anchorIds`), not from the rendered text, so
+ * `#some-heading` links keep working when the heading is translated.
+ */
+function Markdown({source, anchorIds = []}: {source: string; anchorIds?: string[]}) {
+    let headingIndex = 0;
 
-function Markdown({source}: {source: string}) {
+    function heading(level: 1 | 2 | 3 | 4) {
+        return function Heading({children}: {children?: ReactNode}) {
+            const id = anchorIds[headingIndex++] ?? slugify(toText(children));
+            const Tag = `h${level}` as const;
+            return <Tag id={id}>{children}</Tag>;
+        };
+    }
+
     return (
         <div className="markdown">
             <ReactMarkdown
@@ -272,7 +272,7 @@ export default function App() {
                         <p className="notice">{t("docs.untranslated")}</p>
                     ) : null}
                     <p className="notice subtle">{t("docs.importedNotice")}</p>
-                    <Markdown source={entry.markdown} />
+                    <Markdown source={entry.markdown} anchorIds={entry.anchorIds} />
                     {updated ? (
                         <p className="doc-meta">{t("docs.lastUpdated", {date: updated})}</p>
                     ) : null}
