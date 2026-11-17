@@ -16,19 +16,17 @@ updates:
       include: "scope"
 
   # The documentation site — Site/package.json
-  # Added once the site exists; Dependabot needs the manifest present.
-  #
-  # - package-ecosystem: npm
-  #   directory: /Site
-  #   schedule:
-  #     interval: daily
-  #   groups:
-  #     npm:
-  #       patterns: ["*"]
-  #       update-types: ["minor", "patch"]
-  #   commit-message:
-  #     prefix: "chore"
-  #     include: "scope"
+  - package-ecosystem: npm
+    directory: /Site
+    schedule:
+      interval: daily
+    groups:
+      npm:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+    commit-message:
+      prefix: "chore"
+      include: "scope"
 
   # NOTE: the only Python dependency, the opencc wheel in wheels/, is vendored
   # from MMD Tools and is not covered by any Dependabot ecosystem. It is checked
