@@ -1,5 +1,16 @@
 # Changelog
 
+## [5.8.1](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/compare/v5.8.0..v5.8.1) - 2026-11-17
+
+### 🐛 Bug Fixes
+
+- Apply the FBX preset after Blender finished starting up - ([7a81c1e](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/commit/7a81c1e71e222a0d6f280ac88443f7beb93a93ae))
+
+### Action
+
+- Update version in `blender_manifest.toml` and update `CHANGELOG.md` - ([fed5c55](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/commit/fed5c55eaeee3260fc8bea4664f1e5adee8d9afc))
+
+
 ## [5.8.0](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/compare/v5.7.1..v5.8.0) - 2026-11-17
 
 ### ⛰️  Features
