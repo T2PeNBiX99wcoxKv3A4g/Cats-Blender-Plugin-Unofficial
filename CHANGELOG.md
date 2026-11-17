@@ -1,5 +1,23 @@
 # Changelog
 
+## [5.5.0](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/compare/v5.4.0..v5.5.0) - 2026-11-17
+
+### ⛰️  Features
+
+- *(site)* Offer every language the add-on ships - ([ee1e565](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/commit/ee1e565c60519be911f2c0cbab886e59c6aa11d2))
+
+### ⚙️ Miscellaneous Tasks
+
+- Do not cut a release for dependency configuration changes - ([cf7b020](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/commit/cf7b020d8a0b206f5379180bf0ac1f44d53323de))
+
+### Action
+
+- Update version in `blender_manifest.toml` and update `CHANGELOG.md` - ([8606775](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/commit/86067755670f7789d4adafbae17547141c8c5801))
+
+## New Contributors ❤️
+
+* @dependabot[bot] made their first contribution
+
 ## [5.4.0](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/compare/v5.3.10..v5.4.0) - 2026-11-17
 
 ### ⛰️  Features
