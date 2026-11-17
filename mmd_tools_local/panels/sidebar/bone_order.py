@@ -3,11 +3,11 @@
 
 import bpy
 
+from . import PT_ProductionPanelBase
 from ... import utils
 from ...compat.versions import IS_BLENDER_50_UP
 from ...core.bone import BONE_COLLECTION_NAME_DUMMY, BONE_COLLECTION_NAME_SHADOW, FnBone, MigrationFnBone
 from ...core.model import FnModel
-from . import PT_ProductionPanelBase
 
 
 class MMDToolsBoneIdMoveUp(bpy.types.Operator):
@@ -32,7 +32,8 @@ class MMDToolsBoneIdMoveUp(bpy.types.Operator):
 
         # Check if bone_id is -1 and show warning
         if active_id == -1:
-            self.report({"WARNING"}, "Bone ID is invalid (-1). Please click 'Fix Bone Order' button first to assign proper bone IDs.")
+            self.report({"WARNING"},
+                        "Bone ID is invalid (-1). Please click 'Fix Bone Order' button first to assign proper bone IDs.")
             return {"CANCELLED"}
 
         # Find bone with smaller bone_id
@@ -74,7 +75,8 @@ class MMDToolsBoneIdMoveDown(bpy.types.Operator):
 
         # Check if bone_id is -1 and show warning
         if active_id == -1:
-            self.report({"WARNING"}, "Bone ID is invalid (-1). Please click 'Fix Bone Order' button first to assign proper bone IDs.")
+            self.report({"WARNING"},
+                        "Bone ID is invalid (-1). Please click 'Fix Bone Order' button first to assign proper bone IDs.")
             return {"CANCELLED"}
 
         # Find bone with larger bone_id
@@ -440,7 +442,8 @@ class MMD_TOOLS_UL_ModelBones(bpy.types.UIList):
 
         # Apply name search filter
         if self.filter_name:
-            filtered_flags = helper_funcs.filter_items_by_name(self.filter_name, self.bitflag_filter_item, bones, "name", reverse=False)
+            filtered_flags = helper_funcs.filter_items_by_name(self.filter_name, self.bitflag_filter_item, bones,
+                                                               "name", reverse=False)
             # Re-apply shadow bone filter
             for i, bone in enumerate(bones):
                 is_shadow = getattr(bone, "is_mmd_shadow_bone", False) is True
@@ -504,7 +507,8 @@ class MMD_TOOLS_UL_ModelBones(bpy.types.UIList):
         has_duplicate = False
         if bone_id >= 0:
             for other_bone in bone.id_data.pose.bones:
-                if other_bone != bone and not getattr(other_bone, "is_mmd_shadow_bone", False) and other_bone.mmd_bone.bone_id == bone_id:
+                if other_bone != bone and not getattr(other_bone, "is_mmd_shadow_bone",
+                                                      False) and other_bone.mmd_bone.bone_id == bone_id:
                     has_duplicate = True
                     break
 
@@ -599,10 +603,12 @@ class MMD_TOOLS_UL_ModelBones(bpy.types.UIList):
 
         # https://docs.blender.org/api/current/bpy.types.UILayout.html#bpy.types.UILayout.prop
         if IS_BLENDER_50_UP:
-            row.prop(bone, "select", text="", emboss=False, icon_only=True, icon="RESTRICT_SELECT_OFF", invert_checkbox=True)
+            row.prop(bone, "select", text="", emboss=False, icon_only=True, icon="RESTRICT_SELECT_OFF",
+                     invert_checkbox=True)
             row.prop(bone, "hide", text="", emboss=False, icon_only=True, icon="HIDE_OFF", invert_checkbox=False)
         else:
-            row.prop(bone.bone, "select", text="", emboss=False, icon_only=True, icon="RESTRICT_SELECT_OFF" if bone.select else "RESTRICT_SELECT_ON")
+            row.prop(bone.bone, "select", text="", emboss=False, icon_only=True,
+                     icon="RESTRICT_SELECT_OFF" if bone.select else "RESTRICT_SELECT_ON")
             row.prop(bone.bone, "hide", text="", emboss=False, icon_only=True, icon="HIDE_OFF", invert_checkbox=False)
 
 

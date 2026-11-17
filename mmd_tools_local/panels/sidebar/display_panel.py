@@ -4,9 +4,9 @@
 
 import bpy
 
+from . import FnDraw, PT_ProductionPanelBase
 from ...core.model import FnModel
 from ...utils import ItemOp
-from . import FnDraw, PT_ProductionPanelBase
 
 
 class MMDDisplayItemsPanel(PT_ProductionPanelBase, bpy.types.Panel):
@@ -181,7 +181,8 @@ class MMDDisplayItemFrameMenu(bpy.types.Menu):
         layout.operator_enum("mmd_tools_local.display_item_quick_setup", "type")
         layout.separator()
         layout.operator("mmd_tools_local.display_item_frame_move", icon="TRIA_UP_BAR", text="Move To Top").type = "TOP"
-        layout.operator("mmd_tools_local.display_item_frame_move", icon="TRIA_DOWN_BAR", text="Move To Bottom").type = "BOTTOM"
+        layout.operator("mmd_tools_local.display_item_frame_move", icon="TRIA_DOWN_BAR",
+                        text="Move To Bottom").type = "BOTTOM"
 
 
 class MMDDisplayItemMenu(bpy.types.Menu):
@@ -193,4 +194,5 @@ class MMDDisplayItemMenu(bpy.types.Menu):
         layout.operator("mmd_tools_local.display_item_remove", text="Delete All", icon="X").all = True
         layout.separator()
         layout.operator("mmd_tools_local.display_item_move", icon="TRIA_UP_BAR", text="Move To Top").type = "TOP"
-        layout.operator("mmd_tools_local.display_item_move", icon="TRIA_DOWN_BAR", text="Move To Bottom").type = "BOTTOM"
+        layout.operator("mmd_tools_local.display_item_move", icon="TRIA_DOWN_BAR",
+                        text="Move To Bottom").type = "BOTTOM"

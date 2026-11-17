@@ -2,6 +2,7 @@
 
 import bpy
 import numpy as np
+
 from .register import register_wrap
 from .translations import t
 
@@ -60,7 +61,8 @@ class ShapeKeyApplier(bpy.types.Operator):
         # If Key1 is applied to the basis, it should become a reverted key that moves a vertex by -1 instead so that when it's re-applied, it undoes initial application
         # But that would mean that Key2 would have to become a key that moves a vertex by +1, and we want the key to keep its original relative movement of -1
         if new_basis_shapekey in keys_relative_recursive_to_new_basis:
-            self.report({'ERROR_INVALID_INPUT'}, t('ShapeKeyApplier.error.recursiveRelativeToLoop', name=new_basis_shapekey.name))
+            self.report({'ERROR_INVALID_INPUT'},
+                        t('ShapeKeyApplier.error.recursiveRelativeToLoop', name=new_basis_shapekey.name))
             return {'CANCELLED'}
 
         # It should work to pick a different key as a basis, so long as that key is immediately relative to itself (key.relative_key == key)
@@ -196,7 +198,8 @@ class ShapeKeyApplier(bpy.types.Operator):
     # The slowest part of this function when the number of vertices increase are the shape_key.data.foreach_set() and
     # shape_key.data.foreach_get() calls, so the number of calls of those should be minimised for performance
     @staticmethod
-    def apply_key_to_basis(*, mesh, new_basis_shapekey, keys_relative_recursive_to_new_basis, keys_relative_recursive_to_basis):
+    def apply_key_to_basis(*, mesh, new_basis_shapekey, keys_relative_recursive_to_new_basis,
+                           keys_relative_recursive_to_basis):
         data = mesh.data
         num_verts = len(data.vertices)
 
@@ -302,7 +305,9 @@ class ShapeKeyApplier(bpy.types.Operator):
             # All keys in keys_recursive_relative_to_new_basis must also be in keys_recursive_relative_to_basis
             # All the keys that will have only difference_co_flat_scaled added to them are those which are neither
             # new_basis nor relative recursive to new_basis
-            keys_not_relative_recursive_to_new_basis_and_not_new_basis = (keys_relative_recursive_to_basis - keys_relative_recursive_to_new_basis) - {new_basis_shapekey}
+            keys_not_relative_recursive_to_new_basis_and_not_new_basis = (
+                                                                                 keys_relative_recursive_to_basis - keys_relative_recursive_to_new_basis) - {
+                                                                             new_basis_shapekey}
 
             # This for loop is where most of the execution will happen for 'normal' setups of lots of shape keys relative to the first shape
             # I looked into using multiprocessing to parallelise this, but type(key_block) and type(key_block.data) can't be pickled,
@@ -310,9 +315,11 @@ class ShapeKeyApplier(bpy.types.Operator):
             #
             # Add difference between new_basis_shapekey and new_basis_shapekey.relative_key (scaled according to the value and vertex_group of new_basis_shapekey)
             # We already have the co array for new_basis_shapekey.relative_key, so do it separately to save a foreach_get call
-            new_basis_shapekey.relative_key.data.foreach_set('co', np.add(new_basis_relative_co_flat, difference_co_flat_scaled, out=temp_co_array))
+            new_basis_shapekey.relative_key.data.foreach_set('co', np.add(new_basis_relative_co_flat,
+                                                                          difference_co_flat_scaled, out=temp_co_array))
             # And now the rest of the shape keys
-            for key_block in keys_not_relative_recursive_to_new_basis_and_not_new_basis - {new_basis_shapekey.relative_key}:
+            for key_block in keys_not_relative_recursive_to_new_basis_and_not_new_basis - {
+                new_basis_shapekey.relative_key}:
                 key_block.data.foreach_get('co', temp_co_array)
                 key_block.data.foreach_set('co', np.add(temp_co_array, difference_co_flat_scaled, out=temp_co_array))
 
@@ -448,9 +455,9 @@ class ShapeKeyApplier(bpy.types.Operator):
         data.shape_keys.reference_key.data.foreach_get('co', temp_co_array)
         data.vertices.foreach_set('co', temp_co_array)
 
+
 @register_wrap
 class ShapeKeyPruner(bpy.types.Operator):
-
     # Removes shapekeys where no vertex is meaningfully moved
     bl_idname = "cats_shapekey.shape_key_prune"
     bl_label = t('ShapeKeyPruner.label')
@@ -513,7 +520,7 @@ class ShapeKeyPruner(bpy.types.Operator):
 
         if (len(shape_keys_to_delete) > 0):
             report_messages.append(t('ShapeKeyPruner.removedPrefix'))
-        
+
             # Remove redundant shape keys
             for keyblock_name in shape_keys_to_delete:
                 mesh.shape_key_remove(mesh.data.shape_keys.key_blocks[keyblock_name])

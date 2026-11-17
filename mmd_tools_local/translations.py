@@ -1,13 +1,12 @@
 # Copyright 2016 MMD Tools authors
 # This file is part of MMD Tools.
 
+import bpy
 import csv
 import logging
 import os
 import time
 from collections import OrderedDict
-
-import bpy
 
 from .bpyutils import FnContext
 

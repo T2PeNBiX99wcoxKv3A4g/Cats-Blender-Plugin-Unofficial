@@ -1,11 +1,10 @@
 # Copyright 2015 MMD Tools authors
 # This file is part of MMD Tools.
 
-import math
-from typing import Dict, Optional, Tuple, cast
-
 import bpy
+import math
 from mathutils import Euler, Vector
+from typing import Dict, Optional, Tuple, cast
 
 from .. import utils
 from ..bpyutils import FnContext, Props
@@ -114,8 +113,10 @@ class AddRigidBody(bpy.types.Operator):
         description="Select rigid type",
         items=[
             (str(rigid_body.MODE_STATIC), "Bone", "Rigid body's orientation completely determined by attached bone", 1),
-            (str(rigid_body.MODE_DYNAMIC), "Physics", "Attached bone's orientation completely determined by rigid body", 2),
-            (str(rigid_body.MODE_DYNAMIC_BONE), "Physics + Bone", "Bone determined by combination of parent and attached rigid body", 3),
+            (str(rigid_body.MODE_DYNAMIC), "Physics", "Attached bone's orientation completely determined by rigid body",
+             2),
+            (str(rigid_body.MODE_DYNAMIC_BONE), "Physics + Bone",
+             "Bone determined by combination of parent and attached rigid body", 3),
         ],
     )
     rigid_shape: bpy.props.EnumProperty(
@@ -169,7 +170,8 @@ class AddRigidBody(bpy.types.Operator):
         default=0.1,
     )
 
-    def __add_rigid_body(self, context: bpy.types.Context, root_object: bpy.types.Object, pose_bone: Optional[bpy.types.PoseBone] = None):
+    def __add_rigid_body(self, context: bpy.types.Context, root_object: bpy.types.Object,
+                         pose_bone: Optional[bpy.types.PoseBone] = None):
         name_j: str = self.name_j
         name_e: str = self.name_e
         size = self.size.copy()
@@ -413,7 +415,8 @@ class AddJoint(bpy.types.Operator):
             else:
                 yield obj_seq
 
-    def __add_joint(self, context: bpy.types.Context, root_object: bpy.types.Object, rigid_pair: Tuple[bpy.types.Object, bpy.types.Object], bone_map):
+    def __add_joint(self, context: bpy.types.Context, root_object: bpy.types.Object,
+                    rigid_pair: Tuple[bpy.types.Object, bpy.types.Object], bone_map):
         loc: Optional[Vector] = None
         rot = Euler((0.0, 0.0, 0.0))
         rigid_a, rigid_b = rigid_pair
@@ -435,7 +438,8 @@ class AddJoint(bpy.types.Operator):
         name_e = rigid_b.mmd_rigid.name_e or rigid_b.name
 
         return FnRigidBody.setup_joint_object(
-            obj=FnRigidBody.new_joint_object(context, FnModel.ensure_joint_group_object(context, root_object), FnModel.get_empty_display_size(root_object)),
+            obj=FnRigidBody.new_joint_object(context, FnModel.ensure_joint_group_object(context, root_object),
+                                             FnModel.get_empty_display_size(root_object)),
             name=name_j,
             name_e=name_e,
             location=loc,
@@ -467,7 +471,9 @@ class AddJoint(bpy.types.Operator):
         root_object = cast("bpy.types.Object", FnModel.find_root_object(active_object))
         armature_object = cast("bpy.types.Object", FnModel.find_armature_object(root_object))
         bones = cast("bpy.types.Armature", armature_object.data).bones
-        bone_map: Dict[bpy.types.Object, Optional[bpy.types.Bone]] = {r: bones.get(r.mmd_rigid.bone, None) for r in FnModel.iterate_rigid_body_objects(root_object) if r.select_get()}
+        bone_map: Dict[bpy.types.Object, Optional[bpy.types.Bone]] = {r: bones.get(r.mmd_rigid.bone, None) for r in
+                                                                      FnModel.iterate_rigid_body_objects(root_object) if
+                                                                      r.select_get()}
 
         if len(bone_map) < 2:
             self.report({"ERROR"}, "Please select two or more mmd rigid objects")
@@ -535,7 +541,8 @@ class UpdateRigidBodyWorld(bpy.types.Operator):
     def execute(self, context):
         scene = context.scene
         scene_objs = set(scene.objects)
-        scene_objs.union(o for x in scene.objects if x.instance_type == "COLLECTION" and x.instance_collection for o in x.instance_collection.objects)
+        scene_objs.union(o for x in scene.objects if x.instance_type == "COLLECTION" and x.instance_collection for o in
+                         x.instance_collection.objects)
 
         def _update_group(obj, group):
             if obj in scene_objs:

@@ -3,21 +3,21 @@ import bpy
 import mathutils
 import statistics
 
-from .. import common as Common
+from .bones import get_bone, bone_lookup, check_bone
 from .common import get_body_meshes, ArmatureOperator, temp_ensure_enabled
 from .posemode import start_pose_mode_with_reset, apply_pose_to_rest
-from .bones import get_bone, bone_lookup, check_bone
+from .. import common as Common
 from ..register import register_wrap
 
 
 def scale_torso(context, ref_arm, scale_arm):
     # Match scale to ref's neck and upper legs
     scale_leg_center = (
-        get_bone("left_leg", scale_arm).head + get_bone("right_leg", scale_arm).head
-    ) / 2
+                               get_bone("left_leg", scale_arm).head + get_bone("right_leg", scale_arm).head
+                       ) / 2
     ref_leg_center = (
-        get_bone("left_leg", ref_arm).head + get_bone("right_leg", ref_arm).head
-    ) / 2
+                             get_bone("left_leg", ref_arm).head + get_bone("right_leg", ref_arm).head
+                     ) / 2
 
     translation = ref_leg_center - scale_leg_center
     hips = get_bone("hips", scale_arm)
@@ -29,20 +29,20 @@ def scale_torso(context, ref_arm, scale_arm):
     start_pose_mode_with_reset(scale_arm)
 
     scale_leg_center = (
-        get_bone("left_leg", scale_arm).head + get_bone("right_leg", scale_arm).head
-    ) / 2
+                               get_bone("left_leg", scale_arm).head + get_bone("right_leg", scale_arm).head
+                       ) / 2
     ref_leg_center = (
-        get_bone("left_leg", ref_arm).head + get_bone("right_leg", ref_arm).head
-    ) / 2
+                             get_bone("left_leg", ref_arm).head + get_bone("right_leg", ref_arm).head
+                     ) / 2
 
     scale_shoulder_center = (
-        get_bone("left_shoulder", scale_arm).head
-        + get_bone("right_shoulder", scale_arm).head
-    ) / 2
+                                    get_bone("left_shoulder", scale_arm).head
+                                    + get_bone("right_shoulder", scale_arm).head
+                            ) / 2
     ref_shoulder_center = (
-        get_bone("left_shoulder", ref_arm).head
-        + get_bone("right_shoulder", ref_arm).head
-    ) / 2
+                                  get_bone("left_shoulder", ref_arm).head
+                                  + get_bone("right_shoulder", ref_arm).head
+                          ) / 2
 
     scale_torso_len = (scale_shoulder_center - ref_leg_center).length
     ref_torso_len = (ref_shoulder_center - ref_leg_center).length
@@ -57,11 +57,11 @@ def scale_torso(context, ref_arm, scale_arm):
     start_pose_mode_with_reset(scale_arm)
 
     scale_leg_center = (
-        get_bone("left_leg", scale_arm).head + get_bone("right_leg", scale_arm).head
-    ) / 2
+                               get_bone("left_leg", scale_arm).head + get_bone("right_leg", scale_arm).head
+                       ) / 2
     ref_leg_center = (
-        get_bone("left_leg", ref_arm).head + get_bone("right_leg", ref_arm).head
-    ) / 2
+                             get_bone("left_leg", ref_arm).head + get_bone("right_leg", ref_arm).head
+                     ) / 2
 
     translation = ref_leg_center - scale_leg_center
     hips = get_bone("hips", scale_arm)
@@ -70,20 +70,20 @@ def scale_torso(context, ref_arm, scale_arm):
 
     # Correction for lining up the knees and shoulders. If the base is the same it's a no-op.
     hip_scale = (
-        get_bone("left_leg", ref_arm).head - get_bone("right_leg", ref_arm).head
-    ).length / (
-        get_bone("left_leg", scale_arm).head - get_bone("right_leg", scale_arm).head
-    ).length
+                        get_bone("left_leg", ref_arm).head - get_bone("right_leg", ref_arm).head
+                ).length / (
+                        get_bone("left_leg", scale_arm).head - get_bone("right_leg", scale_arm).head
+                ).length
     get_bone("hips", scale_arm).scale = (hip_scale, 1.0, 1.0)
     bpy.context.view_layer.update()
 
     chest_scale = (
-        get_bone("left_shoulder", ref_arm).head
-        - get_bone("right_shoulder", ref_arm).head
-    ).length / (
-        get_bone("left_shoulder", scale_arm).head
-        - get_bone("right_shoulder", scale_arm).head
-    ).length
+                          get_bone("left_shoulder", ref_arm).head
+                          - get_bone("right_shoulder", ref_arm).head
+                  ).length / (
+                          get_bone("left_shoulder", scale_arm).head
+                          - get_bone("right_shoulder", scale_arm).head
+                  ).length
 
     get_bone("left_shoulder", scale_arm).parent.scale = (chest_scale, 1.0, 1.0)
     # Try not to scale the head
@@ -96,13 +96,13 @@ def scale_torso(context, ref_arm, scale_arm):
     # Rotate the whole model to move the shoulders back a little, counter rotating the
     # neck so the head stays as vertical as it was before.
     scale_shoulder_center = (
-        get_bone("left_shoulder", scale_arm).head
-        + get_bone("right_shoulder", scale_arm).head
-    ) / 2
+                                    get_bone("left_shoulder", scale_arm).head
+                                    + get_bone("right_shoulder", scale_arm).head
+                            ) / 2
     ref_shoulder_center = (
-        get_bone("left_shoulder", ref_arm).head
-        + get_bone("right_shoulder", ref_arm).head
-    ) / 2
+                                  get_bone("left_shoulder", ref_arm).head
+                                  + get_bone("right_shoulder", ref_arm).head
+                          ) / 2
 
     spine = get_bone("hips", scale_arm)
     v1 = (ref_shoulder_center - spine.head).normalized()
@@ -132,11 +132,11 @@ def get_scaling_rotations(ref_bone, scale_bone):
     for s_child in scale_bone.children:
         for r_child in ref_bone.children:
             if s_child.name == r_child.name or (
-                bone_lookup(s_child.name) == bone_lookup(r_child.name)
-                and bone_lookup(r_child.name) is not None
+                    bone_lookup(s_child.name) == bone_lookup(r_child.name)
+                    and bone_lookup(r_child.name) is not None
             ):
                 scale = (r_child.head - ref_bone.head).length / (
-                    s_child.head - scale_bone.head
+                        s_child.head - scale_bone.head
                 ).length
                 child_target_scales.append(scale)
 
@@ -147,7 +147,7 @@ def get_scaling_rotations(ref_bone, scale_bone):
 
                 # For the wrist bone, always scale to the middle finger if available
                 if "wrist" in (bone_lookup(scale_bone.name) or "") and "middle" in (
-                    bone_lookup(s_child.name) or ""
+                        bone_lookup(s_child.name) or ""
                 ):
                     starting_rotation = v1.rotation_difference(v2)
                     return [scale], [starting_rotation]
@@ -158,7 +158,7 @@ def get_scaling_rotations(ref_bone, scale_bone):
 def align_bones(ref_bone, scale_bone, arm_thickness, leg_thickness, parent_scale):
     ref_oloc = ref_bone.matrix.decompose()[0]
     scale_oloc = (
-        scale_bone.matrix @ mathutils.Matrix.Translation(scale_bone.location)
+            scale_bone.matrix @ mathutils.Matrix.Translation(scale_bone.location)
     ).decompose()[0]
     if (ref_oloc - scale_oloc).length > 0.01:
         print(
@@ -215,8 +215,8 @@ def align_bones(ref_bone, scale_bone, arm_thickness, leg_thickness, parent_scale
     for s_child in scale_bone.children:
         for r_child in ref_bone.children:
             if s_child.name == r_child.name or (
-                bone_lookup(s_child.name) is not None
-                and bone_lookup(s_child.name) == bone_lookup(r_child.name)
+                    bone_lookup(s_child.name) is not None
+                    and bone_lookup(s_child.name) == bone_lookup(r_child.name)
             ):
                 if not bone_lookup(s_child.name):
                     print(

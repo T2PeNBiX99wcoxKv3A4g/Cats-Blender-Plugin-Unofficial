@@ -31,6 +31,7 @@ if "bpy" not in locals():
 else:
     # print('RELOAD TOOLS!!')
     import importlib
+
     importlib.reload(compat)
     importlib.reload(register)  # Has to be first
     importlib.reload(armature)

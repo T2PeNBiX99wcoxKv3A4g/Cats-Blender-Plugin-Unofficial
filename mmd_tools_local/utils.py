@@ -1,15 +1,14 @@
 # Copyright 2012 MMD Tools authors
 # This file is part of MMD Tools.
 
+import bpy
 import logging
+import numpy as np
 import os
 import re
 import string
 from collections import defaultdict
 from typing import Callable, Optional, Set
-
-import bpy
-import numpy as np
 
 from .bpyutils import FnContext
 
@@ -85,11 +84,11 @@ __CONVERT_R_TO_NAME_REGEXP = re.compile(r"(?P<lr>(?P<separator>[._])[rR])(?P<aft
 def convertLRToName(name):
     match = __CONVERT_L_TO_NAME_REGEXP.search(name)
     if match:
-        return f"左{name[0 : match.start()]}{match['after']}{name[match.end() :]}"
+        return f"左{name[0: match.start()]}{match['after']}{name[match.end():]}"
 
     match = __CONVERT_R_TO_NAME_REGEXP.search(name)
     if match:
-        return f"右{name[0 : match.start()]}{match['after']}{name[match.end() :]}"
+        return f"右{name[0: match.start()]}{match['after']}{name[match.end():]}"
 
     return name
 

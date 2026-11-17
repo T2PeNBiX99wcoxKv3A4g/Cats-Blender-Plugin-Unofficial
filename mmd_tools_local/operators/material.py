@@ -1,11 +1,10 @@
 # Copyright 2014 MMD Tools authors
 # This file is part of MMD Tools.
 
-from collections import defaultdict
-
 import bpy
 from bpy.props import BoolProperty, EnumProperty, StringProperty
 from bpy.types import Operator
+from collections import defaultdict
 
 from .. import cycles_converter
 from ..core.exceptions import MaterialNotFoundError
@@ -50,7 +49,8 @@ class ConvertMaterialsForCycles(Operator):
             self.report({"ERROR"}, " * Failed to change to Cycles render engine.")
             return {"CANCELLED"}
         for obj in (x for x in context.selected_objects if x.type == "MESH"):
-            cycles_converter.convertToCyclesShader(obj, use_principled=self.use_principled, clean_nodes=self.clean_nodes)
+            cycles_converter.convertToCyclesShader(obj, use_principled=self.use_principled,
+                                                   clean_nodes=self.clean_nodes)
         return {"FINISHED"}
 
 
@@ -91,7 +91,8 @@ class ConvertMaterials(Operator):
         for obj in context.selected_objects:
             if obj.type != "MESH":
                 continue
-            cycles_converter.convertToBlenderShader(obj, use_principled=self.use_principled, clean_nodes=self.clean_nodes, subsurface=self.subsurface)
+            cycles_converter.convertToBlenderShader(obj, use_principled=self.use_principled,
+                                                    clean_nodes=self.clean_nodes, subsurface=self.subsurface)
         return {"FINISHED"}
 
 
@@ -182,7 +183,8 @@ class MergeMaterials(Operator):
 
         for details in merge_details:
             sources_text = ", ".join(details["sources"])
-            self.report({"INFO"}, f"Same Texture '{details['texture']}': Merged materials [{sources_text}] into '{details['target']}'")
+            self.report({"INFO"},
+                        f"Same Texture '{details['texture']}': Merged materials [{sources_text}] into '{details['target']}'")
 
 
 class ConvertBSDFMaterials(Operator):
@@ -379,7 +381,8 @@ class MoveMaterialDown(Operator):
     @classmethod
     def poll(cls, context):
         obj = context.active_object
-        return obj is not None and obj.type == "MESH" and obj.mmd_type == "NONE" and obj.active_material_index < len(obj.material_slots) - 1
+        return obj is not None and obj.type == "MESH" and obj.mmd_type == "NONE" and obj.active_material_index < len(
+            obj.material_slots) - 1
 
     def execute(self, context):
         obj = context.active_object
@@ -611,7 +614,8 @@ class EdgePreviewSetup(Operator):
 
     def __get_edge_preview_shader(self):
         group_name = "MMDEdgePreview"
-        shader = bpy.data.node_groups.get(group_name, None) or bpy.data.node_groups.new(name=group_name, type="ShaderNodeTree")
+        shader = bpy.data.node_groups.get(group_name, None) or bpy.data.node_groups.new(name=group_name,
+                                                                                        type="ShaderNodeTree")
         if len(shader.nodes):
             return shader
 

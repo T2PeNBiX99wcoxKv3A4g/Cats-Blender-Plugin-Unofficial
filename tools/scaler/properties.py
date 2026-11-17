@@ -1,10 +1,10 @@
 # MIT License
-from bpy.types import Scene
 from bpy.props import BoolProperty, EnumProperty, FloatProperty
+from bpy.types import Scene
 
+from .bones import BONE_LIST, get_bone_enum_items
 from .. import common as Common
 from ..common import wrap_dynamic_enum_items
-from .bones import BONE_LIST, get_bone_enum_items
 
 
 def register_scene_properties():

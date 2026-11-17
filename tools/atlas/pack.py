@@ -198,9 +198,9 @@ def _next_power_of_two(value: int) -> int:
 
 
 def apply_size_mode(
-    size: Tuple[int, int],
-    mode: str,
-    custom: Tuple[int, int] = (4096, 4096),
+        size: Tuple[int, int],
+        mode: str,
+        custom: Tuple[int, int] = (4096, 4096),
 ) -> Tuple[int, int]:
     """Expand a packed size according to the chosen sizing strategy.
 
@@ -236,10 +236,10 @@ def apply_size_mode(
 
 
 def cell_sizes_for_budget(
-    requests: Dict[object, Tuple[int, int]],
-    cap: Tuple[int, int],
-    padding: int,
-    min_side: int = 4,
+        requests: Dict[object, Tuple[int, int]],
+        cap: Tuple[int, int],
+        padding: int,
+        min_side: int = 4,
 ) -> Dict[object, Tuple[int, int]]:
     """Shrink requested cell sizes until the pack fits inside ``cap``."""
     if not requests:
@@ -262,7 +262,7 @@ def cell_sizes_for_budget(
         if width <= cap[0] and height <= cap[1]:
             return scaled
         if all(
-            w <= min_side and h <= min_side for w, h in scaled.values()
+                w <= min_side and h <= min_side for w, h in scaled.values()
         ):
             return scaled
         scale *= min(cap[0] / float(width), cap[1] / float(height))

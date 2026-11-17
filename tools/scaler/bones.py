@@ -143,6 +143,7 @@ BONE_LIST = [
 
 NO_OVERRIDE = "_None"
 
+
 def get_bone_enum_items(self, context):
     """Items callback shared by every override EnumProperty and the bone-selection
     search operator: '_None' plus every bone on the current Cats armature."""

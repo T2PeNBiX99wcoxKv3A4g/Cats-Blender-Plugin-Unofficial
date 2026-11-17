@@ -5,8 +5,8 @@ from difflib import SequenceMatcher
 
 from . import common as Common
 from .register import register_wrap
-from .. import globs
 from .translations import t
+from .. import globs
 
 
 @register_wrap
@@ -63,7 +63,7 @@ class RootButton(bpy.types.Operator):
 
         self.report({'INFO'}, t('RootButton.success'))
 
-        return{'FINISHED'}
+        return {'FINISHED'}
 
 
 def get_parent_root_bones(self, context):
@@ -142,7 +142,8 @@ def get_parent_root_bones(self, context):
     for rootbone in bone_groups:
         # NOTE: user probably doesn't want to parent bones together that have less then 2 bones
         if len(bone_groups[rootbone]) >= 2:
-            choices.append((rootbone, rootbone.replace('_R', '').replace('_L', '') + ' (' + str(len(bone_groups[rootbone])) + ' bones)', rootbone))
+            choices.append((rootbone, rootbone.replace('_R', '').replace('_L', '') + ' (' + str(
+                len(bone_groups[rootbone])) + ' bones)', rootbone))
             bone_groups_tmp[rootbone] = bone_groups[rootbone]
 
     # set cache
@@ -167,4 +168,4 @@ class RefreshRootButton(bpy.types.Operator):
 
         self.report({'INFO'}, t('RefreshRootButton.success'))
 
-        return{'FINISHED'}
+        return {'FINISHED'}

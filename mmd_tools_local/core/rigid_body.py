@@ -1,11 +1,10 @@
 # Copyright 2014 MMD Tools authors
 # This file is part of MMD Tools.
 
-import logging
-from typing import List, Optional
-
 import bpy
+import logging
 from mathutils import Euler, Vector
+from typing import List, Optional
 
 from ..bpyutils import FnContext, Props
 
@@ -63,7 +62,8 @@ class RigidBodyMaterial:
         if material_name not in bpy.data.materials:
             mat = bpy.data.materials.new(material_name)
             color = cls.COLORS[number]
-            mat.diffuse_color[:3] = [((0xFF0000 & color) >> 16) / float(255), ((0x00FF00 & color) >> 8) / float(255), (0x0000FF & color) / float(255)]
+            mat.diffuse_color[:3] = [((0xFF0000 & color) >> 16) / float(255), ((0x00FF00 & color) >> 8) / float(255),
+                                     (0x0000FF & color) / float(255)]
             mat.specular_intensity = 0
             if len(mat.diffuse_color) > 3:
                 mat.diffuse_color[3] = 0.5
@@ -86,7 +86,8 @@ class RigidBodyMaterial:
 
 class FnRigidBody:
     @staticmethod
-    def new_rigid_body_objects(context: bpy.types.Context, parent_object: bpy.types.Object, count: int) -> List[bpy.types.Object]:
+    def new_rigid_body_objects(context: bpy.types.Context, parent_object: bpy.types.Object, count: int) -> List[
+        bpy.types.Object]:
         if count < 1:
             return []
 
@@ -99,7 +100,8 @@ class FnRigidBody:
 
     @staticmethod
     def new_rigid_body_object(context: bpy.types.Context, parent_object: bpy.types.Object) -> bpy.types.Object:
-        obj = FnContext.new_and_link_object(context, name="Rigidbody", object_data=bpy.data.meshes.new(name="Rigidbody"))
+        obj = FnContext.new_and_link_object(context, name="Rigidbody",
+                                            object_data=bpy.data.meshes.new(name="Rigidbody"))
         obj.parent = parent_object
         obj.mmd_type = "RIGID_BODY"
         obj.rotation_mode = "YXZ"
@@ -115,22 +117,22 @@ class FnRigidBody:
 
     @staticmethod
     def setup_rigid_body_object(
-        obj: bpy.types.Object,
-        shape_type: str,
-        location: Vector,
-        rotation: Euler,
-        size: Vector,
-        dynamics_type: str,
-        collision_group_number: Optional[int] = None,
-        collision_group_mask: Optional[List[bool]] = None,
-        name: Optional[str] = None,
-        name_e: Optional[str] = None,
-        bone: Optional[str] = None,
-        friction: Optional[float] = None,
-        mass: Optional[float] = None,
-        angular_damping: Optional[float] = None,
-        linear_damping: Optional[float] = None,
-        bounce: Optional[float] = None,
+            obj: bpy.types.Object,
+            shape_type: str,
+            location: Vector,
+            rotation: Euler,
+            size: Vector,
+            dynamics_type: str,
+            collision_group_number: Optional[int] = None,
+            collision_group_mask: Optional[List[bool]] = None,
+            name: Optional[str] = None,
+            name_e: Optional[str] = None,
+            bone: Optional[str] = None,
+            friction: Optional[float] = None,
+            mass: Optional[float] = None,
+            angular_damping: Optional[float] = None,
+            linear_damping: Optional[float] = None,
+            bounce: Optional[float] = None,
     ) -> bpy.types.Object:
         obj.location = location
         obj.rotation_euler = rotation
@@ -197,7 +199,8 @@ class FnRigidBody:
         raise ValueError(f"Invalid shape type: {shape}")
 
     @staticmethod
-    def new_joint_object(context: bpy.types.Context, parent_object: bpy.types.Object, empty_display_size: float) -> bpy.types.Object:
+    def new_joint_object(context: bpy.types.Context, parent_object: bpy.types.Object,
+                         empty_display_size: float) -> bpy.types.Object:
         obj = FnContext.new_and_link_object(context, name="Joint", object_data=None)
         obj.parent = parent_object
         obj.mmd_type = "JOINT"
@@ -259,7 +262,8 @@ class FnRigidBody:
         return obj
 
     @staticmethod
-    def new_joint_objects(context: bpy.types.Context, parent_object: bpy.types.Object, count: int, empty_display_size: float) -> List[bpy.types.Object]:
+    def new_joint_objects(context: bpy.types.Context, parent_object: bpy.types.Object, count: int,
+                          empty_display_size: float) -> List[bpy.types.Object]:
         if count < 1:
             return []
 
@@ -272,19 +276,19 @@ class FnRigidBody:
 
     @staticmethod
     def setup_joint_object(
-        obj: bpy.types.Object,
-        location: Vector,
-        rotation: Euler,
-        rigid_a: bpy.types.Object,
-        rigid_b: bpy.types.Object,
-        maximum_location: Vector,
-        minimum_location: Vector,
-        maximum_rotation: Euler,
-        minimum_rotation: Euler,
-        spring_angular: Vector,
-        spring_linear: Vector,
-        name: str,
-        name_e: Optional[str] = None,
+            obj: bpy.types.Object,
+            location: Vector,
+            rotation: Euler,
+            rigid_a: bpy.types.Object,
+            rigid_b: bpy.types.Object,
+            maximum_location: Vector,
+            minimum_location: Vector,
+            maximum_rotation: Euler,
+            minimum_rotation: Euler,
+            spring_angular: Vector,
+            spring_linear: Vector,
+            name: str,
+            name_e: Optional[str] = None,
     ) -> bpy.types.Object:
         obj.name = f"J.{name}"
 

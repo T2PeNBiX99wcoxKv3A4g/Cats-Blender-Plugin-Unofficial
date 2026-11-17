@@ -4,10 +4,10 @@ import bpy
 
 from . import common as Common
 from .register import register_wrap
-from .. import globs
-from .translations import t
-
 from .rootbone import get_parent_root_bones
+from .translations import t
+from .. import globs
+
 
 @register_wrap
 class LoadBonesButton(bpy.types.Operator):
@@ -21,16 +21,15 @@ class LoadBonesButton(bpy.types.Operator):
         return Common.get_armature() is not None
 
     def execute(self, context):
-        
         globs.root_bones_choices = {}
         choices = get_parent_root_bones(self, context)
-        
+
         # Use the wrap_dynamic_enum_items helper
         wrapped_items = Common.wrap_dynamic_enum_items(
             lambda s, c: choices,
             'merge_bone'
         )
-        
+
         bpy.types.Scene.merge_bone = bpy.props.EnumProperty(
             name=t('Scene.merge_bone.label'),
             description=t('Scene.merge_bone.desc'),
@@ -49,7 +48,7 @@ class BoneMergeButton(bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        return (context.scene.merge_bone in globs.root_bones and 
+        return (context.scene.merge_bone in globs.root_bones and
                 Common.is_enum_non_empty(context.scene.merge_mesh))
 
     def execute(self, context):
@@ -121,7 +120,7 @@ class BoneMergeButton(bpy.types.Operator):
             if bone.parent is not None:
                 parent_name = bone.parent.name
 
-                print('Merging ' + bone_name + ' into ' + parent_name+ ' with ratio ' + str(i))
+                print('Merging ' + bone_name + ' into ' + parent_name + ' with ratio ' + str(i))
 
                 # Mix the weights
                 Common.set_default_stage()

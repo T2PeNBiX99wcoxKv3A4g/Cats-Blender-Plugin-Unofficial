@@ -109,7 +109,8 @@ class FlipPose(Operator):
 
     @staticmethod
     def __matrix_compose(loc, rot, scale):
-        return (Matrix.Translation(loc) @ rot.to_matrix().to_4x4()) @ Matrix([(scale[0], 0, 0, 0), (0, scale[1], 0, 0), (0, 0, scale[2], 0), (0, 0, 0, 1)])
+        return (Matrix.Translation(loc) @ rot.to_matrix().to_4x4()) @ Matrix(
+            [(scale[0], 0, 0, 0), (0, scale[1], 0, 0), (0, 0, scale[2], 0), (0, 0, 0, 1)])
 
     @classmethod
     def __flip_pose(cls, matrix_basis, bone_src, bone_dest):

@@ -1,10 +1,9 @@
 # Copyright 2018 MMD Tools authors
 # This file is part of MMD Tools.
 
-from typing import Set
-
 import bpy
 from bpy.types import Operator
+from typing import Set
 
 from ..core.model import FnModel
 from ..core.sdef import FnSDEF

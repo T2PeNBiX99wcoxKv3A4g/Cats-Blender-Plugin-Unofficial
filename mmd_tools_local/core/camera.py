@@ -1,12 +1,11 @@
 # Copyright 2014 MMD Tools authors
 # This file is part of MMD Tools.
 
+import bpy
 import logging
 import math
-from typing import Optional
-
-import bpy
 from mathutils import Matrix, Vector
+from typing import Optional
 
 from ..bpyutils import FnContext, Props
 from ..compat import action_compat
@@ -71,7 +70,8 @@ class FnCamera:
             d.expression = expression
 
         __add_driver(camera_object.data, "ortho_scale", "25*abs($empty_distance)/45")
-        __add_driver(camera_object, "rotation_euler", "pi if $is_perspective == False and $empty_distance > 1e-5 else 0", index=1)
+        __add_driver(camera_object, "rotation_euler",
+                     "pi if $is_perspective == False and $empty_distance > 1e-5 else 0", index=1)
         __add_driver(camera_object.data, "type", "not $is_perspective")
         __add_driver(camera_object.data, "lens", "$sensor_height/tan($angle/2)/2")
 
@@ -225,7 +225,6 @@ class MMDCamera:
 
         _target_override_func = None
         if cameraTarget is None:
-
             def _target_override_func(camObj):
                 return camObj.data.dof.focus_object or camObj
 
@@ -249,7 +248,8 @@ class MMDCamera:
 
         if bake_mode == "ALL":
             baked_curves = [parent_action.fcurves.new(data_path="location", index=i) for i in range(3)]  # x, y, z
-            baked_curves.extend(parent_action.fcurves.new(data_path="rotation_euler", index=i) for i in range(3))  # rx, ry, rz
+            baked_curves.extend(
+                parent_action.fcurves.new(data_path="rotation_euler", index=i) for i in range(3))  # rx, ry, rz
             baked_curves.append(parent_action.fcurves.new(data_path="mmd_camera.angle"))  # fov
             baked_curves.append(parent_action.fcurves.new(data_path="mmd_camera.is_perspective"))  # persp
             baked_curves.append(distance_action.fcurves.new(data_path="location", index=1))  # dis
@@ -257,7 +257,8 @@ class MMDCamera:
             for c in baked_curves:
                 c.keyframe_points.add(frame_count)
 
-            for f, x, y, z, rx, ry, rz, fov, persp, dis in zip(frames, *(c.keyframe_points for c in baked_curves), strict=False):
+            for f, x, y, z, rx, ry, rz, fov, persp, dis in zip(frames, *(c.keyframe_points for c in baked_curves),
+                                                               strict=False):
                 scene.frame_set(f)
                 if _camera_override_func:
                     cameraObj = _camera_override_func()
@@ -293,7 +294,8 @@ class MMDCamera:
             mmd_cam_root.mmd_camera.angle = MMDCamera._lens_to_angle(cameraObj, factor)
             mmd_cam_root.mmd_camera.persp = cameraObj.data.type != "ORTHO"
 
-            baked_curves = [parent_action.fcurves.new(data_path="rotation_euler", index=i) for i in range(3)]  # rx, ry, rz
+            baked_curves = [parent_action.fcurves.new(data_path="rotation_euler", index=i) for i in
+                            range(3)]  # rx, ry, rz
 
             for c in baked_curves:
                 c.keyframe_points.add(frame_count)
@@ -321,9 +323,11 @@ class MMDCamera:
                     dp = fcurve.data_path
                     idx = fcurve.array_index
                     if dp == "lens":
-                        copy_fcurve(fcurve, parent_action, "mmd_camera.angle", transform_func=lambda v: MMDCamera._lens_to_angle(cameraObj, factor, lens_val=v))
+                        copy_fcurve(fcurve, parent_action, "mmd_camera.angle",
+                                    transform_func=lambda v: MMDCamera._lens_to_angle(cameraObj, factor, lens_val=v))
                     elif dp == "type":
-                        copy_fcurve(fcurve, parent_action, "mmd_camera.is_perspective", transform_func=lambda v: 0.0 if round(v) == 1 else 1.0)
+                        copy_fcurve(fcurve, parent_action, "mmd_camera.is_perspective",
+                                    transform_func=lambda v: 0.0 if round(v) == 1 else 1.0)
 
         FnCamera.add_drivers(mmd_cam)
         action_compat.assign_action_to_datablock(mmd_cam_root, parent_action)

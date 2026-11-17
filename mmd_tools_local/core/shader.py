@@ -1,9 +1,8 @@
 # Copyright 2019 MMD Tools authors
 # This file is part of MMD Tools.
 
-from typing import Optional, Tuple, cast
-
 import bpy
+from typing import Optional, Tuple, cast
 
 
 class _NodeTreeUtils:
@@ -64,13 +63,15 @@ class _NodeGroupUtils(_NodeTreeUtils):
     @property
     def node_input(self) -> bpy.types.NodeGroupInput:
         if not self.__node_input:
-            self.__node_input = cast("bpy.types.NodeGroupInput", self._find_node("NodeGroupInput") or self.new_node("NodeGroupInput", (-2, 0)))
+            self.__node_input = cast("bpy.types.NodeGroupInput",
+                                     self._find_node("NodeGroupInput") or self.new_node("NodeGroupInput", (-2, 0)))
         return self.__node_input
 
     @property
     def node_output(self) -> bpy.types.NodeGroupOutput:
         if not self.__node_output:
-            self.__node_output = cast("bpy.types.NodeGroupOutput", self._find_node("NodeGroupOutput") or self.new_node("NodeGroupOutput", (2, 0)))
+            self.__node_output = cast("bpy.types.NodeGroupOutput",
+                                      self._find_node("NodeGroupOutput") or self.new_node("NodeGroupOutput", (2, 0)))
         return self.__node_output
 
     def hide_nodes(self, hide_sockets=True):
@@ -93,7 +94,8 @@ class _NodeGroupUtils(_NodeTreeUtils):
     def __new_io(self, in_out, io_sockets, io_name, socket, default_val=None, min_max=None, socket_type=None):
         if io_name not in io_sockets:
             idname = socket_type or socket.bl_idname
-            interface_socket = self.shader.interface.new_socket(name=io_name, in_out=in_out, socket_type=SOCKET_TYPE_MAPPING.get(idname, idname))
+            interface_socket = self.shader.interface.new_socket(name=io_name, in_out=in_out,
+                                                                socket_type=SOCKET_TYPE_MAPPING.get(idname, idname))
             if idname in SOCKET_SUBTYPE_MAPPING:
                 interface_socket.subtype = SOCKET_SUBTYPE_MAPPING.get(idname, "")
             if not min_max:
@@ -243,7 +245,8 @@ class _MaterialMorph:
     @classmethod
     def __get_shader(cls, morph_type):
         group_name = "MMDMorph" + morph_type
-        shader = bpy.data.node_groups.get(group_name, None) or bpy.data.node_groups.new(name=group_name, type="ShaderNodeTree")
+        shader = bpy.data.node_groups.get(group_name, None) or bpy.data.node_groups.new(name=group_name,
+                                                                                        type="ShaderNodeTree")
         if len(shader.nodes):
             return shader
 
@@ -308,11 +311,14 @@ class _MaterialMorph:
         separate_reflect_alpha_edge = ng.new_node("ShaderNodeSeparateColor", (pos_x + 2, -1.5))
         separate_reflect_alpha_edge.mode = "RGB"
 
-        __add_sockets("Reflect", combine_reflect1_alpha1_edge1.inputs[0], combine_reflect2_alpha2_edge2.inputs[0], separate_reflect_alpha_edge.outputs[0])
-        __add_sockets("Alpha", combine_reflect1_alpha1_edge1.inputs[1], combine_reflect2_alpha2_edge2.inputs[1], separate_reflect_alpha_edge.outputs[1])
+        __add_sockets("Reflect", combine_reflect1_alpha1_edge1.inputs[0], combine_reflect2_alpha2_edge2.inputs[0],
+                      separate_reflect_alpha_edge.outputs[0])
+        __add_sockets("Alpha", combine_reflect1_alpha1_edge1.inputs[1], combine_reflect2_alpha2_edge2.inputs[1],
+                      separate_reflect_alpha_edge.outputs[1])
 
         __blend_color_add("Edge", (pos_x, -1.0), " RGB")
-        __add_sockets("Edge", combine_reflect1_alpha1_edge1.inputs[2], combine_reflect2_alpha2_edge2.inputs[2], separate_reflect_alpha_edge.outputs[2], tag=" A")
+        __add_sockets("Edge", combine_reflect1_alpha1_edge1.inputs[2], combine_reflect2_alpha2_edge2.inputs[2],
+                      separate_reflect_alpha_edge.outputs[2], tag=" A")
 
         node_mix = ng.new_mix_node("MULTIPLY" if use_mul else "ADD", (pos_x + 1, -1.5))
         links.new(node_input.outputs["Fac"], node_mix.inputs[0])
@@ -334,15 +340,18 @@ class _MaterialMorph:
         links.new(node_mix.outputs[0], separate_basea_toona_spherea.inputs[0])
 
         base_rgb = __blend_color_add("Base", (pos_x, -2.5), " RGB")
-        __add_sockets("Base", combine_base1a_toon1a_sphere1a.inputs[0], combine_base2a_toon2a_sphere2a.inputs[0], separate_basea_toona_spherea.outputs[0], tag=" A")
+        __add_sockets("Base", combine_base1a_toon1a_sphere1a.inputs[0], combine_base2a_toon2a_sphere2a.inputs[0],
+                      separate_basea_toona_spherea.outputs[0], tag=" A")
         __blend_tex_color("Base", (pos_x + 3, -2.5), base_rgb, separate_basea_toona_spherea.outputs[0])
 
         toon_rgb = __blend_color_add("Toon", (pos_x, -3.0), " RGB")
-        __add_sockets("Toon", combine_base1a_toon1a_sphere1a.inputs[1], combine_base2a_toon2a_sphere2a.inputs[1], separate_basea_toona_spherea.outputs[1], tag=" A")
+        __add_sockets("Toon", combine_base1a_toon1a_sphere1a.inputs[1], combine_base2a_toon2a_sphere2a.inputs[1],
+                      separate_basea_toona_spherea.outputs[1], tag=" A")
         __blend_tex_color("Toon", (pos_x + 3, -3.0), toon_rgb, separate_basea_toona_spherea.outputs[1])
 
         sphere_rgb = __blend_color_add("Sphere", (pos_x, -3.5), " RGB")
-        __add_sockets("Sphere", combine_base1a_toon1a_sphere1a.inputs[2], combine_base2a_toon2a_sphere2a.inputs[2], separate_basea_toona_spherea.outputs[2], tag=" A")
+        __add_sockets("Sphere", combine_base1a_toon1a_sphere1a.inputs[2], combine_base2a_toon2a_sphere2a.inputs[2],
+                      separate_basea_toona_spherea.outputs[2], tag=" A")
         __blend_tex_color("Sphere", (pos_x + 3, -3.5), sphere_rgb, separate_basea_toona_spherea.outputs[2])
 
         ng.hide_nodes()

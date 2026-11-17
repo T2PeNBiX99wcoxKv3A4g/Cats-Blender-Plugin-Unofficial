@@ -169,7 +169,8 @@ class ActionFCurvesCompatibility:
 
         return channelbags[0]
 
-    def new(self, data_path: str, index: int = 0, group_name: str = "", action_group: str = "", id_type: str = "OBJECT"):
+    def new(self, data_path: str, index: int = 0, group_name: str = "", action_group: str = "",
+            id_type: str = "OBJECT"):
         """Create a new F-Curve (returns existing one if already exists)
 
         Note: For compatibility with legacy code, when an F-Curve already exists,
@@ -212,7 +213,8 @@ class ActionFCurvesCompatibility:
                     return existing
             raise
 
-    def ensure(self, data_path: str, index: int = 0, group_name: str = "", action_group: str = "", id_type: str = "OBJECT"):
+    def ensure(self, data_path: str, index: int = 0, group_name: str = "", action_group: str = "",
+               id_type: str = "OBJECT"):
         """Ensure F-Curve exists
 
         Args:
@@ -299,7 +301,8 @@ def get_action_groups(action: bpy.types.Action):
     return action.groups
 
 
-def new_fcurve(action_obj: bpy.types.Action, data_path: str, index: int = 0, group_name: str = "", id_type: str = "OBJECT"):
+def new_fcurve(action_obj: bpy.types.Action, data_path: str, index: int = 0, group_name: str = "",
+               id_type: str = "OBJECT"):
     """
     Create an F-Curve in a version-independent way.
     Handles the `id_type` argument, available only in Blender 5.0+.

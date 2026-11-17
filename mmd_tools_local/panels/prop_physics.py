@@ -44,7 +44,8 @@ class MMDRigidPanel(bpy.types.Panel):
         else:
             row = c.row(align=True)
             armature = FnModel.find_armature_object(root)
-            row.prop_search(obj.mmd_rigid, "bone", text="", search_data=armature.pose, search_property="bones", icon="BONE_DATA")
+            row.prop_search(obj.mmd_rigid, "bone", text="", search_data=armature.pose, search_property="bones",
+                            icon="BONE_DATA")
 
         c = layout.column(align=True)
         c.enabled = obj.mode == "OBJECT"

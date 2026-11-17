@@ -1,13 +1,12 @@
 # Copyright 2021 MMD Tools authors
 # This file is part of MMD Tools.
 
+import bpy
 import time
 
-import bpy
-
+from . import PT_PanelBase
 from ...core.model import FnModel
 from ...core.sdef import FnSDEF
-from . import PT_PanelBase
 
 
 class MMDToolsModelSetupPanel(PT_PanelBase, bpy.types.Panel):
@@ -102,7 +101,8 @@ class MMDToolsModelSetupPanel(PT_PanelBase, bpy.types.Panel):
         if armature_object is None:
             return self.__toggle_items_cache
         pose_bones = armature_object.pose.bones
-        ik_map = {pose_bones[c.subtarget]: (b.bone, c.chain_count, not c.is_valid) for b in pose_bones for c in b.constraints if c.type == "IK" and c.subtarget in pose_bones}
+        ik_map = {pose_bones[c.subtarget]: (b.bone, c.chain_count, not c.is_valid) for b in pose_bones for c in
+                  b.constraints if c.type == "IK" and c.subtarget in pose_bones}
 
         if not ik_map:
             return self.__toggle_items_cache
@@ -113,7 +113,8 @@ class MMDToolsModelSetupPanel(PT_PanelBase, bpy.types.Panel):
         for ik, (b, cnt, err) in ik_map.items():
             px, py, pz = -ik.bone.head_local / base
             bx, by, bz = -b.head_local / base * 0.15
-            groups.setdefault((int(pz), int(bz), int(px**2), -cnt), set()).add(((px, -py, bx), ik))  # (px, pz, -py, bx, bz, -by)
+            groups.setdefault((int(pz), int(bz), int(px ** 2), -cnt), set()).add(
+                ((px, -py, bx), ik))  # (px, pz, -py, bx, bz, -by)
 
         for _, group in sorted(groups.items()):
             for _, ik in sorted(group, key=lambda x: x[0]):
@@ -135,7 +136,8 @@ class MMDToolsModelSetupPanel(PT_PanelBase, bpy.types.Panel):
         col = self.layout.column(align=True)
         col.label(text="Mesh (Experimental):", icon="MESH_DATA")
         grid = col.grid_flow(row_major=True, align=True)
-        grid.row(align=True).operator("mmd_tools_local.separate_by_materials", text="Separate by Materials", icon="MOD_EXPLODE")
+        grid.row(align=True).operator("mmd_tools_local.separate_by_materials", text="Separate by Materials",
+                                      icon="MOD_EXPLODE")
         grid.row(align=True).operator("mmd_tools_local.join_meshes", text="Join", icon="MESH_CUBE")
 
     def draw_material(self, context, mmd_root_object):
@@ -144,10 +146,12 @@ class MMDToolsModelSetupPanel(PT_PanelBase, bpy.types.Panel):
 
         grid = col.grid_flow(row_major=True, align=False)
         row = grid.row(align=True)
-        row.prop(mmd_root_object.mmd_root, "use_toon_texture", text="Toon Texture", toggle=True, icon="SHADING_RENDERED")
+        row.prop(mmd_root_object.mmd_root, "use_toon_texture", text="Toon Texture", toggle=True,
+                 icon="SHADING_RENDERED")
         row.prop(mmd_root_object.mmd_root, "use_sphere_texture", text="Sphere Texture", toggle=True, icon="MATSPHERE")
         row = grid.row(align=True)
-        row.operator("mmd_tools_local.toggle_transparent_materials", text="Show Transparent Material", icon="HIDE_OFF").action = "SHOW"
+        row.operator("mmd_tools_local.toggle_transparent_materials", text="Show Transparent Material",
+                     icon="HIDE_OFF").action = "SHOW"
         row.operator("mmd_tools_local.toggle_transparent_materials", text="", icon="FILE_REFRESH").action = "RESTORE"
         row = grid.row(align=True)
         row.operator("mmd_tools_local.edge_preview_setup", text="Edge Preview", icon="ANTIALIASED").action = "CREATE"
@@ -164,6 +168,7 @@ class MMDToolsModelSetupPanel(PT_PanelBase, bpy.types.Panel):
         col = self.layout.column(align=True)
         col.label(text="Misc:", icon="TOOL_SETTINGS")
         grid = col.grid_flow(row_major=True)
-        grid.row(align=True).operator("mmd_tools_local.global_translation_popup", text="(Experimental) Global Translation")
+        grid.row(align=True).operator("mmd_tools_local.global_translation_popup",
+                                      text="(Experimental) Global Translation")
         grid.row(align=True).operator("mmd_tools_local.change_mmd_ik_loop_factor", text="Change MMD IK Loop Factor")
         grid.row(align=True).operator("mmd_tools_local.clean_duplicated_material_morphs")

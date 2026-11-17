@@ -6,7 +6,6 @@ import logging
 import math
 import os
 import re
-
 from mathutils import Vector
 
 from .. import pmd, pmx

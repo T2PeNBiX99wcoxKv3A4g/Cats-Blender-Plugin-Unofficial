@@ -1,19 +1,4 @@
 # MIT License
-from .tools import atlas as Atlas
-from .tools import common as Common
-from .tools.common import wrap_dynamic_enum_items
-from .tools import eyetracking as Eyetracking
-from .tools import rootbone as Rootbone
-from .tools import settings as Settings
-from .tools import translation_providers as TranslationProviders
-from .tools import translate as Translate
-from .tools import importer as Importer
-from .tools import translations as Translations
-from .tools.translations import t
-from .tools import viseme as Viseme
-from .tools import scaler as Scaler
-
-from bpy.types import Material, Scene
 from bpy.props import (
     BoolProperty,
     CollectionProperty,
@@ -23,6 +8,21 @@ from bpy.props import (
     PointerProperty,
     StringProperty,
 )
+from bpy.types import Material, Scene
+
+from .tools import atlas as Atlas
+from .tools import common as Common
+from .tools import eyetracking as Eyetracking
+from .tools import importer as Importer
+from .tools import rootbone as Rootbone
+from .tools import scaler as Scaler
+from .tools import settings as Settings
+from .tools import translate as Translate
+from .tools import translation_providers as TranslationProviders
+from .tools import translations as Translations
+from .tools import viseme as Viseme
+from .tools.common import wrap_dynamic_enum_items
+from .tools.translations import t
 
 # Names of the properties added by register(), so unregister() removes exactly those
 _registered_scene_props = []
@@ -37,7 +37,8 @@ def register():
     _register_properties()
 
     _registered_scene_props = [name for name in Scene.bl_rna.properties.keys() if name not in scene_props_before]
-    _registered_material_props = [name for name in Material.bl_rna.properties.keys() if name not in material_props_before]
+    _registered_material_props = [name for name in Material.bl_rna.properties.keys() if
+                                  name not in material_props_before]
 
 
 def unregister():
@@ -52,25 +53,25 @@ def _register_properties():
     Scene.remove_rigidbodies_joints_global = BoolProperty(
         name=t('Scene.removerigidbodiesjointsglobal.label'),
         description=t('Scene.removerigidbodiesjointsglobal.desc'),
-        default=True  
-    )  
-         
+        default=True
+    )
+
     Scene.custom_translate_csv_export_dir = StringProperty(
         name=t('Scene.customfoldershapekeycsv.label'),
         description=t('Scene.customfoldershapekeycsv.desc'),
-        subtype = 'DIR_PATH',
+        subtype='DIR_PATH',
         default=Translate.DEFAULT_EXPORTS_DIR
     )
 
     Scene.export_translate_csv = BoolProperty(
         name=t('Scene.shapekeycsv.label'),
         description=t('Scene.shapekeycsv.desc'),
-        default = False
+        default=False
     )
 
     Scene.progress_update = FloatProperty(
         name=t('Scene.progress_update.label'),
-        description=t('Scene.progress_update.desc'), 
+        description=t('Scene.progress_update.desc'),
         default=0.0,
         min=0.0,
         max=100.0,
@@ -82,7 +83,7 @@ def _register_properties():
         description=t('Scene.generate_twistbones_upper.desc'),
         default=True
     )
-    
+
     Scene.armature = EnumProperty(
         name=t('Scene.armature.label'),
         description=t('Scene.armature.desc'),
@@ -179,9 +180,12 @@ def _register_properties():
         name=t('Scene.mmd_english_names_shapekeys.label'),
         description=t('Scene.mmd_english_names_shapekeys.desc'),
         items=[
-            (Translate.MMD_ENGLISH_NAMES_FALLBACK, t('Scene.mmd_english_names_shapekeys.fallback.label'), t('Scene.mmd_english_names_shapekeys.fallback.desc')),
-            (Translate.MMD_ENGLISH_NAMES_PREFER, t('Scene.mmd_english_names_shapekeys.prefer.label'), t('Scene.mmd_english_names_shapekeys.prefer.desc')),
-            (Translate.MMD_ENGLISH_NAMES_OFF, t('Scene.mmd_english_names_shapekeys.off.label'), t('Scene.mmd_english_names_shapekeys.off.desc')),
+            (Translate.MMD_ENGLISH_NAMES_FALLBACK, t('Scene.mmd_english_names_shapekeys.fallback.label'),
+             t('Scene.mmd_english_names_shapekeys.fallback.desc')),
+            (Translate.MMD_ENGLISH_NAMES_PREFER, t('Scene.mmd_english_names_shapekeys.prefer.label'),
+             t('Scene.mmd_english_names_shapekeys.prefer.desc')),
+            (Translate.MMD_ENGLISH_NAMES_OFF, t('Scene.mmd_english_names_shapekeys.off.label'),
+             t('Scene.mmd_english_names_shapekeys.off.desc')),
         ],
         default=Translate.MMD_ENGLISH_NAMES_FALLBACK
     )
@@ -450,7 +454,7 @@ def _register_properties():
         description=t('Scene.viseme_preview_mode.desc'),
         default=False
     )
-    
+
     Scene.viseme_preview_selection = EnumProperty(
         name=t('Scene.viseme_preview_selection.label'),
         description=t('Scene.viseme_preview_selection.desc'),
@@ -473,7 +477,7 @@ def _register_properties():
         ],
         update=lambda self, context: Viseme.VisemePreview.update_preview(context)
     )
-    
+
     Scene.viseme_validate_deformation = BoolProperty(
         name=t('Scene.viseme_validate_deformation.label'),
         description=t('Scene.viseme_validate_deformation.desc'),
@@ -682,7 +686,7 @@ def _register_properties():
         ],
         default="FULL"
     )
-    
+
     Scene.cats_atlas_bake_size = IntProperty(
         name=t('Scene.cats_atlas_bake_size.label'),
         description=t('Scene.cats_atlas_bake_size.desc'),
@@ -758,11 +762,16 @@ def _register_properties():
         name=t('Scene.translation_service.label'),
         description=t('Scene.translation_service.desc'),
         items=[
-            (TranslationProviders.SERVICE_INTERNAL, t('Scene.translation_service.internal.label'), t('Scene.translation_service.internal.desc')),
-            (TranslationProviders.SERVICE_GOOGLE, t('Scene.translation_service.google.label'), t('Scene.translation_service.google.desc')),
-            (TranslationProviders.SERVICE_DEEPL, t('Scene.translation_service.deepl.label'), t('Scene.translation_service.deepl.desc')),
-            (TranslationProviders.SERVICE_LIBRE, t('Scene.translation_service.libretranslate.label'), t('Scene.translation_service.libretranslate.desc')),
-            (TranslationProviders.SERVICE_MYMEMORY, t('Scene.translation_service.mymemory.label'), t('Scene.translation_service.mymemory.desc')),
+            (TranslationProviders.SERVICE_INTERNAL, t('Scene.translation_service.internal.label'),
+             t('Scene.translation_service.internal.desc')),
+            (TranslationProviders.SERVICE_GOOGLE, t('Scene.translation_service.google.label'),
+             t('Scene.translation_service.google.desc')),
+            (TranslationProviders.SERVICE_DEEPL, t('Scene.translation_service.deepl.label'),
+             t('Scene.translation_service.deepl.desc')),
+            (TranslationProviders.SERVICE_LIBRE, t('Scene.translation_service.libretranslate.label'),
+             t('Scene.translation_service.libretranslate.desc')),
+            (TranslationProviders.SERVICE_MYMEMORY, t('Scene.translation_service.mymemory.label'),
+             t('Scene.translation_service.mymemory.desc')),
         ],
         default=TranslationProviders.SERVICE_GOOGLE,
         update=Settings.update_settings

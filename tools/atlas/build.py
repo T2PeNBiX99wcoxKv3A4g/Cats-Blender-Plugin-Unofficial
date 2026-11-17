@@ -1,8 +1,7 @@
 # MIT License
-from collections import Counter, OrderedDict
-
 import bpy
 import numpy as np
+from collections import Counter, OrderedDict
 
 from . import bake, compose, detect, maps, pack, props, remap, sample
 from .props import ATLAS_IMAGE_PREFIX, ATLAS_MATERIAL_PREFIX
@@ -10,7 +9,6 @@ from .. import colorspace
 from .. import common as Common
 from ..register import register_wrap
 from ..translations import t
-
 
 SECONDARY_SCALES = {'FULL': 1.0, 'HALF': 0.5, 'QUARTER': 0.25}
 
@@ -266,7 +264,7 @@ class CatsAtlasBuild(bpy.types.Operator):
         canvases = {}
         for map_kind in wanted:
             if not any(
-                detect.set_has_data(cell.sets[map_kind], map_kind) for cell in cells
+                    detect.set_has_data(cell.sets[map_kind], map_kind) for cell in cells
             ):
                 continue
             # Albedo defines the UV space, so it is never scaled down. The rest are
@@ -555,7 +553,7 @@ class CatsAtlasBuild(bpy.types.Operator):
     def _remap_and_assign(self, scene, cells, atlas_size, material, by_object, padding):
         """Rewrite UVs into atlas space, then point the faces at the new material."""
         remap_all = scene.cats_atlas_remap_all_uv_layers
-        
+
         for ob in _unique_objects_per_mesh(by_object):
             mesh = ob.data
             slot_for_material = _slots_by_material(ob)

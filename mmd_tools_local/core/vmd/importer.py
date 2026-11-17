@@ -1,20 +1,19 @@
 # Copyright 2014 MMD Tools authors
 # This file is part of MMD Tools.
 
+import bpy
 import logging
 import math
 import os
+from mathutils import Quaternion, Vector
 from typing import Union
 
-import bpy
-from mathutils import Quaternion, Vector
-
-from ... import utils
-from ...compat import action_compat
-from ...operators.view import FlipPose
 from .. import vmd
 from ..camera import MMDCamera
 from ..light import MMDLight
+from ... import utils
+from ...compat import action_compat
+from ...operators.view import FlipPose
 
 
 class _MirrorMapper:
@@ -264,7 +263,9 @@ class HasAnimationData:
 
 
 class VMDImporter:
-    def __init__(self, filepath, scale=1.0, bone_mapper=None, use_pose_mode=False, convert_mmd_camera=True, convert_mmd_light=True, frame_margin=5, use_mirror=False, use_nla=False, detect_camera_changes=True, detect_light_changes=True):
+    def __init__(self, filepath, scale=1.0, bone_mapper=None, use_pose_mode=False, convert_mmd_camera=True,
+                 convert_mmd_light=True, frame_margin=5, use_mirror=False, use_nla=False, detect_camera_changes=True,
+                 detect_light_changes=True):
         self.__vmdFile = vmd.File()
         self.__vmdFile.load(filepath=filepath)
         logging.debug(str(self.__vmdFile.header))
@@ -274,7 +275,8 @@ class VMDImporter:
         self.__bone_mapper = bone_mapper
         self.__bone_util_cls = BoneConverterPoseMode if use_pose_mode else BoneConverter
         self.__frame_start = bpy.context.scene.frame_current
-        self.__frame_margin = frame_margin if self.__frame_start in {0, 1} else 0  # only applies if current frame is 0 or 1
+        self.__frame_margin = frame_margin if self.__frame_start in {0,
+                                                                     1} else 0  # only applies if current frame is 0 or 1
         self.__mirror = use_mirror
         self.__use_nla = use_nla
         self.__detect_camera_changes = detect_camera_changes
@@ -282,8 +284,10 @@ class VMDImporter:
 
     @staticmethod
     def __minRotationDiff(prev_q, curr_q):
-        t1 = (prev_q.w - curr_q.w) ** 2 + (prev_q.x - curr_q.x) ** 2 + (prev_q.y - curr_q.y) ** 2 + (prev_q.z - curr_q.z) ** 2
-        t2 = (prev_q.w + curr_q.w) ** 2 + (prev_q.x + curr_q.x) ** 2 + (prev_q.y + curr_q.y) ** 2 + (prev_q.z + curr_q.z) ** 2
+        t1 = (prev_q.w - curr_q.w) ** 2 + (prev_q.x - curr_q.x) ** 2 + (prev_q.y - curr_q.y) ** 2 + (
+                prev_q.z - curr_q.z) ** 2
+        t2 = (prev_q.w + curr_q.w) ** 2 + (prev_q.x + curr_q.x) ** 2 + (prev_q.y + curr_q.y) ** 2 + (
+                prev_q.z + curr_q.z) ** 2
         # t1 = prev_q.rotation_difference(curr_q).angle
         # t2 = prev_q.rotation_difference(-curr_q).angle
         return -curr_q if t2 < t1 else curr_q
@@ -318,14 +322,16 @@ class VMDImporter:
         kp.handle_right = kp.co + Vector((1, 0))
 
     @staticmethod
-    def __keyframe_insert_inner(fcurves: action_compat.FCurvesCollection, path: str, index: int, frame: float, value: float):
+    def __keyframe_insert_inner(fcurves: action_compat.FCurvesCollection, path: str, index: int, frame: float,
+                                value: float):
         fcurve = fcurves.find(path, index=index)
         if fcurve is None:
             fcurve = fcurves.new(path, index=index)
         fcurve.keyframe_points.insert(frame, value, options={"FAST"})
 
     @staticmethod
-    def __keyframe_insert(fcurves: action_compat.FCurvesCollection, path: str, frame: float, value: Union[int, float, Vector]):
+    def __keyframe_insert(fcurves: action_compat.FCurvesCollection, path: str, frame: float,
+                          value: Union[int, float, Vector]):
         if isinstance(value, (int, float)):
             VMDImporter.__keyframe_insert_inner(fcurves, path, 0, frame, value)
 
@@ -413,7 +419,8 @@ class VMDImporter:
         fcurve = action.fcurves.find(data_path, index=index)
 
         if fcurve is None:
-            fcurve = action_compat.new_fcurve(action, data_path, index=index, group_name=action_group_name, id_type=id_type)
+            fcurve = action_compat.new_fcurve(action, data_path, index=index, group_name=action_group_name,
+                                              id_type=id_type)
         # Ensure F-Curve belongs to the correct action group
         elif action_group_name and (fcurve.group is None or fcurve.group.name != action_group_name):
             # Find or create the action group
@@ -544,7 +551,7 @@ class VMDImporter:
                 if prev_kps is not None:
                     interp = k.interp
                     for idx, prev_kp, kp in zip(indices, prev_kps, curr_kps, strict=False):
-                        self.__setInterpolation(interp[idx : idx + 16 : 4], prev_kp, kp)
+                        self.__setInterpolation(interp[idx: idx + 16: 4], prev_kp, kp)
                 prev_kps = curr_kps
 
         for fcurve in action.fcurves:
@@ -611,10 +618,13 @@ class VMDImporter:
                 # Check if model has this morph registered but not set up
                 if name in model_morph_names:
                     # Model has the morph but it's not assembled
-                    logging.warning("WARNING: not found shape key %s (%d frames) - model has this morph but needs assembly", name, len(keyFrames))
+                    logging.warning(
+                        "WARNING: not found shape key %s (%d frames) - model has this morph but needs assembly", name,
+                        len(keyFrames))
                 else:
                     # Model doesn't have this morph at all
-                    logging.warning("WARNING: not found shape key %s (%d frames) - model doesn't have this morph", name, len(keyFrames))
+                    logging.warning("WARNING: not found shape key %s (%d frames) - model doesn't have this morph", name,
+                                    len(keyFrames))
                 continue
             logging.info("(mesh) frames:%5d  name: %s", len(keyFrames), name)
             shapeKey = shapeKeyDict[name]
@@ -646,9 +656,12 @@ class VMDImporter:
         action_name = action_name or rootObj.name
         action = self.__get_or_create_action(rootObj, action_name)
 
-        logging.debug("(Display) list(frame, show): %s", [(keyFrame.frame_number, bool(keyFrame.visible)) for keyFrame in propertyAnim])
+        logging.debug("(Display) list(frame, show): %s",
+                      [(keyFrame.frame_number, bool(keyFrame.visible)) for keyFrame in propertyAnim])
         for keyFrame in propertyAnim:
-            self.__keyframe_insert(action.fcurves, "mmd_root.show_meshes", keyFrame.frame_number + self.__frame_start + self.__frame_margin, float(keyFrame.visible))
+            self.__keyframe_insert(action.fcurves, "mmd_root.show_meshes",
+                                   keyFrame.frame_number + self.__frame_start + self.__frame_margin,
+                                   float(keyFrame.visible))
 
         self.__assign_action(rootObj, action)
 
@@ -713,7 +726,7 @@ class VMDImporter:
                 interp = k.interp
                 for idx, prev_kp, kp in zip(indices, prev_kps, curr_kps, strict=False):
                     # TODO: Optimize this bottleneck: __setInterpolation is called per keypoint; should batch set interpolation instead
-                    self.__setInterpolation(interp[idx : idx + 4 : 2] + interp[idx + 1 : idx + 4 : 2], prev_kp, kp)
+                    self.__setInterpolation(interp[idx: idx + 4: 2] + interp[idx + 1: idx + 4: 2], prev_kp, kp)
             prev_kps = curr_kps
 
         for fcurve in fcurves:
@@ -758,7 +771,8 @@ class VMDImporter:
         for keyFrame in lightAnim:
             frame = keyFrame.frame_number + self.__frame_start + self.__frame_margin
             self.__keyframe_insert(color_action.fcurves, "color", frame, Vector(keyFrame.color))
-            self.__keyframe_insert(location_action.fcurves, "location", frame, Vector(_loc(keyFrame.direction)).xzy * -1)
+            self.__keyframe_insert(location_action.fcurves, "location", frame,
+                                   Vector(_loc(keyFrame.direction)).xzy * -1)
 
         if self.__detect_light_changes:
             for fcurve in location_action.fcurves:

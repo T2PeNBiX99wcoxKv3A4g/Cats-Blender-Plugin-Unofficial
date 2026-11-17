@@ -246,7 +246,8 @@ class MaterialMorphData(bpy.types.PropertyGroup):
         type=bpy.types.Mesh,
     )
 
-    offset_type: bpy.props.EnumProperty(name="Offset Type", description="Select offset type", items=[("MULT", "Multiply", "", 0), ("ADD", "Add", "", 1)], default="ADD")
+    offset_type: bpy.props.EnumProperty(name="Offset Type", description="Select offset type",
+                                        items=[("MULT", "Multiply", "", 0), ("ADD", "Add", "", 1)], default="ADD")
 
     material: bpy.props.StringProperty(
         name="Material",
@@ -464,7 +465,8 @@ class GroupMorphOffset(bpy.types.PropertyGroup):
         ],
         default="vertex_morphs",
     )
-    factor: bpy.props.FloatProperty(name="Factor", description="Factor", soft_min=0, soft_max=1, precision=3, step=0.1, default=1)
+    factor: bpy.props.FloatProperty(name="Factor", description="Factor", soft_min=0, soft_max=1, precision=3, step=0.1,
+                                    default=1)
 
 
 class GroupMorph(_MorphBase, bpy.types.PropertyGroup):

@@ -1,10 +1,10 @@
 # MIT License
 import bpy
 
-from .. import common as Common
+from .bones import get_bone
 from .common import ArmatureOperator
 from .posemode import start_pose_mode_with_reset, apply_pose_to_rest
-from .bones import get_bone
+from .. import common as Common
 from ..register import register_wrap
 
 

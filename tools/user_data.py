@@ -3,9 +3,9 @@
 # Central helpers for CATS runtime data that must live in a user-writable
 # location instead of the extension package directory.
 
+import bpy
 import os
 import shutil
-import bpy
 
 _ADDON_PACKAGE = __package__.rsplit('.', 1)[0]
 

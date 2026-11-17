@@ -293,8 +293,10 @@ class DisplayItemQuickSetup(Operator):
         items=[
             ("RESET", "Reset", "Clear all items and frames, reset to default", "X", 0),
             ("FACIAL", "Load Facial Items", "Load all morphs to faical frame", "SHAPEKEY_DATA", 1),
-            ("GROUP_LOAD", "Sync from Bone Collections", "Sync armature's bone collections to display item frames", "GROUP_BONE", 2),
-            ("GROUP_APPLY", "Sync to Bone Collections", "Sync display item frames to armature's bone collections", "GROUP_BONE", 3),
+            ("GROUP_LOAD", "Sync from Bone Collections", "Sync armature's bone collections to display item frames",
+             "GROUP_BONE", 2),
+            ("GROUP_APPLY", "Sync to Bone Collections", "Sync display item frames to armature's bone collections",
+             "GROUP_BONE", 3),
         ],
         default="FACIAL",
     )

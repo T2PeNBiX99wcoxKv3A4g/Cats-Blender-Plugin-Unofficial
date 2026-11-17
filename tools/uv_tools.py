@@ -11,18 +11,17 @@ start, so both lines are walked in the same direction before interpolating.
 Ported from the Avatar Toolkit implementation by @989onan.
 """
 
+import bmesh
+import bpy
 import math
+import numpy as np
 import traceback
+from bpy.types import Operator, Context, Mesh, MeshUVLoopLayer
 from collections import deque
 from typing import Set, Dict, List, TypedDict
 
-import bpy
-import bmesh
-import numpy as np
-from bpy.types import Operator, Context, Mesh, MeshUVLoopLayer
-
-from .translations import t
 from .register import register_wrap
+from .translations import t
 
 
 def get_uv_vertex_selection(mesh: Mesh) -> List[bool]:
@@ -122,7 +121,8 @@ class AlignUVEdgesToTarget(Operator):
 
             uv_selection = get_uv_vertex_selection(me)
             for k, is_selected in enumerate(uv_selection):
-                if is_selected and bm.verts[me.loops[k].vertex_index].select and (not bm.verts[me.loops[k].vertex_index].hide):
+                if is_selected and bm.verts[me.loops[k].vertex_index].select and (
+                        not bm.verts[me.loops[k].vertex_index].hide):
                     key = np.array(uv_lay.uv[k].vector[:]).round(decimals=5)
 
                     if str(key) not in vert_target_loops:
@@ -193,8 +193,8 @@ class AlignUVEdgesToTarget(Operator):
 
             # The line end furthest from the 2D cursor becomes the start, so target and
             # source lines are always walked in a consistent direction.
-            dist1 = math.sqrt((uvcoords1[0] - cursor[0])**2 + (uvcoords1[1] - cursor[1])**2)
-            dist2 = math.sqrt((uvcoords2[0] - cursor[0])**2 + (uvcoords2[1] - cursor[1])**2)
+            dist1 = math.sqrt((uvcoords1[0] - cursor[0]) ** 2 + (uvcoords1[1] - cursor[1]) ** 2)
+            dist2 = math.sqrt((uvcoords2[0] - cursor[0]) ** 2 + (uvcoords2[1] - cursor[1]) ** 2)
             startpoint = startpoints[0] if dist1 > dist2 else startpoints[1]
 
             def recursive_sort_uv_tree(point: str, sortedfinal: List[str]) -> List[str]:
@@ -238,8 +238,11 @@ class AlignUVEdgesToTarget(Operator):
                         previous_vertex_index = math.floor(progress_along_edge)
                         next_vertex_index = math.ceil(progress_along_edge)
 
-                        previous_point = [float(x) for x in sorted_target_tree[previous_vertex_index].replace("[", "").replace("]", "").split()]
-                        next_point = [float(x) for x in sorted_target_tree[next_vertex_index].replace("[", "").replace("]", "").split()]
+                        previous_point = [float(x) for x in
+                                          sorted_target_tree[previous_vertex_index].replace("[", "").replace("]",
+                                                                                                             "").split()]
+                        next_point = [float(x) for x in
+                                      sorted_target_tree[next_vertex_index].replace("[", "").replace("]", "").split()]
 
                         progress_between_points = progress_along_edge - int(progress_along_edge)
                         lerped_point = [

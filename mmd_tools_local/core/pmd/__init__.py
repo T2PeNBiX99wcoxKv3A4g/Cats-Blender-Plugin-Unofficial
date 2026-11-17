@@ -599,8 +599,10 @@ class Model:
             logging.debug("  Rigid B: %s", joint.dest_rigid)
             logging.debug("  Location: (%f, %f, %f)", *joint.location)
             logging.debug("  Rotation: (%f, %f, %f)", *joint.rotation)
-            logging.debug("  Location Limit: (%f, %f, %f) - (%f, %f, %f)", *(joint.minimum_location + joint.maximum_location))
-            logging.debug("  Rotation Limit: (%f, %f, %f) - (%f, %f, %f)", *(joint.minimum_rotation + joint.maximum_rotation))
+            logging.debug("  Location Limit: (%f, %f, %f) - (%f, %f, %f)",
+                          *(joint.minimum_location + joint.maximum_location))
+            logging.debug("  Rotation Limit: (%f, %f, %f) - (%f, %f, %f)",
+                          *(joint.minimum_rotation + joint.maximum_rotation))
             logging.debug("  Spring: (%f, %f, %f)", *joint.spring_constant)
             logging.debug("  Spring(rotation): (%f, %f, %f)", *joint.spring_rotation_constant)
             logging.debug("")

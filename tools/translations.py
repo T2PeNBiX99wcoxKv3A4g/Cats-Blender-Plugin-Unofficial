@@ -2,14 +2,14 @@
 
 # Thanks to https://www.thegrove3d.com/learn/how-to-translate-a-blender-addon/ for the idea
 
-import os
 import bpy
 import json
+import os
 import pathlib
 
+from . import user_data
 from .compat import get_requests
 from .register import register_wrap
-from . import user_data
 
 main_dir = pathlib.Path(os.path.dirname(__file__)).parent.resolve()
 resources_dir = os.path.join(str(main_dir), "resources")
@@ -57,6 +57,7 @@ def read_translation_messages(path):
         return None
     return messages if isinstance(messages, dict) else None
 
+
 dictionary: dict[str, str] = dict()
 languages = []
 verbose = True
@@ -77,6 +78,7 @@ LOCALE_CODE_ALIASES = {
     "zh_tw": "zh_TW",
     "zh_hk": "zh_TW",
 }
+
 
 def load_translations(override_language=None):
     global dictionary, languages, last_loaded_language, _addon_startup_time
@@ -189,7 +191,7 @@ def update_ui(self, context):
         settings.update_settings_core(None, None)
 
         load_translations()
-        
+
         bpy.app.timers.register(reload_cats, first_interval=2.0)
     else:
         print("Language unchanged, no reload needed")
@@ -280,6 +282,7 @@ def convert_locale_to_language_code(blender_locale):
     # Fallback to English if no match
     print(f"No language match found for locale: {locale_str}, defaulting to en_US")
     return None
+
 
 load_translations()
 

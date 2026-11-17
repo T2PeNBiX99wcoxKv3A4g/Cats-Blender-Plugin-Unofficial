@@ -19,7 +19,8 @@ class MMDBonePanel(bpy.types.Panel):
         bones = pose_bone.id_data.pose.bones
         ik_bone_names = tuple(c.subtarget for c in pose_bone.constraints if c.type == "IK" and c.subtarget in bones)
         if ik_bone_names:
-            ik_custom_map = {getattr(b.constraints.get("mmd_ik_target_custom", None), "subtarget", None) for b in bones if not b.is_mmd_shadow_bone}
+            ik_custom_map = {getattr(b.constraints.get("mmd_ik_target_custom", None), "subtarget", None) for b in bones
+                             if not b.is_mmd_shadow_bone}
             row = self.layout.column(align=True)
             for name in ik_bone_names:
                 if name in ik_custom_map:
@@ -95,6 +96,7 @@ class MMDBonePanel(bpy.types.Panel):
         c.row().prop(mmd_bone, "display_connection_type", text="Type")
 
         if mmd_bone.display_connection_type == "BONE":
-            c.prop_search(mmd_bone, "display_connection_bone", pose_bone.id_data.pose, "bones", icon="BONE_DATA", text="Target Bone")
+            c.prop_search(mmd_bone, "display_connection_bone", pose_bone.id_data.pose, "bones", icon="BONE_DATA",
+                          text="Target Bone")
         elif mmd_bone.display_connection_type == "OFFSET":
             c.label(text="Offset is auto-calculated during export.")

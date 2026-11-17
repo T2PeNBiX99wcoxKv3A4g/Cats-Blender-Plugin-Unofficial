@@ -1,9 +1,8 @@
 # Copyright 2024 MMD Tools authors
 # This file is part of MMD Tools.
 
-from typing import Optional
-
 import bpy
+from typing import Optional
 
 from ...bpyutils import FnContext
 from ...core.model import FnModel
@@ -11,7 +10,8 @@ from ...core.model import FnModel
 
 class FnDraw:
     @staticmethod
-    def draw_bone_special(layout: bpy.types.UILayout, armature: bpy.types.Object, bone_name: str, mmd_name: Optional[str] = None):
+    def draw_bone_special(layout: bpy.types.UILayout, armature: bpy.types.Object, bone_name: str,
+                          mmd_name: Optional[str] = None):
         if armature is None:
             return
         row = layout.row(align=True)

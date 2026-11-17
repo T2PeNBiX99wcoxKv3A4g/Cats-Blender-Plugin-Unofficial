@@ -2,13 +2,12 @@
 # This file is part of MMD Tools.
 
 import ast
+import bpy
 import logging
 import math
 import re
-from typing import List, Optional, Set
-
-import bpy
 from mathutils import Euler, Quaternion
+from typing import List, Optional, Set
 
 from .. import vmd
 from ..camera import MMDCamera
@@ -30,7 +29,8 @@ class _FCurve:
     def setFCurve(self, fcurve: bpy.types.FCurve):
         assert fcurve.is_valid and self.__fcurve is None
         self.__fcurve = fcurve
-        self.__sorted_keyframe_points: List[bpy.types.Keyframe] = sorted(self.__fcurve.keyframe_points, key=self.__x_co_0)
+        self.__sorted_keyframe_points: List[bpy.types.Keyframe] = sorted(self.__fcurve.keyframe_points,
+                                                                         key=self.__x_co_0)
 
     def set_preserve_curves(self, value):
         self.__preserve_curves = value
@@ -173,8 +173,10 @@ class VMDExporter:
 
     @staticmethod
     def __minRotationDiff(prev_q, curr_q):
-        t1 = (prev_q.w - curr_q.w) ** 2 + (prev_q.x - curr_q.x) ** 2 + (prev_q.y - curr_q.y) ** 2 + (prev_q.z - curr_q.z) ** 2
-        t2 = (prev_q.w + curr_q.w) ** 2 + (prev_q.x + curr_q.x) ** 2 + (prev_q.y + curr_q.y) ** 2 + (prev_q.z + curr_q.z) ** 2
+        t1 = (prev_q.w - curr_q.w) ** 2 + (prev_q.x - curr_q.x) ** 2 + (prev_q.y - curr_q.y) ** 2 + (
+                prev_q.z - curr_q.z) ** 2
+        t2 = (prev_q.w + curr_q.w) ** 2 + (prev_q.x + curr_q.x) ** 2 + (prev_q.y + curr_q.y) ** 2 + (
+                prev_q.z + curr_q.z) ** 2
         # t1 = prev_q.rotation_difference(curr_q).angle
         # t2 = prev_q.rotation_difference(-curr_q).angle
         return -curr_q if t2 < t1 else curr_q
@@ -197,10 +199,10 @@ class VMDExporter:
         #    r_x1, 0, 0, 0, r_y1, 0, 0, 0, r_x2, 0, 0, 0, r_y2, 0, 0, 0,
         #    ]
         return [  # full data, indices in [2, 3, 31, 46, 47, 61, 62, 63] are unclear
-            x_x1, y_x1,    0,    0, x_y1, y_y1, z_y1, r_y1, x_x2, y_x2, z_x2, r_x2, x_y2, y_y2, z_y2, r_y2,
-            y_x1, z_x1, r_x1, x_y1, y_y1, z_y1, r_y1, x_x2, y_x2, z_x2, r_x2, x_y2, y_y2, z_y2, r_y2,    0,
-            z_x1, r_x1, x_y1, y_y1, z_y1, r_y1, x_x2, y_x2, z_x2, r_x2, x_y2, y_y2, z_y2, r_y2,    0,    0,
-            r_x1, x_y1, y_y1, z_y1, r_y1, x_x2, y_x2, z_x2, r_x2, x_y2, y_y2, z_y2, r_y2,    0,    0,    0,
+            x_x1, y_x1, 0, 0, x_y1, y_y1, z_y1, r_y1, x_x2, y_x2, z_x2, r_x2, x_y2, y_y2, z_y2, r_y2,
+            y_x1, z_x1, r_x1, x_y1, y_y1, z_y1, r_y1, x_x2, y_x2, z_x2, r_x2, x_y2, y_y2, z_y2, r_y2, 0,
+            z_x1, r_x1, x_y1, y_y1, z_y1, r_y1, x_x2, y_x2, z_x2, r_x2, x_y2, y_y2, z_y2, r_y2, 0, 0,
+            r_x1, x_y1, y_y1, z_y1, r_y1, x_x2, y_x2, z_x2, r_x2, x_y2, y_y2, z_y2, r_y2, 0, 0, 0,
         ]
         # fmt: on
 
@@ -217,7 +219,6 @@ class VMDExporter:
             return lambda xyzw: xyzw
 
         if mode == "AXIS_ANGLE":
-
             def __xyzw_from_axis_angle(xyzw):
                 q = Quaternion(xyzw[:3], xyzw[3])
                 return [q.x, q.y, q.z, q.w]
@@ -394,7 +395,8 @@ class VMDExporter:
             key = vmd.PropertyFrameKey()
             key.frame_number = data[0] - self.__frame_start
             key.visible = round(data[1][0])
-            key.ik_states = [(ik_name, round(on_off[0])) for ik_name, on_off in zip(ik_name_list, data[2:], strict=False)]
+            key.ik_states = [(ik_name, round(on_off[0])) for ik_name, on_off in
+                             zip(ik_name_list, data[2:], strict=False)]
             vmd_prop_anim.append(key)
         logging.info("(property) frames:%5d  name: %s", len(vmd_prop_anim), root.name if root else armObj.name)
         return vmd_prop_anim

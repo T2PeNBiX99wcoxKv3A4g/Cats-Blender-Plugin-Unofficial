@@ -12,9 +12,8 @@ Version- and environment-dependent behaviour lives here, so feature code can
 ask a question instead of hard-coding a version number.
 """
 
-import importlib.util
-
 import bpy
+import importlib.util
 
 
 # --- Blender version ---------------------------------------------------------

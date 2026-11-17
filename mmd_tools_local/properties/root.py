@@ -5,13 +5,13 @@
 
 import bpy
 
+from . import patch_library_overridable
+from .morph import BoneMorph, GroupMorph, MaterialMorph, UVMorph, VertexMorph
+from .translations import MMDTranslation
 from ..bpyutils import FnContext
 from ..core.material import FnMaterial
 from ..core.model import FnModel
 from ..core.sdef import FnSDEF
-from . import patch_library_overridable
-from .morph import BoneMorph, GroupMorph, MaterialMorph, UVMorph, VertexMorph
-from .translations import MMDTranslation
 
 IS_BLENDER_50_UP = bpy.app.version >= (5, 0)
 
@@ -43,7 +43,8 @@ def _toggleUsePropertyDriver(self: "MMDRoot", _context):
         ik_map = {}
     else:
         bones = armature_object.pose.bones
-        ik_map = {bones[c.subtarget]: (b, c) for b in bones for c in b.constraints if c.type == "IK" and c.is_valid and c.subtarget in bones}
+        ik_map = {bones[c.subtarget]: (b, c) for b in bones for c in b.constraints if
+                  c.type == "IK" and c.is_valid and c.subtarget in bones}
 
     if self.use_property_driver:
         for ik, (b, c) in ik_map.items():

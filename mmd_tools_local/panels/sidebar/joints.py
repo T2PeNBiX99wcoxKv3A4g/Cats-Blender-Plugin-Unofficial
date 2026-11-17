@@ -3,8 +3,8 @@
 
 import bpy
 
-from ...core.model import FnModel
 from . import PT_ProductionPanelBase, UL_ObjectsMixIn
+from ...core.model import FnModel
 
 
 class MMDJointSelectorPanel(PT_ProductionPanelBase, bpy.types.Panel):

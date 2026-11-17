@@ -15,7 +15,8 @@ class MMDFileImportMenu(bpy.types.Menu):
 
     @staticmethod
     def draw_menu(this: bpy.types.Menu, _):
-        this.layout.operator(fileio.ImportPmx.bl_idname, text="MikuMikuDance Model (.pmd, .pmx)", icon="OUTLINER_OB_ARMATURE")
+        this.layout.operator(fileio.ImportPmx.bl_idname, text="MikuMikuDance Model (.pmd, .pmx)",
+                             icon="OUTLINER_OB_ARMATURE")
         this.layout.operator(fileio.ImportVmd.bl_idname, text="MikuMikuDance Motion (.vmd)", icon="ANIM")
         this.layout.operator(fileio.ImportVpd.bl_idname, text="Vocaloid Pose Data (.vpd)", icon="POSE_HLT")
 
@@ -102,7 +103,8 @@ class MMDSelectObjectMenu(bpy.types.Menu):
     def draw_menu(this: bpy.types.Menu, _):
         this.layout.separator()
         this.layout.operator_context = "EXEC_DEFAULT"
-        this.layout.operator(rigid_body.SelectRigidBody.bl_idname, text="Select MMD Rigid Body").properties = {"collision_group_number", "shape"}
+        this.layout.operator(rigid_body.SelectRigidBody.bl_idname, text="Select MMD Rigid Body").properties = {
+            "collision_group_number", "shape"}
 
     @staticmethod
     def register():

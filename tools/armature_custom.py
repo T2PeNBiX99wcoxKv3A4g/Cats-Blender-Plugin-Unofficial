@@ -2,8 +2,8 @@
 
 import bpy
 import webbrowser
-from typing import List, Optional, Tuple
 from mathutils import Vector
+from typing import List, Optional, Tuple
 
 from . import common as Common
 from .register import register_wrap
@@ -29,7 +29,7 @@ class MergeArmature(bpy.types.Operator):
     def execute(self, context):
         wm = context.window_manager
         wm.progress_begin(0, 100)
-        
+
         saved_data = Common.SavedData()
 
         # Set default stage
@@ -39,8 +39,10 @@ class MergeArmature(bpy.types.Operator):
         wm.progress_update(10)
 
         # Get both armatures (use safe enum getter for Blender 5.0 compatibility)
-        base_armature_name = Common.get_enum_property_value(bpy.context.scene, 'merge_armature_into', Common.get_armature_list)
-        merge_armature_name = Common.get_enum_property_value(bpy.context.scene, 'merge_armature', Common.get_armature_merge_list)
+        base_armature_name = Common.get_enum_property_value(bpy.context.scene, 'merge_armature_into',
+                                                            Common.get_armature_list)
+        merge_armature_name = Common.get_enum_property_value(bpy.context.scene, 'merge_armature',
+                                                             Common.get_armature_merge_list)
         base_armature = Common.get_objects().get(base_armature_name)
         merge_armature = Common.get_objects().get(merge_armature_name)
         Common.set_default_stage()
@@ -57,9 +59,9 @@ class MergeArmature(bpy.types.Operator):
             saved_data.load()
             wm.progress_end()
             Common.show_error(4, [t('MergeArmature.error.not_single_user'),
-                                t('MergeArmature.error.make_single_user'),
-                                t('MergeArmature.error.make_single_user1'),
-                                t('MergeArmature.error.make_single_user2')])
+                                  t('MergeArmature.error.make_single_user'),
+                                  t('MergeArmature.error.make_single_user1'),
+                                  t('MergeArmature.error.make_single_user2')])
             return {'CANCELLED'}
 
         # Remove Rigid Bodies and Joints
@@ -96,6 +98,7 @@ class MergeArmature(bpy.types.Operator):
         self.report({'INFO'}, t('MergeArmature.success'))
         return {'FINISHED'}
 
+
 @register_wrap
 class AttachMesh(bpy.types.Operator):
     bl_idname = 'cats_custom.attach_mesh'
@@ -120,7 +123,8 @@ class AttachMesh(bpy.types.Operator):
 
         # Get armature and mesh (use safe enum getter for Blender 5.0 compatibility)
         mesh_name = Common.get_enum_property_value(context.scene, 'attach_mesh', Common.get_top_meshes)
-        base_armature_name = Common.get_enum_property_value(context.scene, 'merge_armature_into', Common.get_armature_list)
+        base_armature_name = Common.get_enum_property_value(context.scene, 'merge_armature_into',
+                                                            Common.get_armature_list)
         attach_bone_name = Common.get_enum_property_value(context.scene, 'attach_to_bone', Common.get_bones_merge)
         mesh = Common.get_objects().get(mesh_name)
         armature = Common.get_objects().get(base_armature_name)
@@ -149,9 +153,9 @@ class AttachMesh(bpy.types.Operator):
             saved_data.load()
             wm.progress_end()
             Common.show_error(4, [t('AttachMesh.error.not_single_user'),
-                                t('AttachMesh.error.make_single_user'),
-                                t('AttachMesh.error.make_single_user1'),
-                                t('AttachMesh.error.make_single_user2')])
+                                  t('AttachMesh.error.make_single_user'),
+                                  t('AttachMesh.error.make_single_user1'),
+                                  t('AttachMesh.error.make_single_user2')])
             return {'CANCELLED'}
 
         # Parent mesh to armature
@@ -183,8 +187,8 @@ class AttachMesh(bpy.types.Operator):
         Common.switch('OBJECT')
 
         # Verify vertex group
-        verts_in_group = [v for v in mesh.data.vertices 
-                         for g in v.groups if g.group == vg.index]
+        verts_in_group = [v for v in mesh.data.vertices
+                          for g in v.groups if g.group == vg.index]
         if not verts_in_group:
             self.report({'ERROR'}, f"Vertex group '{mesh_name}' is empty")
             saved_data.load()
@@ -239,6 +243,7 @@ class AttachMesh(bpy.types.Operator):
         self.report({'INFO'}, t('AttachMesh.success'))
         return {'FINISHED'}
 
+
 @register_wrap
 class CustomModelTutorialButton(bpy.types.Operator):
     bl_idname = 'cats_custom.tutorial'
@@ -251,48 +256,52 @@ class CustomModelTutorialButton(bpy.types.Operator):
         self.report({'INFO'}, t('CustomModelTutorialButton.success'))
         return {'FINISHED'}
 
+
 class TransformValidator:
     """Unified transform validation system for improved consistency and maintainability."""
-    
+
     @staticmethod
     def validate_mesh_transforms(mesh: Optional[bpy.types.Object]) -> Tuple[bool, str]:
         """Validate mesh transforms are suitable for attaching."""
         if not mesh:
             return False, "Mesh not found"
-        
+
         # Check for non-uniform scale
         scale = mesh.scale
-        if (abs(scale[0] - scale[1]) > SCALE_TOLERANCE or 
-            abs(scale[1] - scale[2]) > SCALE_TOLERANCE or
-            abs(scale[0] - scale[2]) > SCALE_TOLERANCE):
+        if (abs(scale[0] - scale[1]) > SCALE_TOLERANCE or
+                abs(scale[1] - scale[2]) > SCALE_TOLERANCE or
+                abs(scale[0] - scale[2]) > SCALE_TOLERANCE):
             return False, "Mesh has non-uniform scale. Please apply scale (Ctrl+A)"
-        
+
         return True, ""
+
 
 def validate_mesh_name(armature: bpy.types.Object, mesh_name: str) -> Tuple[bool, str]:
     """Validate mesh name doesn't conflict with existing bones."""
     if not armature or not armature.data:
         return False, "Invalid armature"
-        
+
     if mesh_name in armature.data.bones:
         return False, f"Bone named '{mesh_name}' already exists in armature"
     return True, ""
+
 
 def calculate_bone_orientation(mesh, vertices):
     """Calculate optimal bone orientation based on mesh geometry."""
     # Calculate mesh dimensions
     if not vertices:
         return Vector((0, 0, 0.1)), 0.0
-        
+
     coords = [mesh.data.vertices[v.index].co for v in vertices]
     min_co = Vector(map(min, zip(*coords)))
     max_co = Vector(map(max, zip(*coords)))
     dimensions = max_co - min_co
-    
+
     # Calculate roll angle (simplified - could be enhanced)
     roll_angle = 0.0
-    
+
     return dimensions, roll_angle
+
 
 def _is_rigidbody_or_joint(obj: bpy.types.Object) -> bool:
     name = obj.name.lower()
@@ -339,9 +348,9 @@ def is_transform_clean(obj: bpy.types.Object) -> bool:
 
 
 def merge_armatures(
-    base_armature_name: str,
-    merge_armature_name: str,
-    merge_same_bones: bool = False
+        base_armature_name: str,
+        merge_armature_name: str,
+        merge_same_bones: bool = False
 ):
     tolerance = POSITION_TOLERANCE
     base_armature = Common.get_objects().get(base_armature_name)
@@ -409,7 +418,6 @@ def merge_armatures(
                 else:
                     # Keep the original parent relationship for non-root bones
                     original_parents[bone.name] = bone.parent.name
-
 
     # Get names of bones in the base armature
     base_bone_names = set(bone.name for bone in base_armature.data.bones)
@@ -511,28 +519,30 @@ def merge_armatures(
     # Fix armature names
     Common.fix_armature_names(armature_name=base_armature_name)
 
+
 def validate_merge_armature_transforms(
-    base_armature: bpy.types.Object,
-    merge_armature: bpy.types.Object, 
-    mesh_merge: Optional[bpy.types.Object],
-    tolerance: float
+        base_armature: bpy.types.Object,
+        merge_armature: bpy.types.Object,
+        mesh_merge: Optional[bpy.types.Object],
+        tolerance: float
 ) -> bool:
     """Validate transforms of both armatures and mesh."""
     # Check if both armatures have the same scale values
     for i in [0, 1, 2]:
         if abs(base_armature.scale[i] - merge_armature.scale[i]) > tolerance:
             return False
-            
+
         # Check rotations
         if abs(merge_armature.rotation_euler[i]) > tolerance or \
-           (mesh_merge and abs(mesh_merge.rotation_euler[i]) > tolerance):
+                (mesh_merge and abs(mesh_merge.rotation_euler[i]) > tolerance):
             return False
-            
+
     return True
 
+
 def adjust_merge_armature_transforms(
-    merge_armature: bpy.types.Object,
-    mesh_merge: bpy.types.Object
+        merge_armature: bpy.types.Object,
+        mesh_merge: bpy.types.Object
 ):
     """Adjust transforms of the merge armature."""
     old_loc = list(merge_armature.location)
@@ -548,26 +558,27 @@ def adjust_merge_armature_transforms(
         mesh_merge.rotation_euler[i] = 0
         mesh_merge.scale[i] = 1
 
+
 def process_vertex_groups(meshes: List[bpy.types.Object]) -> None:
     """Process all vertex groups in the given meshes efficiently, merging or renaming groups with '.merge' suffix."""
     for mesh in meshes:
         if not mesh.vertex_groups:
             continue
-            
+
         # Build lookup tables for efficient processing
         vertex_groups_by_name = {vg.name: vg for vg in mesh.vertex_groups}
         merge_groups = {}
-        
+
         # Collect all merge groups in one pass
         for vg_name, vg in vertex_groups_by_name.items():
             if vg_name.endswith('.merge'):
                 base_name = vg_name[:-6]  # Remove '.merge' suffix
                 merge_groups[base_name] = (vg_name, vg)
-        
+
         # Process merge groups efficiently
         for base_name, (merge_name, merge_vg) in merge_groups.items():
             base_vg = vertex_groups_by_name.get(base_name)
-            
+
             if base_vg:
                 # Both vertex groups exist, merge them efficiently
                 _merge_vertex_groups_optimized(mesh, merge_vg, base_vg)
@@ -576,7 +587,9 @@ def process_vertex_groups(meshes: List[bpy.types.Object]) -> None:
                 # Only the '.merge' vertex group exists, rename it
                 merge_vg.name = base_name
 
-def _merge_vertex_groups_optimized(mesh: bpy.types.Object, vg_from: bpy.types.VertexGroup, vg_to: bpy.types.VertexGroup) -> None:
+
+def _merge_vertex_groups_optimized(mesh: bpy.types.Object, vg_from: bpy.types.VertexGroup,
+                                   vg_to: bpy.types.VertexGroup) -> None:
     """Optimized vertex group merging using Blender's native APIs for better performance."""
     if not vg_from or not vg_to:
         return
@@ -591,28 +604,29 @@ def _merge_vertex_groups_optimized(mesh: bpy.types.Object, vg_from: bpy.types.Ve
 
     # Collect weights efficiently in a single pass
     weights_combined = {}
-    
+
     for vertex in mesh.data.vertices:
         weight_from = 0.0
         weight_to = 0.0
-        
+
         for group in vertex.groups:
             if group.group == idx_from:
                 weight_from = group.weight
             elif group.group == idx_to:
                 weight_to = group.weight
-        
+
         # Only process vertices that have weights in either group
         if weight_from > 0.0 or weight_to > 0.0:
             combined = min(1.0, weight_from + weight_to)
             if combined > TRANSFORM_EPSILON:
                 weights_combined[vertex.index] = combined
-    
+
     # Apply combined weights efficiently
     if weights_combined:
         # Batch operation - add all vertices at once with their final weights
         for vertex_idx, weight in weights_combined.items():
             vg_to.add([vertex_idx], weight, 'REPLACE')
+
 
 def add_armature_modifier(mesh: bpy.types.Object, armature: bpy.types.Object):
     """Add an armature modifier to the mesh."""

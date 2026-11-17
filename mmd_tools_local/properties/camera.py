@@ -1,9 +1,8 @@
 # Copyright 2014 MMD Tools authors
 # This file is part of MMD Tools.
 
-import math
-
 import bpy
+import math
 
 from . import patch_library_overridable
 

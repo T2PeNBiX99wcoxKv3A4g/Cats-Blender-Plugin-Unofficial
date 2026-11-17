@@ -1,11 +1,10 @@
 # Copyright 2015 MMD Tools authors
 # This file is part of MMD Tools.
 
-from collections import namedtuple
-from typing import Optional, cast
-
 import bpy
+from collections import namedtuple
 from mathutils import Quaternion, Vector
+from typing import Optional, cast
 
 from .. import bpyutils, utils
 from ..bpyutils import FnObject
@@ -386,13 +385,15 @@ class ApplyMaterialOffset(bpy.types.Operator):
 
         if mat_data.offset_type == "MULT":
             try:
-                diffuse_offset = divide_vector_components(work_mmd_mat.diffuse_color, base_mmd_mat.diffuse_color) + [special_division(work_mmd_mat.alpha, base_mmd_mat.alpha)]
+                diffuse_offset = divide_vector_components(work_mmd_mat.diffuse_color, base_mmd_mat.diffuse_color) + [
+                    special_division(work_mmd_mat.alpha, base_mmd_mat.alpha)]
                 specular_offset = divide_vector_components(work_mmd_mat.specular_color, base_mmd_mat.specular_color)
                 edge_offset = divide_vector_components(work_mmd_mat.edge_color, base_mmd_mat.edge_color)
                 mat_data.diffuse_color = diffuse_offset
                 mat_data.specular_color = specular_offset
                 mat_data.shininess = special_division(work_mmd_mat.shininess, base_mmd_mat.shininess)
-                mat_data.ambient_color = divide_vector_components(work_mmd_mat.ambient_color, base_mmd_mat.ambient_color)
+                mat_data.ambient_color = divide_vector_components(work_mmd_mat.ambient_color,
+                                                                  base_mmd_mat.ambient_color)
                 mat_data.edge_color = edge_offset
                 mat_data.edge_weight = special_division(work_mmd_mat.edge_weight, base_mmd_mat.edge_weight)
 
@@ -404,7 +405,8 @@ class ApplyMaterialOffset(bpy.types.Operator):
                 raise
 
         if mat_data.offset_type == "ADD":
-            diffuse_offset = list(work_mmd_mat.diffuse_color - base_mmd_mat.diffuse_color) + [work_mmd_mat.alpha - base_mmd_mat.alpha]
+            diffuse_offset = list(work_mmd_mat.diffuse_color - base_mmd_mat.diffuse_color) + [
+                work_mmd_mat.alpha - base_mmd_mat.alpha]
             specular_offset = list(work_mmd_mat.specular_color - base_mmd_mat.specular_color)
             edge_offset = Vector(work_mmd_mat.edge_color) - Vector(base_mmd_mat.edge_color)
             mat_data.diffuse_color = diffuse_offset
@@ -530,7 +532,8 @@ class ViewBoneMorph(bpy.types.Operator):
             p_bone: Optional[bpy.types.PoseBone] = armature.pose.bones.get(morph_data.bone, None)
             if p_bone:
                 p_bone.select = True
-                mtx = (p_bone.matrix_basis.to_3x3() @ Quaternion(*morph_data.rotation.to_axis_angle()).to_matrix()).to_4x4()
+                mtx = (p_bone.matrix_basis.to_3x3() @ Quaternion(
+                    *morph_data.rotation.to_axis_angle()).to_matrix()).to_4x4()
                 mtx.translation = p_bone.location + morph_data.location
                 p_bone.matrix_basis = mtx
         return {"FINISHED"}
@@ -770,7 +773,8 @@ class EditUVMorph(bpy.types.Operator):
                     vertices[loop.vertex_index].select = True
 
             polygons = mesh.polygons
-            polygons.active = getattr(next((p for p in polygons if all(vertices[i].select for i in p.vertices)), None), "index", polygons.active)
+            polygons.active = getattr(next((p for p in polygons if all(vertices[i].select for i in p.vertices)), None),
+                                      "index", polygons.active)
 
             bpy.ops.object.mode_set(mode="EDIT")
         meshObj.select_set(selected)
@@ -1013,7 +1017,8 @@ class ConvertBoneMorphToVertexMorph(bpy.types.Operator):
 
             # Success message
             shape_key_info = ", ".join([f"{mesh}:{key}" for mesh, key in created_shape_keys])
-            self.report({"INFO"}, f"Successfully converted bone morph '{original_name}' to vertex morph '{target_name}'. Created shape keys: {shape_key_info}")
+            self.report({"INFO"},
+                        f"Successfully converted bone morph '{original_name}' to vertex morph '{target_name}'. Created shape keys: {shape_key_info}")
 
         except Exception as e:
             self.report({"ERROR"}, f"Error during conversion: {str(e)}")
@@ -1200,7 +1205,8 @@ class ConvertGroupMorphToVertexMorph(bpy.types.Operator):
                 for kb in obj.data.shape_keys.key_blocks:
                     kb.value = 0
 
-        self.report({"INFO"}, f"Successfully converted vertex morphs in group to vertex morph '{target_name}' and added to facial display frame")
+        self.report({"INFO"},
+                    f"Successfully converted vertex morphs in group to vertex morph '{target_name}' and added to facial display frame")
         return {"FINISHED"}
 
 

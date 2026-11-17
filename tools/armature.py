@@ -3,14 +3,14 @@
 import bpy
 import copy
 import math
-import platform
 import numpy as np
+import platform
 from mathutils import Matrix
 
+from . import armature_bones as Bones
 from . import common as Common
 from . import compat as Compat
 from . import translate as Translate
-from . import armature_bones as Bones
 from .register import register_wrap
 from .translations import t
 
@@ -19,6 +19,7 @@ mmd_tools_local_installed = False
 if platform.system() != "Linux":
     try:
         from ..mmd_tools_local.operators import morph as Morph
+
         mmd_tools_local_installed = True
     except ImportError:
         pass
@@ -26,6 +27,7 @@ if platform.system() != "Linux":
 
 class ValidationError(Exception):
     """Custom exception for validation errors"""
+
     def __init__(self, message, error_code=None):
         self.message = message
         self.error_code = error_code
@@ -34,62 +36,63 @@ class ValidationError(Exception):
 
 class ArmatureValidator:
     """Comprehensive input validation for armature fixing"""
-    
+
     @staticmethod
     def validate_armature_requirements(context, armature):
         """Validate all requirements before processing begins"""
         errors = []
         warnings = []
-        
+
         # Basic armature validation
         if not armature:
             errors.append("No armature found in the scene")
             return errors, warnings
-            
+
         if not armature.data:
             errors.append("Armature has no data")
             return errors, warnings
-        
+
         if any(armature.lock_location) or any(armature.lock_rotation) or any(armature.lock_scale):
             warnings.append("Armature has locked transforms - these will be unlocked")
-        
+
         # Check bone count
         bone_count = len(armature.data.bones)
         if bone_count == 0:
             errors.append("Armature has no bones")
         elif bone_count > 1000:
             warnings.append(f"Armature has {bone_count} bones - processing may be slow")
-        
+
         # Check for Rigify/Metarig (shared detector, so this agrees with the converter's poll).
         # This is the only Rigify gate in Fix Model.
         if Common.is_rigify_armature(armature):
-            errors.append("Rigify and Metarig armatures are not supported by Fix Model. Use the 'Convert Rigify to Cats' button in Model Options instead.")
-        
+            errors.append(
+                "Rigify and Metarig armatures are not supported by Fix Model. Use the 'Convert Rigify to Cats' button in Model Options instead.")
+
         # Validate meshes
         mesh_errors, mesh_warnings = ArmatureValidator._validate_meshes(context, armature)
         errors.extend(mesh_errors)
         warnings.extend(mesh_warnings)
-        
+
         # Check for required bones for basic functionality
         required_bone_groups = [
             ['Hips', 'Spine'],
             ['Head', 'Neck'],
         ]
-        
+
         for bone_group in required_bone_groups:
             if not any(bone.name in bone_group for bone in armature.data.bones):
                 warnings.append(f"No bones found from group: {', '.join(bone_group)}")
-        
+
         return errors, warnings
-    
+
     @staticmethod
     def _validate_meshes(context, armature):
         """Validate mesh requirements"""
         errors = []
         warnings = []
-        
+
         meshes = Common.get_meshes_objects()
-        
+
         if not meshes:
             # Check for VRM models with .baked meshes
             is_vrm = False
@@ -97,15 +100,15 @@ class ArmatureValidator:
                 if mesh.name.endswith(('.baked', '.baked0')):
                     is_vrm = True
                     break
-            
+
             if not is_vrm:
                 errors.append("No meshes found in the scene")
-                
+
         # Check for valid vertex groups
         for mesh in meshes:
             if not mesh.vertex_groups:
                 warnings.append(f"Mesh '{mesh.name}' has no vertex groups")
-            
+
             # Check for NaN values in UV coordinates.
             uv_issues = 0
             for uv_layer in mesh.data.uv_layers:
@@ -120,7 +123,7 @@ class ArmatureValidator:
 
             if uv_issues > 0:
                 warnings.append(f"Mesh '{mesh.name}' has {uv_issues} faulty UV coordinates that will be fixed")
-        
+
         return errors, warnings
 
 
@@ -270,7 +273,7 @@ def convert_bone_morphs_native(context, armature, mmd_root):
                 if not pose_bone:
                     continue
                 offset = Matrix.Translation(Vector(morph_data.location)) \
-                    @ Quaternion(morph_data.rotation).to_matrix().to_4x4()
+                         @ Quaternion(morph_data.rotation).to_matrix().to_4x4()
                 pose_bone.matrix_basis = original_basis[pose_bone.name] @ offset
                 posed_bones.append(pose_bone)
 
@@ -386,25 +389,25 @@ class FixArmature(bpy.types.Operator):
     def execute(self, context):
         saved_data = Common.SavedData()
         armature = Common.get_armature()
-        
+
         # ========== COMPREHENSIVE INPUT VALIDATION ==========
         try:
             errors, warnings = ArmatureValidator.validate_armature_requirements(context, armature)
-            
+
             # Display warnings to user
             for warning in warnings:
                 self.report({'WARNING'}, warning)
-            
+
             # Stop execution if there are critical errors
             if errors:
                 for error in errors:
                     self.report({'ERROR'}, error)
                 return {'CANCELLED'}
-                
+
         except Exception as e:
             self.report({'ERROR'}, f"Validation failed: {str(e)}")
             return {'CANCELLED'}
-        
+
         # Tag every bone with its current name so we can report exactly what got
         # renamed or removed. Downstream tools bind to bones by name, so users need
         # to know which references they have to rebind after a fix.
@@ -423,15 +426,15 @@ class FixArmature(bpy.types.Operator):
 
             for collection in list(armature.data.collections):
                 armature.data.collections.remove(collection)
-        
+
         # Check if all meshes are single user
         meshes_to_check = Common.get_meshes_objects()
         for mesh in meshes_to_check:
             if mesh.data.users > 1:
                 Common.show_error(4, [t('JoinMeshes.error.not_single_user'),
-                                    t('JoinMeshes.error.make_single_user'),
-                                    t('JoinMeshes.error.make_single_user1'),
-                                    t('JoinMeshes.error.make_single_user2')])
+                                      t('JoinMeshes.error.make_single_user'),
+                                      t('JoinMeshes.error.make_single_user1'),
+                                      t('JoinMeshes.error.make_single_user2')])
                 return {'CANCELLED'}
 
         is_vrm = False
@@ -464,7 +467,7 @@ class FixArmature(bpy.types.Operator):
         for key, value in temp_rename_bones.items():
             if key == 'Spine':
                 continue
-            bone_list = temp_reweight_bones.get(key) 
+            bone_list = temp_reweight_bones.get(key)
             if not bone_list:
                 temp_reweight_bones[key] = value
             else:
@@ -488,7 +491,7 @@ class FixArmature(bpy.types.Operator):
         # Get Double Entries
         print('DOUBLE ENTRIES:')
         print('RENAME:')
-        name_list = []  
+        name_list = []
         for key, value in temp_rename_bones.items():
             for name in value:
                 if name.lower() not in name_list:
@@ -496,7 +499,7 @@ class FixArmature(bpy.types.Operator):
                 else:
                     print(key + " | " + name)
         print('REWEIGHT:')
-        name_list = [] 
+        name_list = []
         for key, value in temp_reweight_bones.items():
             for name in value:
                 if name.lower() not in name_list:
@@ -521,7 +524,7 @@ class FixArmature(bpy.types.Operator):
 
             # Convert mmd bone morphs into shape keys
             if hasattr(mmd_root, 'bone_morphs') and len(mmd_root.bone_morphs) > 0:
-                
+
                 if mmd_tools_local_installed:
                     # Same naming as Translate Shape Keys dictionary, then the MMD
                     # author's English name (per the Author Names setting), then the
@@ -530,7 +533,7 @@ class FixArmature(bpy.types.Operator):
 
                     # Update translation dictionary (same as bones do)
                     Translate.update_dictionary(to_translate, translating_shapes=True)
-                    
+
                     # Use mmd_tools_local for non-Linux platforms
                     current_step = 0
                     wm.progress_begin(current_step, len(mmd_root.bone_morphs))
@@ -568,7 +571,7 @@ class FixArmature(bpy.types.Operator):
                 source_engine = True
                 break
 
-        #Perform "Blenda" specific operation. This is needed because Spine1 on this model represents the hips and that conflicts with other mappings.
+        # Perform "Blenda" specific operation. This is needed because Spine1 on this model represents the hips and that conflicts with other mappings.
         for bone in armature.pose.bones:
             if bone.name.startswith("cShrugger"):
                 for bone in armature.pose.bones:
@@ -674,7 +677,7 @@ class FixArmature(bpy.types.Operator):
         Common.set_active(armature)
         Common.switch('EDIT')
         Common.switch('OBJECT')
-        
+
         Translate.store_mmd_english_names(armature)
         Common.remove_empty()
         Common.remove_unused_objects()
@@ -751,7 +754,8 @@ class FixArmature(bpy.types.Operator):
             if is_vrm and Common.has_shapekeys(mesh):
                 shapekeys = mesh.data.shape_keys.key_blocks
                 for shapekey in shapekeys:
-                    shapekey.name = shapekey.name.replace('_', ' ').replace('Face.M F00 000 Fcl ', '').replace('Face.M F00 000 00 Fcl ', '')
+                    shapekey.name = shapekey.name.replace('_', ' ').replace('Face.M F00 000 Fcl ', '').replace(
+                        'Face.M F00 000 00 Fcl ', '')
 
                 # Sort shapekeys in categories
                 shapekey_order = []
@@ -760,7 +764,7 @@ class FixArmature(bpy.types.Operator):
                         if shapekey.name.startswith(categorie):
                             shapekey_order.append(shapekey.name)
 
-                Common.sort_shape_keys(mesh.name, shapekey_order)        
+                Common.sort_shape_keys(mesh.name, shapekey_order)
 
             # Remove empty shape keys and then save the shape key order
             Common.clean_shapekeys(mesh)
@@ -977,19 +981,25 @@ class FixArmature(bpy.types.Operator):
             name1 = ''
             name2 = ''
             for name0 in names[0]:
-                names0.append(name0.replace('\\Left', 'Left').replace('\\left', 'left').replace('\\L', 'L').replace('\\l', 'l'))
+                names0.append(
+                    name0.replace('\\Left', 'Left').replace('\\left', 'left').replace('\\L', 'L').replace('\\l', 'l'))
             if '\\Left' in names[1] or '\\L' in names[1]:
-                name1 = names[1].replace('\\Left', 'Left').replace('\\left', 'left').replace('\\L', 'L').replace('\\l', 'l')
+                name1 = names[1].replace('\\Left', 'Left').replace('\\left', 'left').replace('\\L', 'L').replace('\\l',
+                                                                                                                 'l')
             if '\\Left' in names[2] or '\\L' in names[2]:
-                name2 = names[2].replace('\\Left', 'Left').replace('\\left', 'left').replace('\\L', 'L').replace('\\l', 'l')
+                name2 = names[2].replace('\\Left', 'Left').replace('\\left', 'left').replace('\\L', 'L').replace('\\l',
+                                                                                                                 'l')
             conflicting_bones.append((names0, name1, name2))
 
             for name0 in names[0]:
-                names0.append(name0.replace('\\Left', 'Right').replace('\\left', 'right').replace('\\L', 'R').replace('\\l', 'r'))
+                names0.append(
+                    name0.replace('\\Left', 'Right').replace('\\left', 'right').replace('\\L', 'R').replace('\\l', 'r'))
             if '\\Left' in names[1] or '\\L' in names[1]:
-                name1 = names[1].replace('\\Left', 'Right').replace('\\left', 'right').replace('\\L', 'R').replace('\\l', 'r')
+                name1 = names[1].replace('\\Left', 'Right').replace('\\left', 'right').replace('\\L', 'R').replace(
+                    '\\l', 'r')
             if '\\Left' in names[2] or '\\L' in names[2]:
-                name2 = names[2].replace('\\Left', 'Right').replace('\\left', 'right').replace('\\L', 'R').replace('\\l', 'r')
+                name2 = names[2].replace('\\Left', 'Right').replace('\\left', 'right').replace('\\L', 'R').replace(
+                    '\\l', 'r')
             conflicting_bones.append((names0, name1, name2))
 
         # Name -> bone index for the rename passes below, so they do not rescan every
@@ -1032,7 +1042,7 @@ class FixArmature(bpy.types.Operator):
         for bone_new, bones_old in temp_rename_bones.items():
             if "\\L" in bone_new:
                 bones = [[bone_new.replace("\\Left", "Left").replace("\\L", "L"), ""],
-                        [bone_new.replace("\\Left", "Right").replace("\\L", "R"), ""]]
+                         [bone_new.replace("\\Left", "Right").replace("\\L", "R"), ""]]
             else:
                 bones = [[bone_new, ""]]
             for bone_old in bones_old:
@@ -1206,7 +1216,7 @@ class FixArmature(bpy.types.Operator):
             spine.tail = chest.head
 
             # Add all redundant spines to the merge list
-            for spine in spines[1:spine_count-1]:
+            for spine in spines[1:spine_count - 1]:
                 print(spine)
                 temp_list_reweight_bones[spine] = 'Spine'
 
@@ -1313,7 +1323,7 @@ class FixArmature(bpy.types.Operator):
 
         # Merged bones that should be deleted
         bones_to_delete = []
-        
+
         meshes = Common.get_meshes_objects()
 
         # Mixing the weights
@@ -1366,7 +1376,8 @@ class FixArmature(bpy.types.Operator):
 
                     if context.scene.keep_twist_bones and 'twist' in bone_child.name.lower():
                         continue
-                    if context.scene.fix_twist_bones and bone_child.name.lower() in ['handtwist_l', 'handtwist_r', 'armtwist_l', 'armtwist_r']:
+                    if context.scene.fix_twist_bones and bone_child.name.lower() in ['handtwist_l', 'handtwist_r',
+                                                                                     'armtwist_l', 'armtwist_r']:
                         print('TWIST FOUND!')
                         continue
 
@@ -1442,7 +1453,8 @@ class FixArmature(bpy.types.Operator):
 
                         if context.scene.keep_twist_bones and 'twist' in bone[1].lower():
                             continue
-                        if context.scene.fix_twist_bones and bone[1].lower() in ['handtwist_l', 'handtwist_r', 'armtwist_l', 'armtwist_r']:
+                        if context.scene.fix_twist_bones and bone[1].lower() in ['handtwist_l', 'handtwist_r',
+                                                                                 'armtwist_l', 'armtwist_r']:
                             print('TWIST FOUND!')
                             continue
 
@@ -1495,7 +1507,8 @@ class FixArmature(bpy.types.Operator):
 
                 if context.scene.keep_twist_bones and 'twist' in vg_from.name.lower():
                     continue
-                if context.scene.fix_twist_bones and vg_from.name.lower() in ['handtwist_l', 'handtwist_r', 'armtwist_l', 'armtwist_r']:
+                if context.scene.fix_twist_bones and vg_from.name.lower() in ['handtwist_l', 'handtwist_r',
+                                                                              'armtwist_l', 'armtwist_r']:
                     print('TWIST FOUND!')
                     continue
 
@@ -1600,8 +1613,8 @@ class FixArmature(bpy.types.Operator):
         if fixed_uv_coords:
             saved_data.load()
             Common.show_error(6.2, [t('FixArmature.error.faultyUV1', uvcoord=str(fixed_uv_coords)),
-                                          t('FixArmature.error.faultyUV2'),
-                                          t('FixArmature.error.faultyUV3')])
+                                    t('FixArmature.error.faultyUV2'),
+                                    t('FixArmature.error.faultyUV3')])
             return {'FINISHED'}
 
         saved_data.load()
@@ -1662,6 +1675,8 @@ def check_hierarchy(check_parenting, correct_hierarchy_array):
                             return {'result': False, 'message': bone.name + t('FixArmature.notParent')}
                         # Previous needs to be the parent of the current item
                         if previous != bone.parent.name:
-                            return {'result': False, 'message': bone.name + t('FixArmature.notParentTo1') + previous + t('FixArmature.notParentTo2')}
+                            return {'result': False,
+                                    'message': bone.name + t('FixArmature.notParentTo1') + previous + t(
+                                        'FixArmature.notParentTo2')}
 
     return {'result': True}

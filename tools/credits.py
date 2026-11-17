@@ -2,8 +2,10 @@
 
 import bpy
 import webbrowser
+
 from .register import register_wrap
 from .translations import t
+
 
 @register_wrap
 class ForumButton(bpy.types.Operator):

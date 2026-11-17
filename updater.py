@@ -1,20 +1,21 @@
 # MIT License
 
-import os
 import bpy
 import json
+import os
+import pathlib
+import shutil
+import threading
 import urllib
 import urllib.error
 import urllib.request
-import shutil
-import pathlib
 import zipfile
-import threading
-from collections import OrderedDict
 from bpy.app.handlers import persistent
-from .tools.translations import t
-from .tools.common import wrap_dynamic_enum_items
+from collections import OrderedDict
+
 from . import CATS_VERSION
+from .tools.common import wrap_dynamic_enum_items
+from .tools.translations import t
 
 no_ver_check = False
 fake_update = False
@@ -50,6 +51,7 @@ package_name = __package__
 
 # Icons for UI
 ICON_URL = 'URL'
+
 
 class CheckForUpdateButton(bpy.types.Operator):
     bl_idname = 'cats_updater.check_for_update'
@@ -357,7 +359,7 @@ def _fetch_releases_worker():
 
 def poll_update_fetch():
     if _fetch_thread is not None and _fetch_thread.is_alive():
-        return 0.3 
+        return 0.3
 
     print('Checking for Cats update...')
 
@@ -770,7 +772,8 @@ def draw_update_notification_panel(layout):
     row = col.row(align=True)
     row.scale_y = 1
     row.operator(RemindMeLaterButton.bl_idname, text=t('draw_update_notification_panel.RemindMeLaterButton.label'))
-    row.operator(IgnoreThisVersionButton.bl_idname, text=t('draw_update_notification_panel.IgnoreThisVersionButton.label'))
+    row.operator(IgnoreThisVersionButton.bl_idname,
+                 text=t('draw_update_notification_panel.IgnoreThisVersionButton.label'))
 
 
 def draw_updater_panel(context, layout, user_preferences=False):
@@ -781,7 +784,9 @@ def draw_updater_panel(context, layout, user_preferences=False):
 
     row = col.row(align=True)
     row.scale_y = 0.8
-    row.label(text=t('draw_updater_panel.updateLabel') if not user_preferences else t('draw_updater_panel.updateLabel_alt'), icon=ICON_URL)
+    row.label(
+        text=t('draw_updater_panel.updateLabel') if not user_preferences else t('draw_updater_panel.updateLabel_alt'),
+        icon=ICON_URL)
     col.separator()
 
     if update_finished:
@@ -815,7 +820,8 @@ def draw_updater_panel(context, layout, user_preferences=False):
         split = col.row(align=True)
         row = split.row(align=True)
         row.scale_y = scale_big
-        row.operator(UpdateToLatestButton.bl_idname, text=t('draw_updater_panel.UpdateToLatestButton.label', name=latest_version_str))
+        row.operator(UpdateToLatestButton.bl_idname,
+                     text=t('draw_updater_panel.UpdateToLatestButton.label', name=latest_version_str))
         row = split.row(align=True)
         row.alignment = 'RIGHT'
         row.scale_y = scale_big
@@ -933,9 +939,12 @@ def register(dev_branch, version_str):
         name=t('bpy.types.Scene.cats_update_action.label'),
         description=t('bpy.types.Scene.cats_update_action.desc'),
         items=[
-            ("UPDATE", t('bpy.types.Scene.cats_update_action.update.label'), t('bpy.types.Scene.cats_update_action.update.desc')),
-            ("IGNORE", t('bpy.types.Scene.cats_update_action.ignore.label'), t( 'bpy.types.Scene.cats_update_action.ignore.desc')),
-            ("DEFER", t('bpy.types.Scene.cats_update_action.defer.label'), t( 'bpy.types.Scene.cats_update_action.defer.desc'))
+            ("UPDATE", t('bpy.types.Scene.cats_update_action.update.label'),
+             t('bpy.types.Scene.cats_update_action.update.desc')),
+            ("IGNORE", t('bpy.types.Scene.cats_update_action.ignore.label'),
+             t('bpy.types.Scene.cats_update_action.ignore.desc')),
+            ("DEFER", t('bpy.types.Scene.cats_update_action.defer.label'),
+             t('bpy.types.Scene.cats_update_action.defer.desc'))
         ]
     )
 

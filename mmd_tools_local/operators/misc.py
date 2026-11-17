@@ -1,9 +1,8 @@
 # Copyright 2014 MMD Tools authors
 # This file is part of MMD Tools.
 
-import re
-
 import bpy
+import re
 
 from .. import utils
 from ..bpyutils import FnContext, FnObject
@@ -48,7 +47,7 @@ class MoveObject(bpy.types.Operator, utils.ItemMoveOp):
     def get_name(cls, obj, prefix=None):
         m = cls.__PREFIX_REGEXP.match(obj.name)
         name = m.group("name") if m else obj.name
-        return name[len(prefix) :] if prefix and name.startswith(prefix) else name
+        return name[len(prefix):] if prefix and name.startswith(prefix) else name
 
     @classmethod
     def normalize_indices(cls, objects):

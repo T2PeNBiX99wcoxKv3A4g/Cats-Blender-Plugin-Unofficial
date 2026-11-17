@@ -1,13 +1,12 @@
 # Copyright 2021 MMD Tools authors
 # This file is part of MMD Tools.
 
+import bpy
 import importlib
 import inspect
 import pkgutil
 import typing
 from pathlib import Path
-
-import bpy
 
 __all__ = (
     "init",

@@ -1,7 +1,6 @@
 # MIT License
-from typing import Dict, NamedTuple, Optional
-
 import bpy
+from typing import Dict, NamedTuple, Optional
 
 from .maps import MAPS, NEUTRAL
 
@@ -360,7 +359,7 @@ def _secondary(material, map_kind: str) -> TextureSet:
     # No image. Fall back to the socket's constant where one exists, so a material
     # set to roughness 0.4 contributes 0.4 rather than the neutral 1.0.
     if map_kind in MAP_INPUTS and not (
-        map_kind == 'emission' and _emission_is_off(shader_node)
+            map_kind == 'emission' and _emission_is_off(shader_node)
     ):
         socket = _first_socket(shader_node, MAP_INPUTS[map_kind])
         if socket is not None and not socket.links:

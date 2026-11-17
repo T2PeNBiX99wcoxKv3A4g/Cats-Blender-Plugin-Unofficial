@@ -1,21 +1,16 @@
 # Copyright 2014 MMD Tools authors
 # This file is part of MMD Tools.
 
+import bpy
 import collections
 import logging
 import math
 import os
 import time
+from mathutils import Matrix, Vector
 from pathlib import Path
 from typing import TYPE_CHECKING, List, Optional
 
-import bpy
-from mathutils import Matrix, Vector
-
-from ... import bpyutils, utils
-from ...bpyutils import FnContext, FnObject
-from ...compat.versions import IS_BLENDER_50_UP
-from ...operators.misc import MoveObject
 from .. import pmx
 from ..bone import FnBone
 from ..material import FnMaterial
@@ -23,6 +18,10 @@ from ..model import FnModel, Model
 from ..morph import FnMorph
 from ..rigid_body import FnRigidBody
 from ..vmd.importer import BoneConverter
+from ... import bpyutils, utils
+from ...bpyutils import FnContext, FnObject
+from ...compat.versions import IS_BLENDER_50_UP
+from ...operators.misc import MoveObject
 
 if TYPE_CHECKING:
     from ...properties.pose_bone import MMDBone
@@ -100,13 +99,15 @@ class PMXImporter:
 
     def __createMeshObject(self):
         model_name = self.__root.name
-        self.__meshObj = bpy.data.objects.new(name=model_name + "_mesh", object_data=bpy.data.meshes.new(name=model_name))
+        self.__meshObj = bpy.data.objects.new(name=model_name + "_mesh",
+                                              object_data=bpy.data.meshes.new(name=model_name))
         self.__meshObj.parent = self.__armObj
         FnContext.link_object(self.__targetContext, self.__meshObj)
 
     def __importVertexGroup(self):
         vgroups = self.__meshObj.vertex_groups
-        self.__vertexGroupTable = [vgroups.new(name=i.name) for i in self.__model.bones] or [vgroups.new(name="NO BONES")]
+        self.__vertexGroupTable = [vgroups.new(name=i.name) for i in self.__model.bones] or [
+            vgroups.new(name="NO BONES")]
 
     def __importVertices(self):
         self.__importVertexGroup()
@@ -189,6 +190,7 @@ class PMXImporter:
         nameTable = []
         specialTipBones = []
         dependency_cycle_ik_bones = []
+
         # for i, p_bone in enumerate(pmx_bones):
         #    if p_bone.isIK:
         #        if p_bone.target >= 0:
@@ -328,9 +330,12 @@ class PMXImporter:
             is_valid_ik = ik_constraint_bone == ik_constraint_bone_real
             if not is_valid_ik:
                 ik_constraint_bone = ik_constraint_bone_real
-                logging.warning(" * IK bone (%s) warning: IK target (%s) is not a child of IK link 0 (%s)", ik_bone.name, ik_target.name, ik_constraint_bone.name)
-            elif any(pose_bones[i.target].parent != pose_bones[j.target] for i, j in zip(pmx_bone.ik_links, pmx_bone.ik_links[1:], strict=False)):
-                logging.warning(" * Invalid IK bone (%s): IK chain does not follow parent-child relationship", ik_bone.name)
+                logging.warning(" * IK bone (%s) warning: IK target (%s) is not a child of IK link 0 (%s)",
+                                ik_bone.name, ik_target.name, ik_constraint_bone.name)
+            elif any(pose_bones[i.target].parent != pose_bones[j.target] for i, j in
+                     zip(pmx_bone.ik_links, pmx_bone.ik_links[1:], strict=False)):
+                logging.warning(" * Invalid IK bone (%s): IK chain does not follow parent-child relationship",
+                                ik_bone.name)
                 return
         if ik_constraint_bone is None or len(pmx_bone.ik_links) < 1:
             logging.warning(" * Invalid IK bone (%s)", ik_bone.name)
@@ -364,7 +369,8 @@ class PMXImporter:
                 c.name = f"mmd_ik_limit_custom{idx}"
                 use_limits = c.use_limit_x = c.use_limit_y = c.use_limit_z = i.maximumAngle is not None
                 if use_limits:
-                    minimum, maximum = self.convertIKLimitAngles(i.minimumAngle, i.maximumAngle, pose_bones[i.target].bone.matrix_local)
+                    minimum, maximum = self.convertIKLimitAngles(i.minimumAngle, i.maximumAngle,
+                                                                 pose_bones[i.target].bone.matrix_local)
                     c.max_x, c.max_y, c.max_z = maximum
                     c.min_x, c.min_y, c.min_z = minimum
                 continue
@@ -460,7 +466,9 @@ class PMXImporter:
         start_time = time.time()
         self.__rigidTable = {}
         context = FnContext.ensure_context()
-        rigid_pool = FnRigidBody.new_rigid_body_objects(context, FnModel.ensure_rigid_group_object(context, self.__rig.rootObject()), len(self.__model.rigids))
+        rigid_pool = FnRigidBody.new_rigid_body_objects(context, FnModel.ensure_rigid_group_object(context,
+                                                                                                   self.__rig.rootObject()),
+                                                        len(self.__model.rigids))
         for i, (rigid, rigid_obj) in enumerate(zip(self.__model.rigids, rigid_pool, strict=False)):
             loc_data = rigid.location
             rot_data = rigid.rotation
@@ -508,7 +516,10 @@ class PMXImporter:
             return
         start_time = time.time()
         context = FnContext.ensure_context()
-        joint_pool = FnRigidBody.new_joint_objects(context, FnModel.ensure_joint_group_object(context, self.__rig.rootObject()), len(self.__model.joints), FnModel.get_empty_display_size(self.__rig.rootObject()))
+        joint_pool = FnRigidBody.new_joint_objects(context,
+                                                   FnModel.ensure_joint_group_object(context, self.__rig.rootObject()),
+                                                   len(self.__model.joints),
+                                                   FnModel.get_empty_display_size(self.__rig.rootObject()))
         for i, (joint, joint_obj) in enumerate(zip(self.__model.joints, joint_pool, strict=False)):
             loc = Vector(joint.location).xzy * self.__scale
             rot = Vector(joint.rotation).xzy * -1
@@ -649,8 +660,10 @@ class PMXImporter:
         if pmxModel.header and pmxModel.header.additional_uvs:
             logging.info("Importing %d additional uvs", pmxModel.header.additional_uvs)
             zw_data_map = collections.OrderedDict()
+
             def split_uvzw(uvi):
                 return (self.flipUV_V(uvi[:2]), uvi[2:])
+
             for i in range(pmxModel.header.additional_uvs):
                 add_uv = uv_layers[uv_textures.new(name="UV" + str(i + 1)).name]
                 logging.info(" - %s...(uv channels)", add_uv.name)
@@ -690,7 +703,8 @@ class PMXImporter:
             if mi <= mi_skip:
                 continue
             si = 3 * i
-            verts = tuple(sorted((_rounded_co_vi(loop_indices[si]), _rounded_co_vi(loop_indices[si + 1]), _rounded_co_vi(loop_indices[si + 2]))))
+            verts = tuple(sorted((_rounded_co_vi(loop_indices[si]), _rounded_co_vi(loop_indices[si + 1]),
+                                  _rounded_co_vi(loop_indices[si + 2]))))
             if verts not in check:
                 check[verts] = mi
             elif check[verts] < mi:
@@ -845,7 +859,8 @@ class PMXImporter:
                     else:
                         logging.warning("Invalid morph index %d in display frame '%s', skipping item", index, i.name)
                 else:
-                    logging.warning("Unknown display item type %d in display frame '%s', skipping item", disp_type, i.name)
+                    logging.warning("Unknown display item type %d in display frame '%s', skipping item", disp_type,
+                                    i.name)
 
         FnBone.sync_bone_collections_from_display_item_frames(self.__armObj)
 
@@ -880,7 +895,8 @@ class PMXImporter:
         total_edges = len(mesh.edges)
         sharp_edges = sum(1 for edge in mesh.edges if edge.use_edge_sharp)
         percentage = (sharp_edges / total_edges) * 100 if total_edges > 0 else 0
-        logging.info("   - Marked %s/%s (%.2f%%) sharp edges with angle: 179 degrees", sharp_edges, total_edges, percentage)
+        logging.info("   - Marked %s/%s (%.2f%%) sharp edges with angle: 179 degrees", sharp_edges, total_edges,
+                     percentage)
         if self.__vertex_map:
             verts, faces = self.__model.vertices, self.__model.faces
             custom_normals = [(Vector(verts[i].normal).xzy).normalized() for f in faces for i in f]
@@ -1093,6 +1109,7 @@ class _PMXCleaner:
         # clean face
         def face_key_func(f):
             return frozenset({vertex_map[x][0]: tuple(pmx_vertices[x].uv) for x in f}.items())
+
         cls.__clean_pmx_faces(pmx_model.faces, pmx_model.materials, face_key_func)
 
         if mesh_only:

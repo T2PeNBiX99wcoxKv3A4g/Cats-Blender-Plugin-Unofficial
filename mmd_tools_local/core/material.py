@@ -1,17 +1,16 @@
 # Copyright 2014 MMD Tools authors
 # This file is part of MMD Tools.
 
+import bpy
 import logging
 import os
+from mathutils import Vector
 from pathlib import Path
 from typing import TYPE_CHECKING, Callable, Iterable, Optional, Tuple, cast
 
-import bpy
-from mathutils import Vector
-
-from ..bpyutils import FnContext
 from .exceptions import MaterialNotFoundError
 from .shader import _NodeGroupUtils
+from ..bpyutils import FnContext
 
 if TYPE_CHECKING:
     from ..properties.material import MMDMaterial
@@ -65,7 +64,8 @@ class FnMaterial:
                 bpy.data.materials.remove(m)
 
     @staticmethod
-    def swap_materials(mesh_object: bpy.types.Object, mat1_ref: str | int, mat2_ref: str | int, reverse=False, swap_slots=False) -> Tuple[bpy.types.Material, bpy.types.Material]:
+    def swap_materials(mesh_object: bpy.types.Object, mat1_ref: str | int, mat2_ref: str | int, reverse=False,
+                       swap_slots=False) -> Tuple[bpy.types.Material, bpy.types.Material]:
         """
         Assign the polygons of mat1 to mat2.
 
@@ -218,7 +218,8 @@ class FnMaterial:
             return
         mmd_mat: MMDMaterial = self.__material.mmd_material
         if mmd_mat.is_shared_toon_texture:
-            shared_toon_folder = FnContext.get_addon_preferences_attribute(FnContext.ensure_context(), "shared_toon_folder", "")
+            shared_toon_folder = FnContext.get_addon_preferences_attribute(FnContext.ensure_context(),
+                                                                           "shared_toon_folder", "")
             toon_path = os.path.join(shared_toon_folder, f"toon{mmd_mat.shared_toon_texture + 1:02d}.bmp")
             self.create_toon_texture(str(Path(toon_path).resolve()))
         elif mmd_mat.toon_texture != "":
@@ -306,7 +307,8 @@ class FnMaterial:
             self.__update_shader_input("Sphere Tex", (0, 0, 0, 1) if is_sph_add else (1, 1, 1, 1))
 
             texture = self.__get_texture_node("mmd_sphere_tex")
-            if texture and (not texture.inputs["Vector"].is_linked or texture.inputs["Vector"].links[0].from_node.name == "mmd_tex_uv"):
+            if texture and (not texture.inputs["Vector"].is_linked or texture.inputs["Vector"].links[
+                0].from_node.name == "mmd_tex_uv"):
                 if hasattr(texture, "color_space"):
                     texture.color_space = "NONE" if is_sph_add else "COLOR"
                 elif hasattr(texture.image, "colorspace_settings"):
@@ -320,7 +322,8 @@ class FnMaterial:
                         next(uv_layers, None)  # skip base UV
                         subtex_uv = getattr(next(uv_layers, None), "name", "")
                         if subtex_uv != "UV1":
-                            logging.info(' * material(%s): object "%s" use UV "%s" for SubTex', mat.name, obj.name, subtex_uv)
+                            logging.info(' * material(%s): object "%s" use UV "%s" for SubTex', mat.name, obj.name,
+                                         subtex_uv)
                     links.new(nodes["mmd_tex_uv"].outputs["SubTex UV"], texture.inputs["Vector"])
                 else:
                     links.new(nodes["mmd_tex_uv"].outputs["Sphere UV"], texture.inputs["Vector"])
@@ -504,7 +507,8 @@ class FnMaterial:
                 tex_node.name = "mmd_base_tex"
             else:
                 # Take the Base Color from BSDF or Emission if there's no texture
-                bsdf_node = next((n for n in m.node_tree.nodes if n.type == "EMISSION" or n.type.startswith("BSDF_")), None)
+                bsdf_node = next((n for n in m.node_tree.nodes if n.type == "EMISSION" or n.type.startswith("BSDF_")),
+                                 None)
                 if bsdf_node:
                     base_color_input = bsdf_node.inputs.get("Base Color") or bsdf_node.inputs.get("Color")
                     if base_color_input:
@@ -602,7 +606,8 @@ class FnMaterial:
         color_linked = color_out_socket and color_out_socket.is_linked
         alpha_linked = alpha_out_socket and alpha_out_socket.is_linked
         if not (shader_linked or color_linked or alpha_linked):
-            node_output = next((n for n in nodes if isinstance(n, bpy.types.ShaderNodeOutputMaterial) and n.is_active_output), None)
+            node_output = next(
+                (n for n in nodes if isinstance(n, bpy.types.ShaderNodeOutputMaterial) and n.is_active_output), None)
             if node_output is None:
                 node_output: bpy.types.ShaderNodeOutputMaterial = nodes.new("ShaderNodeOutputMaterial")
                 node_output.is_active_output = True
@@ -610,13 +615,18 @@ class FnMaterial:
             if shader_out_socket:
                 links.new(shader_out_socket, node_output.inputs["Surface"])
             elif color_out_socket:
-                logging.info("Material '%s': MMDShaderDev node group is missing 'Shader' output. Falling back to 'Color' output. Material will render as an emission shader.", mat.name)
+                logging.info(
+                    "Material '%s': MMDShaderDev node group is missing 'Shader' output. Falling back to 'Color' output. Material will render as an emission shader.",
+                    mat.name)
                 links.new(color_out_socket, node_output.inputs["Surface"])
             elif alpha_out_socket:
-                logging.warning("Material '%s': MMDShaderDev node group is missing 'Shader' and 'Color' outputs. Falling back to 'Alpha' output. Material will render as grayscale.", mat.name)
+                logging.warning(
+                    "Material '%s': MMDShaderDev node group is missing 'Shader' and 'Color' outputs. Falling back to 'Alpha' output. Material will render as grayscale.",
+                    mat.name)
                 links.new(alpha_out_socket, node_output.inputs["Surface"])
             else:
-                raise RuntimeError(f"Material '{mat.name}': The 'mmd_shader' node group is invalid or corrupted. It is missing all expected outputs ('Shader', 'Color', and 'Alpha'). Unable to link material output.")
+                raise RuntimeError(
+                    f"Material '{mat.name}': The 'mmd_shader' node group is invalid or corrupted. It is missing all expected outputs ('Shader', 'Color', and 'Alpha'). Unable to link material output.")
 
         for name_id in ("Base", "Toon", "Sphere"):
             texture = self.__get_texture_node(f"mmd_{name_id.lower()}_tex")
@@ -631,7 +641,8 @@ class FnMaterial:
 
     def __get_shader_uv(self):
         group_name = "MMDTexUV"
-        shader: bpy.types.ShaderNodeTree = bpy.data.node_groups.get(group_name, None) or bpy.data.node_groups.new(name=group_name, type="ShaderNodeTree")
+        shader: bpy.types.ShaderNodeTree = bpy.data.node_groups.get(group_name, None) or bpy.data.node_groups.new(
+            name=group_name, type="ShaderNodeTree")
         if len(shader.nodes):
             return shader
 
@@ -668,7 +679,8 @@ class FnMaterial:
 
     def __get_shader(self):
         group_name = "MMDShaderDev"
-        shader: bpy.types.ShaderNodeTree = bpy.data.node_groups.get(group_name, None) or bpy.data.node_groups.new(name=group_name, type="ShaderNodeTree")
+        shader: bpy.types.ShaderNodeTree = bpy.data.node_groups.get(group_name, None) or bpy.data.node_groups.new(
+            name=group_name, type="ShaderNodeTree")
         if len(shader.nodes):
             return shader
 
@@ -770,7 +782,8 @@ class MigrationFnMaterial:
         if "Color" in ng.node_output.inputs:
             return
 
-        shader_diffuse: bpy.types.ShaderNodeBsdfDiffuse = [n for n in mmd_shader_node_tree.nodes if n.type == "BSDF_DIFFUSE"][0]
+        shader_diffuse: bpy.types.ShaderNodeBsdfDiffuse = \
+            [n for n in mmd_shader_node_tree.nodes if n.type == "BSDF_DIFFUSE"][0]
         node_sphere: bpy.types.ShaderNodeMixRGB = shader_diffuse.inputs["Color"].links[0].from_node
         node_output: bpy.types.NodeGroupOutput = ng.node_output
         shader_alpha_mix: bpy.types.ShaderNodeMixShader = node_output.inputs["Shader"].links[0].from_node

@@ -16,7 +16,9 @@ class MMDToolsSceneSetupPanel(PT_PanelBase, bpy.types.Panel):
     }
 
     def draw(self, context: bpy.types.Context):
-        self.layout.row(align=True).operator("wm.url_open", text="MMD Tools/Manual", icon="URL").url = self.__LANGUAGE_MANUAL_URL.get(context.preferences.view.language, "https://mmd-blender.fandom.com/wiki/MMD_Tools/Manual")
+        self.layout.row(align=True).operator("wm.url_open", text="MMD Tools/Manual",
+                                             icon="URL").url = self.__LANGUAGE_MANUAL_URL.get(
+            context.preferences.view.language, "https://mmd-blender.fandom.com/wiki/MMD_Tools/Manual")
 
         self.draw_io()
         self.draw_timeline(context)
@@ -55,7 +57,8 @@ class MMDToolsSceneSetupPanel(PT_PanelBase, bpy.types.Panel):
         col = layout.column(align=True)
         row = col.row(align=False)
         row.label(text="Rigid Body Physics:", icon="PHYSICS")
-        row.row().operator("mmd_tools_local.rigid_body_world_update", text="Update World", icon="NONE" if getattr(rigidbody_world, "substeps_per_frame", 0) == 6 else "ERROR")
+        row.row().operator("mmd_tools_local.rigid_body_world_update", text="Update World",
+                           icon="NONE" if getattr(rigidbody_world, "substeps_per_frame", 0) == 6 else "ERROR")
 
         if rigidbody_world:
             row = col.row(align=True)

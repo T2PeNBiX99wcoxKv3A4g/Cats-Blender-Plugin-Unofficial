@@ -1,6 +1,8 @@
 # Copyright 2014 MMD Tools authors
 # This file is part of MMD Tools.
 
+import bmesh
+import bpy
 import copy
 import logging
 import math
@@ -10,14 +12,9 @@ import shutil
 import time
 from collections import OrderedDict
 from contextlib import contextmanager
+from mathutils import Euler, Matrix, Vector
 from pathlib import Path
 
-import bmesh
-import bpy
-from mathutils import Euler, Matrix, Vector
-
-from ...bpyutils import FnContext
-from ...operators.misc import MoveObject
 from .. import pmx
 from ..bone import FnBone
 from ..material import FnMaterial
@@ -26,6 +23,8 @@ from ..morph import FnMorph
 from ..sdef import FnSDEF
 from ..translations import FnTranslations
 from ..vmd.importer import BoneConverter, BoneConverterPoseMode
+from ...bpyutils import FnContext
+from ...operators.misc import MoveObject
 
 
 class _Vertex:
@@ -270,7 +269,9 @@ class __PmxExporter:
                 else:
                     # Fallback for textures without blender_image
                     for image in bpy.data.images:
-                        if getattr(image, "packed_file", None) is not None and (image.filepath == src_path or os.path.basename(image.filepath) == os.path.basename(src_path)):
+                        if getattr(image, "packed_file", None) is not None and (
+                                image.filepath == src_path or os.path.basename(image.filepath) == os.path.basename(
+                            src_path)):
                             packed_image = image
                             break
 
@@ -294,7 +295,8 @@ class __PmxExporter:
                             os.makedirs(os.path.dirname(full_dest_path), exist_ok=True)
                             shutil.copy2(src_path, full_dest_path)
                         except PermissionError:
-                            logging.warning("Permission denied. Could not copy texture to '%s'. Skipping.", full_dest_path)
+                            logging.warning("Permission denied. Could not copy texture to '%s'. Skipping.",
+                                            full_dest_path)
                         except Exception as e:
                             logging.exception("An unexpected error occurred while copying external texture: %s", e)
                 else:
@@ -433,7 +435,8 @@ class __PmxExporter:
         world_mat = arm.matrix_world
         r = {}
 
-        sorted_bones = sorted(pose_bones, key=lambda x: (x.mmd_bone.bone_id if x.mmd_bone.bone_id >= 0 else float("inf"), x.name))
+        sorted_bones = sorted(pose_bones,
+                              key=lambda x: (x.mmd_bone.bone_id if x.mmd_bone.bone_id >= 0 else float("inf"), x.name))
         bone_id_map = {p_bone.mmd_bone.bone_id: p_bone for p_bone in sorted_bones}
 
         pmx_matrix = world_mat * self.__scale
@@ -461,10 +464,13 @@ class __PmxExporter:
                 if mmd_bone.additional_transform_bone:
                     pmx_bone.hasAdditionalRotate = mmd_bone.has_additional_rotation
                     pmx_bone.hasAdditionalLocation = mmd_bone.has_additional_location
-                    pmx_bone.additionalTransform = [mmd_bone.additional_transform_bone, mmd_bone.additional_transform_influence]
+                    pmx_bone.additionalTransform = [mmd_bone.additional_transform_bone,
+                                                    mmd_bone.additional_transform_influence]
                 else:
                     if mmd_bone.has_additional_rotation or mmd_bone.has_additional_location:
-                        logging.warning("Bone %s: Additional Transform is enabled but no target bone is specified. Automatically disabling.", p_bone.name)
+                        logging.warning(
+                            "Bone %s: Additional Transform is enabled but no target bone is specified. Automatically disabling.",
+                            p_bone.name)
                     pmx_bone.hasAdditionalRotate = False
                     pmx_bone.hasAdditionalLocation = False
                     pmx_bone.additionalTransform = ["", 1.0]
@@ -484,15 +490,15 @@ class __PmxExporter:
 
                 # fmt: off
                 if (
-                    pmx_bone.parent is not None
-                    and (
+                        pmx_bone.parent is not None
+                        and (
                         bone.use_connect
                         or (
-                            not pmx_bone.isMovable
-                            and math.isclose(0.0, (bone.head - pmx_bone.parent.tail).length)
+                                not pmx_bone.isMovable
+                                and math.isclose(0.0, (bone.head - pmx_bone.parent.tail).length)
                         )
-                    )
-                    and p_bone.parent.mmd_bone.is_tip
+                )
+                        and p_bone.parent.mmd_bone.is_tip
                 ):
                     logging.debug(" * fix location of bone %s, parent %s is tip", bone.name, pmx_bone.parent.name)
                     pmx_bone.location = boneMap[pmx_bone.parent].location
@@ -509,7 +515,9 @@ class __PmxExporter:
 
                     # Force OFFSET if target bone is too far.
                     if target_p_bone and (target_p_bone.head - p_bone.tail).length > 0.01:
-                        logging.warning('Bone "%s": Target bone "%s" is too far. Automatically switching display connection to OFFSET.', p_bone.name, target_p_bone.name)
+                        logging.warning(
+                            'Bone "%s": Target bone "%s" is too far. Automatically switching display connection to OFFSET.',
+                            p_bone.name, target_p_bone.name)
                         tail_loc = __to_pmx_location(p_bone.tail)
                         pmx_bone.displayConnection = tail_loc - pmx_bone.location
                     else:
@@ -522,7 +530,8 @@ class __PmxExporter:
                     pmx_bone.axis = __to_pmx_axis(mmd_bone.fixed_axis, p_bone)
 
                 if mmd_bone.enabled_local_axes:
-                    pmx_bone.localCoordinate = pmx.Coordinate(__to_pmx_axis(mmd_bone.local_axis_x, p_bone), __to_pmx_axis(mmd_bone.local_axis_z, p_bone))
+                    pmx_bone.localCoordinate = pmx.Coordinate(__to_pmx_axis(mmd_bone.local_axis_x, p_bone),
+                                                              __to_pmx_axis(mmd_bone.local_axis_z, p_bone))
 
             for idx, i in enumerate(pmx_bones):
                 if i.parent is not None:
@@ -562,8 +571,11 @@ class __PmxExporter:
         if ik_export_option == "IGNORE_ALL":
             unused_counts = 3
         else:
-            ik_limit_custom = next((c for c in custom_bone.constraints if c.type == "LIMIT_ROTATION" and c.name == f"mmd_ik_limit_custom{len(ik_links)}"), None)
-            ik_limit_override = next((c for c in pose_bone.constraints if c.type == "LIMIT_ROTATION" and not c.mute), None)
+            ik_limit_custom = next((c for c in custom_bone.constraints if
+                                    c.type == "LIMIT_ROTATION" and c.name == f"mmd_ik_limit_custom{len(ik_links)}"),
+                                   None)
+            ik_limit_override = next((c for c in pose_bone.constraints if c.type == "LIMIT_ROTATION" and not c.mute),
+                                     None)
 
             for i, axis in enumerate("xyz"):
                 if ik_limit_custom:  # custom ik limits for MMD only
@@ -595,7 +607,8 @@ class __PmxExporter:
             ik_link.minimumAngle = list(minimum)
             ik_link.maximumAngle = list(maximum)
 
-        return self.__exportIKLinks(pose_bone.parent, count - 1, bone_map, ik_links + [ik_link], custom_bone, ik_export_option)
+        return self.__exportIKLinks(pose_bone.parent, count - 1, bone_map, ik_links + [ik_link], custom_bone,
+                                    ik_export_option)
 
     def __exportIK(self, root, bone_map):
         """Export IK constraints
@@ -608,12 +621,14 @@ class __PmxExporter:
 
         logging.info("IK angle limits handling: %s", self.__ik_angle_limits)
 
-        ik_target_custom_map = {getattr(b.constraints.get("mmd_ik_target_custom", None), "subtarget", None): b for b in pose_bones if not b.is_mmd_shadow_bone}
+        ik_target_custom_map = {getattr(b.constraints.get("mmd_ik_target_custom", None), "subtarget", None): b for b in
+                                pose_bones if not b.is_mmd_shadow_bone}
 
         def __ik_target_bone_get(ik_constraint_bone, ik_bone):
             if ik_bone.name in ik_target_custom_map:
                 logging.debug('  (use "mmd_ik_target_custom")')
-                return ik_target_custom_map[ik_bone.name]  # for supporting the ik target which is not a child of ik_constraint_bone
+                return ik_target_custom_map[
+                    ik_bone.name]  # for supporting the ik target which is not a child of ik_constraint_bone
             return self.__get_ik_target_bone(ik_constraint_bone)  # this only search the children of ik_constraint_bone
 
         for bone in pose_bones:
@@ -650,7 +665,8 @@ class __PmxExporter:
                     else:
                         pmx_ik_bone.rotationConstraint = bone.mmd_bone.ik_rotation_constraint
                     pmx_ik_bone.target = bone_map[ik_target_bone.name]
-                    pmx_ik_bone.ik_links = self.__exportIKLinks(ik_chain0, c.chain_count, bone_map, [], ik_pose_bone, self.__ik_angle_limits)
+                    pmx_ik_bone.ik_links = self.__exportIKLinks(ik_chain0, c.chain_count, bone_map, [], ik_pose_bone,
+                                                                self.__ik_angle_limits)
 
     def __get_ik_control_bone(self, ik_constraint):
         arm = ik_constraint.target
@@ -711,7 +727,8 @@ class __PmxExporter:
             shape_key_names.sort(key=root.mmd_root.vertex_morphs.find)
 
         for i in shape_key_names:
-            morph = pmx.VertexMorph(name=i, name_e=morph_english_names.get(i, ""), category=morph_categories.get(i, pmx.Morph.CATEGORY_OHTER))
+            morph = pmx.VertexMorph(name=i, name_e=morph_english_names.get(i, ""),
+                                    category=morph_categories.get(i, pmx.Morph.CATEGORY_OHTER))
             self.__model.morphs.append(morph)
 
         append_table = dict(zip(shape_key_names, [m.offsets.append for m in self.__model.morphs], strict=False))
@@ -726,7 +743,8 @@ class __PmxExporter:
         mmd_root = root.mmd_root
         categories = self.CATEGORIES
         for morph in mmd_root.material_morphs:
-            mat_morph = pmx.MaterialMorph(name=morph.name, name_e=morph.name_e, category=categories.get(morph.category, pmx.Morph.CATEGORY_OHTER))
+            mat_morph = pmx.MaterialMorph(name=morph.name, name_e=morph.name_e,
+                                          category=categories.get(morph.category, pmx.Morph.CATEGORY_OHTER))
             for data in morph.data:
                 morph_data = pmx.MaterialMorphOffset()
                 try:
@@ -783,7 +801,7 @@ class __PmxExporter:
         sorted_mat = []
         self.__material_name_table.clear()
         for d, mat, offset, vert_count, bl_mat_name in sorted(distances, key=lambda x: x[0]):
-            sorted_faces.extend(faces[offset : offset + vert_count])
+            sorted_faces.extend(faces[offset: offset + vert_count])
             sorted_mat.append(mat)
             self.__material_name_table.append(bl_mat_name)
         self.__model.materials = sorted_mat
@@ -820,7 +838,8 @@ class __PmxExporter:
             return converter_cache[b]
 
         for morph in mmd_root.bone_morphs:
-            bone_morph = pmx.BoneMorph(name=morph.name, name_e=morph.name_e, category=categories.get(morph.category, pmx.Morph.CATEGORY_OHTER))
+            bone_morph = pmx.BoneMorph(name=morph.name, name_e=morph.name_e,
+                                       category=categories.get(morph.category, pmx.Morph.CATEGORY_OHTER))
             for data in morph.data:
                 morph_data = pmx.BoneMorphOffset()
                 try:
@@ -846,7 +865,8 @@ class __PmxExporter:
         categories = self.CATEGORIES
         append_table_vg = {}
         for morph in mmd_root.uv_morphs:
-            uv_morph = pmx.UVMorph(name=morph.name, name_e=morph.name_e, category=categories.get(morph.category, pmx.Morph.CATEGORY_OHTER))
+            uv_morph = pmx.UVMorph(name=morph.name, name_e=morph.name_e,
+                                   category=categories.get(morph.category, pmx.Morph.CATEGORY_OHTER))
             uv_morph.uv_index = morph.uv_index
             self.__model.morphs.append(uv_morph)
             if morph.data_type == "VERTEX_GROUP":
@@ -878,7 +898,8 @@ class __PmxExporter:
         categories = self.CATEGORIES
         start_index = len(self.__model.morphs)
         for morph in mmd_root.group_morphs:
-            group_morph = pmx.GroupMorph(name=morph.name, name_e=morph.name_e, category=categories.get(morph.category, pmx.Morph.CATEGORY_OHTER))
+            group_morph = pmx.GroupMorph(name=morph.name, name_e=morph.name_e,
+                                         category=categories.get(morph.category, pmx.Morph.CATEGORY_OHTER))
             self.__model.morphs.append(group_morph)
 
         morph_map = self.__get_pmx_morph_map(root)
@@ -1026,10 +1047,14 @@ class __PmxExporter:
             p_joint.src_rigid = rigid_map.get(rbc.object1, -1)
             p_joint.dest_rigid = rigid_map.get(rbc.object2, -1)
             scale = self.__scale * sum(s) / 3
-            p_joint.maximum_location = Vector((rbc.limit_lin_x_upper, rbc.limit_lin_z_upper, rbc.limit_lin_y_upper)) * scale
-            p_joint.minimum_location = Vector((rbc.limit_lin_x_lower, rbc.limit_lin_z_lower, rbc.limit_lin_y_lower)) * scale
-            p_joint.maximum_rotation = Vector((rbc.limit_ang_x_lower, rbc.limit_ang_z_lower, rbc.limit_ang_y_lower)) * -1
-            p_joint.minimum_rotation = Vector((rbc.limit_ang_x_upper, rbc.limit_ang_z_upper, rbc.limit_ang_y_upper)) * -1
+            p_joint.maximum_location = Vector(
+                (rbc.limit_lin_x_upper, rbc.limit_lin_z_upper, rbc.limit_lin_y_upper)) * scale
+            p_joint.minimum_location = Vector(
+                (rbc.limit_lin_x_lower, rbc.limit_lin_z_lower, rbc.limit_lin_y_lower)) * scale
+            p_joint.maximum_rotation = Vector(
+                (rbc.limit_ang_x_lower, rbc.limit_ang_z_lower, rbc.limit_ang_y_lower)) * -1
+            p_joint.minimum_rotation = Vector(
+                (rbc.limit_ang_x_upper, rbc.limit_ang_z_upper, rbc.limit_ang_y_upper)) * -1
             p_joint.spring_constant = Vector(mmd_joint.spring_linear).xzy
             p_joint.spring_rotation_constant = Vector(mmd_joint.spring_angular).xzy
             self.__model.joints.append(p_joint)
@@ -1200,6 +1225,7 @@ class __PmxExporter:
 
         uv_morph_names = {g.index: (n, x) for g, n, x in FnMorph.get_uv_morph_vertex_groups(meshObj)}
         AXIS_MAP = {"X": 0, "Y": 1, "Z": 2, "W": 3}
+
         def get_uv_offsets(v):
             uv_offsets = {}
             for x in v.groups:
@@ -1266,7 +1292,7 @@ class __PmxExporter:
                 self.uv1, self.uv2, self.uv3 = (v.uv.copy() for v in uvs)
 
         def _UVWrapper(x):
-            return (_DummyUV(x[i : i + 3]) for i in range(0, len(x), 3))
+            return (_DummyUV(x[i: i + 3]) for i in range(0, len(x), 3))
 
         material_faces = {}
         uv_data = base_mesh.uv_layers.active
@@ -1303,6 +1329,7 @@ class __PmxExporter:
 
         def _mat_name(x):
             return x.name if x else self.__getDefaultMaterial().name
+
         material_names = {i: _mat_name(m) for i, m in enumerate(base_mesh.materials)}
         material_names = {i: material_names.get(i) or _mat_name(None) for i in material_faces.keys()}
 
@@ -1313,7 +1340,8 @@ class __PmxExporter:
                 continue
             uv_data = _UVWrapper(uv_tex.data)
             zw_data = base_mesh.uv_layers.get("_" + uv_tex.name, None)
-            logging.info(" # exporting addUV%s: %s [zw: %s]", uv_n + 1, uv_tex.name, zw_data.name if zw_data else zw_data)
+            logging.info(" # exporting addUV%s: %s [zw: %s]", uv_n + 1, uv_tex.name,
+                         zw_data.name if zw_data else zw_data)
             if zw_data:
                 zw_data = _UVWrapper(zw_data.data)
             else:
@@ -1531,7 +1559,8 @@ class __PmxExporter:
         triangulation_ratio = final_face_count / original_face_count if original_face_count > 0 else 0
         logging.info("Changes in Vertex and Face Count:")
         logging.info("  Normal Handling: %s", self.__normal_handling)
-        logging.info("  Vertices: Original %d -> Output %d (%+d)", original_vertex_count, final_vertex_count, vertex_diff)
+        logging.info("  Vertices: Original %d -> Output %d (%+d)", original_vertex_count, final_vertex_count,
+                     vertex_diff)
         logging.info("  Faces: Original %d -> Output %d (%+d)", original_face_count, final_face_count, face_diff)
         logging.info("  Face Triangulation Ratio: %.2fx (Output / Original)", triangulation_ratio)
 

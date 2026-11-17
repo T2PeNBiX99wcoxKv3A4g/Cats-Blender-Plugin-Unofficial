@@ -1,9 +1,8 @@
 # Copyright 2021 MMD Tools authors
 # This file is part of MMD Tools.
 
-from typing import Dict, List, Optional, Tuple
-
 import bpy
+from typing import Dict, List, Optional, Tuple
 
 from ..core.translations import FnTranslations, MMDTranslationElementType
 from ..translations import DictionaryEnum
@@ -40,11 +39,14 @@ BATCH_OPERATION_SCRIPT_PRESETS: Dict[str, Tuple[Optional[str], str, str, int]] =
     "RESTORE_BLENDER": ("BLENDER", "Restore Blender Names", "org_name", 5),
     "RESTORE_JAPANESE": ("JAPANESE", "Restore Japanese MMD Names", "org_name_j", 6),
     "RESTORE_ENGLISH": ("ENGLISH", "Restore English MMD Names", "org_name_e", 7),
-    "ENGLISH_IF_EMPTY_JAPANESE": (None, "Copy English MMD Names, if empty copy Japanese MMD Name", "name_e if name_e else name_j", 8),
-    "JAPANESE_IF_EMPTY_ENGLISH": (None, "Copy Japanese MMD Names, if empty copy English MMD Name", "name_j if name_j else name_e", 9),
+    "ENGLISH_IF_EMPTY_JAPANESE": (None, "Copy English MMD Names, if empty copy Japanese MMD Name",
+                                  "name_e if name_e else name_j", 8),
+    "JAPANESE_IF_EMPTY_ENGLISH": (None, "Copy Japanese MMD Names, if empty copy English MMD Name",
+                                  "name_j if name_j else name_e", 9),
 }
 
-BATCH_OPERATION_SCRIPT_PRESET_ITEMS: List[Tuple[str, str, str, int]] = [(k, t[1], t[2], t[3]) for k, t in BATCH_OPERATION_SCRIPT_PRESETS.items()]
+BATCH_OPERATION_SCRIPT_PRESET_ITEMS: List[Tuple[str, str, str, int]] = [(k, t[1], t[2], t[3]) for k, t in
+                                                                        BATCH_OPERATION_SCRIPT_PRESETS.items()]
 
 
 class MMDTranslation(bpy.types.PropertyGroup):

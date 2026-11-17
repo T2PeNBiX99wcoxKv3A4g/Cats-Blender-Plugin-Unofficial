@@ -1,8 +1,8 @@
 # MIT License
 
+from .bones import BONE_LIST, get_bone_enum_items, NO_OVERRIDE
 from .. import common as Common
 from ..translations import t
-from .bones import BONE_LIST, get_bone_enum_items, NO_OVERRIDE
 
 
 def draw_ui(context, layout):

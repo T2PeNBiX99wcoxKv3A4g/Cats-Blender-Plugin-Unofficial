@@ -13,6 +13,7 @@ if "bpy" not in locals():
     from . import build
 else:
     import importlib
+
     importlib.reload(maps)
     importlib.reload(pack)
     importlib.reload(compose)
@@ -25,5 +26,5 @@ else:
     importlib.reload(build)
 
 from .build import CatsAtlasBuild, CatsAtlasRefreshList
-from .migrate import CatsAtlasImportSMC  
+from .migrate import CatsAtlasImportSMC
 from .props import CatsAtlasItem, CatsAtlasMaterialSettings

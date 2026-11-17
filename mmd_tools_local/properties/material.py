@@ -3,11 +3,11 @@
 
 import bpy
 
+from . import patch_library_overridable
 from .. import utils
 from ..core import material
 from ..core.material import FnMaterial
 from ..core.model import FnModel
-from . import patch_library_overridable
 
 
 def _mmd_material_update_ambient_color(prop: "MMDMaterial", _context):
@@ -290,7 +290,9 @@ class MMDMaterial(bpy.types.PropertyGroup):
     )
 
     def is_id_unique(self):
-        return self.material_id < 0 or not next((m for m in bpy.data.materials if m.mmd_material != self and m.mmd_material.material_id == self.material_id), None)
+        return self.material_id < 0 or not next((m for m in bpy.data.materials if
+                                                 m.mmd_material != self and m.mmd_material.material_id == self.material_id),
+                                                None)
 
     @staticmethod
     def register():

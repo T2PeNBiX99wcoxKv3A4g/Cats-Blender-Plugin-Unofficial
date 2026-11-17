@@ -1,34 +1,32 @@
 # MIT License
 
-import re
-import bpy
-import time
 import bmesh
+import bpy
 import fnmatch
 import numpy as np
-
+import re
+import time
 from bpy.types import (
     ShapeKey,
     Object,
     ShaderNodeTexImage,
     ShaderNodeGroup,
 )
-
-from mathutils import Vector
-from html.parser import HTMLParser
 from html.entities import name2codepoint
+from html.parser import HTMLParser
+from mathutils import Vector
+from sys import intern
 from typing import Optional, Any
 
+from . import armature_bones as Bones
+from . import colorspace as Colorspace
 from . import common as Common
 from . import iconloader as Iconloader
 from . import translate as Translate
-from . import armature_bones as Bones
-from . import colorspace as Colorspace
 from .register import register_wrap
 from .translations import t
-from sys import intern
-
 from ..mmd_tools_local import utils
+
 
 def get_objects():
     return bpy.context.view_layer.objects
@@ -50,11 +48,11 @@ def get_enum_property_value(property_holder, property_name, items_func=None):
         value = getattr(property_holder, property_name, None)
         if value is None:
             return ''
-        
+
         # If it's already a valid string, return it
         if isinstance(value, str):
             return value
-        
+
         # Handle integer index (Blender 5.0 compatibility)
         if isinstance(value, int) and items_func is not None:
             try:
@@ -224,11 +222,12 @@ class SavedData:
             if self.__active_object not in ignore and self.__active_object != context.view_layer.objects.active:
                 set_active(get_objects().get(self.__active_object), skip_sel=True)
 
+
 def get_armature(armature_name=None):
     if not armature_name:
         # Use safe enum getter for Blender 5.0 compatibility
         armature_name = get_enum_property_value(bpy.context.scene, 'armature', get_armature_list)
-        
+
     # Handle case where armature_name might still be an integer (e.g., passed directly)
     if isinstance(armature_name, int):
         armatures = get_armature_objects()
@@ -237,30 +236,31 @@ def get_armature(armature_name=None):
         elif armatures:
             return armatures[0]
         return None
-        
+
     # Get all objects in the scene
     objects = get_objects()
     if not objects:
         return None
-        
+
     # First try to find exact name match
     for obj in objects:
         if obj and obj.type == 'ARMATURE':
             if obj.name == armature_name:
                 return obj
-                
+
     # If no exact match, return first armature if name is empty
     if Common.is_enum_empty(armature_name):
         for obj in objects:
             if obj and obj.type == 'ARMATURE':
                 return obj
-    
+
     # Fallback: if the selected armature doesn't exist, return the first available armature
     for obj in objects:
         if obj and obj.type == 'ARMATURE':
             return obj
-                
+
     return None
+
 
 def get_armature_objects():
     armatures = []
@@ -332,7 +332,7 @@ def select(obj, sel=True):
     if obj is not None:
         hide(obj, False)
         obj.select_set(sel)
-        
+
 
 def hide(obj, val=True):
     if hasattr(obj, 'hide_set'):
@@ -358,12 +358,12 @@ def switch(new_mode, check_mode=True):
     active = context.view_layer.objects.active
     if check_mode and active and active.mode == new_mode:
         return
-    
+
     # Validate that the active object supports the requested mode
     if active is None:
         print(f"Warning: No active object when trying to switch to {new_mode} mode")
         return
-        
+
     # Check if the object type supports the requested mode
     supported_modes = []
     if active.type == 'MESH':
@@ -376,11 +376,12 @@ def switch(new_mode, check_mode=True):
         supported_modes = ['OBJECT', 'EDIT']
     else:
         supported_modes = ['OBJECT']
-    
+
     if new_mode not in supported_modes:
-        print(f"Warning: {active.type} object '{active.name}' does not support {new_mode} mode. Supported modes: {supported_modes}")
+        print(
+            f"Warning: {active.type} object '{active.name}' does not support {new_mode} mode. Supported modes: {supported_modes}")
         return
-    
+
     if bpy.ops.object.mode_set.poll():
         bpy.ops.object.mode_set(mode=new_mode, toggle=False)
 
@@ -392,7 +393,6 @@ def is_rigidbody_or_joint(obj):
 
 
 def remove_rigidbodies_global():
-
     if bpy.context.scene.remove_rigidbodies_joints_global:
         print('Collections:')
         for collection in bpy.data.collections:
@@ -408,6 +408,7 @@ def remove_rigidbodies_global():
         set_active(armature)
 
     return armature
+
 
 def set_default_stage():
     """
@@ -562,7 +563,7 @@ def get_armature_list(self, context):
         # 2. Will be shown in lists
         # 3. will be shown in the hover description (below description)
         choices.append((armature.name, name, armature.name))
-    
+
     return choices
 
 
@@ -572,16 +573,16 @@ def validate_armature_selection():
         context = bpy.context
         if not context or not context.scene:
             return
-        
+
         current_armature = context.scene.armature
         available_armatures = [obj.name for obj in get_armature_objects()]
-        
+
         if not available_armatures:
             return
-        
+
         # Determine if we need to fix the selection
         new_armature = None
-        
+
         # Handle case where current_armature might be an integer index (Blender 5.0)
         if isinstance(current_armature, int):
             # Only fix if the index is out of bounds
@@ -592,7 +593,7 @@ def validate_armature_selection():
             # Only fix if the string identifier is not in the available armatures
             if current_armature not in available_armatures:
                 new_armature = available_armatures[0]
-        
+
         # If we need to update, try direct update first, then schedule via timer
         if new_armature:
             try:
@@ -605,6 +606,7 @@ def validate_armature_selection():
                     except (AttributeError, TypeError):
                         pass
                     return None  # Don't repeat
+
                 bpy.app.timers.register(fix_armature_selection)
     except Exception as e:
         print(f'CATS validate_armature_selection failed: {e}')
@@ -719,11 +721,15 @@ def get_shapekeys_mouth_ch(self, context):
 
 
 def get_shapekeys_eye_blink_l(self, context):
-    return get_shapekeys(context, ['EYE Close L', 'Wink 2', 'Wink', 'Wink left', 'Wink Left', 'Blink (Left)', 'Blink', 'Basis'], False, False, False)
+    return get_shapekeys(context,
+                         ['EYE Close L', 'Wink 2', 'Wink', 'Wink left', 'Wink Left', 'Blink (Left)', 'Blink', 'Basis'],
+                         False, False, False)
 
 
 def get_shapekeys_eye_blink_r(self, context):
-    return get_shapekeys(context, ['EYE Close R', 'Wink 2 right', 'Wink 2 Right', 'Wink right 2', 'Wink Right 2', 'Wink right', 'Wink Right', 'Blink (Right)', 'Basis'], False, False, False)
+    return get_shapekeys(context,
+                         ['EYE Close R', 'Wink 2 right', 'Wink 2 Right', 'Wink right 2', 'Wink Right 2', 'Wink right',
+                          'Wink Right', 'Blink (Right)', 'Basis'], False, False, False)
 
 
 def get_shapekeys_eye_low_l(self, context):
@@ -787,8 +793,10 @@ def get_shapekeys(context, names, is_mouth, no_basis, return_list):
 def fix_armature_names(armature_name=None):
     if not armature_name:
         armature_name = get_enum_property_value(bpy.context.scene, 'armature', get_armature_list)
-    base_armature = get_armature(armature_name=get_enum_property_value(bpy.context.scene, 'merge_armature_into', get_armature_list))
-    merge_armature = get_armature(armature_name=get_enum_property_value(bpy.context.scene, 'merge_armature', get_armature_merge_list))
+    base_armature = get_armature(
+        armature_name=get_enum_property_value(bpy.context.scene, 'merge_armature_into', get_armature_list))
+    merge_armature = get_armature(
+        armature_name=get_enum_property_value(bpy.context.scene, 'merge_armature', get_armature_merge_list))
 
     # Armature should be named correctly (has to be at the end because of multiple armatures)
     armature = get_armature(armature_name=armature_name)
@@ -830,30 +838,30 @@ def get_meshes_objects(armature_name=None, mode=0, check=True, visible_only=Fals
             armature_name = armature.name
 
     meshes = []
-    
-    for ob in get_objects():
-            if ob is None:
-                continue
-            if ob.type != 'MESH':
-                continue
-                
-            if mode == 0 or mode == 5: 
-                if ob.parent:
-                    if ob.parent.type == 'ARMATURE' and ob.parent.name == armature_name:
-                        meshes.append(ob)
-                    elif ob.parent.parent and ob.parent.parent.type == 'ARMATURE' and ob.parent.parent.name == armature_name:
-                        meshes.append(ob) 
 
-            elif mode == 1:
-                if not ob.parent:
+    for ob in get_objects():
+        if ob is None:
+            continue
+        if ob.type != 'MESH':
+            continue
+
+        if mode == 0 or mode == 5:
+            if ob.parent:
+                if ob.parent.type == 'ARMATURE' and ob.parent.name == armature_name:
+                    meshes.append(ob)
+                elif ob.parent.parent and ob.parent.parent.type == 'ARMATURE' and ob.parent.parent.name == armature_name:
                     meshes.append(ob)
 
-            elif mode == 2:
+        elif mode == 1:
+            if not ob.parent:
                 meshes.append(ob)
 
-            elif mode == 3:
-                if ob.select_get():
-                    meshes.append(ob)
+        elif mode == 2:
+            meshes.append(ob)
+
+        elif mode == 3:
+            if ob.select_get():
+                meshes.append(ob)
 
     if visible_only:
         for mesh in meshes:
@@ -885,6 +893,7 @@ def get_meshes_objects(armature_name=None, mode=0, check=True, visible_only=Fals
 
     return meshes
 
+
 def get_meshes_objects_for_export(armature_name=None, mode=0, check=True):
     if not armature_name:
         armature = get_armature()
@@ -892,16 +901,16 @@ def get_meshes_objects_for_export(armature_name=None, mode=0, check=True):
             armature_name = armature.name
 
     meshes = []
-    
+
     for ob in get_objects():
         if ob is None or ob.type != 'MESH':
             continue
-            
+
         # Only include visible meshes
         if is_hidden(ob):
             continue
-            
-        if mode == 0 or mode == 5: 
+
+        if mode == 0 or mode == 5:
             if ob.parent:
                 if ob.parent.type == 'ARMATURE' and ob.parent.name == armature_name:
                     meshes.append(ob)
@@ -918,12 +927,13 @@ def get_meshes_objects_for_export(armature_name=None, mode=0, check=True):
 
     return meshes
 
+
 def join_meshes(armature_name=None, mode=0, apply_transformations=True, repair_shape_keys=True):
     # Modes:
     # 0 - Join all meshes
     # 1 - Join selected only
     context = bpy.context
-    
+
     if not armature_name:
         armature_name = bpy.context.scene.armature
 
@@ -951,14 +961,13 @@ def join_meshes(armature_name=None, mode=0, apply_transformations=True, repair_s
 
     for mesh in meshes_to_join:
         set_active(mesh)
-        
+
         for mod in mesh.modifiers:
             if mod.type == 'SUBSURF':
                 mesh.modifiers.remove(mod)
 
         if mesh.data.uv_layers:
             mesh.data.uv_layers[0].name = 'UVMap'
-            
 
     # Get the name of the active mesh in order to check if it was deleted later.
     # The joined objects are freed by the join, so remember them by name now.
@@ -973,7 +982,6 @@ def join_meshes(armature_name=None, mode=0, apply_transformations=True, repair_s
 
     # In Blender 5.0 we need to refresh the context after operations
     context = bpy.context
-
 
     # Delete meshes that somehow weren't deleted. Both pre and post join mesh deletion methods are needed!
     for mesh in get_meshes_objects(armature_name=armature_name):
@@ -1053,7 +1061,6 @@ def apply_transforms_to_mesh(mesh):
 
 
 def apply_all_transforms():
-
     def apply_transforms_with_children(parent):
         unselect_all()
         set_active(parent)
@@ -1225,9 +1232,9 @@ def save_shapekey_order(mesh_name):
     sys_props = armature.bl_system_properties_get()
     if not sys_props:
         return
-    
+
     custom_data = sys_props.get('CUSTOM')
-    
+
     if not custom_data:
         # print('NEW DATA!')
         custom_data = {}
@@ -1272,18 +1279,18 @@ def repair_shapekey_order(mesh_name, armature_name=None):
         armature = get_armature()
     if not armature:
         return
-    
+
     # In Blender 5.0, use bl_system_properties_get() to access IDProperties
     sys_props = armature.bl_system_properties_get()
     if not sys_props:
         return
-    
+
     # Early return if no custom data exists
     if 'CUSTOM' not in sys_props:
         return
-    
+
     custom_data = sys_props.get('CUSTOM', {})
-    
+
     if not isinstance(custom_data, dict):
         return
 
@@ -1303,7 +1310,6 @@ def repair_shapekey_order(mesh_name, armature_name=None):
     # Only call sort_shape_keys if shape_key_order is not empty
     if custom_data.get('shape_key_order'):
         sort_shape_keys(mesh_name, custom_data['shape_key_order'])
-
 
 
 def update_shapekey_orders(picked_author_names=None):
@@ -1537,7 +1543,8 @@ def delete_zero_weight(armature_name=None, ignore=''):
                 armature.data.edit_bones.remove(bone)  # delete bone
                 count += 1
                 if bone_name in vertex_group_name_to_objects_having_same_named_vertex_group:
-                    for objects in vertex_group_name_to_objects_having_same_named_vertex_group[bone_name]:  # delete vertex groups
+                    for objects in vertex_group_name_to_objects_having_same_named_vertex_group[
+                        bone_name]:  # delete vertex groups
                         vertex_group = objects.vertex_groups.get(bone_name)
                         if vertex_group is not None:
                             objects.vertex_groups.remove(vertex_group)
@@ -1547,7 +1554,7 @@ def delete_zero_weight(armature_name=None, ignore=''):
 
 def remove_unused_objects():
     default_scene_objects = []
-    
+
     for obj in get_objects():
         if obj.type in {'CAMERA', 'LAMP', 'LIGHT', 'MESH'} and is_default_object(obj):
             default_scene_objects.append(obj)
@@ -1555,6 +1562,7 @@ def remove_unused_objects():
     if len(default_scene_objects) == 3:
         for obj in default_scene_objects:
             delete_hierarchy(obj)
+
 
 def is_default_object(obj):
     # Check if the object is one of the default objects based on type
@@ -1865,11 +1873,12 @@ def fix_zero_length_bones(armature: bpy.types.Object):
         if length > 0.0001:
             continue
 
-        head_rounded = [round(x, 4) for x in bone.head] 
+        head_rounded = [round(x, 4) for x in bone.head]
         tail_rounded = [round(x, 4) for x in bone.tail]
 
         if head_rounded == tail_rounded:
             bone.tail += Vector((0, 0, 0.1))
+
 
 def fix_bone_orientations(armature):
     # Connect all bones with their children if they have exactly one
@@ -1877,7 +1886,7 @@ def fix_bone_orientations(armature):
         if len(bone.children) == 1 and bone.name not in ['LeftEye', 'RightEye', 'Head', 'Hips']:
             p1 = bone.head
             p2 = bone.children[0].head
-            dist = ((p2[0] - p1[0]) ** 2 + (p2[1] - p1[1]) ** 2 + (p2[2] - p1[2]) ** 2) ** (1/2)
+            dist = ((p2[0] - p1[0]) ** 2 + (p2[1] - p1[1]) ** 2 + (p2[2] - p1[2]) ** 2) ** (1 / 2)
 
             # Only connect them if the other bone is a certain distance away, otherwise blender will delete them
             if dist > 0.005:
@@ -2142,7 +2151,8 @@ def add_principled_shader(mesh: Object, bake_mmd=True):
                     cats_principled_bsdf.inputs["Base Color"].default_value = principled_base_color
                 # Link principled BSDF node's output to the material output
                 node_tree.links.new(cats_principled_bsdf.outputs["BSDF"], cats_material_output.inputs["Surface"])
-                
+
+
 def fix_twist_bones(mesh, bones_to_delete):
     # This will fix MMD twist bones
 
@@ -2397,13 +2407,13 @@ def _fix_out_of_bounds_enum_choices(property_holder, scene, choices, property_na
     # If the property is not yet initialised, it should get set to a valid index automatically, so we only care
     # if it has already been initialised
     is_initialised = current_choice_value is not None
-    
+
     if not is_initialised:
         return choices
-    
+
     # Build a set of valid identifiers for quick lookup
     valid_identifiers = {choice[0] for choice in choices}
-    
+
     # Check if the current value is a valid string identifier
     if isinstance(current_choice_value, str):
         if current_choice_value in valid_identifiers:
@@ -2427,7 +2437,7 @@ def _fix_out_of_bounds_enum_choices(property_holder, scene, choices, property_na
             replacement_identifier = choices[0][0]
             _schedule_enum_fix(property_holder, scene, property_name, property_path, replacement_identifier)
             return choices
-    
+
     # Handle integer indices (Blender 5.0 compatibility)
     if isinstance(current_choice_value, int):
         if 0 <= current_choice_value < num_choices:
@@ -2443,7 +2453,7 @@ def _fix_out_of_bounds_enum_choices(property_holder, scene, choices, property_na
                 temp_identifier = f"__temp_choice_{num_choices + i}__"
                 temp_choice = (temp_identifier, choices[0][1], choices[0][2])
                 choices.append(temp_choice)
-            
+
             replacement_identifier = choices[0][0]
             _schedule_enum_fix(property_holder, scene, property_name, property_path, replacement_identifier)
 
@@ -2465,13 +2475,13 @@ def _schedule_enum_fix(property_holder, scene, property_name, property_path, new
     # Always schedule via timer to avoid recursion
     scene_name = scene.name
     scheduled_property_set = _enum_choice_fix_scheduled.setdefault(scene_name, set())
-    
+
     if property_path in scheduled_property_set:
         # Already scheduled, don't duplicate
         return
-    
+
     scheduled_property_set.add(property_path)
-    
+
     def fix_enum_task():
         scene_by_name = bpy.data.scenes.get(scene_name)
         if scene_by_name:
@@ -2498,6 +2508,7 @@ def is_enum_empty(string):
     Returns False in all other cases."""
     return _empty_enum_identifier == string
 
+
 def is_enum_non_empty(string):
     """Returns False only if the tested string is not the string that signifies that an EnumProperty is empty.
 
@@ -2523,6 +2534,7 @@ def wrap_dynamic_enum_items(items_func, property_name, sort=True, in_place=True,
     Interns and caches all strings in the items to avoid a known Blender UI bug.
     Only works for properties whose owner is a scene.
     By setting is_holder=false, the fix for out of bounds values will be disabled."""
+
     def wrapped_items_func(self, context):
         # Create unique key for this property to detect recursion
         # Using id(self) and property_name to uniquely identify each property being accessed
@@ -2564,7 +2576,8 @@ def wrap_dynamic_enum_items(items_func, property_name, sort=True, in_place=True,
                 _enum_items_being_processed.pop(holder_id, None)
 
     return wrapped_items_func
-    
+
+
 def op_override(operator, context_override: dict[str, Any], context: Optional[bpy.types.Context] = None,
                 execution_context: Optional[str] = None,
                 undo: Optional[bool] = None, **operator_args) -> set[str]:
@@ -2580,6 +2593,7 @@ def op_override(operator, context_override: dict[str, Any], context: Optional[bp
     with context.temp_override(**context_override):
         return operator(*args, **operator_args)
 
+
 def set_material_shading():
     # Set shading to 3D view
     for area in bpy.context.screen.areas:  # iterate through areas in current screen
@@ -2591,6 +2605,7 @@ def set_material_shading():
                     space.shading.studiolight_rotate_z = 0.0
                     space.shading.studiolight_background_alpha = 0.0
                     space.shading.render_pass = 'COMBINED'
+
 
 def clear_unused_data():
     """

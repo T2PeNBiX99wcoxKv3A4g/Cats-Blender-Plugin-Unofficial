@@ -1,9 +1,8 @@
 # Copyright 2012 MMD Tools authors
 # This file is part of MMD Tools.
 
-from typing import Iterable, Optional
-
 import bpy
+from typing import Iterable, Optional
 
 from .core.material import FnMaterial
 from .core.shader import _NodeGroupUtils
@@ -138,7 +137,9 @@ def __convertToMMDBasicShader(material: bpy.types.Material):
     mmd_basic_shader_grp = create_MMDBasicShader()
     mmd_alpha_shader_grp = create_MMDAlphaShader()
 
-    if not any(filter(lambda x: isinstance(x, bpy.types.ShaderNodeGroup) and x.node_tree.name in {"MMDBasicShader", "MMDAlphaShader"}, material.node_tree.nodes)):
+    if not any(filter(lambda x: isinstance(x, bpy.types.ShaderNodeGroup) and x.node_tree.name in {"MMDBasicShader",
+                                                                                                  "MMDAlphaShader"},
+                      material.node_tree.nodes)):
         # Add nodes for Cycles Render
         shader: bpy.types.ShaderNodeGroup = material.node_tree.nodes.new("ShaderNodeGroup")
         shader.node_tree = mmd_basic_shader_grp
@@ -163,7 +164,8 @@ def __convertToMMDBasicShader(material: bpy.types.Material):
             material.node_tree.links.new(alpha_shader.inputs[0], outplug)
             outplug = alpha_shader.outputs[0]
 
-        material_output: bpy.types.ShaderNodeOutputMaterial = __getMaterialOutput(material.node_tree.nodes, "ShaderNodeOutputMaterial")
+        material_output: bpy.types.ShaderNodeOutputMaterial = __getMaterialOutput(material.node_tree.nodes,
+                                                                                  "ShaderNodeOutputMaterial")
         material.node_tree.links.new(material_output.inputs["Surface"], outplug)
         material_output.location.x = shader.location.x + 500
         material_output.location.y = shader.location.y - 150
@@ -192,7 +194,8 @@ def __convertToPrincipledBsdf(material: bpy.types.Material, subsurface: float):
         nodes.remove(nodes[name])
 
 
-def __switchToPrincipledBsdf(node_tree: bpy.types.NodeTree, node_basic: bpy.types.ShaderNodeGroup, subsurface: float, node_alpha: Optional[bpy.types.ShaderNodeGroup] = None):
+def __switchToPrincipledBsdf(node_tree: bpy.types.NodeTree, node_basic: bpy.types.ShaderNodeGroup, subsurface: float,
+                             node_alpha: Optional[bpy.types.ShaderNodeGroup] = None):
     shader: bpy.types.ShaderNodeBsdfPrincipled = node_tree.nodes.new("ShaderNodeBsdfPrincipled")
     shader.parent = node_basic.parent
     shader.location.x = node_basic.location.x
@@ -223,7 +226,8 @@ def __switchToPrincipledBsdf(node_tree: bpy.types.NodeTree, node_basic: bpy.type
             if "Alpha" in shader.inputs:
                 shader.inputs["Alpha"].default_value = node_alpha.inputs["Alpha"].default_value
                 if node_alpha.inputs[alpha_socket_name].is_linked:
-                    node_tree.links.new(node_alpha.inputs[alpha_socket_name].links[0].from_socket, shader.inputs["Alpha"])
+                    node_tree.links.new(node_alpha.inputs[alpha_socket_name].links[0].from_socket,
+                                        shader.inputs["Alpha"])
             else:
                 shader.inputs["Transmission"].default_value = 1 - node_alpha.inputs[alpha_socket_name].default_value
                 if node_alpha.inputs[alpha_socket_name].is_linked:
@@ -234,7 +238,8 @@ def __switchToPrincipledBsdf(node_tree: bpy.types.NodeTree, node_basic: bpy.type
                     node_invert.operation = "SUBTRACT"
                     node_invert.use_clamp = True
                     node_invert.inputs[0].default_value = 1
-                    node_tree.links.new(node_alpha.inputs[alpha_socket_name].links[0].from_socket, node_invert.inputs[1])
+                    node_tree.links.new(node_alpha.inputs[alpha_socket_name].links[0].from_socket,
+                                        node_invert.inputs[1])
                     node_tree.links.new(node_invert.outputs[0], shader.inputs["Transmission"])
 
     for link in output_links:

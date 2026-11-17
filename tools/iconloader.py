@@ -1,13 +1,11 @@
 # MIT License
 
-import os
 import bpy
-import pathlib
-
 import bpy.utils.previews
-from bpy.utils.previews import ImagePreviewCollection
+import os
+import pathlib
 import typing
-
+from bpy.utils.previews import ImagePreviewCollection
 
 # global variables
 preview_collections: typing.Type[ImagePreviewCollection] = {}
@@ -15,6 +13,7 @@ reloading = False
 
 main_dir = pathlib.Path(os.path.dirname(__file__)).parent.resolve()
 resources_dir = os.path.join(str(main_dir), "resources")
+
 
 def load_other_icons():
     # Note that preview collections returned by bpy.utils.previews
@@ -46,4 +45,3 @@ def unload_icons():
         bpy.utils.previews.remove(pcoll)
     preview_collections.clear()
     print('DONE!')
-    

@@ -1,14 +1,13 @@
 # Copyright 2022 MMD Tools authors
 # This file is part of MMD Tools.
 
-import itertools
-from operator import itemgetter
-from typing import Dict, List, Optional, Set
-
 import bmesh
 import bpy
+import itertools
 import numpy as np
 from mathutils import Matrix
+from operator import itemgetter
+from typing import Dict, List, Optional, Set
 
 from ..bpyutils import FnContext, select_object
 from ..core.model import FnModel, Model
@@ -114,7 +113,8 @@ class ModelSeparateByBonesOperator(bpy.types.Operator):
 
     separate_armature: bpy.props.BoolProperty(name="Separate Armature", default=True)
     include_descendant_bones: bpy.props.BoolProperty(name="Include Descendant Bones", default=True)
-    weight_threshold: bpy.props.FloatProperty(name="Weight Threshold", default=0.001, min=0.0, max=1.0, precision=4, subtype="FACTOR")
+    weight_threshold: bpy.props.FloatProperty(name="Weight Threshold", default=0.001, min=0.0, max=1.0, precision=4,
+                                              subtype="FACTOR")
     boundary_joint_owner: bpy.props.EnumProperty(
         name="Boundary Joint Owner",
         items=[
@@ -172,11 +172,14 @@ class ModelSeparateByBonesOperator(bpy.types.Operator):
                 context.active_object.data.edit_bones.active = original_active_bone
 
         separate_bones: Dict[str, bpy.types.EditBone] = {b.name: b for b in context.selected_bones}
-        deform_bones: Dict[str, bpy.types.EditBone] = {b.name: b for b in target_armature_object.data.edit_bones if b.use_deform}
+        deform_bones: Dict[str, bpy.types.EditBone] = {b.name: b for b in target_armature_object.data.edit_bones if
+                                                       b.use_deform}
         mmd_root_object: bpy.types.Object = FnModel.find_root_object(context.active_object)
         mmd_model = Model(mmd_root_object)
         mmd_model_mesh_objects: List[bpy.types.Object] = list(mmd_model.meshes())
-        mmd_model_mesh_objects = list(self._select_weighted_vertices(mmd_model_mesh_objects, separate_bones, deform_bones, weight_threshold).keys())
+        mmd_model_mesh_objects = list(
+            self._select_weighted_vertices(mmd_model_mesh_objects, separate_bones, deform_bones,
+                                           weight_threshold).keys())
         bpy.ops.object.mode_set(mode="OBJECT")
 
         # Store original transform matrix for root object
@@ -192,7 +195,8 @@ class ModelSeparateByBonesOperator(bpy.types.Operator):
         bpy.ops.mmd_tools_local.clean_additional_transform()
 
         # Create new separate model first
-        separate_model: Model = Model.create(mmd_root_object.mmd_root.name, mmd_root_object.mmd_root.name_e, mmd_scale, obj_name=mmd_root_object.name, add_root_bone=False)
+        separate_model: Model = Model.create(mmd_root_object.mmd_root.name, mmd_root_object.mmd_root.name_e, mmd_scale,
+                                             obj_name=mmd_root_object.name, add_root_bone=False)
         separate_model.initialDisplayFrames()
         separate_root_object = separate_model.rootObject()
         separate_root_object.matrix_world = mmd_root_object.matrix_world
@@ -210,11 +214,15 @@ class ModelSeparateByBonesOperator(bpy.types.Operator):
                     target_armature_object.data.edit_bones[bone_name].select = True
 
             bpy.ops.armature.separate()
-            separate_armature_object = next(iter([a for a in context.selected_objects if a != target_armature_object and a.type == "ARMATURE"]), None)
+            separate_armature_object = next(
+                iter([a for a in context.selected_objects if a != target_armature_object and a.type == "ARMATURE"]),
+                None)
         bpy.ops.object.mode_set(mode="OBJECT")
 
         # Collect separate rigid bodies
-        separate_rigid_bodies: Set[bpy.types.Object] = {rigid_body_object for rigid_body_object in mmd_model.rigidBodies() if rigid_body_object.mmd_rigid.bone in separate_bones}
+        separate_rigid_bodies: Set[bpy.types.Object] = {rigid_body_object for rigid_body_object in
+                                                        mmd_model.rigidBodies() if
+                                                        rigid_body_object.mmd_rigid.bone in separate_bones}
 
         boundary_joint_owner_condition = any if self.boundary_joint_owner == "DESTINATION" else all
 
@@ -256,7 +264,8 @@ class ModelSeparateByBonesOperator(bpy.types.Operator):
             # Separate mesh by selected vertices
             bpy.ops.object.mode_set(mode="EDIT")
             bpy.ops.mesh.separate(type="SELECTED")
-            separate_mesh_objects = [m for m in context.selected_objects if m.type == "MESH" and m not in mmd_model_mesh_objects]
+            separate_mesh_objects = [m for m in context.selected_objects if
+                                     m.type == "MESH" and m not in mmd_model_mesh_objects]
             bpy.ops.object.mode_set(mode="OBJECT")
 
             model2separate_mesh_objects = dict(zip(mmd_model_mesh_objects, separate_mesh_objects, strict=False))
@@ -275,29 +284,34 @@ class ModelSeparateByBonesOperator(bpy.types.Operator):
 
         if self.separate_armature and separate_armature_object:
             separate_armature_data = separate_armature_object.data
-            with select_object(separate_model_armature_object, objects=[separate_model_armature_object, separate_armature_object]):
+            with select_object(separate_model_armature_object,
+                               objects=[separate_model_armature_object, separate_armature_object]):
                 bpy.ops.object.join()
             if separate_armature_data.users == 0:
                 bpy.data.armatures.remove(separate_armature_data)
 
         if separate_mesh_objects:
-            with select_object(separate_model_armature_object, objects=[separate_model_armature_object] + separate_mesh_objects):
+            with select_object(separate_model_armature_object,
+                               objects=[separate_model_armature_object] + separate_mesh_objects):
                 bpy.ops.object.parent_set(type="OBJECT", keep_transform=True)
 
         # Replace mesh armature modifier.object
         for separate_mesh in separate_mesh_objects:
-            armature_modifier: Optional[bpy.types.ArmatureModifier] = next(iter([m for m in separate_mesh.modifiers if m.type == "ARMATURE"]), None)
+            armature_modifier: Optional[bpy.types.ArmatureModifier] = next(
+                iter([m for m in separate_mesh.modifiers if m.type == "ARMATURE"]), None)
             if armature_modifier is None:
                 armature_modifier: bpy.types.ArmatureModifier = separate_mesh.modifiers.new("mmd_armature", "ARMATURE")
 
             armature_modifier.object = separate_model_armature_object
 
         if separate_rigid_bodies:
-            with select_object(separate_model.rigidGroupObject(), objects=[separate_model.rigidGroupObject()] + list(separate_rigid_bodies)):
+            with select_object(separate_model.rigidGroupObject(),
+                               objects=[separate_model.rigidGroupObject()] + list(separate_rigid_bodies)):
                 bpy.ops.object.parent_set(type="OBJECT", keep_transform=True)
 
         if separate_joints:
-            with select_object(separate_model.jointGroupObject(), objects=[separate_model.jointGroupObject()] + list(separate_joints)):
+            with select_object(separate_model.jointGroupObject(),
+                               objects=[separate_model.jointGroupObject()] + list(separate_joints)):
                 bpy.ops.object.parent_set(type="OBJECT", keep_transform=True)
 
         # Move separate objects to new collection
@@ -324,7 +338,8 @@ class ModelSeparateByBonesOperator(bpy.types.Operator):
             },
         )
 
-        empty_source_mesh_objects = [mesh_obj for mesh_obj in mmd_model_mesh_objects if len(mesh_obj.data.vertices) == 0]
+        empty_source_mesh_objects = [mesh_obj for mesh_obj in mmd_model_mesh_objects if
+                                     len(mesh_obj.data.vertices) == 0]
         self._remove_mesh_objects(empty_source_mesh_objects)
 
         # Apply additional transform
@@ -349,7 +364,10 @@ class ModelSeparateByBonesOperator(bpy.types.Operator):
             if mesh_data and mesh_data.users == 0:
                 bpy.data.meshes.remove(mesh_data)
 
-    def _select_weighted_vertices(self, mmd_model_mesh_objects: List[bpy.types.Object], separate_bones: Dict[str, bpy.types.EditBone], deform_bones: Dict[str, bpy.types.EditBone], weight_threshold: float) -> Dict[bpy.types.Object, int]:
+    def _select_weighted_vertices(self, mmd_model_mesh_objects: List[bpy.types.Object],
+                                  separate_bones: Dict[str, bpy.types.EditBone],
+                                  deform_bones: Dict[str, bpy.types.EditBone], weight_threshold: float) -> Dict[
+        bpy.types.Object, int]:
         mesh2selected_vertex_count: Dict[bpy.types.Object, int] = {}
         target_bmesh: bmesh.types.BMesh = bmesh.new()
         for mesh_object in mmd_model_mesh_objects:
@@ -366,7 +384,8 @@ class ModelSeparateByBonesOperator(bpy.types.Operator):
                 vert.select_set(False)
 
                 # Find the largest weight vertex group
-                weights = [(group_index, weight) for group_index, weight in vert[deform_layer].items() if vertex_groups[group_index].name in deform_bones]
+                weights = [(group_index, weight) for group_index, weight in vert[deform_layer].items() if
+                           vertex_groups[group_index].name in deform_bones]
 
                 weights.sort(key=lambda i: vertex_groups[i[0]].name in separate_bones, reverse=True)
                 weights.sort(key=itemgetter(1), reverse=True)

@@ -3,8 +3,8 @@
 
 import bpy
 
-from ...core.model import FnModel
 from . import PT_ProductionPanelBase
+from ...core.model import FnModel
 
 
 class MMDModelDebugPanel(PT_ProductionPanelBase, bpy.types.Panel):

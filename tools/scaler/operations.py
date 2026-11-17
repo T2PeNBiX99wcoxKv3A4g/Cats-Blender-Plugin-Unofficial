@@ -1,14 +1,14 @@
 # MIT License
 import bpy
-import mathutils
 import math
+import mathutils
 import numpy as np
 from typing import Iterable
 
-from .. import common as Common
-from .common import get_body_meshes, temp_ensure_enabled, ArmatureOperator
 from .bones import get_bone, check_bone
+from .common import get_body_meshes, temp_ensure_enabled, ArmatureOperator
 from .posemode import start_pose_mode_with_reset, apply_pose_to_rest
+from .. import common as Common
 from ..register import register_wrap
 
 
@@ -183,11 +183,11 @@ def get_current_scaling(obj):
 
 def get_upper_body_portion(arm):
     eye_z = (
-        get_bone_worldspace_z("left_eye", arm) + get_bone_worldspace_z("right_eye", arm)
-    ) / 2
+                    get_bone_worldspace_z("left_eye", arm) + get_bone_worldspace_z("right_eye", arm)
+            ) / 2
     leg_average_z = (
-        get_bone_worldspace_z("left_leg", arm) + get_bone_worldspace_z("right_leg", arm)
-    ) / 2
+                            get_bone_worldspace_z("left_leg", arm) + get_bone_worldspace_z("right_leg", arm)
+                    ) / 2
     lowest_point = get_lowest_point()
 
     return 1 - (leg_average_z - lowest_point) / (eye_z - lowest_point)
@@ -246,17 +246,17 @@ def calculate_arm_rescaling(obj, head_arm_change):
     # Derived using sympy: solveset(Eq(a * x, sqrt((c * b + s)**2 + y**2)), b)
     # where x=total length, c=arm length, y=neck length, a=head_arm_change, s=shoulder_length
     shoulder_length = (
-        math.sqrt((total_length - neck_length) * (total_length + neck_length))
-        - arm_length
+            math.sqrt((total_length - neck_length) * (total_length + neck_length))
+            - arm_length
     )
 
     arm_change = (
-        math.sqrt(
-            (head_arm_change * total_length - neck_length)
-            * (head_arm_change * total_length + neck_length)
-        )
-        / arm_length
-    ) - (shoulder_length / arm_length)
+                         math.sqrt(
+                             (head_arm_change * total_length - neck_length)
+                             * (head_arm_change * total_length + neck_length)
+                         )
+                         / arm_length
+                 ) - (shoulder_length / arm_length)
 
     return arm_change
 
@@ -286,23 +286,23 @@ def get_leg_proportions(arm):
     """Relative worldspace-z lengths of each leg portion from the top of the leg to the lowest foot vertex.
     Returns ([0.0, to_knee, to_ankle, 1.0], total_length)."""
     leg_average_z = (
-        get_bone_worldspace_z("left_leg", arm) + get_bone_worldspace_z("right_leg", arm)
-    ) / 2
+                            get_bone_worldspace_z("left_leg", arm) + get_bone_worldspace_z("right_leg", arm)
+                    ) / 2
     knee_average_z = (
-        get_bone_worldspace_z("left_knee", arm)
-        + get_bone_worldspace_z("right_knee", arm)
-    ) / 2
+                             get_bone_worldspace_z("left_knee", arm)
+                             + get_bone_worldspace_z("right_knee", arm)
+                     ) / 2
     ankle_average_z = (
-        get_bone_worldspace_z("left_ankle", arm)
-        + get_bone_worldspace_z("right_ankle", arm)
-    ) / 2
+                              get_bone_worldspace_z("left_ankle", arm)
+                              + get_bone_worldspace_z("right_ankle", arm)
+                      ) / 2
     lowest_point = get_lowest_point()
 
     total = leg_average_z - lowest_point
     nl = (
-        [0.0]
-        + [1 - (i - lowest_point) / total for i in (knee_average_z, ankle_average_z)]
-        + [1.0]
+            [0.0]
+            + [1 - (i - lowest_point) / total for i in (knee_average_z, ankle_average_z)]
+            + [1.0]
     )
     return nl, total
 
@@ -372,8 +372,8 @@ def scale_torso(arm, torso_scale_ratio):
         scaled_top = get_bone_worldspace_z("chest", arm)
 
     scaled_bottom = (
-        get_bone_worldspace_z("left_leg", arm) + get_bone_worldspace_z("right_leg", arm)
-    ) / 2
+                            get_bone_worldspace_z("left_leg", arm) + get_bone_worldspace_z("right_leg", arm)
+                    ) / 2
 
     total_height = get_eye_height(arm) - scaled_bottom
     scaled_height = scaled_top - scaled_bottom
@@ -409,16 +409,16 @@ def scale_torso(arm, torso_scale_ratio):
 
 
 def scale_to_floor(
-    arm_to_legs,
-    arm_thickness,
-    leg_thickness,
-    extra_leg_length,
-    scale_hand,
-    thigh_percentage,
-    custom_scale_ratio,
-    scale_relative,
-    keep_head_size,
-    upper_body_portion,
+        arm_to_legs,
+        arm_thickness,
+        leg_thickness,
+        extra_leg_length,
+        scale_hand,
+        thigh_percentage,
+        custom_scale_ratio,
+        scale_relative,
+        keep_head_size,
+        upper_body_portion,
 ):
     arm = Common.get_armature()
 
@@ -433,7 +433,7 @@ def scale_to_floor(
     leg_height_portion = get_leg_length(arm) / eye_z
 
     if scale_relative:
-        rescale_leg_ratio = rescale_ratio**arm_to_legs
+        rescale_leg_ratio = rescale_ratio ** arm_to_legs
         rescale_arm_ratio = rescale_ratio ** (1 - arm_to_legs)
         leg_scale_ratio = 1 - (1 - (1 / rescale_leg_ratio)) / leg_height_portion
     elif keep_head_size:
@@ -450,9 +450,9 @@ def scale_to_floor(
         eye_z = get_eye_height(arm)
         lowest_point = get_lowest_point()
         leg_average_z = (
-            get_bone_worldspace_z("left_leg", arm)
-            + get_bone_worldspace_z("right_leg", arm)
-        ) / 2
+                                get_bone_worldspace_z("left_leg", arm)
+                                + get_bone_worldspace_z("right_leg", arm)
+                        ) / 2
 
         ntl = (eye_z - leg_average_z) * torso_scale_ratio
         ns = ntl / (ntl + ((leg_average_z - lowest_point) * leg_scale_ratio))
@@ -466,7 +466,7 @@ def scale_to_floor(
         ubp = get_upper_body_portion(arm)
         ub_scale_ratio = ubp / upper_body_portion
         leg_scale_ratio = ub_scale_ratio + (
-            (ub_scale_ratio * ubp - ubp) / (leg_height_portion)
+                (ub_scale_ratio * ubp - ubp) / (leg_height_portion)
         )
         rescale_leg_ratio = 1 / (leg_height_portion * (leg_scale_ratio - 1) + 1)
         rescale_arm_ratio = rescale_ratio / rescale_leg_ratio
@@ -588,18 +588,18 @@ def center_model(worldspace=True):
 
 
 def rescale_main(
-    new_height,
-    arm_to_legs,
-    arm_thickness,
-    leg_thickness,
-    extra_leg_length,
-    scale_hand,
-    thigh_percentage,
-    custom_scale_ratio,
-    scale_eyes,
-    scale_relative,
-    keep_head_size,
-    upper_body_percent,
+        new_height,
+        arm_to_legs,
+        arm_thickness,
+        leg_thickness,
+        extra_leg_length,
+        scale_hand,
+        thigh_percentage,
+        custom_scale_ratio,
+        scale_eyes,
+        scale_relative,
+        keep_head_size,
+        upper_body_percent,
 ):
     context = bpy.context
     s = context.scene
@@ -648,8 +648,8 @@ def shrink_hips():
     spine_name = get_bone("spine", arm).name
 
     leg_start = (
-        edit_bones[left_leg_name].head[2] + edit_bones[right_leg_name].head[2]
-    ) / 2
+                        edit_bones[left_leg_name].head[2] + edit_bones[right_leg_name].head[2]
+                ) / 2
     spine_start = edit_bones[spine_name].head[2]
     edit_bones[hips_name].head[2] = leg_start + (spine_start - leg_start) * 0.9
     edit_bones[hips_name].head[1] = edit_bones[spine_name].head[1]

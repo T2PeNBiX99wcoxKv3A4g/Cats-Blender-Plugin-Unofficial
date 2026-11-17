@@ -18,9 +18,8 @@ Two limits worth knowing, both surfaced in the UI:
 Every render setting this module touches is restored, including on failure.
 """
 
-import contextlib
-
 import bpy
+import contextlib
 
 from . import compose, detect, maps, sample
 from .. import colorspace

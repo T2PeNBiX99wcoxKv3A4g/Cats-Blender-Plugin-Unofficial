@@ -1,11 +1,10 @@
 # Copyright 2018 MMD Tools authors
 # This file is part of MMD Tools.
 
-import logging
-import time
-
 import bpy
+import logging
 import numpy as np
+import time
 from mathutils import Matrix, Vector
 
 from ..bpyutils import FnObject
@@ -145,7 +144,8 @@ class FnSDEF:
             # For Blender 2.8x, we should use evaluated object, and the only reference is the "obj" variable of SDEF driver
             # cls.driver_function(shapekey.id_data.original.key_blocks[shapekey.name], obj_name, bulk_update, use_skip, use_scale) # update original data
             data_path = shapekey.path_from_id("value")
-            obj = next(i for i in shapekey.id_data.animation_data.drivers if i.data_path == data_path).driver.variables["obj"].targets[0].id
+            obj = next(i for i in shapekey.id_data.animation_data.drivers if i.data_path == data_path).driver.variables[
+                "obj"].targets[0].id
         cls.__init_cache(obj, shapekey)
         if cls.__sdef_muted(obj, shapekey):
             return 0.0
@@ -155,7 +155,8 @@ class FnSDEF:
             shapekey_data = shapekey.data
             if use_scale:
                 # with scale
-                key_blocks = tuple(k for k in shapekey.id_data.key_blocks[1:] if not k.mute and k.value and k.name != cls.SHAPEKEY_NAME)
+                key_blocks = tuple(k for k in shapekey.id_data.key_blocks[1:] if
+                                   not k.mute and k.value and k.name != cls.SHAPEKEY_NAME)
                 for bone0, bone1, sdef_data, vids in cls.g_verts[_hash(obj)].values():
                     bone0, bone1 = pose_bones[bone0.name], pose_bones[bone1.name]
                     # if use_skip and not cls.__check_bone_update(obj, bone0, bone1):
@@ -169,9 +170,13 @@ class FnSDEF:
                     s0, s1 = mat0.to_scale(), mat1.to_scale()
                     for vid, w0, w1, pos_c, cr0, cr1 in sdef_data:
                         s = s0 * w0 + s1 * w1
-                        mat_rot = (rot0 * w0 + rot1 * w1).normalized().to_matrix() @ Matrix([(s[0], 0, 0), (0, s[1], 0), (0, 0, s[2])])
-                        delta = sum(((key.data[vid].co - key.relative_key.data[vid].co) * key.value for key in key_blocks), Vector())  # assuming key.vertex_group = ''
-                        shapekey_data[vid].co = (mat_rot @ (pos_c + delta)) - delta + (mat0 @ cr0) * w0 + (mat1 @ cr1) * w1
+                        mat_rot = (rot0 * w0 + rot1 * w1).normalized().to_matrix() @ Matrix(
+                            [(s[0], 0, 0), (0, s[1], 0), (0, 0, s[2])])
+                        delta = sum(
+                            ((key.data[vid].co - key.relative_key.data[vid].co) * key.value for key in key_blocks),
+                            Vector())  # assuming key.vertex_group = ''
+                        shapekey_data[vid].co = (mat_rot @ (pos_c + delta)) - delta + (mat0 @ cr0) * w0 + (
+                                mat1 @ cr1) * w1
             else:
                 # default
                 for bone0, bone1, sdef_data, vids in cls.g_verts[_hash(obj)].values():
@@ -196,7 +201,8 @@ class FnSDEF:
                 shapekey_data = cls.g_shapekey_data[_hash(obj)] = shapekey_data.reshape(len(shapekey.data), 3)
             if use_scale:
                 # scale & bulk update
-                key_blocks = tuple(k for k in shapekey.id_data.key_blocks[1:] if not k.mute and k.value and k.name != cls.SHAPEKEY_NAME)
+                key_blocks = tuple(k for k in shapekey.id_data.key_blocks[1:] if
+                                   not k.mute and k.value and k.name != cls.SHAPEKEY_NAME)
                 for bone0, bone1, sdef_data, vids in cls.g_verts[_hash(obj)].values():
                     bone0, bone1 = pose_bones[bone0.name], pose_bones[bone1.name]
                     # if use_skip and not cls.__check_bone_update(obj, bone0, bone1):
@@ -214,10 +220,14 @@ class FnSDEF:
                         return mat_rot @ Matrix([(s[0], 0, 0), (0, s[1], 0), (0, 0, s[2])])
 
                     def offset(mat_rot, pos_c, vid):
-                        delta = sum(((key.data[vid].co - key.relative_key.data[vid].co) * key.value for key in key_blocks), Vector())  # assuming key.vertex_group = ''
+                        delta = sum(
+                            ((key.data[vid].co - key.relative_key.data[vid].co) * key.value for key in key_blocks),
+                            Vector())  # assuming key.vertex_group = ''
                         return (mat_rot @ (pos_c + delta)) - delta
 
-                    shapekey_data[vids] = [offset(scale((rot0 * w0 + rot1 * w1).normalized().to_matrix(), w0, w1, s0, s1), pos_c, vid) + (mat0 @ cr0) * w0 + (mat1 @ cr1) * w1 for vid, w0, w1, pos_c, cr0, cr1 in sdef_data]
+                    shapekey_data[vids] = [
+                        offset(scale((rot0 * w0 + rot1 * w1).normalized().to_matrix(), w0, w1, s0, s1), pos_c, vid) + (
+                                mat0 @ cr0) * w0 + (mat1 @ cr1) * w1 for vid, w0, w1, pos_c, cr0, cr1 in sdef_data]
             else:
                 # bulk update
                 for bone0, bone1, sdef_data, vids in cls.g_verts[_hash(obj)].values():
@@ -230,7 +240,9 @@ class FnSDEF:
                     rot1 = mat1.to_euler("YXZ").to_quaternion()
                     if rot1.dot(rot0) < 0:
                         rot1 = -rot1
-                    shapekey_data[vids] = [((rot0 * w0 + rot1 * w1).normalized().to_matrix() @ pos_c) + (mat0 @ cr0) * w0 + (mat1 @ cr1) * w1 for vid, w0, w1, pos_c, cr0, cr1 in sdef_data]
+                    shapekey_data[vids] = [
+                        ((rot0 * w0 + rot1 * w1).normalized().to_matrix() @ pos_c) + (mat0 @ cr0) * w0 + (
+                                mat1 @ cr1) * w1 for vid, w0, w1, pos_c, cr0, cr1 in sdef_data]
             shapekey.data.foreach_set("co", shapekey_data.reshape(3 * len(shapekey.data)))
 
         return 1.0  # shapkey value
@@ -259,7 +271,8 @@ class FnSDEF:
             cls.driver_function(shapkey, obj.name, bulk_update=True, use_skip=False, use_scale=use_scale)
         bulk_time = time.time() - t
         result = default_time > bulk_time
-        logging.info("FnSDEF:benchmark: default %.4f vs bulk_update %.4f => bulk_update=%s", default_time, bulk_time, result)
+        logging.info("FnSDEF:benchmark: default %.4f vs bulk_update %.4f => bulk_update=%s", default_time, bulk_time,
+                     result)
         return result
 
     @classmethod
@@ -288,7 +301,8 @@ class FnSDEF:
         ov.targets[0].data_path = "name"
         mod = obj.modifiers.get("mmd_armature")
         variables = f.driver.variables
-        for name in {data[i].name for data in cls.g_verts[_hash(obj)].values() for i in range(2)}:  # add required bones for dependency graph
+        for name in {data[i].name for data in cls.g_verts[_hash(obj)].values() for i in
+                     range(2)}:  # add required bones for dependency graph
             var = variables.new()
             var.type = "TRANSFORMS"
             var.targets[0].id = mod.object

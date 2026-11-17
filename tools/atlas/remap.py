@@ -1,8 +1,7 @@
 # MIT License
 import math
-from typing import Dict, NamedTuple, Sequence, Tuple
-
 import numpy as np
+from typing import Dict, NamedTuple, Sequence, Tuple
 
 Bounds = Tuple[float, float, float, float]
 
@@ -69,15 +68,15 @@ def uv_span(bounds: Bounds, max_tiles: int = 8) -> Tuple[float, float]:
 
 
 def cell_transform(
-    cell_x: int,
-    cell_y: int,
-    cell_w: int,
-    cell_h: int,
-    atlas_w: int,
-    atlas_h: int,
-    bounds: Tuple[float, float, float, float],
-    span: Tuple[float, float],
-    padding: int = 0,
+        cell_x: int,
+        cell_y: int,
+        cell_w: int,
+        cell_h: int,
+        atlas_w: int,
+        atlas_h: int,
+        bounds: Tuple[float, float, float, float],
+        span: Tuple[float, float],
+        padding: int = 0,
 ) -> Transform:
     """Map a material's source UV range onto its content rectangle in the atlas.
 
@@ -124,6 +123,7 @@ def apply_transform(uvs: np.ndarray, transform: Transform, mask=None) -> None:
     target[:, 1] = target[:, 1] * transform.scale_y + transform.offset_y
     if mask is not None:
         uvs[mask] = target
+
 
 def _uv_layer(mesh, layer_name: str):
     """The named UV layer, or the active one when no name is given."""
@@ -179,7 +179,7 @@ def read_loop_materials(mesh) -> np.ndarray:
 
 
 def slot_uv_bounds(
-    uvs: np.ndarray, loop_materials: np.ndarray, slot_indices: Sequence[int]
+        uvs: np.ndarray, loop_materials: np.ndarray, slot_indices: Sequence[int]
 ) -> Dict[int, Tuple[float, float, float, float]]:
     if uvs.size == 0 or loop_materials.size != uvs.shape[0]:
         return {}

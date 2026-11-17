@@ -2,9 +2,9 @@
 import bpy
 import numpy as np
 
+from .common import get_body_meshes
 from .. import common as Common
 from ..armature_manual import bake_pose_to_rest
-from .common import get_body_meshes
 
 _ZERO_ROTATION_QUATERNION = np.array([1, 0, 0, 0], dtype=np.single)
 

@@ -132,12 +132,12 @@ def _area_axis(source: np.ndarray, target: int, axis: int) -> np.ndarray:
 
 
 def place(
-    canvas: np.ndarray,
-    tile: np.ndarray,
-    x: int,
-    y: int,
-    padding: int = 0,
-    wrap: bool = False,
+        canvas: np.ndarray,
+        tile: np.ndarray,
+        x: int,
+        y: int,
+        padding: int = 0,
+        wrap: bool = False,
 ) -> None:
     """Blit ``tile`` into ``canvas`` and fill its padding ring.
 
@@ -175,12 +175,12 @@ def place(
 
 
 def _fill_ring(
-    canvas: np.ndarray,
-    tile: np.ndarray,
-    inner_x: int,
-    inner_y: int,
-    padding: int,
-    wrap: bool,
+        canvas: np.ndarray,
+        tile: np.ndarray,
+        inner_x: int,
+        inner_y: int,
+        padding: int,
+        wrap: bool,
 ) -> None:
     """Extend the tile's border pixels outward into its padding ring."""
     tile_h, tile_w = tile.shape[:2]
@@ -222,7 +222,7 @@ def to_blender_buffer(canvas: np.ndarray) -> np.ndarray:
 
 
 def pack_metallic_smoothness(
-    metallic: np.ndarray, roughness: np.ndarray
+        metallic: np.ndarray, roughness: np.ndarray
 ) -> np.ndarray:
     """Combine metallic and roughness into Unity's MetallicSmoothness layout."""
     if metallic.shape != roughness.shape:

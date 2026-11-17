@@ -1,11 +1,10 @@
 # Copyright 2015 MMD Tools authors
 # This file is part of MMD Tools.
 
-import math
-from typing import TYPE_CHECKING, Iterable, Optional, Set
-
 import bpy
+import math
 from mathutils import Vector
+from typing import TYPE_CHECKING, Iterable, Optional, Set
 
 from .. import bpyutils
 from ..bpyutils import TransformConstraintOp
@@ -44,7 +43,8 @@ SPECIAL_BONE_COLLECTION_NAMES = [BONE_COLLECTION_NAME_SHADOW, BONE_COLLECTION_NA
 class FnBone:
     AUTO_LOCAL_AXIS_ARMS = ("左肩", "左腕", "左ひじ", "左手首", "右腕", "右肩", "右ひじ", "右手首")
     AUTO_LOCAL_AXIS_FINGERS = ("親指", "人指", "中指", "薬指", "小指")
-    AUTO_LOCAL_AXIS_SEMI_STANDARD_ARMS = ("左腕捩", "左手捩", "左肩P", "左ダミー", "右腕捩", "右手捩", "右肩P", "右ダミー")
+    AUTO_LOCAL_AXIS_SEMI_STANDARD_ARMS = ("左腕捩", "左手捩", "左肩P", "左ダミー", "右腕捩", "右手捩", "右肩P",
+                                          "右ダミー")
 
     def __init__(self):
         raise NotImplementedError("This class cannot be instantiated.")
@@ -56,8 +56,10 @@ class FnBone:
         # This logic is the same as Blender's
         bone = pose_bone.bone
         if not IS_BLENDER_50_UP:
-            return not bone.hide and (not bone.collections or any(collection.is_visible for collection in bone.collections))
-        return not pose_bone.hide and (not bone.collections or any(collection.is_visible for collection in bone.collections))
+            return not bone.hide and (
+                    not bone.collections or any(collection.is_visible for collection in bone.collections))
+        return not pose_bone.hide and (
+                not bone.collections or any(collection.is_visible for collection in bone.collections))
 
     @staticmethod
     def find_pose_bone_by_bone_id(armature_object: bpy.types.Object, bone_id: int) -> Optional[bpy.types.PoseBone]:
@@ -98,7 +100,8 @@ class FnBone:
                     mmd_bone.fixed_axis = axes[lock_rotation.index(False)].xzy
                 else:
                     mmd_bone.fixed_axis = axes[1].xzy  # Y-axis
-            elif all(b.lock_location) and lock_rotation.count(True) > 1 and lock_rotation == (b.lock_ik_x, b.lock_ik_y, b.lock_ik_z):
+            elif all(b.lock_location) and lock_rotation.count(True) > 1 and lock_rotation == (b.lock_ik_x, b.lock_ik_y,
+                                                                                              b.lock_ik_z):
                 # unlock transform locks if fixed axis was applied
                 b.lock_ik_x, b.lock_ik_y, b.lock_ik_z = b.lock_rotation = (False, False, False)
                 b.lock_location = b.lock_scale = (False, False, False)
@@ -120,7 +123,8 @@ class FnBone:
 
     @staticmethod
     def __is_special_bone_collection(bone_collection: bpy.types.BoneCollection) -> bool:
-        return bone_collection.get(BONE_COLLECTION_CUSTOM_PROPERTY_NAME) == BONE_COLLECTION_CUSTOM_PROPERTY_VALUE_SPECIAL
+        return bone_collection.get(
+            BONE_COLLECTION_CUSTOM_PROPERTY_NAME) == BONE_COLLECTION_CUSTOM_PROPERTY_VALUE_SPECIAL
 
     @staticmethod
     def __set_bone_collection_to_special(bone_collection: bpy.types.BoneCollection, is_visible: bool):
@@ -337,7 +341,9 @@ class FnBone:
 
     @staticmethod
     def apply_auto_bone_roll(armature):
-        bone_names = [b.name for b in armature.pose.bones if not b.is_mmd_shadow_bone and not b.mmd_bone.enabled_local_axes and FnBone.has_auto_local_axis(b.mmd_bone.name_j)]
+        bone_names = [b.name for b in armature.pose.bones if
+                      not b.is_mmd_shadow_bone and not b.mmd_bone.enabled_local_axes and FnBone.has_auto_local_axis(
+                          b.mmd_bone.name_j)]
         with bpyutils.edit_object(armature) as data:
             bone: bpy.types.EditBone
             for bone in data.edit_bones:
@@ -563,14 +569,16 @@ class _AT_ShadowBoneCreate:
             return
 
         dummy_bone_name = self.__dummy_bone_name
-        dummy = edit_bones.get(dummy_bone_name, None) or FnBone.set_edit_bone_to_dummy(edit_bones.new(name=dummy_bone_name))
+        dummy = edit_bones.get(dummy_bone_name, None) or FnBone.set_edit_bone_to_dummy(
+            edit_bones.new(name=dummy_bone_name))
         dummy.parent = target_bone
         dummy.head = target_bone.head
         dummy.tail = dummy.head + bone.tail - bone.head
         dummy.roll = bone.roll
 
         shadow_bone_name = self.__shadow_bone_name
-        shadow = edit_bones.get(shadow_bone_name, None) or FnBone.set_edit_bone_to_shadow(edit_bones.new(name=shadow_bone_name))
+        shadow = edit_bones.get(shadow_bone_name, None) or FnBone.set_edit_bone_to_shadow(
+            edit_bones.new(name=shadow_bone_name))
         shadow.parent = target_bone.parent
         shadow.head = dummy.head
         shadow.tail = dummy.tail

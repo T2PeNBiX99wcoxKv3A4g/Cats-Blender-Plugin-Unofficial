@@ -5,11 +5,11 @@
 
 import bpy
 
+from . import patch_library_overridable
 from .. import bpyutils
 from ..core import rigid_body
 from ..core.model import FnModel
 from ..core.rigid_body import FnRigidBody, RigidBodyMaterial
-from . import patch_library_overridable
 
 
 def _updateCollisionGroup(prop, _context):
@@ -142,7 +142,7 @@ def _set_size(prop, value):
                 for v in mesh.vertices:
                     dir_xy = v.co.xy.normalized()
                     norm_len_xy = min(v.co.xy.length / r0, 1.0)  # normalized distance from z axis
-                    new_cap_z = (1 - norm_len_xy**2) ** (1 / 2) * radius
+                    new_cap_z = (1 - norm_len_xy ** 2) ** (1 / 2) * radius
                     dir_xy *= radius * norm_len_xy
                     sign_z = -1.0 if v.co.z < 0 else 1.0
                     v.co = [dir_xy.x, dir_xy.y, sign_z * (half_height + new_cap_z)]
@@ -194,8 +194,10 @@ class MMDRigidBody(bpy.types.PropertyGroup):
         description="Select rigid type",
         items=[
             (str(rigid_body.MODE_STATIC), "Bone", "Rigid body's orientation completely determined by attached bone", 1),
-            (str(rigid_body.MODE_DYNAMIC), "Physics", "Attached bone's orientation completely determined by rigid body", 2),
-            (str(rigid_body.MODE_DYNAMIC_BONE), "Physics + Bone", "Bone determined by combination of parent and attached rigid body", 3),
+            (str(rigid_body.MODE_DYNAMIC), "Physics", "Attached bone's orientation completely determined by rigid body",
+             2),
+            (str(rigid_body.MODE_DYNAMIC_BONE), "Physics + Bone",
+             "Bone determined by combination of parent and attached rigid body", 3),
         ],
         update=_updateType,
     )

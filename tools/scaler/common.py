@@ -7,6 +7,7 @@
 
 import bpy
 from contextlib import contextmanager
+
 from .. import common as Common
 
 
@@ -54,7 +55,7 @@ def temp_ensure_enabled(*objs):
         yield
     finally:
         for obj, old_hide_viewport, added_to_collection in zip(
-            unique_objs, old_hide_viewports, added_to_collections
+                unique_objs, old_hide_viewports, added_to_collections
         ):
             try:
                 # While we could do `if old_hide_viewport: obj.hide_viewport = True`, this wouldn't always check that

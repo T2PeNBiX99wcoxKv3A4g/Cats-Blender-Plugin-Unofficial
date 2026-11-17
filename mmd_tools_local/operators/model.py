@@ -142,7 +142,8 @@ class SetupBoneFixedAxes(bpy.types.Operator):
         description="Select type",
         items=[
             ("DISABLE", "Disable", "Disable MMD fixed axis of selected bones", 0),
-            ("LOAD", "Load", "Load/Enable MMD fixed axis of selected bones from their Y-axis or the only rotatable axis", 1),
+            ("LOAD", "Load",
+             "Load/Enable MMD fixed axis of selected bones from their Y-axis or the only rotatable axis", 1),
             ("APPLY", "Apply", "Align bone axes to MMD fixed axis of each bone", 2),
         ],
         default="LOAD",

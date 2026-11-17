@@ -2,14 +2,13 @@
 # This file is part of MMD Tools.
 
 import ast
+import bpy
 import logging
 import os
 import re
 import sys
 import time
 import traceback
-
-import bpy
 from bpy.types import Operator, OperatorFileListElement
 from bpy_extras.io_utils import ExportHelper, ImportHelper, poll_file_object_drop
 
@@ -112,7 +111,8 @@ def _parse_preset_literal(node):
     if isinstance(node, ast.Set):
         return {_parse_preset_literal(element) for element in node.elts}
     if isinstance(node, ast.Dict):
-        return {_parse_preset_literal(key): _parse_preset_literal(value) for key, value in zip(node.keys, node.values, strict=False)}
+        return {_parse_preset_literal(key): _parse_preset_literal(value) for key, value in
+                zip(node.keys, node.values, strict=False)}
     if isinstance(node, ast.UnaryOp) and isinstance(node.op, (ast.UAdd, ast.USub)):
         operand = _parse_preset_literal(node.operand)
         return +operand if isinstance(node.op, ast.UAdd) else -operand
@@ -383,7 +383,8 @@ class ImportPmx(Operator, ImportHelper, PreferencesMixin):
                     self._do_execute(context)
             elif self.filepath:
                 self._do_execute(context)
-        except (pmx.InvalidFileError, pmx.UnsupportedVersionError, pmd.InvalidFileError, pmd.UnsupportedVersionError) as e:
+        except (pmx.InvalidFileError, pmx.UnsupportedVersionError, pmd.InvalidFileError,
+                pmd.UnsupportedVersionError) as e:
             logging.exception("Error occurred during PMX import")
             self.report({"ERROR"}, f'Failed to import model from "{self.filepath}": {e}')
         except Exception:
@@ -650,7 +651,8 @@ class ImportVmd(Operator, ImportHelper, PreferencesMixin):
             for obj in self.__target_objects:
                 importer.assign(obj)
 
-            logging.info(' Finished importing motion "%s" in %f seconds.', os.path.basename(self.filepath), time.time() - start_time)
+            logging.info(' Finished importing motion "%s" in %f seconds.', os.path.basename(self.filepath),
+                         time.time() - start_time)
             self.report({"INFO"}, f'Imported VMD: "{os.path.basename(self.filepath)}"')
 
         except Exception:

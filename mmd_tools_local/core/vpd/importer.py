@@ -1,14 +1,13 @@
 # Copyright 2017 MMD Tools authors
 # This file is part of MMD Tools.
 
-import logging
-
 import bpy
+import logging
 from mathutils import Matrix
 
-from ...compat import action_compat
 from .. import vpd
 from ..vmd import importer
+from ...compat import action_compat
 
 
 class VPDImporter:
@@ -76,7 +75,8 @@ class VPDImporter:
                 for axis_i in range(len(bone_rotation)):
                     fcurves[3 + axis_i] = action.fcurves.find(data_path, index=axis_i)
                     if fcurves[3 + axis_i] is None:
-                        fcurves[3 + axis_i] = action.fcurves.new(data_path=data_path, index=axis_i, action_group=bone.name)
+                        fcurves[3 + axis_i] = action.fcurves.new(data_path=data_path, index=axis_i,
+                                                                 action_group=bone.name)
 
                 for axis_i in range(3):
                     fcurves[axis_i].keyframe_points.insert(current_frame, bone.location[axis_i])

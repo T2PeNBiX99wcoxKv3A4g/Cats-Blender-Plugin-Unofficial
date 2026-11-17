@@ -21,7 +21,8 @@ class MMDMaterialSorter(PT_ProductionPanelBase, bpy.types.Panel):
 
         col = layout.column(align=True)
         row = col.row()
-        row.template_list("MMD_TOOLS_UL_Materials", "", active_obj.data, "materials", active_obj, "active_material_index")
+        row.template_list("MMD_TOOLS_UL_Materials", "", active_obj.data, "materials", active_obj,
+                          "active_material_index")
         tb = row.column()
         tb1 = tb.column(align=True)
         tb1.operator("mmd_tools_local.move_material_up", text="", icon="TRIA_UP")

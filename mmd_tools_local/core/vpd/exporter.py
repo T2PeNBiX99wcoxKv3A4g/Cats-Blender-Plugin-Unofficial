@@ -1,15 +1,14 @@
 # Copyright 2017 MMD Tools authors
 # This file is part of MMD Tools.
 
+import bpy
 import logging
 import os
-
-import bpy
 from mathutils import Matrix
 
-from ...bpyutils import FnContext
 from .. import vpd
 from ..vmd import importer
+from ...bpyutils import FnContext
 
 
 class VPDExporter:
@@ -88,7 +87,8 @@ class VPDExporter:
 
         try:
             pose_markers = armObj.animation_data.action.pose_markers
-            with FnContext.temp_override_objects(FnContext.ensure_context(), active_object=armObj, selected_objects=[armObj]):
+            with FnContext.temp_override_objects(FnContext.ensure_context(), active_object=armObj,
+                                                 selected_objects=[armObj]):
                 bpy.ops.object.mode_set(mode="POSE")
                 if pose_type == "ACTIVE":
                     if 0 <= pose_markers.active_index < len(pose_markers):

@@ -15,15 +15,14 @@ returned unchanged so the operator degrades to dictionary-only instead of
 hanging or crashing Blender's UI thread.
 """
 
-import json
 import concurrent.futures
+import json
 
 # ``requests`` ships with Blender's Python but is not guaranteed in a stripped
 # build, and importing it costs ~85 ms. It is resolved on first use through
 # tools/compat.py so a missing copy disables online translation instead of
 # stopping the add-on from registering.
 from .compat import get_requests
-
 
 # Service ids stored in settings / shown in the UI enum.
 SERVICE_INTERNAL = "internal"

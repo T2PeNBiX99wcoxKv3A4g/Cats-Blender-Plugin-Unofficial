@@ -1,12 +1,11 @@
 # Copyright 2014 MMD Tools authors
 # This file is part of MMD Tools.
 
+import bpy
 from typing import cast
 
-import bpy
-
-from ..core.bone import FnBone
 from . import patch_library_overridable
+from ..core.bone import FnBone
 
 
 def _mmd_bone_update_additional_transform(prop: "MMDBone", context: bpy.types.Context):
@@ -247,13 +246,16 @@ class MMDBone(bpy.types.PropertyGroup):
     )
 
     def is_id_unique(self):
-        return self.bone_id < 0 or not next((b for b in self.id_data.pose.bones if b.mmd_bone != self and b.mmd_bone.bone_id == self.bone_id), None)
+        return self.bone_id < 0 or not next(
+            (b for b in self.id_data.pose.bones if b.mmd_bone != self and b.mmd_bone.bone_id == self.bone_id), None)
 
     @staticmethod
     def register():
         bpy.types.PoseBone.mmd_bone = patch_library_overridable(bpy.props.PointerProperty(type=MMDBone))
-        bpy.types.PoseBone.is_mmd_shadow_bone = patch_library_overridable(bpy.props.BoolProperty(name="is_mmd_shadow_bone", default=False))
-        bpy.types.PoseBone.mmd_shadow_bone_type = patch_library_overridable(bpy.props.StringProperty(name="mmd_shadow_bone_type"))
+        bpy.types.PoseBone.is_mmd_shadow_bone = patch_library_overridable(
+            bpy.props.BoolProperty(name="is_mmd_shadow_bone", default=False))
+        bpy.types.PoseBone.mmd_shadow_bone_type = patch_library_overridable(
+            bpy.props.StringProperty(name="mmd_shadow_bone_type"))
         bpy.types.PoseBone.mmd_ik_toggle = patch_library_overridable(
             bpy.props.BoolProperty(
                 name="MMD IK Toggle",

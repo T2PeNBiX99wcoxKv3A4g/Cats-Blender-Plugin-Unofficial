@@ -10,8 +10,8 @@ import bpy
 import traceback
 from typing import Dict, List, Optional
 
-from . import common as Common
 from . import armature_bones as Bones
+from . import common as Common
 from .register import register_wrap
 from .translations import t
 

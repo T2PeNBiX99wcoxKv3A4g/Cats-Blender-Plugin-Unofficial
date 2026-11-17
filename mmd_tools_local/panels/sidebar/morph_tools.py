@@ -3,11 +3,11 @@
 
 import bpy
 
+from . import FnDraw, PT_ProductionPanelBase
 from ...core.model import FnModel, Model
 from ...operators import morph as operators_morph
 from ...properties.morph import MaterialMorph
 from ...utils import ItemOp
-from . import FnDraw, PT_ProductionPanelBase
 
 
 class MMDMorphToolsPanel(PT_ProductionPanelBase, bpy.types.Panel):
@@ -190,7 +190,8 @@ class MMDMorphToolsPanel(PT_ProductionPanelBase, bpy.types.Panel):
         row.operator(operators_morph.ClearBoneMorphView.bl_idname, text="Clear")
 
         row = col.row(align=True)
-        row.operator("mmd_tools_local.convert_bone_morph_to_vertex_morph", text="Convert To Vertex Morph", icon="SHAPEKEY_DATA")
+        row.operator("mmd_tools_local.convert_bone_morph_to_vertex_morph", text="Convert To Vertex Morph",
+                     icon="SHAPEKEY_DATA")
         row.operator("mmd_tools_local.batch_convert_bone_morph_to_vertex_morph", text="", icon="LINENUMBERS_ON")
 
         col.label(text=bpy.app.translations.pgettext_iface("Bone Offsets (%d)") % len(morph.data))
@@ -234,7 +235,8 @@ class MMDMorphToolsPanel(PT_ProductionPanelBase, bpy.types.Panel):
 
     def _draw_group_data(self, context, rig, col, morph):
         row = col.row(align=True)
-        row.operator("mmd_tools_local.convert_group_morph_to_vertex_morph", text="Convert To Vertex Morph", icon="SHAPEKEY_DATA")
+        row.operator("mmd_tools_local.convert_group_morph_to_vertex_morph", text="Convert To Vertex Morph",
+                     icon="SHAPEKEY_DATA")
         row.operator("mmd_tools_local.batch_convert_group_morph_to_vertex_morph", text="", icon="LINENUMBERS_ON")
 
         col.label(text=bpy.app.translations.pgettext_iface("Group Offsets (%d)") % len(morph.data))
@@ -357,8 +359,10 @@ class MMDMorphMenu(bpy.types.Menu):
         layout = self.layout
         layout.operator("mmd_tools_local.morph_remove", text="Delete All", icon="X").all = True
         layout.separator()
-        layout.operator("mmd_tools_local.morph_slider_setup", text="Bind morphs to .placeholder", icon="DRIVER").type = "BIND"
-        layout.operator("mmd_tools_local.morph_slider_setup", text="Unbind morphs from .placeholder", icon="UNLINKED").type = "UNBIND"
+        layout.operator("mmd_tools_local.morph_slider_setup", text="Bind morphs to .placeholder",
+                        icon="DRIVER").type = "BIND"
+        layout.operator("mmd_tools_local.morph_slider_setup", text="Unbind morphs from .placeholder",
+                        icon="UNLINKED").type = "UNBIND"
         layout.separator()
         layout.operator("mmd_tools_local.morph_copy", icon="COPY_ID")
         layout.operator("mmd_tools_local.morph_overwrite_from_active_action_pose", icon="PRESET_NEW")

@@ -1,24 +1,22 @@
 # MIT License
 
-import re
-import os
 import bpy
-import copy
-import json
-import pathlib
 import collections
+import copy
 import csv
-
-from datetime import datetime, timezone
+import json
+import os
+import pathlib
+import re
 from collections import OrderedDict
+from datetime import datetime, timezone
 
 from . import common as Common
-from . import user_data
 from . import translation_providers
+from . import user_data
 from .register import register_wrap
-from .. import globs
 from .translations import t
-
+from .. import globs
 from ..mmd_tools_local import translations as mmd_translations
 
 dictionary = {}
@@ -28,8 +26,8 @@ curated_keys = set()
 
 JP_CHARS_REGEX = re.compile(u'[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00-\u9faf\u3400-\u4dbf]+')
 MMD_ENGLISH_NAMES_OFF = 'OFF'
-MMD_ENGLISH_NAMES_FALLBACK = 'FALLBACK'  
-MMD_ENGLISH_NAMES_PREFER = 'PREFER'   
+MMD_ENGLISH_NAMES_FALLBACK = 'FALLBACK'
+MMD_ENGLISH_NAMES_PREFER = 'PREFER'
 SOURCE_AUTHOR = 'author'
 SOURCE_TRANSLATED = 'translated'
 SOURCE_NONE = 'none'
@@ -278,6 +276,7 @@ class TranslateMaterialsButton(bpy.types.Operator):
         self.report({'INFO'}, translation_report('TranslateMaterialsButton.success', i, from_author))
         return {'FINISHED'}
 
+
 @register_wrap
 class TranslateAllButton(bpy.types.Operator):
     bl_idname = 'cats_translate.all'
@@ -286,7 +285,7 @@ class TranslateAllButton(bpy.types.Operator):
     bl_options = {'REGISTER', 'UNDO', 'INTERNAL'}
 
     def execute(self, context):
-        
+
         # Check if the export_translate_csv is checked and if the blend file is saved
         if context.scene.export_translate_csv:
             if not bpy.data.filepath:
@@ -476,7 +475,8 @@ def update_dictionary(to_translate_list, translating_shapes=False, self=None):
     except Exception as e:
         print('ONLINE TRANSLATE ERROR:', str(e))
         if self:
-            self.report({'ERROR'}, t('update_dictionary.error.errorMsg') + t('update_dictionary.error.catsTranslated') + '\n' + str(e))
+            self.report({'ERROR'}, t('update_dictionary.error.errorMsg') + t(
+                'update_dictionary.error.catsTranslated') + '\n' + str(e))
         return
 
     translations = [(text or '').strip() for text in raw_translations]
@@ -557,7 +557,8 @@ def translate(to_translate, add_space=False, translating_shapes=False):
                 if translated_count >= length:
                     break
 
-    to_translate = to_translate.replace('.L', '_L').replace('.R', '_R').replace('  ', ' ').replace('し', '').replace('っ', '').strip()
+    to_translate = to_translate.replace('.L', '_L').replace('.R', '_R').replace('  ', ' ').replace('し', '').replace(
+        'っ', '').strip()
 
     # print('"' + pre_translation + '"')
     # print('"' + to_translate + '"')

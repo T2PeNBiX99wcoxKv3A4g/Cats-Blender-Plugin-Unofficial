@@ -1,12 +1,11 @@
 # Copyright 2025 MMD Tools authors
 # This file is part of MMD Tools.
 
+import bpy
 import filecmp
 import logging
 import os
 import shutil
-
-import bpy
 from bpy.types import Operator
 
 try:
@@ -379,7 +378,8 @@ class MMDModelValidateTextures(Operator):
                     stem, ext = os.path.splitext(basename)
                     found = _find_additional_unallowed_chars(stem, unallowed)
                     if found:
-                        issues.append(f"Texture '{basename}' stem contains additional unallowed characters: {', '.join(repr(c) for c in found)}")
+                        issues.append(
+                            f"Texture '{basename}' stem contains additional unallowed characters: {', '.join(repr(c) for c in found)}")
 
         # Format missing file messages
         if missing_files:
@@ -808,27 +808,32 @@ class MMDModelFixTextureIssues(Operator):
                                 # It's a standard shared toon, set to use shared version
                                 mmd_mat.is_shared_toon_texture = True
                                 mmd_mat.shared_toon_texture = toon_num - 1  # 0-based index
-                                fixed_toon_textures.append(f"Fixed toon texture in '{material_name}': '{filename}' -> Using shared toon{toon_num:02d}.bmp")
+                                fixed_toon_textures.append(
+                                    f"Fixed toon texture in '{material_name}': '{filename}' -> Using shared toon{toon_num:02d}.bmp")
                             elif filename == "toon0.bmp":
                                 # Special case for toon0.bmp -> use toon10.bmp
                                 mmd_mat.is_shared_toon_texture = True
                                 mmd_mat.shared_toon_texture = 9  # toon10.bmp (0-based index)
-                                fixed_toon_textures.append(f"Fixed toon texture in '{material_name}': '{filename}' -> Using shared toon10.bmp")
+                                fixed_toon_textures.append(
+                                    f"Fixed toon texture in '{material_name}': '{filename}' -> Using shared toon10.bmp")
                             else:
                                 # Any other toon*.bmp -> use toon01.bmp
                                 mmd_mat.is_shared_toon_texture = True
                                 mmd_mat.shared_toon_texture = 0  # toon01.bmp (0-based index)
-                                fixed_toon_textures.append(f"Fixed toon texture in '{material_name}': '{filename}' -> Using shared toon01.bmp")
+                                fixed_toon_textures.append(
+                                    f"Fixed toon texture in '{material_name}': '{filename}' -> Using shared toon01.bmp")
                         except (ValueError, IndexError):
                             # If we can't parse the number, default to toon01.bmp
                             mmd_mat.is_shared_toon_texture = True
                             mmd_mat.shared_toon_texture = 0  # toon01.bmp
-                            fixed_toon_textures.append(f"Fixed toon texture in '{material_name}': '{filename}' -> Using shared toon01.bmp")
+                            fixed_toon_textures.append(
+                                f"Fixed toon texture in '{material_name}': '{filename}' -> Using shared toon01.bmp")
                     else:
                         # Non-standard toon texture, default to toon01.bmp
                         mmd_mat.is_shared_toon_texture = True
                         mmd_mat.shared_toon_texture = 0  # toon01.bmp
-                        fixed_toon_textures.append(f"Fixed toon texture in '{material_name}': '{filename}' -> Using shared toon01.bmp")
+                        fixed_toon_textures.append(
+                            f"Fixed toon texture in '{material_name}': '{filename}' -> Using shared toon01.bmp")
 
                     # Update toon texture to apply changes
                     FnMaterial(material).update_toon_texture()
@@ -901,7 +906,8 @@ class MMDModelFixTextureIssues(Operator):
             all_fixed = True
             for filepath in filepaths:
                 for img in texture_filepaths.get(filepath, []):
-                    material_names = [m.name for m in bpy.data.materials if m.node_tree and any(n.type == "TEX_IMAGE" and n.image == img for n in m.node_tree.nodes)]
+                    material_names = [m.name for m in bpy.data.materials if m.node_tree and any(
+                        n.type == "TEX_IMAGE" and n.image == img for n in m.node_tree.nodes)]
                     if not any((mat_name, img.name) in fixed_material_image_pairs for mat_name in material_names):
                         all_fixed = False
                         break
@@ -925,7 +931,8 @@ class MMDModelFixTextureIssues(Operator):
                     old_path = img.filepath
 
                     # Skip already fixed toon textures
-                    material_names = [m.name for m in bpy.data.materials if m.node_tree and any(n.type == "TEX_IMAGE" and n.image == img for n in m.node_tree.nodes)]
+                    material_names = [m.name for m in bpy.data.materials if m.node_tree and any(
+                        n.type == "TEX_IMAGE" and n.image == img for n in m.node_tree.nodes)]
                     if any((mat_name, img.name) in fixed_material_image_pairs for mat_name in material_names):
                         continue
 
@@ -961,7 +968,8 @@ class MMDModelFixTextureIssues(Operator):
                         # Only copy if target doesn't exist or is different
                         if not os.path.exists(abs_new_path):
                             shutil.copy2(abs_path, abs_new_path)
-                            conflict_fixed.append(f"Modified texture path and copied file: '{old_path}' -> '{new_path}'")
+                            conflict_fixed.append(
+                                f"Modified texture path and copied file: '{old_path}' -> '{new_path}'")
                         else:
                             conflict_fixed.append(f"Reusing existing file for: '{old_path}' -> '{new_path}'")
 
@@ -1031,7 +1039,8 @@ class MMDModelFixTextureIssues(Operator):
                         fixed.append(f"Error renaming texture file '{basename}': {str(e)}")
 
         # Report remaining missing textures that couldn't be fixed
-        remaining_missing = [(mat, img, path) for mat, img, path, node in missing_textures if (mat, img) not in fixed_material_image_pairs and node != "mmd_toon_tex"]
+        remaining_missing = [(mat, img, path) for mat, img, path, node in missing_textures if
+                             (mat, img) not in fixed_material_image_pairs and node != "mmd_toon_tex"]
 
         if remaining_missing:
             if fixed:  # If we already have content in the fixed list

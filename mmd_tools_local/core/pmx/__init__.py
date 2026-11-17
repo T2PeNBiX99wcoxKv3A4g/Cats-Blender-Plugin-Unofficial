@@ -481,7 +481,8 @@ class Model:
                 logging.debug("    Unit Angle: %f", b.rotationConstraint)
                 logging.debug("    Target: %d", b.target)
                 for j, link in enumerate(b.ik_links):
-                    logging.debug("    IK Link %d: %d, %s - %s", j, link.target, str(link.minimumAngle), str(link.maximumAngle))
+                    logging.debug("    IK Link %d: %d, %s - %s", j, link.target, str(link.minimumAngle),
+                                  str(link.maximumAngle))
             logging.debug("")
         logging.info("----- Loaded %d bones.", len(self.bones))
 
@@ -706,7 +707,7 @@ class BoneWeight:
     BDEF1 = 0
     BDEF2 = 1
     BDEF4 = 2
-    SDEF  = 3
+    SDEF = 3
 
     TYPES = [
         (BDEF1, "BDEF1"),
@@ -993,12 +994,12 @@ class Bone:
         else:
             self.displayConnection = fs.readVector(3)
 
-        self.isRotatable    = ((flags & 0x0002) != 0)
-        self.isMovable      = ((flags & 0x0004) != 0)
-        self.visible        = ((flags & 0x0008) != 0)
+        self.isRotatable = ((flags & 0x0002) != 0)
+        self.isMovable = ((flags & 0x0004) != 0)
+        self.visible = ((flags & 0x0008) != 0)
         self.isControllable = ((flags & 0x0010) != 0)
 
-        self.isIK           = ((flags & 0x0020) != 0)
+        self.isIK = ((flags & 0x0020) != 0)
 
         self.hasAdditionalRotate = ((flags & 0x0100) != 0)
         self.hasAdditionalLocation = ((flags & 0x0200) != 0)

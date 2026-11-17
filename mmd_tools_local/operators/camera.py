@@ -31,7 +31,9 @@ class ConvertToMMDCamera(Operator):
                 "Copy animation curve and bake only the camera rotation.\nYou can use Decimate function in Graph Editor to reduce keyframes.\n\nWarning: You have to separate slots in Action Editor first if you made Focal Length animation in Blender 4.4 or later",
                 1,
             ),
-            ("ALL", "All", "Bake everything by inserting keyframes for every frame.\nYou can use Decimate function in Graph Editor to reduce keyframes", 2),
+            ("ALL", "All",
+             "Bake everything by inserting keyframes for every frame.\nYou can use Decimate function in Graph Editor to reduce keyframes",
+             2),
         ],
         default="NONE",
         options={"SKIP_SAVE"},
@@ -71,6 +73,7 @@ class ConvertToMMDCamera(Operator):
             target = targets[0] if len(targets) == 1 else None
             if self.camera_source == "SCENE":
                 obj = None
-            camera = MMDCamera.newMMDCameraAnimation(obj, target, self.scale, self.min_distance, self.bake_animation).camera()
+            camera = MMDCamera.newMMDCameraAnimation(obj, target, self.scale, self.min_distance,
+                                                     self.bake_animation).camera()
             FnContext.set_active_object(context, camera)
         return {"FINISHED"}

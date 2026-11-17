@@ -1,13 +1,12 @@
 # Copyright 2013 MMD Tools authors
 # This file is part of MMD Tools.
 
-import contextlib
-import math
-from typing import Generator, List, Optional, TypeVar
-
 import bmesh
 import bpy
+import contextlib
+import math
 from mathutils import Matrix
+from typing import Generator, List, Optional, TypeVar
 
 
 class Props:  # For API changes of only name changed properties
@@ -54,7 +53,8 @@ class __SelectObjects:
             i.select_set(False)
 
         self.__active_object = active_object
-        self.__selected_objects = tuple(set(selected_objects) | {active_object}) if selected_objects else (active_object,)
+        self.__selected_objects = tuple(set(selected_objects) | {active_object}) if selected_objects else (
+            active_object,)
 
         self.__hides: List[bool] = []
         for i in self.__selected_objects:
@@ -181,7 +181,7 @@ def makeCapsule(segment=8, ring_count=2, radius=1.0, height=1.0, target_object=N
 
     for i in range(ring_count, 0, -1):
         z = f(i - 1)
-        t = math.sqrt(radius**2 - z**2)
+        t = math.sqrt(radius ** 2 - z ** 2)
         for j in range(segment):
             theta = 2 * math.pi / segment * j
             x = t * math.sin(-theta)
@@ -190,7 +190,7 @@ def makeCapsule(segment=8, ring_count=2, radius=1.0, height=1.0, target_object=N
 
     for i in range(ring_count):
         z = -f(i)
-        t = math.sqrt(radius**2 - z**2)
+        t = math.sqrt(radius ** 2 - z ** 2)
         for j in range(segment):
             theta = 2 * math.pi / segment * j
             x = t * math.sin(-theta)
@@ -412,11 +412,13 @@ class FnContext:
         return obj
 
     @staticmethod
-    def new_and_link_object(context: bpy.types.Context, name: str, object_data: Optional[bpy.types.ID]) -> bpy.types.Object:
+    def new_and_link_object(context: bpy.types.Context, name: str,
+                            object_data: Optional[bpy.types.ID]) -> bpy.types.Object:
         return FnContext.link_object(context, bpy.data.objects.new(name=name, object_data=object_data))
 
     @staticmethod
-    def duplicate_object(context: bpy.types.Context, object_to_duplicate: bpy.types.Object, target_count: int) -> List[bpy.types.Object]:
+    def duplicate_object(context: bpy.types.Context, object_to_duplicate: bpy.types.Object, target_count: int) -> List[
+        bpy.types.Object]:
         """
         Duplicate object.
 
@@ -455,7 +457,8 @@ class FnContext:
         return result_objects
 
     @staticmethod
-    def find_user_layer_collection_by_object(context: bpy.types.Context, target_object: bpy.types.Object) -> Optional[bpy.types.LayerCollection]:
+    def find_user_layer_collection_by_object(context: bpy.types.Context, target_object: bpy.types.Object) -> Optional[
+        bpy.types.LayerCollection]:
         """
         Find the layer collection that contains the given target_object in the user's collections.
 
@@ -468,7 +471,8 @@ class FnContext:
         """
         scene_layer_collection: bpy.types.LayerCollection = context.view_layer.layer_collection
 
-        def find_layer_collection_by_name(layer_collection: bpy.types.LayerCollection, name: str) -> Optional[bpy.types.LayerCollection]:
+        def find_layer_collection_by_name(layer_collection: bpy.types.LayerCollection, name: str) -> Optional[
+            bpy.types.LayerCollection]:
             if layer_collection.name == name:
                 return layer_collection
 
@@ -490,7 +494,8 @@ class FnContext:
 
     @staticmethod
     @contextlib.contextmanager
-    def temp_override_active_layer_collection(context: bpy.types.Context, target_object: bpy.types.Object) -> Generator[bpy.types.Context, None, None]:
+    def temp_override_active_layer_collection(context: bpy.types.Context, target_object: bpy.types.Object) -> Generator[
+        bpy.types.Context, None, None]:
         """
         Context manager to temporarily override the active_layer_collection that contains the target object.
 
@@ -528,18 +533,19 @@ class FnContext:
         return addon.preferences if addon else None
 
     @staticmethod
-    def get_addon_preferences_attribute(context: bpy.types.Context, attribute_name: str, default_value: ADDON_PREFERENCE_ATTRIBUTE_VALUE_TYPE = None) -> ADDON_PREFERENCE_ATTRIBUTE_VALUE_TYPE:
+    def get_addon_preferences_attribute(context: bpy.types.Context, attribute_name: str,
+                                        default_value: ADDON_PREFERENCE_ATTRIBUTE_VALUE_TYPE = None) -> ADDON_PREFERENCE_ATTRIBUTE_VALUE_TYPE:
         return getattr(FnContext.__get_addon_preferences(context), attribute_name, default_value)
 
     @staticmethod
     def temp_override_objects(
-        context: bpy.types.Context,
-        window: Optional[bpy.types.Window] = None,
-        area: Optional[bpy.types.Area] = None,
-        region: Optional[bpy.types.Region] = None,
-        active_object: Optional[bpy.types.Object] = None,
-        selected_objects: Optional[List[bpy.types.Object]] = None,
-        **keywords,
+            context: bpy.types.Context,
+            window: Optional[bpy.types.Window] = None,
+            area: Optional[bpy.types.Area] = None,
+            region: Optional[bpy.types.Region] = None,
+            active_object: Optional[bpy.types.Object] = None,
+            selected_objects: Optional[List[bpy.types.Object]] = None,
+            **keywords,
     ) -> Generator[bpy.types.Context, None, None]:
         if active_object is not None:
             keywords["active_object"] = active_object

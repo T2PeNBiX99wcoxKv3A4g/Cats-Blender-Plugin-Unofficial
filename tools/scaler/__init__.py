@@ -11,6 +11,7 @@ if "bpy" not in locals():
     from . import properties
 else:
     import importlib
+
     importlib.reload(common)
     importlib.reload(bones)
     importlib.reload(posemode)
@@ -20,7 +21,7 @@ else:
     importlib.reload(ui)
     importlib.reload(properties)
 
-from .ui import draw_ui
 from .properties import register_scene_properties
+from .ui import draw_ui
 
 __all__ = ["draw_ui", "register_scene_properties"]

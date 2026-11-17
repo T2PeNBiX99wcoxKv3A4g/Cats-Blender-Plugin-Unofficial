@@ -1,9 +1,8 @@
 # Copyright 2022 MMD Tools authors
 # This file is part of MMD Tools.
 
-import os
-
 import bpy
+import os
 
 
 def get_preset_items_for_operator(operator_bl_idname):
@@ -77,7 +76,8 @@ class MMDToolsAddonPreferences(bpy.types.AddonPreferences):
     )
     shared_toon_folder: bpy.props.StringProperty(
         name="Shared Toon Texture Folder",
-        description=('Directory path to toon textures. This is normally the "Data" directory within of your MikuMikuDance directory'),
+        description=(
+            'Directory path to toon textures. This is normally the "Data" directory within of your MikuMikuDance directory'),
         subtype="DIR_PATH",
         default=os.path.join(os.path.dirname(__file__), "externals", "MikuMikuDance"),
     )

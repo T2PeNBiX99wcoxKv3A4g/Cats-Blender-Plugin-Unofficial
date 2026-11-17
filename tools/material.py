@@ -1,11 +1,13 @@
-import os
 import bpy
 import numpy as np
+import os
 
 from . import common as Common
 from .register import register_wrap
 from .translations import t
+
 mmd_tools_local_installed = True
+
 
 @register_wrap
 class CombineMaterialsButton(bpy.types.Operator):
@@ -25,10 +27,10 @@ class CombineMaterialsButton(bpy.types.Operator):
     def hash_material(self, material):
         if not material or not material.node_tree:
             return 'empty'
-        
+
         ignore_nodes = {'Material Output', 'mmd_tex_uv', 'Cats Export Shader'}
         hash_components = []
-        
+
         for node in material.node_tree.nodes:
             if node.name in ignore_nodes or node.label in ignore_nodes:
                 continue
@@ -115,13 +117,13 @@ class CombineMaterialsButton(bpy.types.Operator):
     def execute(self, context):
         print('COMBINE MATERIALS!')
         saved_data = Common.SavedData()
-        
+
         # Setup
         Common.set_default_stage()
         Common.remove_rigidbodies_global()
         self.generate_combined_tex()
         Common.switch('OBJECT')
-        
+
         total_combined = 0
         wm = context.window_manager
         meshes = Common.get_meshes_objects()
@@ -136,7 +138,7 @@ class CombineMaterialsButton(bpy.types.Operator):
             # Drop the slots that no longer own any polygons
             bpy.ops.object.material_slot_remove_unused()
             Common.clean_material_names(mesh)
-            
+
             wm.progress_update(index)
 
         wm.progress_end()
@@ -150,6 +152,7 @@ class CombineMaterialsButton(bpy.types.Operator):
             self.report({'INFO'}, t('CombineMaterialsButton.success', number=str(total_combined)))
 
         return {'FINISHED'}
+
 
 @register_wrap
 class ConvertAllToPngButton(bpy.types.Operator):
@@ -215,7 +218,7 @@ class ConvertAllToPngButton(bpy.types.Operator):
         scene.render.image_settings.color_mode = 'RGBA'
         scene.render.image_settings.color_depth = '16'
         scene.render.image_settings.compression = 100
-        image.save_render(tex_path_new, scene=scene)  
+        image.save_render(tex_path_new, scene=scene)
 
         bpy.context.scene.view_settings.view_transform = view_transform
 
@@ -223,4 +226,3 @@ class ConvertAllToPngButton(bpy.types.Operator):
         bpy.data.images[image_name].name = image_name_new
 
         return True
-    

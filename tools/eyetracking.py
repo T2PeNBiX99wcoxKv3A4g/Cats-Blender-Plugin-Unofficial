@@ -1,21 +1,20 @@
 # MIT License
 
-import os
+import bmesh
 import bpy
 import copy
 import json
 import math
-import bmesh
 import mathutils
+import os
+from collections import OrderedDict
+from itertools import chain
+from random import random
 from typing import Optional, Dict, Tuple
 
-from collections import OrderedDict
-from random import random
-from itertools import chain
-
+from . import armature as Armature
 from . import common as Common
 from . import compat as Compat
-from . import armature as Armature
 from .register import register_wrap
 from .translations import t
 
@@ -24,11 +23,12 @@ VALID_EYE_NAMES = {
     'right': ['RightEye', 'Eye_R', 'eye_R', 'eye.R', 'EyeRight', 'right_eye', 'r_eye']
 }
 
+
 class EyeTrackingBackup:
     def __init__(self):
         self.backup_path = os.path.join(bpy.app.tempdir, "eye_tracking_backup.json")
         self.bone_positions: Dict[str, Dict[str, Tuple[float, float, float]]] = {}
-        
+
     def store_bone_positions(self, armature) -> bool:
         try:
             self.bone_positions = {
@@ -41,34 +41,35 @@ class EyeTrackingBackup:
                     'tail': tuple(armature.data.bones['RightEye'].tail_local)
                 }
             }
-            
+
             with open(self.backup_path, 'w') as f:
                 json.dump(self.bone_positions, f)
             return True
         except Exception as e:
             print(f"Backup failed: {str(e)}")
             return False
-            
+
     def restore_bone_positions(self, armature) -> bool:
         try:
             if not os.path.exists(self.backup_path):
                 return False
-                
+
             with open(self.backup_path, 'r') as f:
                 backup_data = json.load(f)
-                
+
             Common.switch('EDIT')
-            
+
             for bone_name, positions in backup_data.items():
                 if bone_name in armature.data.edit_bones:
                     bone = armature.data.edit_bones[bone_name]
                     bone.head = positions['head']
                     bone.tail = positions['tail']
-                    
+
             return True
         except Exception as e:
             print(f"Restore failed: {str(e)}")
             return False
+
 
 class EyeTrackingValidator:
     @staticmethod
@@ -77,16 +78,16 @@ class EyeTrackingValidator:
         mesh = Common.get_objects().get(mesh_name)
         if not mesh:
             return None, None
-            
+
         left_group = None
         right_group = None
-        
+
         for group in mesh.vertex_groups:
             if any(name.lower() in group.name.lower() for name in VALID_EYE_NAMES['left']):
                 left_group = group.name
             if any(name.lower() in group.name.lower() for name in VALID_EYE_NAMES['right']):
                 right_group = group.name
-                
+
         return left_group, right_group
 
     @staticmethod
@@ -96,35 +97,35 @@ class EyeTrackingValidator:
         armature = Common.get_armature()
         if not armature:
             return False, t('EyeTrackingValidator.error.noArmature')
-            
+
         # Validate mesh
         mesh = Common.get_objects().get(mesh_name)
         if not mesh:
             return False, t('EyeTrackingValidator.error.noMesh', mesh=mesh_name)
-            
+
         # Validate shape keys
         if not Common.has_shapekeys(mesh):
             return False, t('EyeTrackingValidator.error.noShapekeys')
-            
+
         # Validate vertex groups
         left_group, right_group = EyeTrackingValidator.find_eye_vertex_groups(mesh_name)
         missing_groups = []
-        
+
         if not left_group:
             missing_groups.append(t('EyeTrackingValidator.error.leftEye'))
         if not right_group:
             missing_groups.append(t('EyeTrackingValidator.error.rightEye'))
-            
+
         if missing_groups:
             return False, t('EyeTrackingValidator.error.missingGroups', groups=', '.join(missing_groups))
-            
+
         # Validate bone structure
         required_bones = [context.scene.head, context.scene.eye_left, context.scene.eye_right]
         missing_bones = [bone for bone in required_bones if bone not in armature.data.bones]
-        
+
         if missing_bones:
             return False, t('EyeTrackingValidator.error.missingBones', bones=', '.join(missing_bones))
-            
+
         return True, t('EyeTrackingValidator.success')
 
     @staticmethod
@@ -133,56 +134,56 @@ class EyeTrackingValidator:
         mesh = Common.get_objects().get(mesh_name)
         if not mesh:
             return False
-            
+
         group = mesh.vertex_groups.get(vertex_group)
         if not group:
             return False
-            
+
         for vertex in mesh.data.vertices:
             for group_element in vertex.groups:
                 if group_element.group == group.index and group_element.weight > 0:
                     return True
-                    
+
         return False
 
     @staticmethod
     def get_eye_bone_names(armature) -> Dict[str, str]:
         """Get standardized eye bone names based on armature"""
         eye_bones = {'left': None, 'right': None}
-        
+
         for bone in armature.data.bones:
             if any(name.lower() in bone.name.lower() for name in VALID_EYE_NAMES['left']):
                 eye_bones['left'] = bone.name
             if any(name.lower() in bone.name.lower() for name in VALID_EYE_NAMES['right']):
                 eye_bones['right'] = bone.name
-                
+
         return eye_bones
 
 
 class VertexGroupCache:
     _cache = {}
-    
+
     @classmethod
     def get_vertex_indices(cls, mesh_name: str, group_name: str) -> Optional[set]:
         cache_key = f"{mesh_name}_{group_name}"
-        
+
         if cache_key in cls._cache:
             return cls._cache[cache_key]
-            
+
         mesh = Common.get_objects().get(mesh_name)
         if not mesh:
             return None
-            
+
         group = mesh.vertex_groups.get(group_name)
         if not group:
             return None
-            
+
         indices = {v.index for v in mesh.data.vertices
-                  if any(g.group == group.index for g in v.groups)}
-                  
+                   if any(g.group == group.index for g in v.groups)}
+
         cls._cache[cache_key] = indices
         return indices
-    
+
     @classmethod
     def clear_cache(cls):
         cls._cache.clear()
@@ -243,7 +244,7 @@ class RotateEyeBonesForAv3Button(bpy.types.Operator):
         # We can determine bone roll (and the overall orientation of the bone) through matrix_local.
         # The expected matrix_local for a bone pointing straight up and with zero roll is a 90 degrees rotation about
         # the X-axis and no other rotation.
-        straight_up_and_zero_roll = mathutils.Matrix.Rotation(math.pi/2, 3, 'X')
+        straight_up_and_zero_roll = mathutils.Matrix.Rotation(math.pi / 2, 3, 'X')
 
         # Check each bone
         for eye_bone_name in list(eye_bone_names):
@@ -316,6 +317,7 @@ class RotateEyeBonesForAv3Button(bpy.types.Operator):
         self.report({'INFO'}, t("Av3EyeTrackingRotateEyeBones.success"))
         return {'FINISHED'}
 
+
 @register_wrap
 class CreateEyesButton(bpy.types.Operator):
     bl_idname = 'cats_eyes.create_eye_tracking'
@@ -378,8 +380,8 @@ class CreateEyesButton(bpy.types.Operator):
 
             # Validation checks with proper error messages
             if not context.scene.disable_eye_blinking:
-                if any(Common.is_enum_empty(getattr(context.scene, attr)) for attr in 
-                      ['wink_left', 'wink_right', 'lowerlid_left', 'lowerlid_right']):
+                if any(Common.is_enum_empty(getattr(context.scene, attr)) for attr in
+                       ['wink_left', 'wink_right', 'lowerlid_left', 'lowerlid_right']):
                     saved_data.load()
                     self.report({'ERROR'}, t('CreateEyesButton.error.noShapeSelected'))
                     return {'CANCELLED'}
@@ -446,10 +448,10 @@ class CreateEyesButton(bpy.types.Operator):
             context.scene.progress_update = 80
 
             # Handle shape keys
-            shapes = [context.scene.wink_left, context.scene.wink_right, 
-                     context.scene.lowerlid_left, context.scene.lowerlid_right]
-            new_shapes = ['vrc.blink_left', 'vrc.blink_right', 
-                         'vrc.lowerlid_left', 'vrc.lowerlid_right']
+            shapes = [context.scene.wink_left, context.scene.wink_right,
+                      context.scene.lowerlid_left, context.scene.lowerlid_right]
+            new_shapes = ['vrc.blink_left', 'vrc.blink_right',
+                          'vrc.lowerlid_left', 'vrc.lowerlid_right']
 
             # Remove existing shapekeys efficiently
             for new_shape in new_shapes:
@@ -849,6 +851,7 @@ class StopTestingButton(bpy.types.Operator):
 
         return {'FINISHED'}
 
+
 # This gets called by the eye testing sliders
 def set_rotation(self, context):
     global eye_left, eye_right, eye_left_rot, eye_right_rot
@@ -865,7 +868,7 @@ def set_rotation(self, context):
     # Store and print values for debugging
     x_rotation = math.radians(context.scene.eye_rotation_x)
     y_rotation = math.radians(context.scene.eye_rotation_y)
-    
+
     # Apply rotations with initial offset
     eye_left.rotation_euler[0] = eye_left_rot[0] + x_rotation
     eye_left.rotation_euler[1] = eye_left_rot[1] + y_rotation
@@ -877,39 +880,39 @@ def set_rotation(self, context):
 
 
 def stop_testing(self, context):
-        global eye_left, eye_right, eye_left_data, eye_right_data, eye_left_rot, eye_right_rot
-        if not eye_left or not eye_right or not eye_left_data or not eye_right_data or not eye_left_rot or not eye_right_rot:
-            return None
-
-        armature = Common.set_default_stage()
-        Common.switch('POSE')
-        armature.data.pose_position = 'POSE'
-
-        context.scene.eye_rotation_x = 0
-        context.scene.eye_rotation_y = 0
-
-        for pb in armature.data.bones:
-            pb.hide = False
-            pb.select = True
-        bpy.ops.pose.rot_clear()
-        bpy.ops.pose.scale_clear()
-        bpy.ops.pose.transforms_clear()
-        for pb in armature.data.bones:
-            pb.select = False
-
-        armature = Common.set_default_stage()
-        # armature.data.pose_position = 'REST'
-
-        for shape_key in Common.get_objects()[context.scene.mesh_name_eye].data.shape_keys.key_blocks:
-            shape_key.value = 0
-
-        eye_left = None
-        eye_right = None
-        eye_left_data = None
-        eye_right_data = None
-        eye_left_rot = []
-        eye_right_rot = []
+    global eye_left, eye_right, eye_left_data, eye_right_data, eye_left_rot, eye_right_rot
+    if not eye_left or not eye_right or not eye_left_data or not eye_right_data or not eye_left_rot or not eye_right_rot:
         return None
+
+    armature = Common.set_default_stage()
+    Common.switch('POSE')
+    armature.data.pose_position = 'POSE'
+
+    context.scene.eye_rotation_x = 0
+    context.scene.eye_rotation_y = 0
+
+    for pb in armature.data.bones:
+        pb.hide = False
+        pb.select = True
+    bpy.ops.pose.rot_clear()
+    bpy.ops.pose.scale_clear()
+    bpy.ops.pose.transforms_clear()
+    for pb in armature.data.bones:
+        pb.select = False
+
+    armature = Common.set_default_stage()
+    # armature.data.pose_position = 'REST'
+
+    for shape_key in Common.get_objects()[context.scene.mesh_name_eye].data.shape_keys.key_blocks:
+        shape_key.value = 0
+
+    eye_left = None
+    eye_right = None
+    eye_left_data = None
+    eye_right_data = None
+    eye_left_rot = []
+    eye_right_rot = []
+    return None
 
 
 @register_wrap
@@ -1135,6 +1138,7 @@ class ResetBlinkTest(bpy.types.Operator):
         context.scene.eye_lowerlid_shape = 1
 
         return {'FINISHED'}
+
 
 @register_wrap
 class ResetEyeTrackingButton(bpy.types.Operator):

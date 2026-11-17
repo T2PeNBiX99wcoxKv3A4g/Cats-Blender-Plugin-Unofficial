@@ -1,11 +1,10 @@
 # Copyright 2021 MMD Tools authors
 # This file is part of MMD Tools.
 
+import bpy
 import csv
 import os
 from typing import TYPE_CHECKING, cast
-
-import bpy
 
 from ..core.model import FnModel, Model
 from ..core.translations import MMD_DATA_TYPE_TO_HANDLERS, FnTranslations
@@ -107,7 +106,8 @@ class TranslateMMDModel(bpy.types.Operator):
         translator = self.__translator
         txt = translator.save_fails()
         if translator.fails:
-            self.report({"WARNING"}, f"Failed to translate {len(translator.fails)} names, see '{txt.name}' in text editor")
+            self.report({"WARNING"},
+                        f"Failed to translate {len(translator.fails)} names, see '{txt.name}' in text editor")
         return {"FINISHED"}
 
     def translate(self, name_j, name_e):
@@ -182,7 +182,7 @@ class TranslateMMDModel(bpy.types.Operator):
                     if not m.name_e.startswith(prefix):
                         m.name_e = prefix + m.name_e
                 elif m.name_e.startswith(prefix):
-                    m.name_e = m.name_e[len(prefix) :]
+                    m.name_e = m.name_e[len(prefix):]
 
     def translate_material(self, rig):
         for m in rig.materials():
@@ -211,15 +211,15 @@ DEFAULT_SHOW_ROW_COUNT = 20
 
 class MMD_TOOLS_UL_MMDTranslationElementIndex(bpy.types.UIList):
     def draw_item(
-        self,
-        context,
-        layout: bpy.types.UILayout,
-        data,
-        mmd_translation_element_index: "MMDTranslationElementIndex",
-        icon,
-        active_data,
-        active_propname,
-        index: int,
+            self,
+            context,
+            layout: bpy.types.UILayout,
+            data,
+            mmd_translation_element_index: "MMDTranslationElementIndex",
+            icon,
+            active_data,
+            active_propname,
+            index: int,
     ):
         mmd_translation_element: MMDTranslationElement = data.translation_elements[mmd_translation_element_index.value]
         MMD_DATA_TYPE_TO_HANDLERS[mmd_translation_element.type].draw_item(
@@ -240,7 +240,8 @@ class RestoreMMDDataReferenceOperator(bpy.types.Operator):
 
     def execute(self, context: bpy.types.Context):
         root_object = FnModel.find_root_object(context.active_object)
-        mmd_translation_element_index = root_object.mmd_root.translation.filtered_translation_element_indices[self.index].value
+        mmd_translation_element_index = root_object.mmd_root.translation.filtered_translation_element_indices[
+            self.index].value
         mmd_translation_element = root_object.mmd_root.translation.translation_elements[mmd_translation_element_index]
         setattr(mmd_translation_element, self.prop_name, self.restore_value)
 

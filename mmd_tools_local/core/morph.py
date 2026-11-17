@@ -1,12 +1,11 @@
 # Copyright 2016 MMD Tools authors
 # This file is part of MMD Tools.
 
+import bpy
 import logging
 import math
 import re
 from typing import TYPE_CHECKING, Tuple, cast
-
-import bpy
 
 from .. import bpyutils, utils
 from ..bpyutils import FnContext, FnObject, TransformConstraintOp
@@ -272,29 +271,32 @@ class FnMorph:
 
         def morph_data_equals(left, right) -> bool:
             return (
-                left.related_mesh_data == right.related_mesh_data
-                and left.offset_type == right.offset_type
-                and left.material == right.material
-                and all(a == b for a, b in zip(left.diffuse_color, right.diffuse_color, strict=False))
-                and all(a == b for a, b in zip(left.specular_color, right.specular_color, strict=False))
-                and left.shininess == right.shininess
-                and all(a == b for a, b in zip(left.ambient_color, right.ambient_color, strict=False))
-                and all(a == b for a, b in zip(left.edge_color, right.edge_color, strict=False))
-                and left.edge_weight == right.edge_weight
-                and all(a == b for a, b in zip(left.texture_factor, right.texture_factor, strict=False))
-                and all(a == b for a, b in zip(left.sphere_texture_factor, right.sphere_texture_factor, strict=False))
-                and all(a == b for a, b in zip(left.toon_texture_factor, right.toon_texture_factor, strict=False))
+                    left.related_mesh_data == right.related_mesh_data
+                    and left.offset_type == right.offset_type
+                    and left.material == right.material
+                    and all(a == b for a, b in zip(left.diffuse_color, right.diffuse_color, strict=False))
+                    and all(a == b for a, b in zip(left.specular_color, right.specular_color, strict=False))
+                    and left.shininess == right.shininess
+                    and all(a == b for a, b in zip(left.ambient_color, right.ambient_color, strict=False))
+                    and all(a == b for a, b in zip(left.edge_color, right.edge_color, strict=False))
+                    and left.edge_weight == right.edge_weight
+                    and all(a == b for a, b in zip(left.texture_factor, right.texture_factor, strict=False))
+                    and all(
+                a == b for a, b in zip(left.sphere_texture_factor, right.sphere_texture_factor, strict=False))
+                    and all(a == b for a, b in zip(left.toon_texture_factor, right.toon_texture_factor, strict=False))
             )
 
         def morph_equals(left, right) -> bool:
-            return len(left.data) == len(right.data) and all(morph_data_equals(a, b) for a, b in zip(left.data, right.data, strict=False))
+            return len(left.data) == len(right.data) and all(
+                morph_data_equals(a, b) for a, b in zip(left.data, right.data, strict=False))
 
         # Remove duplicated mmd_root.material_morphs.data[]
         for material_morph in mmd_root.material_morphs:
             save_materil_morph_datas = []
             remove_material_morph_data_indices = []
             for index, material_morph_data in enumerate(material_morph.data):
-                if any(morph_data_equals(material_morph_data, saved_material_morph_data) for saved_material_morph_data in save_materil_morph_datas):
+                if any(morph_data_equals(material_morph_data, saved_material_morph_data) for saved_material_morph_data
+                       in save_materil_morph_datas):
                     remove_material_morph_data_indices.append(index)
                     continue
                 save_materil_morph_datas.append(material_morph_data)
@@ -353,7 +355,8 @@ class _MorphSlider:
     def __dummy_armature(self, obj, create=False):
         arm = next((x for x in obj.children if x.mmd_type == "PLACEHOLDER" and x.type == "ARMATURE"), None)
         if create and arm is None:
-            arm = bpy.data.objects.new(name=".dummy_armature", object_data=bpy.data.armatures.new(name=".dummy_armature"))
+            arm = bpy.data.objects.new(name=".dummy_armature",
+                                       object_data=bpy.data.armatures.new(name=".dummy_armature"))
             arm.mmd_type = "PLACEHOLDER"
             arm.parent = obj
             FnContext.link_object(FnContext.ensure_context(), arm)
@@ -420,7 +423,8 @@ class _MorphSlider:
         if isinstance(d, int):  # for Blender 2.76 or older
             data_path = key_block.path_from_id("value")
             d = next((i for i in key_block.id_data.animation_data.drivers if i.data_path == data_path), None)
-        return not d or d.driver.expression == "".join(("*w", "+g", "v")[-1 if i < 1 else i % 2] + str(i + 1) for i in range(len(d.driver.variables)))
+        return not d or d.driver.expression == "".join(
+            ("*w", "+g", "v")[-1 if i < 1 else i % 2] + str(i + 1) for i in range(len(d.driver.variables)))
 
     def __cleanup(self, names_in_use=None):
         names_in_use = names_in_use or {}
@@ -435,7 +439,9 @@ class _MorphSlider:
                 if kb.name.startswith("mmd_bind"):
                     kb.driver_remove("value")
                     ms = morph_sliders[kb.relative_key.name]
-                    kb.relative_key.slider_min, kb.relative_key.slider_max = min(ms.slider_min, math.floor(ms.value)), max(ms.slider_max, math.ceil(ms.value))
+                    kb.relative_key.slider_min, kb.relative_key.slider_max = min(ms.slider_min,
+                                                                                 math.floor(ms.value)), max(
+                        ms.slider_max, math.ceil(ms.value))
                     kb.relative_key.value = ms.value
                     kb.relative_key.mute = False
                     FnObject.mesh_remove_shape_key(mesh_object, kb)
@@ -443,7 +449,8 @@ class _MorphSlider:
                 elif kb.name in morph_sliders and self.__shape_key_driver_check(kb):
                     ms = morph_sliders[kb.name]
                     kb.driver_remove("value")
-                    kb.slider_min, kb.slider_max = min(ms.slider_min, math.floor(kb.value)), max(ms.slider_max, math.ceil(kb.value))
+                    kb.slider_min, kb.slider_max = min(ms.slider_min, math.floor(kb.value)), max(ms.slider_max,
+                                                                                                 math.ceil(kb.value))
 
             for m in reversed(mesh_object.modifiers):  # uv morph
                 if m.name.startswith("mmd_bind") and m.name not in names_in_use:
@@ -453,7 +460,8 @@ class _MorphSlider:
 
         for m in rig.materials():
             if m and m.node_tree:
-                for n in sorted((x for x in m.node_tree.nodes if x.name.startswith("mmd_bind")), key=lambda x: -x.location[0]):
+                for n in sorted((x for x in m.node_tree.nodes if x.name.startswith("mmd_bind")),
+                                key=lambda x: -x.location[0]):
                     _MaterialMorph.reset_morph_links(n)
                     m.node_tree.nodes.remove(n)
 
@@ -545,7 +553,8 @@ class _MorphSlider:
 
                 name_bind = f"mmd_bind{hash(vg.name)}"
                 uv_morph_map.setdefault(name_bind, ())
-                mod = mesh_object.modifiers.get(name_bind, None) or mesh_object.modifiers.new(name=name_bind, type="UV_WARP")
+                mod = mesh_object.modifiers.get(name_bind, None) or mesh_object.modifiers.new(name=name_bind,
+                                                                                              type="UV_WARP")
                 mod.show_expanded = False
                 mod.vertex_group = vg.name
                 mod.axis_u, mod.axis_v = ("Y", "X") if axis[1] in "YW" else ("X", "Y")
@@ -732,7 +741,8 @@ class MigrationFnMorph:
                     if morph_data.material_data is not None:
                         # SUPPORT_UNTIL: 5 LTS
                         # The material_id is also no longer used, but for compatibility with older version mmd_tools, keep it.
-                        if "material_id" not in morph_data.material_data.mmd_material or "material_id" not in morph_data or morph_data.material_data.mmd_material["material_id"] == morph_data["material_id"]:
+                        if "material_id" not in morph_data.material_data.mmd_material or "material_id" not in morph_data or \
+                                morph_data.material_data.mmd_material["material_id"] == morph_data["material_id"]:
                             # In the new version, the related_mesh property is no longer used.
                             # Explicitly remove this property to avoid misuse.
                             if "related_mesh" in morph_data:

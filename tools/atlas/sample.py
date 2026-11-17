@@ -1,9 +1,8 @@
 # MIT License
-import os
-from typing import Dict, Optional, Tuple
-
 import bpy
 import numpy as np
+import os
+from typing import Dict, Optional, Tuple
 
 from . import compose, detect, maps
 from .. import colorspace
@@ -61,13 +60,13 @@ def _read_image(image: bpy.types.Image) -> Optional[np.ndarray]:
 
 
 def cell_source(
-    texture_set,
-    width: int,
-    height: int,
-    multiply_diffuse: bool,
-    bounds=(0.0, 0.0, 1.0, 1.0),
-    pixel_art: bool = False,
-    colour: bool = False,
+        texture_set,
+        width: int,
+        height: int,
+        multiply_diffuse: bool,
+        bounds=(0.0, 0.0, 1.0, 1.0),
+        pixel_art: bool = False,
+        colour: bool = False,
 ) -> np.ndarray:
     """Build the content tile for one material's cell.
 
@@ -140,10 +139,10 @@ def _to_atlas_encoding(tile, encoded, colour, tint=None) -> np.ndarray:
 
 
 def write_atlas(
-    name: str,
-    canvas: np.ndarray,
-    map_kind: str = 'albedo',
-    colorspace_from: Optional[bpy.types.Image] = None,
+        name: str,
+        canvas: np.ndarray,
+        map_kind: str = 'albedo',
+        colorspace_from: Optional[bpy.types.Image] = None,
 ) -> bpy.types.Image:
     """Create a Blender image from a canvas, tagged with the right colorspace.
 

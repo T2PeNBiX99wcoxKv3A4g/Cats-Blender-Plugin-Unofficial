@@ -1,23 +1,23 @@
 # MIT License
 
-import os
 import bpy
-import json
-import copy
-import time
-import pathlib
 import collections
-from datetime import datetime, timezone
+import copy
+import json
+import os
+import pathlib
+import time
+from bpy.app.handlers import persistent
 from collections import OrderedDict
 from contextlib import contextmanager
-from bpy.app.handlers import persistent
+from datetime import datetime, timezone
 
-from .. import globs
-from ..tools.register import register_wrap
 from . import translate as Translate
 from . import translation_providers
 from . import user_data
 from .translations import t
+from .. import globs
+from ..tools.register import register_wrap
 
 main_dir = pathlib.Path(os.path.dirname(__file__)).parent.resolve()
 resources_dir = os.path.join(str(main_dir), "resources")
@@ -47,6 +47,7 @@ CREDENTIAL_SETTINGS = ('deepl_api_key', 'libretranslate_url', 'libretranslate_ap
 
 lock_settings = False
 
+
 @contextmanager
 def settings_lock_context():
     global lock_settings
@@ -55,6 +56,7 @@ def settings_lock_context():
         yield
     finally:
         lock_settings = False
+
 
 @register_wrap
 class RevertChangesButton(bpy.types.Operator):
@@ -70,6 +72,7 @@ class RevertChangesButton(bpy.types.Operator):
         self.report({'INFO'}, t('RevertChangesButton.success'))
         return {'FINISHED'}
 
+
 @register_wrap
 class ResetGoogleDictButton(bpy.types.Operator):
     bl_idname = 'cats_settings.reset_google_dict'
@@ -82,6 +85,7 @@ class ResetGoogleDictButton(bpy.types.Operator):
         Translate.load_translations()
         self.report({'INFO'}, t('ResetGoogleDictButton.resetInfo'))
         return {'FINISHED'}
+
 
 @register_wrap
 class DebugTranslations(bpy.types.Operator):
@@ -105,6 +109,7 @@ class DebugTranslations(bpy.types.Operator):
         bpy.context.scene.debug_translations = False
         self.report({'INFO'}, t('DebugTranslations.success'))
         return {'FINISHED'}
+
 
 def load_settings():
     global settings_data, settings_data_unchanged
@@ -161,12 +166,14 @@ def load_settings():
 
     settings_data_unchanged = copy.deepcopy(settings_data)
 
+
 def save_settings():
     try:
         with open(user_data.settings_file(ensure_dir=True), 'w', encoding="utf8") as outfile:
             json.dump(settings_data, outfile, ensure_ascii=False, indent=4)
     except OSError as e:
         print(f"CATS: could not save settings to {user_data.settings_file()}: {e}")
+
 
 def reset_settings(full_reset=False, to_reset_settings=None):
     if not to_reset_settings:
@@ -193,12 +200,14 @@ def reset_settings(full_reset=False, to_reset_settings=None):
     settings_data_unchanged = copy.deepcopy(settings_data)
     print('SETTINGS RESET')
 
+
 def start_apply_settings_timer():
     global settings_timer_running, settings_timer_started_at
     settings_timer_started_at = time.monotonic()
     settings_timer_running = True
     if not bpy.app.timers.is_registered(apply_settings_timer):
         bpy.app.timers.register(apply_settings_timer, first_interval=0.3)
+
 
 def apply_settings_timer():
     global settings_timer_running
@@ -217,13 +226,16 @@ def apply_settings_timer():
 
     return 0.3
 
+
 def release_lock():
     global lock_settings
     print("Settings lock timed out, releasing lock")
     lock_settings = False
 
+
 def credential_accessors(setting):
     """get/set callbacks for a CREDENTIAL_SETTINGS scene property."""
+
     def getter(_self):
         if not settings_data:
             return settings_default[setting][0]
@@ -237,6 +249,7 @@ def credential_accessors(setting):
 
     return getter, setter
 
+
 def purge_stored_credentials():
     """Remove credential values that older Cats versions stored inside the open .blend."""
     for scene in bpy.data.scenes:
@@ -246,6 +259,7 @@ def purge_stored_credentials():
         for setting in CREDENTIAL_SETTINGS:
             if setting in sys_props:
                 del sys_props[setting]
+
 
 def apply_settings():
     if not hasattr(bpy.context, 'scene'):
@@ -272,6 +286,7 @@ def apply_settings():
     print('Settings applied successfully')
     return True
 
+
 def stop_apply_settings_timer():
     global settings_timer_running
 
@@ -281,6 +296,7 @@ def stop_apply_settings_timer():
         bpy.app.timers.unregister(apply_settings_timer)
     print("Settings timer stopped.")
 
+
 @persistent
 def apply_settings_on_load(_dummy):
     """Re-apply the user's global Cats settings after a .blend is opened."""
@@ -289,13 +305,16 @@ def apply_settings_on_load(_dummy):
     with settings_lock_context():
         apply_settings()
 
+
 def register_load_post_handler():
     if apply_settings_on_load not in bpy.app.handlers.load_post:
         bpy.app.handlers.load_post.append(apply_settings_on_load)
 
+
 def unregister_load_post_handler():
     if apply_settings_on_load in bpy.app.handlers.load_post:
         bpy.app.handlers.load_post.remove(apply_settings_on_load)
+
 
 def settings_changed():
     for setting, value in settings_default.items():
@@ -303,8 +322,10 @@ def settings_changed():
             return True
     return False
 
+
 def update_settings(self, context):
     update_settings_core(self, context)
+
 
 def update_settings_core(self, context):
     print("update_settings_core function called")
@@ -333,23 +354,30 @@ def update_settings_core(self, context):
 
     return settings_changed_tmp
 
+
 def get_embed_textures():
     return settings_data.get('embed_textures')
+
 
 def get_ui_lang():
     return settings_data.get('ui_lang')
 
+
 def get_translation_service():
     return settings_data.get('translation_service') if settings_data else None
+
 
 def get_deepl_api_key():
     return settings_data.get('deepl_api_key', "") if settings_data else ""
 
+
 def get_libretranslate_url():
     return settings_data.get('libretranslate_url', "") if settings_data else ""
 
+
 def get_libretranslate_api_key():
     return settings_data.get('libretranslate_api_key', "") if settings_data else ""
+
 
 def get_mymemory_email():
     return settings_data.get('mymemory_email', "") if settings_data else ""
