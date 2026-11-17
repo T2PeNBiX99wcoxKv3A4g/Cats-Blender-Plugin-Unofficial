@@ -1,6 +1,13 @@
 # Changelog
 
-## [unreleased]
+## [5.3.10](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/compare/v5.3.9..v5.3.10) - 2026-11-17
+
+### 📚 Documentation
+
+- Describe the automated release flow - ([a3c29eb](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/commit/a3c29eb22aed78e7525d9c51a165d17304d0e6a9))
+
+
+## [5.3.9] - 2026-11-17
 
 ### ⛰️  Features
 
@@ -61,12 +68,13 @@
 
 ### Action
 
+- Update version in `blender_manifest.toml` and update `CHANGELOG.md` - ([5e8149c](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/commit/5e8149c10172bfb0f3f135a9d6f3297610691cbf))
 - Update version in `blender_manifest.toml` and update `CHANGELOG.md` - ([59d8b8e](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/commit/59d8b8e649e81015027dbc1fcbcff2f6ca0a7a07))
 
 ## New Contributors ❤️
 
-* @opencode-agent[bot] made their first contribution
 * @github-actions[bot] made their first contribution
+* @opencode-agent[bot] made their first contribution
 * @T2PeNBiX99wcoxKv3A4g made their first contribution
 * @ made their first contribution
 * @RinaDev-xyz made their first contribution
