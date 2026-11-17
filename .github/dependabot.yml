@@ -1,0 +1,35 @@
+# https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+version: 2
+
+updates:
+  # The workflow files — .github/workflows/*
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: daily
+    groups:
+      actions:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+
+  # The documentation site — Site/package.json
+  # Added once the site exists; Dependabot needs the manifest present.
+  #
+  # - package-ecosystem: npm
+  #   directory: /Site
+  #   schedule:
+  #     interval: daily
+  #   groups:
+  #     npm:
+  #       patterns: ["*"]
+  #       update-types: ["minor", "patch"]
+  #   commit-message:
+  #     prefix: "chore"
+  #     include: "scope"
+
+  # NOTE: the only Python dependency, the opencc wheel in wheels/, is vendored
+  # from MMD Tools and is not covered by any Dependabot ecosystem. It is checked
+  # by hand: https://pypi.org/project/opencc-python-reimplemented/

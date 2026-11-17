@@ -1,0 +1,33 @@
+name: Release
+
+on:
+  workflow_dispatch:
+  push:
+    branches-ignore:
+      - "dev/**"
+      - "dependabot/**"
+    paths-ignore:
+      - "README.md"
+      - "README.*.md"
+      - "CONTRIBUTING.md"
+      - "LICENSE*"
+      - ".gitignore"
+      - "Site/**"
+      - ".github/workflows/site.yml"
+      - ".github/workflows/dependabot-auto-merge.yml"
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    uses: T2PeNBiX99wcoxKv3A4g/Release-Workflows/.github/workflows/blender_extension_release.yml@main
+    with:
+      blender_version: '5.3.0'
+      version_file_path: './blender_manifest.toml'
+      version_keyword: 'version'
+      extra_version_files: |
+        ./__init__.py|CATS_VERSION
+    secrets: inherit
