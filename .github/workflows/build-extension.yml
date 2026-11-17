@@ -15,7 +15,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # Blender is unpacked outside the checkout on purpose: anything inside
       # the workspace would be picked up as part of the extension payload.
@@ -35,14 +35,14 @@ jobs:
             --output-dir "$RUNNER_TEMP/dist"
           ls -l "$RUNNER_TEMP/dist"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: cats-extension
           path: ${{ runner.temp }}/dist/*.zip
 
       - name: Publish release
         if: startsWith(github.ref, 'refs/tags/')
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           files: ${{ runner.temp }}/dist/*.zip
           fail_on_unmatched_files: true
