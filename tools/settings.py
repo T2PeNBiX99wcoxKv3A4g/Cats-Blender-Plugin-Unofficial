@@ -1,8 +1,10 @@
 # MIT License
 
 import bpy
+import base64
 import collections
 import copy
+import ctypes
 import json
 import os
 import pathlib
@@ -56,7 +58,189 @@ settings_default['qa_show_pose'] = [True, False]
 CREDENTIAL_SETTINGS = ('deepl_api_key', 'libretranslate_url', 'libretranslate_api_key',
                        'mymemory_email', 'github_token')
 
+# The subset above that is actually secret. libretranslate_url is a plain URL, so it is
+# stored readably; encrypting it would only make settings.json harder to inspect.
+SECRET_SETTINGS = ('deepl_api_key', 'libretranslate_api_key', 'mymemory_email',
+                   'github_token')
+
 lock_settings = False
+
+
+# --- Protection of stored credentials ---------------------------------------
+#
+# Blender has no secret storage of its own, so the values above would otherwise sit in
+# settings.json as plain text. On Windows they are encrypted with DPAPI, which ties the
+# ciphertext to the current Windows account: another user on the same machine cannot
+# decrypt it, and neither can the file after being copied to another machine.
+#
+# On other platforms a keyed obfuscation derived from the user and host name is used
+# instead. It is not cryptography: it only keeps the value out of plain sight and makes
+# settings.json unusable on another machine, so a copied credential has to be re-entered.
+_SECRET_PREFIX = 'dpapi1:'   # Windows DPAPI, tied to the Windows account
+_OBF_PREFIX = 'obf1:'        # keyed XOR, for platforms without an equivalent API
+
+_dpapi_cache = None
+
+
+def _dpapi():
+    """Lazily bind CryptProtectData / CryptUnprotectData (Windows only)."""
+    global _dpapi_cache
+    if _dpapi_cache is not None:
+        return _dpapi_cache
+
+    from ctypes import wintypes
+
+    class DataBlob(ctypes.Structure):
+        _fields_ = [("cbData", wintypes.DWORD),
+                    ("pbData", ctypes.POINTER(ctypes.c_char))]
+
+    crypt32 = ctypes.WinDLL("crypt32", use_last_error=True)
+    kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+
+    crypt32.CryptProtectData.argtypes = [
+        ctypes.POINTER(DataBlob), wintypes.LPCWSTR, ctypes.POINTER(DataBlob),
+        ctypes.c_void_p, ctypes.c_void_p, wintypes.DWORD, ctypes.POINTER(DataBlob)]
+    crypt32.CryptProtectData.restype = wintypes.BOOL
+
+    crypt32.CryptUnprotectData.argtypes = [
+        ctypes.POINTER(DataBlob), ctypes.POINTER(wintypes.LPWSTR), ctypes.POINTER(DataBlob),
+        ctypes.c_void_p, ctypes.c_void_p, wintypes.DWORD, ctypes.POINTER(DataBlob)]
+    crypt32.CryptUnprotectData.restype = wintypes.BOOL
+
+    kernel32.LocalFree.argtypes = [ctypes.c_void_p]
+    kernel32.LocalFree.restype = ctypes.c_void_p
+
+    _dpapi_cache = (DataBlob, crypt32, kernel32)
+    return _dpapi_cache
+
+
+def _blob(data):
+    """Build a DATA_BLOB plus the buffer that has to stay alive while it is used."""
+    DataBlob = _dpapi()[0]
+    buffer = ctypes.create_string_buffer(data, len(data))
+    return DataBlob(len(data), ctypes.cast(buffer, ctypes.POINTER(ctypes.c_char))), buffer
+
+
+def _take_blob(blob):
+    """Copy a DATA_BLOB's contents and free the memory the API allocated."""
+    _, _, kernel32 = _dpapi()
+    data = ctypes.string_at(blob.pbData, blob.cbData)
+    kernel32.LocalFree(ctypes.cast(blob.pbData, ctypes.c_void_p))
+    return data
+
+
+def protect_secret(value):
+    """Protect a credential for storage. Plain text is returned when that is impossible."""
+    if not value or value.startswith((_SECRET_PREFIX, _OBF_PREFIX)):
+        return value
+
+    if os.name == 'nt':
+        protected = _protect_dpapi(value)
+        if protected is not None:
+            return protected
+
+    return _protect_obfuscated(value)
+
+
+def unprotect_secret(value):
+    """Read back a stored credential. Returns an empty string if it cannot be read."""
+    if not value:
+        return value
+    if value.startswith(_SECRET_PREFIX):
+        return _unprotect_dpapi(value)
+    if value.startswith(_OBF_PREFIX):
+        return _unprotect_obfuscated(value)
+    return value
+
+
+def _protect_dpapi(value):
+    """DPAPI encryption, or None when it is unavailable/failed."""
+    try:
+        DataBlob, crypt32, _ = _dpapi()
+        blob_in, _keep_alive = _blob(value.encode('utf-8'))
+        blob_out = DataBlob()
+        if not crypt32.CryptProtectData(ctypes.byref(blob_in), None, None, None, None,
+                                        0, ctypes.byref(blob_out)):
+            return None
+        return _SECRET_PREFIX + base64.b64encode(_take_blob(blob_out)).decode('ascii')
+    except Exception as e:
+        print('CATS: DPAPI encryption unavailable, falling back to obfuscation:', e)
+        return None
+
+
+def _unprotect_dpapi(value):
+    try:
+        DataBlob, crypt32, _ = _dpapi()
+        blob_in, _keep_alive = _blob(base64.b64decode(value[len(_SECRET_PREFIX):]))
+        blob_out = DataBlob()
+        if not crypt32.CryptUnprotectData(ctypes.byref(blob_in), None, None, None, None,
+                                          0, ctypes.byref(blob_out)):
+            print('CATS: a stored credential could not be decrypted (another Windows account?)')
+            return ""
+        return _take_blob(blob_out).decode('utf-8')
+    except Exception as e:
+        print('CATS: could not decrypt a stored credential:', e)
+        return ""
+
+
+def _obfuscation_key():
+    """Key material for the fallback scheme: user + host + platform.
+
+    This is deliberately not cryptography. It only makes settings.json unreadable at a
+    glance and non-portable between machines. Losing either the user name or the host
+    name means a stored credential cannot be recovered; it has to be entered again.
+    """
+    import getpass
+    import hashlib
+    import socket
+
+    parts = []
+    for getter in (getpass.getuser, socket.gethostname, lambda: os.name):
+        try:
+            parts.append(str(getter()))
+        except Exception:
+            pass
+
+    return hashlib.sha256(('cats-blender-plugin|' + '|'.join(parts)).encode('utf-8')).digest()
+
+
+def _xor_stream(key, data):
+    import hashlib
+
+    out = bytearray(len(data))
+    for block_index in range(0, (len(data) + 31) // 32):
+        block = hashlib.sha256(key + block_index.to_bytes(8, 'big')).digest()
+        for offset, byte in enumerate(block):
+            position = block_index * 32 + offset
+            if position >= len(data):
+                break
+            out[position] = data[position] ^ byte
+    return bytes(out)
+
+
+def _protect_obfuscated(value):
+    import hashlib
+
+    key = _obfuscation_key()
+    payload = value.encode('utf-8')
+    tag = hashlib.sha256(key + b'tag' + payload).digest()[:8]
+    return _OBF_PREFIX + base64.b64encode(_xor_stream(key, tag + payload)).decode('ascii')
+
+
+def _unprotect_obfuscated(value):
+    import hashlib
+
+    try:
+        key = _obfuscation_key()
+        raw = _xor_stream(key, base64.b64decode(value[len(_OBF_PREFIX):]))
+        tag, payload = raw[:8], raw[8:]
+        if hashlib.sha256(key + b'tag' + payload).digest()[:8] != tag:
+            print('CATS: a stored credential does not match this machine/user; re-enter it')
+            return ""
+        return payload.decode('utf-8')
+    except Exception as e:
+        print('CATS: could not read a stored credential:', e)
+        return ""
 
 
 @contextmanager
@@ -78,6 +262,9 @@ class RevertChangesButton(bpy.types.Operator):
 
     def execute(self, context):
         for setting in settings_default.keys():
+            if setting in CREDENTIAL_SETTINGS:
+                # Stored behind get/set callbacks; they save themselves on change.
+                continue
             setattr(bpy.context.scene, setting, settings_data_unchanged.get(setting))
         save_settings()
         self.report({'INFO'}, t('RevertChangesButton.success'))
@@ -175,6 +362,9 @@ def load_settings():
         reset_settings(to_reset_settings=to_reset_settings)
         return
 
+    # Older versions stored credentials as plain text; protect them in place.
+    encrypt_stored_credentials()
+
     settings_data_unchanged = copy.deepcopy(settings_data)
 
 
@@ -250,15 +440,56 @@ def credential_accessors(setting):
     def getter(_self):
         if not settings_data:
             return settings_default[setting][0]
-        return settings_data.get(setting) or ""
+        return unprotect_secret(settings_data.get(setting) or "")
 
     def setter(_self, value):
-        if settings_data is None or settings_data.get(setting) == value:
+        if settings_data is None:
             return
-        settings_data[setting] = value
+        if setting not in SECRET_SETTINGS:
+            if settings_data.get(setting) == value:
+                return
+            settings_data[setting] = value
+            save_settings()
+            return
+        # Compare the readable value: encryption is randomised, so the stored form
+        # differs on every call even when the credential itself did not change.
+        if unprotect_secret(settings_data.get(setting) or "") == value:
+            return
+        settings_data[setting] = protect_secret(value)
         save_settings()
 
     return getter, setter
+
+
+def encrypt_stored_credentials():
+    """Protect secrets still stored as plain text by older versions."""
+    if settings_data is None:
+        return False
+
+    changed = False
+    for setting in CREDENTIAL_SETTINGS:
+        value = settings_data.get(setting)
+        if not value or not isinstance(value, str):
+            continue
+
+        if setting not in SECRET_SETTINGS:
+            # A URL is not a secret: undo protection from an earlier build.
+            if value.startswith((_SECRET_PREFIX, _OBF_PREFIX)):
+                settings_data[setting] = unprotect_secret(value)
+                changed = True
+            continue
+
+        if value.startswith((_SECRET_PREFIX, _OBF_PREFIX)):
+            continue
+        protected = protect_secret(value)
+        if protected != value:
+            settings_data[setting] = protected
+            changed = True
+
+    if changed:
+        save_settings()
+        print('CATS: encrypted stored credentials')
+    return changed
 
 
 def purge_stored_credentials():
@@ -284,6 +515,8 @@ def apply_settings():
     try:
         settings_to_reset = []
         for setting in settings_default.keys():
+            if setting in CREDENTIAL_SETTINGS:
+                continue
             try:
                 setattr(bpy.context.scene, setting, settings_data.get(setting))
             except TypeError:
@@ -329,6 +562,8 @@ def unregister_load_post_handler():
 
 def settings_changed():
     for setting, value in settings_default.items():
+        if setting in CREDENTIAL_SETTINGS:
+            continue
         if value[1] and settings_data.get(setting) != settings_data_unchanged.get(setting):
             return True
     return False
@@ -347,6 +582,10 @@ def update_settings_core(self, context):
 
     with settings_lock_context():
         for setting in settings_default.keys():
+            if setting in CREDENTIAL_SETTINGS:
+                # The scene value is the decrypted text, the stored value is the
+                # protected blob; comparing them would rewrite the file forever.
+                continue
             old = settings_data[setting]
             new = getattr(bpy.context.scene, setting)
             print(f"Checking setting: {setting}")
