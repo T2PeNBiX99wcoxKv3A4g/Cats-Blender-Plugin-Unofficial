@@ -48,18 +48,36 @@ function headingIds(markdown: string): string[] {
 export function loadDoc(slug: string, language: string): DocEntry | null {
     const localised = docs.get(`${language}/${slug}`);
     const fallback = docs.get(`${site.defaultLanguage}/${slug}`);
-    const markdown = localised ?? fallback;
-    if (!markdown) return null;
+    const source = localised ?? fallback;
+    if (!source) return null;
 
     return {
         slug,
-        title: titleOf(markdown, slug),
-        markdown,
+        title: titleOf(source, slug),
+        markdown: stripTrailingRule(source),
         translated: localised !== undefined,
         // Always taken from the default language: translations render the same anchors,
         // so `#some-heading` links keep working after the headings are translated.
-        anchorIds: headingIds(fallback ?? markdown),
+        anchorIds: headingIds(fallback ?? source),
     };
+}
+
+/**
+ * Drop a horizontal rule at the very end of a page. The wiki pages end with `---` and
+ * the site draws its own separator above the "last updated" line, which otherwise shows
+ * as two rules.
+ */
+function stripTrailingRule(markdown: string): string {
+    const lines = markdown.split("\n");
+
+    while (lines.length && lines[lines.length - 1].trim() === "") lines.pop();
+
+    if (lines.length && /^(-{3,}|\*{3,}|_{3,})$/.test(lines[lines.length - 1].trim())) {
+        lines.pop();
+        while (lines.length && lines[lines.length - 1].trim() === "") lines.pop();
+    }
+
+    return lines.join("\n");
 }
 
 export function hasDoc(slug: string, language: string): boolean {
