@@ -1,5 +1,16 @@
 # Changelog
 
+## [5.8.2](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/compare/v5.8.1..v5.8.2) - 2026-11-23
+
+### 🐛 Bug Fixes
+
+- Pass the FBX option count into the translated message - ([b2a27d3](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/commit/b2a27d34c66fa13a9ddaec8f6db0dd3112686563))
+
+### Action
+
+- Update version in `blender_manifest.toml` and update `CHANGELOG.md` - ([0fa5455](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/commit/0fa5455c033c189b0e1091f8d1fb7403e516ebb2))
+
+
 ## [5.8.1](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/compare/v5.8.0..v5.8.1) - 2026-11-17
 
 ### 🐛 Bug Fixes
