@@ -266,7 +266,7 @@ class SetFbxPreset(bpy.types.Operator):
         if not self.preset:
             self.report({'INFO'}, t('FbxExport.offNow'))
         else:
-            self.report({'INFO'}, t('FbxExport.applied').format(applied))
+            self.report({'INFO'}, t('FbxExport.applied', applied))
         return {'FINISHED'}
 
 
@@ -282,7 +282,7 @@ class ApplyFbxSettings(bpy.types.Operator):
             self.report({'ERROR'}, t('FbxExport.noExporter'))
             return {'CANCELLED'}
         applied = apply_stored()
-        self.report({'INFO'}, t('FbxExport.applied').format(applied))
+        self.report({'INFO'}, t('FbxExport.applied', applied))
         return {'FINISHED'}
 
 
