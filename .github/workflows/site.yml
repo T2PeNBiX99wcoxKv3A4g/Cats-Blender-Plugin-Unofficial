@@ -19,38 +19,10 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-        with:
-          # The site shows each page's last commit date, so the history is needed.
-          fetch-depth: 0
-
-      - uses: actions/setup-node@v7
-        with:
-          node-version: 22
-          cache: npm
-          cache-dependency-path: Site/package-lock.json
-
-      - name: Build the site
-        working-directory: Site
-        run: |
-          npm ci
-          npm run build
-
-      - uses: actions/upload-pages-artifact@v5
-        with:
-          path: Site/dist
-
   deploy:
-    name: Deploy
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v5
+    uses: T2PeNBiX99wcoxKv3A4g/Release-Workflows/.github/workflows/web_pages.yml@main
+    with:
+      working_directory: Site
+      # The site shows each page's last commit date, so the history is needed.
+      fetch_depth: 0
+    secrets: inherit
