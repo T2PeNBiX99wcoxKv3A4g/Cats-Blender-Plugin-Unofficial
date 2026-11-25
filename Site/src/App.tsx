@@ -276,7 +276,12 @@ export default function App() {
                         aria-expanded={searchOpen && query.length > 0}
                         aria-controls="cats-search-results"
                         aria-autocomplete="list"
-                        onFocus={() => setSearchOpen(true)}
+                        onFocus={() => {
+                            // Only one panel is open on a phone: the search results would
+                            // otherwise cover the navigation that was just opened.
+                            setNavOpen(false);
+                            setSearchOpen(true);
+                        }}
                         onChange={(event) => {
                             setQuery(event.target.value);
                             setActiveIndex(0);
@@ -356,11 +361,14 @@ export default function App() {
 
                     <NavToggle
                         type="button"
-                        onClick={() => setNavOpen((open) => !open)}
+                        onClick={() => {
+                            setNavOpen((open) => !open);
+                            setSearchOpen(false);
+                        }}
                         aria-expanded={navOpen}
                         aria-label={t("nav.menu")}
                     >
-                        <Icon $glyph="menu" aria-hidden="true"/>
+                        <Icon $glyph={navOpen ? "close" : "menu"} aria-hidden="true"/>
                         <NavToggleLabel>{t("nav.menu")}</NavToggleLabel>
                     </NavToggle>
                 </Controls>

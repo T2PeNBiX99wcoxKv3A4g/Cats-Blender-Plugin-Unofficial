@@ -8,7 +8,7 @@ import languageIcon from "./icons/language.svg";
 import menuIcon from "./icons/menu.svg";
 import releasesIcon from "./icons/releases.svg";
 import searchIcon from "./icons/search.svg";
-import { mobile } from "./styles/media";
+import { mobile, narrow } from "./styles/media";
 
 /** Every icon file, keyed by the name used at the call site. */
 const glyphs = {
@@ -153,6 +153,11 @@ export const TopBar = styled.header`
         padding: 0.6rem 0.9rem;
         gap: 0.5rem 0.6rem;
     }
+
+    @media ${narrow} {
+        padding: 0.55rem 0.7rem;
+        gap: 0.45rem;
+    }
 `;
 
 /** Reading progress, drawn along the bottom edge of the top bar. */
@@ -205,6 +210,11 @@ export const Brand = styled.a`
     @media ${mobile} {
         font-size: 0.98rem;
         white-space: nowrap;
+        padding-block: 0.25rem;
+    }
+
+    @media ${narrow} {
+        font-size: 0.88rem;
     }
 `;
 
@@ -270,6 +280,7 @@ export const SearchBox = styled.div`
     @media ${mobile} {
         order: 3;
         flex: 1 1 100%;
+        padding: 0.2rem 0.6rem;
     }
 `;
 
@@ -286,6 +297,13 @@ export const SearchInput = styled.input`
 
     &::placeholder {
         color: var(--text-muted);
+    }
+
+    @media ${mobile} {
+        // 16px keeps iOS from zooming the page when the field is focused.
+        font-size: 1rem;
+        // The whole field, not just its text line, should accept the tap.
+        padding-block: 0.4rem;
     }
 `;
 
@@ -306,6 +324,10 @@ export const SearchClear = styled.button`
         color: var(--accent-strong);
         transform: rotate(90deg);
     }
+
+    @media ${mobile} {
+        padding: 0.45rem;
+    }
 `;
 
 export const SearchResults = styled.div`
@@ -318,10 +340,18 @@ export const SearchResults = styled.div`
     padding: 0.3rem;
     border: 1px solid var(--border-strong);
     border-radius: var(--radius-md);
-    background: rgba(11, 15, 25, 0.98);
+    // Solid: the page must not show through the results.
+    background: var(--background);
     box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.9);
     animation: ${slideIn} var(--duration-fast) var(--ease-out) both;
-    overflow: hidden;
+    // Eight results are taller than a phone screen. The panel scrolls on its own, because
+    // the part that ran past the bottom edge could not be reached at all.
+    max-height: calc(100vh - 8rem);
+    // Same limit against the viewport that the address bar and the keyboard leave behind.
+    max-height: calc(100dvh - 8rem);
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
 `;
 
 export const SearchResult = styled.button<{ $active?: boolean }>`
@@ -390,6 +420,14 @@ export const LanguageLabel = styled.label`
     &:focus-within {
         color: var(--accent-strong);
     }
+
+    @media ${narrow} {
+        gap: 0;
+
+        ${Icon} {
+            display: none;
+        }
+    }
 `;
 
 export const LanguageSelect = styled.select`
@@ -416,7 +454,10 @@ export const LanguageSelect = styled.select`
     }
 
     @media ${mobile} {
-        max-width: 7.5rem;
+        max-width: 8rem;
+        min-height: 2.5rem;
+        // Under 16px iOS zooms the page in when the control is focused.
+        font-size: 1rem;
     }
 `;
 
@@ -453,12 +494,17 @@ export const NavToggle = styled.button`
     }
 
     &[aria-expanded="true"] ${Icon} {
-        transform: rotate(90deg);
+        transform: scale(0.9);
     }
 
     @media ${mobile} {
-        display: inline-block;
-        padding: 0.35rem 0.45rem;
+        display: inline-flex;
+        justify-content: center;
+        min-width: 2.5rem;
+        min-height: 2.5rem;
+        padding: 0.35rem;
+        // Larger glyph: the button is icon-only here.
+        font-size: 1rem;
     }
 `;
 
@@ -535,6 +581,14 @@ export const NavHome = styled.a<{ $active?: boolean }>`
             background: var(--surface);
             color: var(--accent-strong);
         `}
+
+    @media ${mobile} {
+        // Comfortable tap target; the navigation is only open by hand on these widths.
+        display: flex;
+        align-items: center;
+        min-height: 2.5rem;
+        padding: 0.4rem 0.7rem;
+    }
 `;
 
 export const NavGroup = styled.section<{ $index?: number }>`
@@ -590,6 +644,13 @@ export const NavLink = styled.a<{ $active?: boolean }>`
             color: var(--accent-strong);
             font-weight: 600;
         `}
+
+    @media ${mobile} {
+        display: flex;
+        align-items: center;
+        min-height: 2.5rem;
+        padding: 0.4rem 0.7rem;
+    }
 `;
 
 export const Content = styled.main`
@@ -610,6 +671,9 @@ export const Hero = styled.section`
     h1 {
         margin: 0 0 0.4rem;
         font-size: 2rem;
+        // The heading wraps to two lines on a phone; the inherited 1.7 leaves a gap that
+        // reads like a paragraph break.
+        line-height: 1.25;
         border: none;
         padding: 0;
         animation: ${fadeUp} var(--duration-slow) var(--ease-out) both;
@@ -696,6 +760,14 @@ export const DocIndex = styled.section`
         margin: 0.3rem 0;
         animation: ${fadeUp} var(--duration) var(--ease-out) both;
         ${stagger(10, 0.02)}
+    }
+
+    @media ${mobile} {
+        // The list is a row of links on a phone; give each one a thumb-sized height.
+        li a {
+            display: inline-block;
+            padding-block: 0.35rem;
+        }
     }
 `;
 
@@ -863,5 +935,13 @@ export const Footer = styled.footer`
 
     a {
         ${underlineOnHover}
+    }
+
+    @media ${mobile} {
+        padding: 1.2rem 1rem;
+
+        a {
+            padding-block: 0.4rem;
+        }
     }
 `;
