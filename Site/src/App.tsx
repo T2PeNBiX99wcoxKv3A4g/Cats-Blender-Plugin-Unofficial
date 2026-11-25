@@ -8,6 +8,37 @@ import {readme} from "./generated/readme";
 import {docDates} from "./generated/doc-dates";
 import {hasDoc, loadDoc, rewriteLinks, slugifyHeading} from "./docs";
 import {detectLanguage, languages, translate} from "./i18n";
+import {
+    AppShell,
+    Badge,
+    Brand,
+    BrandSuffix,
+    Content,
+    Controls,
+    DocIndex,
+    DocMeta,
+    Footer,
+    Hero,
+    HeroActions,
+    HeroSuffix,
+    Icon,
+    LanguageLabel,
+    LanguageSelect,
+    Layout,
+    MarkdownBody,
+    NavGroup,
+    NavHome,
+    NavLink,
+    NavToggle,
+    Notice,
+    Sidebar,
+    Tagline,
+    TopBar,
+    TopNav,
+    TopNavLink,
+    VisuallyHidden,
+} from "./App.styles";
+import {ButtonLink} from "./styles/buttons";
 
 type Route =
     | {name: "home"}
@@ -63,7 +94,7 @@ function Markdown({source, anchorIds = []}: {source: string; anchorIds?: string[
     }
 
     return (
-        <div className="markdown">
+        <MarkdownBody>
             <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{
@@ -86,7 +117,7 @@ function Markdown({source, anchorIds = []}: {source: string; anchorIds?: string[
             >
                 {rewriteLinks(source)}
             </ReactMarkdown>
-        </div>
+        </MarkdownBody>
     );
 }
 
@@ -128,29 +159,29 @@ export default function App() {
         .filter((group) => group.docs.length > 0);
 
     return (
-        <div className="app">
-            <header className="topbar">
-                <a className="brand" href="#/">
-                    <span className="brand-name">{site.name}</span>
-                    <span className="brand-suffix">{site.suffix}</span>
-                </a>
+        <AppShell>
+            <TopBar>
+                <Brand href="#/">
+                    <span>{site.name}</span>
+                    <BrandSuffix>{site.suffix}</BrandSuffix>
+                </Brand>
 
-                <nav className="topnav">
-                    <a href={site.releases} target="_blank" rel="noreferrer noopener">
-                        <span className="icon icon-releases" aria-hidden="true"/>
+                <TopNav>
+                    <TopNavLink href={site.releases} target="_blank" rel="noreferrer noopener">
+                        <Icon $glyph="releases" aria-hidden="true"/>
                         {t("nav.releases")}
-                    </a>
-                    <a href={site.repository} target="_blank" rel="noreferrer noopener">
-                        <span className="icon icon-github" aria-hidden="true"/>
+                    </TopNavLink>
+                    <TopNavLink href={site.repository} target="_blank" rel="noreferrer noopener">
+                        <Icon $glyph="github" aria-hidden="true"/>
                         {t("nav.github")}
-                    </a>
-                </nav>
+                    </TopNavLink>
+                </TopNav>
 
-                <div className="controls">
-                    <label className="language">
-                        <span className="icon icon-language" aria-hidden="true"/>
-                        <span className="visually-hidden">{t("language.label")}</span>
-                        <select
+                <Controls>
+                    <LanguageLabel>
+                        <Icon $glyph="language" aria-hidden="true"/>
+                        <VisuallyHidden>{t("language.label")}</VisuallyHidden>
+                        <LanguageSelect
                             value={language}
                             onChange={(event) => setLanguage(event.target.value)}
                         >
@@ -159,35 +190,29 @@ export default function App() {
                                     {item.label}
                                 </option>
                             ))}
-                        </select>
-                    </label>
+                        </LanguageSelect>
+                    </LanguageLabel>
 
-                    <button
+                    <NavToggle
                         type="button"
-                        className="nav-toggle"
                         onClick={() => setNavOpen((open) => !open)}
                         aria-expanded={navOpen}
                     >
-                        <span className="icon icon-menu" aria-hidden="true"/>
+                        <Icon $glyph="menu" aria-hidden="true"/>
                         {t("nav.menu")}
-                    </button>
-                </div>
-            </header>
+                    </NavToggle>
+                </Controls>
+            </TopBar>
 
-            <div className="layout">
-                <aside className={navOpen ? "sidebar open" : "sidebar"}>
-                    <a
-                        href="#/"
-                        className={
-                            route.name === "home" ? "nav-home active" : "nav-home"
-                        }
-                    >
-                        <span className="icon icon-home" aria-hidden="true"/>
+            <Layout>
+                <Sidebar $open={navOpen}>
+                    <NavHome href="#/" $active={route.name === "home"}>
+                        <Icon $glyph="home" aria-hidden="true"/>
                         {t("nav.home")}
-                    </a>
+                    </NavHome>
 
                     {groups.map((group) => (
-                        <section key={group.id} className="nav-group">
+                        <NavGroup key={group.id}>
                             <h2>{t(`group.${group.id}`)}</h2>
                             <ul>
                                 {group.docs.map((slug) => {
@@ -196,24 +221,24 @@ export default function App() {
                                         route.name === "doc" && route.slug === slug;
                                     return (
                                         <li key={slug}>
-                                            <a
+                                            <NavLink
                                                 href={`#/docs/${encodeURIComponent(slug)}`}
-                                                className={active ? "active" : undefined}
+                                                $active={active}
                                             >
                                                 {entry?.title ?? slug}
-                                            </a>
+                                            </NavLink>
                                         </li>
                                     );
                                 })}
                             </ul>
-                        </section>
+                        </NavGroup>
                     ))}
-                </aside>
+                </Sidebar>
 
-                <main className="content">{renderRoute()}</main>
-            </div>
+                <Content>{renderRoute()}</Content>
+            </Layout>
 
-            <footer className="footer">
+            <Footer>
                 <span>
                     {site.name} {site.suffix} — {t("footer.unofficial")}
                 </span>
@@ -226,8 +251,8 @@ export default function App() {
                     </a>
                     <span>{t("footer.license")}</span>
                 </nav>
-            </footer>
-        </div>
+            </Footer>
+        </AppShell>
     );
 
     function renderRoute() {
@@ -235,10 +260,10 @@ export default function App() {
             return (
                 <>
                     <h1>{t("docs.title")}</h1>
-                    <p className="notice">{t("docs.importedNotice")}</p>
+                    <Notice>{t("docs.importedNotice")}</Notice>
 
                     {groups.map((group) => (
-                        <section key={group.id} className="doc-index">
+                        <DocIndex key={group.id}>
                             <h2>{t(`group.${group.id}`)}</h2>
                             <ul>
                                 {group.docs.map((slug) => {
@@ -249,13 +274,13 @@ export default function App() {
                                                 {entry?.title ?? slug}
                                             </a>
                                             {!entry?.translated && language !== site.defaultLanguage ? (
-                                                <span className="badge">{site.defaultLanguage}</span>
+                                                <Badge>{site.defaultLanguage}</Badge>
                                             ) : null}
                                         </li>
                                     );
                                 })}
                             </ul>
-                        </section>
+                        </DocIndex>
                     ))}
                 </>
             );
@@ -281,12 +306,12 @@ export default function App() {
             return (
                 <>
                     {!entry.translated && language !== site.defaultLanguage ? (
-                        <p className="notice">{t("docs.untranslated")}</p>
+                        <Notice>{t("docs.untranslated")}</Notice>
                     ) : null}
-                    <p className="notice subtle">{t("docs.importedNotice")}</p>
+                    <Notice $subtle>{t("docs.importedNotice")}</Notice>
                     <Markdown source={entry.markdown} anchorIds={entry.anchorIds} />
                     {updated ? (
-                        <p className="doc-meta">{t("docs.lastUpdated", {date: updated})}</p>
+                        <DocMeta>{t("docs.lastUpdated", {date: updated})}</DocMeta>
                     ) : null}
                 </>
             );
@@ -294,29 +319,24 @@ export default function App() {
 
         return (
             <>
-                <section className="hero">
+                <Hero>
                     <h1>
-                        {site.name} <span className="hero-suffix">{site.suffix}</span>
+                        {site.name} <HeroSuffix>{site.suffix}</HeroSuffix>
                     </h1>
-                    <p className="tagline">{site.tagline}</p>
-                    <div className="hero-actions">
-                        <a className="button primary" href="#/docs">
-                            <span className="icon icon-docs" aria-hidden="true"/>
+                    <Tagline>{site.tagline}</Tagline>
+                    <HeroActions>
+                        <ButtonLink $primary href="#/docs">
+                            <Icon $glyph="docs" aria-hidden="true"/>
                             {t("nav.docs")}
-                        </a>
-                        <a
-                            className="button"
-                            href={site.releases}
-                            target="_blank"
-                            rel="noreferrer noopener"
-                        >
-                            <span className="icon icon-releases" aria-hidden="true"/>
+                        </ButtonLink>
+                        <ButtonLink href={site.releases} target="_blank" rel="noreferrer noopener">
+                            <Icon $glyph="releases" aria-hidden="true"/>
                             {t("nav.releases")}
-                        </a>
-                    </div>
-                </section>
+                        </ButtonLink>
+                    </HeroActions>
+                </Hero>
 
-                <p className="notice subtle">{t("home.readmeNote")}</p>
+                <Notice $subtle>{t("home.readmeNote")}</Notice>
                 <Markdown source={readme} />
             </>
         );
