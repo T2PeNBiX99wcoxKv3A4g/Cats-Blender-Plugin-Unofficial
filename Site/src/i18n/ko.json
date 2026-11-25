@@ -19,5 +19,8 @@
   "footer.source": "소스 코드",
   "footer.wiki": "업스트림 위키",
   "footer.unofficial": "비공식 후속 버전이며 원래 Cats 개발자와 관련이 없습니다.",
-  "docs.lastUpdated": "마지막 업데이트: {date}"
+  "docs.lastUpdated": "마지막 업데이트: {date}",
+  "search.placeholder": "문서 검색",
+  "search.clear": "검색 지우기",
+  "search.noResults": "일치하는 문서가 없습니다"
 }

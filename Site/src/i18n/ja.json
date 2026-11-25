@@ -19,5 +19,8 @@
   "footer.source": "ソースコード",
   "footer.wiki": "上流 wiki",
   "footer.unofficial": "非公式の継続版です。元の Cats 開発者とは関係ありません。",
-  "docs.lastUpdated": "最終更新: {date}"
+  "docs.lastUpdated": "最終更新: {date}",
+  "search.placeholder": "ドキュメントを検索",
+  "search.clear": "検索をクリア",
+  "search.noResults": "一致するページがありません"
 }

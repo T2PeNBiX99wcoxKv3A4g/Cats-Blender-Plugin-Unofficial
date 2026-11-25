@@ -19,5 +19,8 @@
   "footer.source": "Source code",
   "footer.wiki": "Upstream wiki",
   "footer.unofficial": "Unofficial continuation, not affiliated with the original Cats developers.",
-  "docs.lastUpdated": "Last updated {date}"
+  "docs.lastUpdated": "Last updated {date}",
+  "search.placeholder": "Search documentation",
+  "search.clear": "Clear search",
+  "search.noResults": "No matching pages"
 }

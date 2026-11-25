@@ -19,5 +19,8 @@
   "footer.source": "源代码",
   "footer.wiki": "上游 wiki",
   "footer.unofficial": "非官方延续版本，与原始 Cats 开发者无关。",
-  "docs.lastUpdated": "最后更新：{date}"
+  "docs.lastUpdated": "最后更新：{date}",
+  "search.placeholder": "搜索文档",
+  "search.clear": "清除搜索",
+  "search.noResults": "没有匹配的页面"
 }

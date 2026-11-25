@@ -20,6 +20,9 @@ body {
 
 html {
     font-family: var(--font-sans);
+    // Anchors land below the sticky top bar instead of under it.
+    scroll-padding-top: 5rem;
+    scroll-behavior: smooth;
 }
 
 body {
@@ -33,5 +36,23 @@ a {
 
     &:hover {
         text-decoration: underline;
+    }
+}
+
+// Motion is decoration here: nothing is hidden while it runs, so switching it off only
+// removes the transitions.
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        animation-delay: 0ms !important;
+        transition-duration: 0.01ms !important;
+        transition-delay: 0ms !important;
     }
 }
