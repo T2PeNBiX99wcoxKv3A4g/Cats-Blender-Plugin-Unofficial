@@ -485,7 +485,11 @@ export const Sidebar = styled.aside<{ $open?: boolean }>`
     top: 4.5rem;
     align-self: start;
     max-height: calc(100vh - 6rem);
+    // The hovered link slides 2px to the right; the padding keeps that inside the scroll
+    // area, and the clipped axis stops the browser from drawing a scrollbar for it.
+    overflow-x: hidden;
     overflow-y: auto;
+    padding-right: 2px;
     font-size: 0.9rem;
     animation: ${fadeIn} var(--duration-slow) var(--ease-out) both;
 
