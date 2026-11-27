@@ -67,6 +67,11 @@ ${features}
  * This page is what a reader without JavaScript sees.
  */
 function rootRedirect() {
+    const links = site.languages.map(
+        (language) =>
+            `<a href="${site.base}${language}/" hreflang="${language}" lang="${language}">${labels[language].language}</a>`
+    );
+
     return `---
 layout: false
 title: ${site.name} ${site.suffix}
@@ -75,9 +80,7 @@ title: ${site.name} ${site.suffix}
 # ${site.name} ${site.suffix}
 
 <p>
-    The documentation opens in <a href="${site.base}en/">English</a>. Other languages:
-    <a href="${site.base}ja/">日本語</a>, <a href="${site.base}ko/">한국어</a>,
-    <a href="${site.base}zh-CN/">简体中文</a>, <a href="${site.base}zh-TW/">繁體中文</a>.
+    The documentation opens in ${links[0]}. Other languages: ${links.slice(1).join(", ")}.
 </p>
 `;
 }

@@ -34,6 +34,46 @@ function lastCommit(file) {
 }
 
 
+/**
+ * The previous build used short language folders (`/en/FAQ.html`, `/zh-TW/`). They are kept as
+ * small redirect pages so bookmarks and shared links still land on the page they named.
+ */
+const legacyFolders = [
+    ["en", "en-US"],
+    ["ja", "ja-JP"],
+    ["ko", "ko-KR"],
+    ["zh-CN", "zh-Hans"],
+    ["zh-TW", "zh-Hant"],
+];
+
+function legacyFolderRedirects() {
+    const pages = site.groups.flatMap((group) => group.docs);
+
+    const html = (target) =>
+        `<!DOCTYPE html><html lang="${site.defaultLanguage}"><head><meta charset="utf-8">` +
+        `<title>${site.name}</title><link rel="canonical" href="${target}">` +
+        `<meta http-equiv="refresh" content="0; url=${target}">` +
+        `<script>location.replace(${JSON.stringify(target)} + location.search + location.hash)</script>` +
+        `</head><body><p><a href="${target}">${target}</a></p></body></html>`;
+
+    return {
+        name: "cats-legacy-language-folders",
+        generateBundle() {
+            for (const [from, to] of legacyFolders) {
+                for (const slug of ["", ...pages]) {
+                    const target = `${site.base}${to}/${slug}${slug ? ".html" : ""}`;
+                    this.emitFile({
+                        type: "asset",
+                        fileName: `${from}/${slug ? `${slug}.html` : "index.html"}`,
+                        source: html(target),
+                    });
+                }
+            }
+        },
+    };
+}
+
+
 /** Sidebar text comes from the page heading, so a page is written once and its title is not repeated here. */
 function titleOf(language, slug) {
     const path = join(docsRoot, prefixOf(language), `${slug}.md`);
@@ -107,6 +147,7 @@ export default defineConfig({
         const date = pageData.filePath ? lastCommit(pageData.filePath) : "";
         pageData.lastUpdated = date ? +new Date(date) : undefined;
     },
+    vite: {plugins: [legacyFolderRedirects()]},
     themeConfig: {
         // Cream is the add-on's own colour and disappears on white, so the light theme gets amber.
         logo: {light: "/cats-amber.svg", dark: "/cats-cream.svg", alt: site.name, width: 32, height: 32},

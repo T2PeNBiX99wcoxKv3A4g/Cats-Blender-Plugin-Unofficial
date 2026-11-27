@@ -5,18 +5,18 @@
 // `theme` holds the strings of the default theme (outline, footer, search, buttons); VitePress
 // does not translate them by itself, so every language carries its own copy.
 const groups = {
-    en: {"getting-started": "Getting started", workflow: "Workflow", help: "Help"},
-    ja: {"getting-started": "はじめに", workflow: "ワークフロー", help: "ヘルプ"},
-    ko: {"getting-started": "시작하기", workflow: "워크플로", help: "도움말"},
-    "zh-CN": {"getting-started": "开始使用", workflow: "操作流程", help: "疑难解答"},
-    "zh-TW": {"getting-started": "開始使用", workflow: "操作流程", help: "疑難排解"},
+    "en-US": {"getting-started": "Getting started", workflow: "Workflow", help: "Help"},
+    "ja-JP": {"getting-started": "はじめに", workflow: "ワークフロー", help: "ヘルプ"},
+    "ko-KR": {"getting-started": "시작하기", workflow: "워크플로", help: "도움말"},
+    "zh-Hans": {"getting-started": "开始使用", workflow: "操作流程", help: "疑难解答"},
+    "zh-Hant": {"getting-started": "開始使用", workflow: "操作流程", help: "疑難排解"},
 };
 
 export const labels = {
-    en: {
+    "en-US": {
         language: "English",
         nav: {docs: "Documentation", releases: "Releases", github: "GitHub"},
-        group: groups.en,
+        group: groups["en-US"],
         home: {
             tagline: "Shorten the steps to import and optimize models for VRChat.",
             features: [
@@ -43,10 +43,10 @@ export const labels = {
             },
         },
     },
-    ja: {
+    "ja-JP": {
         language: "日本語",
         nav: {docs: "ドキュメント", releases: "リリース", github: "GitHub"},
-        group: groups.ja,
+        group: groups["ja-JP"],
         home: {
             tagline: "VRChat 向けモデルのインポートと最適化の手順を短くします。",
             features: [
@@ -80,10 +80,10 @@ export const labels = {
             },
         },
     },
-    ko: {
+    "ko-KR": {
         language: "한국어",
         nav: {docs: "문서", releases: "릴리스", github: "GitHub"},
-        group: groups.ko,
+        group: groups["ko-KR"],
         home: {
             tagline: "VRChat용 모델의 가져오기와 최적화 단계를 줄여 줍니다.",
             features: [
@@ -117,10 +117,10 @@ export const labels = {
             },
         },
     },
-    "zh-CN": {
+    "zh-Hans": {
         language: "简体中文",
         nav: {docs: "文档", releases: "版本发布", github: "GitHub"},
-        group: groups["zh-CN"],
+        group: groups["zh-Hans"],
         home: {
             tagline: "缩短为 VRChat 导入和优化模型的步骤。",
             features: [
@@ -154,10 +154,10 @@ export const labels = {
             },
         },
     },
-    "zh-TW": {
+    "zh-Hant": {
         language: "繁體中文",
         nav: {docs: "文件", releases: "版本發佈", github: "GitHub"},
-        group: groups["zh-TW"],
+        group: groups["zh-Hant"],
         home: {
             tagline: "縮短為 VRChat 匯入與最佳化模型的步驟。",
             features: [

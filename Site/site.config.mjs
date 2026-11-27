@@ -18,8 +18,9 @@ export const site = {
     releases: "https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/releases",
     upstream: "https://github.com/teamneoneko/Cats-Blender-Plugin",
     wikiSource: "https://git.neoneko.org/NeoNeko/Cats-Blender-Plugin/wiki",
-    languages: ["en", "ja", "ko", "zh-CN", "zh-TW"],
-    defaultLanguage: "en",
+    // BCP 47 codes, the same set the documentation is translated into.
+    languages: ["en-US", "ja-JP", "ko-KR", "zh-Hans", "zh-Hant"],
+    defaultLanguage: "en-US",
     // Sidebar order and grouping for the pages under docs/<language>/.
     groups: [
         {
