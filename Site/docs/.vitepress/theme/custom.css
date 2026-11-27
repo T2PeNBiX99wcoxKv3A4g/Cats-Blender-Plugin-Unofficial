@@ -30,17 +30,6 @@
     max-width: 860px;
 }
 
-/* The home page's README body lines up with the hero instead of the 1280px default. */
-.VPHomeContent .container {
-    max-width: 1152px;
-}
-
-/* The default theme hides the footer on pages that have a sidebar; this site wants the
-   "unofficial continuation" line on every page. */
-.VPFooter.has-sidebar {
-    display: block !important;
-}
-
 /* The logo is the add-on's 32px pixel-art icon; keep it sharp instead of smoothing it. */
 .VPHero .VPImage.image-src {
     width: 96px;
