@@ -1,8 +1,8 @@
-# Translation
+# Translation {#translation}
 
 The **Translation** panel translates Japanese (and other) names to English so your model works cleanly in English tooling, Unity and VRChat. In `5.2.3.0` it has its own dedicated panel and a **pluggable, multi-service backend**.
 
-## How it works
+## How it works {#how-it-works}
 
 Translation always happens in two phases:
 
@@ -13,7 +13,7 @@ This means the internal dictionary is *always* used, the service dropdown only d
 
 Since `5.2.4.0` there is a step in between for MMD models: the **English names the model's author stored in the PMX file** (MMD Tools shows them as *Name(Eng)*). See [Author Names](#author-names-mmd) below.
 
-## Choosing a service
+## Choosing a service {#choosing-a-service}
 
 The **Translation Service** dropdown offers:
 
@@ -30,13 +30,13 @@ When you pick a service that needs credentials, the relevant field(s) appear in 
 - **LibreTranslate** → LibreTranslate URL and optional API Key
 - **MyMemory** → optional email
 
-> 🔒 Your service choice and credentials are stored in Cats' **global settings** (see [Settings](Settings#settings-file-location)), not inside the `.blend` file, so API keys never travel with your models. Before `5.3.1.0` the API keys, LibreTranslate URL and MyMemory email were also saved into each `.blend`; opening such a file with `5.3.1.0` or newer removes them (save the file to make it stick). If you shared files made with an older version, consider replacing your API key.
+> 🔒 Your service choice and credentials are stored in Cats' **global settings** (see [Settings](./Settings.md#settings-file-location)), not inside the `.blend` file, so API keys never travel with your models. Before `5.3.1.0` the API keys, LibreTranslate URL and MyMemory email were also saved into each `.blend`; opening such a file with `5.3.1.0` or newer removes them (save the file to make it stick). If you shared files made with an older version, consider replacing your API key.
 
 > 💡 If an online service is unavailable (no key, offline, or rate-limited), translation **degrades gracefully** to whatever the internal dictionary could do, rather than failing.
 
 > Online services only run when Blender's **Edit > Preferences > System > Network > Allow Online Access** is turned on. With it off, Cats uses the internal dictionary only and shows a warning saying online access is disabled. **Internal Dictionary Only** works either way.
 
-## Translate buttons
+## Translate buttons {#translate-buttons}
 
 - **Translate All** translates everything below in one click
 - **Shape Keys**
@@ -44,7 +44,7 @@ When you pick a service that needs credentials, the relevant field(s) appear in 
 - **Bones**
 - **Materials**
 
-## Author Names (MMD)
+## Author Names (MMD) {#author-names-mmd}
 
 PMX files carry an optional English name for every bone, shape key and material, written by the model's author. From `5.2.4.0` Cats can use them, which is often better than any dictionary or online service because the author knew what the key *does*.
 
@@ -56,16 +56,16 @@ PMX files carry an optional English name for every bone, shape key and material,
 
 **Bones and objects never use author names.** Fix MMD Model relies on the dictionary's bone names to recognise the rig, so bone translation is unchanged.
 
-The shape-key setting is mirrored in **Fix MMD Model**'s ⚙ Model Settings, and Fix MMD Model records the names before it deletes the MMD root so they are still available afterwards. The translation report tells you how many names came from the author, and the [Export Translation CSV](Settings#export-translation-csv) gains a *source* column saying where each name came from.
+The shape-key setting is mirrored in **Fix MMD Model**'s ⚙ Model Settings, and Fix MMD Model records the names before it deletes the MMD root so they are still available afterwards. The translation report tells you how many names came from the author, and the [Export Translation CSV](./Settings.md#export-translation-csv) gains a *source* column saying where each name came from.
 
 > 🧪 **New and lightly tested.** This works on the models it was built against, but it needs more MMD models with English names run through it. If a shape key or material comes out with a name you didn't expect, switch the setting to **Off**, and please report the model.
 
-## Options
+## Options {#options}
 
 - **Skip Dictionary for Shape Keys** *(online only)* legacy behaviour: ignore the internal dictionary for shape keys and translate them entirely with the selected online service. Only needed if you rely on the exact shape-key names from Cats 0.9.0 and earlier.
 - **Skip Locked Shape Keys** locked shape keys are left untranslated (useful to protect intentionally named keys).
 
-## Best practices
+## Best practices {#best-practices}
 
 **DO:**
 - ✅ Translate early right after import / Fix MMD Model
@@ -76,22 +76,22 @@ The shape-key setting is mirrored in **Fix MMD Model**'s ⚙ Model Settings, and
 - ❌ Translate again *after* setting up visemes/eye tracking (it can break references)
 - ❌ Translate the same model repeatedly (can cause duplicated words)
 
-### When to translate
+### When to translate {#when-to-translate}
 
 **Before:** visemes, eye tracking, custom shape keys, merging with other models.
 **After:** importing a model, running Fix MMD Model.
 
-## Resetting the cache
+## Resetting the cache {#resetting-the-cache}
 
-The online-translation cache can be cleared from the [Settings](Settings) panel (**Reset Google Dictionary**). This is handy if a bad translation got cached or you switch services and want fresh results.
+The online-translation cache can be cleared from the [Settings](./Settings.md) panel (**Reset Google Dictionary**). This is handy if a bad translation got cached or you switch services and want fresh results.
 
 ---
 
 **Related Pages:**
-- [Quick Access](Quick-Access) - Import your model first
-- [Converters](Converters) - Fix MMD Model translates as part of its process
-- [Settings](Settings) - Reset the translation cache
-- [Visemes](Visemes) / [Eye Tracking](Eye-Tracking) - Do these *after* translating
+- [Quick Access](./Quick-Access.md) - Import your model first
+- [Converters](./Converters.md) - Fix MMD Model translates as part of its process
+- [Settings](./Settings.md) - Reset the translation cache
+- [Visemes](./Visemes.md) / [Eye Tracking](./Eye-Tracking.md) - Do these *after* translating
 
 ---
 

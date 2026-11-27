@@ -1,12 +1,12 @@
-# Installation Guide
+# Installation Guide {#installation-guide}
 
 This guide covers installing Cats Blender Plugin for **Blender 4.2 LTS through 5.4** (5.2 LTS recommended).
 
 > #### If you were told to follow these instructions and clearly have not, your issue will be closed no ifs, no buts.
 
-## Requirements
+## Requirements {#requirements}
 
-### Required Software
+### Required Software {#required-software}
 - **Blender 4.2 LTS or newer** (through 5.4; we recommend **Blender 5.2 LTS**)
   - Download from [blender.org](https://www.blender.org/download/)
   - Use the official build from blender.org or the Steam version. Other builds are not supported.
@@ -14,7 +14,7 @@ This guide covers installing Cats Blender Plugin for **Blender 4.2 LTS through 5
 > ⚠ **Blender 4.1 and below are not supported.** The add-on ships as a Blender extension, and the extension system only exists from 4.2 onwards.
 
 
-### Python Dependencies
+### Python Dependencies {#python-dependencies}
 - If Blender uses a custom Python install, ensure **NumPy** is available.
 
 > ⚠ **Windows Store users:** Cats may work with the Windows Store build of Blender, but it is not officially supported. Use the official build from [blender.org](https://www.blender.org/).
@@ -27,9 +27,9 @@ This guide covers installing Cats Blender Plugin for **Blender 4.2 LTS through 5
 >
 > Any issue caused by using an unsupported distro, Snap, Flatpak, or other repackaged build will be closed immediately. Our stance on this is clear.
 
-## Installation Steps
+## Installation Steps {#installation-steps}
 
-### Step 1: Download Cats
+### Step 1: Download Cats {#step-1-download-cats}
 
 Get the latest release from the repository:
 - **Releases:** [GitHub](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/releases)
@@ -38,7 +38,7 @@ Get the latest release from the repository:
 
 > 📝 Make sure you **don't** already have the original/official Cats installed; the two conflict. Restart Blender if you had another version installed.
 
-### Step 2: Install via Blender's Extension System
+### Step 2: Install via Blender's Extension System {#step-2-install-via-blenders-extension-system}
 
 1. Open **Blender 5.2 or 5.3**.
 2. Go to **Edit > Preferences**.
@@ -46,27 +46,27 @@ Get the latest release from the repository:
 4. Click **Install from Disk** (the down-arrow icon, top-right).
 5. Select the Cats ZIP and click **Install from Disk**.
 
-### Step 3: Enable the Extension
+### Step 3: Enable the Extension {#step-3-enable-the-extension}
 
 Cats usually enables automatically. If not, search "cats" in the Extensions list and tick the box next to it.
 
-### Step 4: Verify Installation
+### Step 4: Verify Installation {#step-4-verify-installation}
 
 1. Open the **3D Viewport**.
 2. Press **N** to open the sidebar.
 3. Click the **Cats** tab.
 
-## Optional Dependencies
+## Optional Dependencies {#optional-dependencies}
 
 Some features used to need additional add-ons. None are required any more:
 
-### Material Combiner (texture atlasing)
-No longer needed or supported. Since `5.3.1.0` Cats only has its built-in [Atlas Generator](Optimization#atlas-generator), and the old *Atlas Generator (Legacy)* panel that drove Material Combiner is gone. If Material Combiner is still installed you can use **Import Material Combiner Settings** once to carry your settings over, then remove it.
+### Material Combiner (texture atlasing) {#material-combiner-texture-atlasing}
+No longer needed or supported. Since `5.3.1.0` Cats only has its built-in [Atlas Generator](./Optimization.md#atlas-generator), and the old *Atlas Generator (Legacy)* panel that drove Material Combiner is gone. If Material Combiner is still installed you can use **Import Material Combiner Settings** once to carry your settings over, then remove it.
 
-### Scaling tools
-No longer needed. The [Scaling](Scaling) panel used to require the separate Immersive Scaler add-on. Cats now has its own scaler built in. If you still have Immersive Scaler installed, you can remove it.
+### Scaling tools {#scaling-tools}
+No longer needed. The [Scaling](./Scaling.md) panel used to require the separate Immersive Scaler add-on. Cats now has its own scaler built in. If you still have Immersive Scaler installed, you can remove it.
 
-## Troubleshooting Installation
+## Troubleshooting Installation {#troubleshooting-installation}
 
 **Extension doesn't appear** - check it's enabled in Extensions preferences, confirm your Blender version is supported (4.2 LTS through 5.4), and **restart Blender completely**.
 
@@ -78,15 +78,15 @@ No longer needed. The [Scaling](Scaling) panel used to require the separate Imme
 
 **Previously installed an older version** - remove it, **restart Blender**, then install the new version.
 
-## Next Steps
+## Next Steps {#next-steps}
 
-- Read the [Quick Access](Quick-Access) guide for the basics.
-- Browse the [Interface Guides](Home#interface-guides).
-- Check the [FAQ](FAQ) and [Troubleshooting](Troubleshooting) if you run into issues.
+- Read the [Quick Access](./Quick-Access.md) guide for the basics.
+- Browse the [Interface Guides](./Overview.md#interface-guides).
+- Check the [FAQ](./FAQ.md) and [Troubleshooting](./Troubleshooting.md) if you run into issues.
 
 ---
 
-**Need help?** See the [Troubleshooting](Troubleshooting) page, or open an issue on the [repository](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial).
+**Need help?** See the [Troubleshooting](./Troubleshooting.md) page, or open an issue on the [repository](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial).
 
 ---
 

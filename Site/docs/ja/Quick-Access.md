@@ -1,8 +1,8 @@
-# クイックアクセス
+# クイックアクセス {#quick-access}
 
 **Quick Access** パネルは最上部のパネルで、作業の出発点です。最もよく使う操作をまとめています。簡単なメッシュ操作、インポート/エクスポート、**Fix MMD Model**、ポーズモードです。
 
-## パネルのレイアウト（上から下へ）
+## パネルのレイアウト（上から下へ） {#panel-layout-top-to-bottom}
 
 1. **アップデート / バージョンの通知**（該当する場合のみ表示）
 2. **Quick Actions**  Combine Materials、Join All Meshes
@@ -13,7 +13,7 @@
 
 ---
 
-## クイックアクション
+## クイックアクション {#quick-actions}
 
 上部にまとめられた、すばやいワンクリック操作です。
 
@@ -24,11 +24,11 @@
 
 ---
 
-## モデルのインポート
+## モデルのインポート {#import-model}
 
 VRChat のワークフローに適した設定でモデルをインポートします。
 
-### 対応形式
+### 対応形式 {#supported-formats}
 
 - **MMD:** `.pmx`、`.pmd`
 - **XNALara:** `.xps`、`.mesh`、`.ascii`
@@ -45,7 +45,7 @@ VRChat のワークフローに適した設定でモデルをインポートし�
 
 ---
 
-## モデルのエクスポート
+## モデルのエクスポート {#export-model}
 
 - **FBX for Unity** - Unity/VRChat に適したスケール、回転、アーマチュア設定でエクスポートします。
 - **Resonite (glTF)** - Resonite 用に glTF 2.0 でエクスポートします。
@@ -54,7 +54,7 @@ VRChat のワークフローに適した設定でモデルをインポートし�
 
 ---
 
-## Fix MMD Model
+## Fix MMD Model {#fix-mmd-model}
 
 **Fix MMD Model** ボタン（横に **⚙ 設定ギア**があります）は、見つけやすいようここ最上部にあります。**新しくインポートした** MMD/VRM を Unity/VRChat 対応のリグに変換します。
 
@@ -62,11 +62,11 @@ VRChat のワークフローに適した設定でモデルをインポートし�
 
 > 🚫 **これらの警告を無視する場合は自己責任です。** 新しくインポートした MMD/VRM 以外のものに対して Fix MMD Model を実行し、Cats とこの wiki が示すすべての警告を無視した場合、それは完全にあなたの責任です。**それについて issue を開かないでください**。これらの警告へ案内され、即座にクローズされます。
 
-ボタンが行うことすべてとギアの背後の設定を含む詳細は、[Converters](Converters) ページにあります（Fix MMD Model は MMD Cleanup セクションにも表示されます）。
+ボタンが行うことすべてとギアの背後の設定を含む詳細は、[Converters](./Converters.md) ページにあります（Fix MMD Model は MMD Cleanup セクションにも表示されます）。
 
 ---
 
-## ポーズモード
+## ポーズモード {#pose-mode}
 
 アーマチュアを操作するにはポーズモードに入ります。
 
@@ -80,21 +80,21 @@ VRChat のワークフローに適した設定でモデルをインポートし�
 
 ---
 
-## 典型的なワークフロー
+## 典型的なワークフロー {#typical-workflow}
 
 1. モデルを**インポート**します。
 2. 新しくインポートした MMD/VRM の場合は **Fix MMD Model** を実行します。
-3. 名前を**翻訳**します（[Translation](Translation)）。
-4. 最適化し（[Optimization](Optimization)）、[Eye Tracking](Eye-Tracking) と [Visemes](Visemes) を設定します。
+3. 名前を**翻訳**します（[Translation](./Translation.md)）。
+4. 最適化し（[Optimization](./Optimization.md)）、[Eye Tracking](./Eye-Tracking.md) と [Visemes](./Visemes.md) を設定します。
 5. 対象プラットフォーム向けに**エクスポート**します。
 
 ---
 
 **関連ページ:**
-- [Converters](Converters) - Fix MMD Model の詳細、Rigify/Valve/VRM の変換
-- [Optimization](Optimization) - マテリアル、ボーン、頂点の削減
-- [Merge & Attach](Merge-and-Attach) - モデルの結合
-- [Settings](Settings) - エクスポートとモデル修正の挙動
+- [Converters](./Converters.md) - Fix MMD Model の詳細、Rigify/Valve/VRM の変換
+- [Optimization](./Optimization.md) - マテリアル、ボーン、頂点の削減
+- [Merge & Attach](./Merge-and-Attach.md) - モデルの結合
+- [Settings](./Settings.md) - エクスポートとモデル修正の挙動
 
 ---
 

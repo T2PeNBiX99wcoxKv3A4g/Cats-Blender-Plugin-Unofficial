@@ -1,8 +1,8 @@
-# Bone Parenting
+# Bone Parenting {#bone-parenting}
 
 The Bone Parenting panel helps you manage and set up root bones for your armature, which is essential for proper model rigging and animation.
 
-## What is a Root Bone?
+## What is a Root Bone? {#what-is-a-root-bone}
 
 The root bone is the top-level parent bone in your armature hierarchy:
 - All other bones are children of the root (directly or indirectly)
@@ -10,7 +10,7 @@ The root bone is the top-level parent bone in your armature hierarchy:
 - Essential for proper animation
 - Required for VRChat avatars
 
-## Why Root Bones Matter
+## Why Root Bones Matter {#why-root-bones-matter}
 
 A properly set root bone ensures:
 - Correct model behavior in-game
@@ -18,11 +18,11 @@ A properly set root bone ensures:
 - Correct IK (Inverse Kinematics) behavior
 - VRChat compatibility
 
-## Root Bone Selection
+## Root Bone Selection {#root-bone-selection}
 
 The panel displays available bones that can serve as the root bone.
 
-### Choosing a Root Bone
+### Choosing a Root Bone {#choosing-a-root-bone}
 
 **Typically the root bone is:**
 - At the center of the model
@@ -40,9 +40,9 @@ The panel displays available bones that can serve as the root bone.
 
 ---
 
-## Main Actions
+## Main Actions {#main-actions}
 
-### Refresh Root
+### Refresh Root {#refresh-root}
 
 Updates the root bone list and hierarchy information.
 
@@ -57,7 +57,7 @@ Updates the root bone list and hierarchy information.
 2. Wait for the list to update
 3. Review available root bones
 
-### Set Root
+### Set Root {#set-root}
 
 Establishes the selected bone as the root of the armature.
 
@@ -74,9 +74,9 @@ Establishes the selected bone as the root of the armature.
 
 ---
 
-## Workflow
+## Workflow {#workflow}
 
-### Setting Up Root Bone (New Model)
+### Setting Up Root Bone (New Model) {#setting-up-root-bone-new-model}
 
 1. **Import your model**
 2. **Open Bone Parenting panel**
@@ -86,7 +86,7 @@ Establishes the selected bone as the root of the armature.
 6. **Click Set Root**
 7. **Verify hierarchy**
 
-### Fixing Root Bone Issues
+### Fixing Root Bone Issues {#fixing-root-bone-issues}
 
 If your model has incorrect root:
 
@@ -97,9 +97,9 @@ If your model has incorrect root:
 5. **Test animations**
 6. **Save changes**
 
-### After Armature Merging
+### After Armature Merging {#after-armature-merging}
 
-After using [Merge & Attach](Merge-and-Attach):
+After using [Merge & Attach](./Merge-and-Attach.md):
 
 1. **Refresh Root** to update hierarchy
 2. **Check if root is correct**
@@ -108,9 +108,9 @@ After using [Merge & Attach](Merge-and-Attach):
 
 ---
 
-## Use Cases
+## Use Cases {#use-cases}
 
-### Preparing Model for VRChat
+### Preparing Model for VRChat {#preparing-model-for-vrchat}
 
 1. Import model
 2. Fix MMD model (if needed only use on MMD and VRM models)
@@ -118,7 +118,7 @@ After using [Merge & Attach](Merge-and-Attach):
 4. Configure eye tracking and visemes
 5. Export
 
-### Fixing Imported Models
+### Fixing Imported Models {#fixing-imported-models}
 
 Some importers don't set root correctly:
 
@@ -126,7 +126,7 @@ Some importers don't set root correctly:
 2. Animations don't work correctly
 3. **Solution:** Set proper root bone
 
-### After Merging Models
+### After Merging Models {#after-merging-models}
 
 When combining armatures:
 
@@ -134,7 +134,7 @@ When combining armatures:
 2. **Refresh and Set Root** to fix
 3. Ensures clean bone structure
 
-### Creating Custom Rigs
+### Creating Custom Rigs {#creating-custom-rigs}
 
 When building custom rigs:
 
@@ -145,9 +145,9 @@ When building custom rigs:
 
 ---
 
-## Best Practices
+## Best Practices {#best-practices}
 
-### Choosing Root Bone
+### Choosing Root Bone {#choosing-root-bone}
 
 **DO:**
 - ✅ Choose central, main bone
@@ -161,7 +161,7 @@ When building custom rigs:
 - ❌ Pick bones that should move independently
 - ❌ Use arbitrary bones
 
-### When to Refresh
+### When to Refresh {#when-to-refresh}
 
 **Refresh Root after:**
 - Importing models
@@ -170,7 +170,7 @@ When building custom rigs:
 - Duplicating armatures
 - Major hierarchy changes
 
-### After Setting Root
+### After Setting Root {#after-setting-root}
 
 **Always verify:**
 1. Open armature in Edit Mode
@@ -181,9 +181,9 @@ When building custom rigs:
 
 ---
 
-## Common Issues
+## Common Issues {#common-issues}
 
-### Root Bone List is Empty
+### Root Bone List is Empty {#root-bone-list-is-empty}
 
 **Possible causes:**
 - No armature selected
@@ -195,7 +195,7 @@ When building custom rigs:
 - Click Refresh Root
 - Verify armature has bones
 
-### Wrong Bone Appears as Root
+### Wrong Bone Appears as Root {#wrong-bone-appears-as-root}
 
 **Possible causes:**
 - Hierarchy wasn't updated
@@ -208,7 +208,7 @@ When building custom rigs:
 - Click Set Root
 - Verify change took effect
 
-### Animations Break After Setting Root
+### Animations Break After Setting Root {#animations-break-after-setting-root}
 
 **This is rare, but possible:**
 - Some animations might need rebaking
@@ -220,7 +220,7 @@ When building custom rigs:
 - Test animations after change
 - If broken, undo and investigate further
 
-### Can't Set Root on Specific Bone
+### Can't Set Root on Specific Bone {#cant-set-root-on-specific-bone}
 
 **Possible causes:**
 - Bone is locked
@@ -234,9 +234,9 @@ When building custom rigs:
 
 ---
 
-## Understanding Bone Hierarchy
+## Understanding Bone Hierarchy {#understanding-bone-hierarchy}
 
-### How Hierarchies Work
+### How Hierarchies Work {#how-hierarchies-work}
 
 ```
 Root ("Armature" for VRC models) (top level)
@@ -257,7 +257,7 @@ Root ("Armature" for VRC models) (top level)
 - Each bone can have multiple children
 - Root has no parent
 
-### Why Hierarchy Matters
+### Why Hierarchy Matters {#why-hierarchy-matters}
 
 - **Animation:** Children follow parent rotations
 - **IK:** Bone chains need proper hierarchy
@@ -267,10 +267,10 @@ Root ("Armature" for VRC models) (top level)
 ---
 
 **Related Pages:**
-- [Merge & Attach](Merge-and-Attach) - Merging armatures
-- [Optimization](Optimization) - Bone merging tools
-- [Quick Access](Quick-Access) - Model import/export
-- [Troubleshooting](Troubleshooting) - Common bone issues
+- [Merge & Attach](./Merge-and-Attach.md) - Merging armatures
+- [Optimization](./Optimization.md) - Bone merging tools
+- [Quick Access](./Quick-Access.md) - Model import/export
+- [Troubleshooting](./Troubleshooting.md) - Common bone issues
 
 ---
 

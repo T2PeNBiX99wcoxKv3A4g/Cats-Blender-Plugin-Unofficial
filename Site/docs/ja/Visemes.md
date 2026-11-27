@@ -1,8 +1,8 @@
-# Visemes
+# Visemes {#visemes}
 
 Visemes パネルは、VRChat でのリップシンクと表情アニメーションのための viseme シェイプキーを設定するのに役立ちます。
 
-## Viseme とは
+## Viseme とは {#what-are-visemes}
 
 Viseme は、さまざまな発話音に対応する口の形です。これにより、VRChat で話したときにアバターが自動的にリップシンクできるようになります。
 
@@ -11,21 +11,21 @@ VRChat は 3 つの主要な viseme 形状を使用します。
 - **Mouth O（'oh'）:** 'o' と 'u' の音のための丸めた唇
 - **Mouth CH:** 'ch' と 'sh' の音のための、閉じて前に突き出した唇
 
-## 必要条件
+## 必要条件 {#requirements}
 
 - 口の動き用のシェイプキーを持つメッシュ
 - 適切に名前が付けられたシェイプキー（または割り当てられること）
 
-## メッシュの選択
+## メッシュの選択 {#mesh-selection}
 
 シーンに複数のメッシュがある場合:
 - 顔/口を含む**対象のメッシュを選択**します
 - 通常は体または頭のメッシュです
 - メッシュにシェイプキーがある必要があります
 
-## Viseme の設定
+## Viseme の設定 {#viseme-settings}
 
-### プレビューコントロール
+### プレビューコントロール {#preview-controls}
 
 **Preview Visemes:**
 - viseme の形状をリアルタイムでテストします
@@ -42,11 +42,11 @@ VRChat は 3 つの主要な viseme 形状を使用します。
 - Mouth A、Mouth O、Mouth CH を個別にテストします
 - 各形状の微調整に便利です
 
-### シェイプキーの割り当て
+### シェイプキーの割り当て {#shape-key-assignment}
 
 Cats は、どのシェイプキーが各 viseme に対応するかを知る必要があります。
 
-#### Mouth A（'ah' の音）
+#### Mouth A（'ah' の音） {#mouth-a-ah-sound}
 - 開いた口のシェイプキーを選択します
 - 'a'、'e' などの母音に使用されます
 - 通常は最も大きく開いた口です
@@ -57,7 +57,7 @@ Cats は、どのシェイプキーが各 viseme に対応するかを知る必�
 2. メッシュから適切なシェイプキーを選択します
 3. プレビューでテストします
 
-#### Mouth O（'oh' の音）
+#### Mouth O（'oh' の音） {#mouth-o-oh-sound}
 - 丸めた唇のシェイプキーを選択します
 - 'o' と 'u' の音に使用されます
 - 唇が O の形を作ります
@@ -68,7 +68,7 @@ Cats は、どのシェイプキーが各 viseme に対応するかを知る必�
 2. 適切なシェイプキーを選択します
 3. プレビューでテストします
 
-#### Mouth CH
+#### Mouth CH {#mouth-ch}
 - 閉じて前に突き出した唇のシェイプキーを選択します
 - 'ch'、'sh' の音に使用されます
 - 唇は前に押し出されますが、ほぼ閉じています
@@ -79,7 +79,7 @@ Cats は、どのシェイプキーが各 viseme に対応するかを知る必�
 2. 適切なシェイプキーを選択します
 3. プレビューでテストします
 
-### シェイプの強度
+### シェイプの強度 {#shape-intensity}
 
 - viseme 形状の強さ/倍率を調整します
 - 範囲: 通常 0.0 から 2.0
@@ -93,7 +93,7 @@ Cats は、どのシェイプキーが各 viseme に対応するかを知る必�
 3. 自然に見える強度を見つけます
 4. 推奨範囲: 0.8 から 1.2
 
-## 自動 Viseme セットアップ
+## 自動 Viseme セットアップ {#auto-viseme-setup}
 
 **Auto Viseme Setup** 機能は、viseme の自動構成を試みます。
 
@@ -116,11 +116,11 @@ Cats は、どのシェイプキーが各 viseme に対応するかを知る必�
 
 > 💡 **ヒント:** 自動セットアップがすべてを正しく行わなくても、良い出発点になります。後から割り当てを手動で調整できます。
 
-## ワークフロー
+## ワークフロー {#workflow}
 
-### 基本的な Viseme のセットアップ
+### 基本的な Viseme のセットアップ {#basic-viseme-setup}
 
-1. [Quick Access](Quick-Access) を使用して**モデルをインポート**します
+1. [Quick Access](./Quick-Access.md) を使用して**モデルをインポート**します
 2. **Visemes パネルを開きます**
 3. **メッシュを選択します**（複数ある場合）
 4. まず **Auto Viseme Setup** を試します
@@ -132,7 +132,7 @@ Cats は、どのシェイプキーが各 viseme に対応するかを知る必�
    - 強度を調整します
 7. **モデルをエクスポートします**
 
-### 手動での Viseme セットアップ
+### 手動での Viseme セットアップ {#manual-viseme-setup}
 
 自動セットアップが動作しない場合、またはより細かく制御したい場合:
 
@@ -147,9 +147,9 @@ Cats は、どのシェイプキーが各 viseme に対応するかを知る必�
    - プレビューで確認します
    - 必要に応じて強度を調整します
 
-## ヒントとベストプラクティス
+## ヒントとベストプラクティス {#tips-and-best-practices}
 
-### 良い Viseme の作成
+### 良い Viseme の作成 {#creating-good-visemes}
 
 シェイプキーをゼロから作成する場合:
 
@@ -171,7 +171,7 @@ Cats は、どのシェイプキーが各 viseme に対応するかを知る必�
 - 'much' や 'ssh' の語尾のような形
 - わずかにすぼめた形
 
-### Viseme のテスト
+### Viseme のテスト {#testing-visemes}
 
 1. **まず Blender でテストします:**
    - プレビュー機能を使用します
@@ -182,7 +182,7 @@ Cats は、どのシェイプキーが各 viseme に対応するかを知る必�
    - 他の人に見え方を聞きます
    - 必要に応じて調整します
 
-### よくある問題
+### よくある問題 {#common-issues}
 
 **Viseme が控えめすぎる:**
 - Shape Intensity を上げます
@@ -204,9 +204,9 @@ Cats は、どのシェイプキーが各 viseme に対応するかを知る必�
 - シェイプキーの名前を確認します
 - 必要に応じて手動で再割り当てします
 
-## 詳細オプション
+## 詳細オプション {#advanced-options}
 
-### 複数のメッシュ
+### 複数のメッシュ {#multiple-meshes}
 
 アバターに個別のメッシュがある場合:
 - viseme を持つ体のメッシュ
@@ -214,7 +214,7 @@ Cats は、どのシェイプキーが各 viseme に対応するかを知る必�
 - アクティブな viseme を持てるメッシュは 1 つだけです
 - アニメーションさせるメッシュを選択します
 
-### カスタム Viseme システム
+### カスタム Viseme システム {#custom-viseme-systems}
 
 一部のモデルは異なる viseme システムを使用します。
 - 標準の 3 viseme（VRChat のデフォルト）
@@ -223,9 +223,9 @@ Cats は、どのシェイプキーが各 viseme に対応するかを知る必�
 
 Cats は標準の 3 viseme システムをサポートします。
 
-## Viseme システムの説明
+## Viseme システムの説明 {#viseme-systems-explained}
 
-### なぜ 3 つの Viseme なのか
+### なぜ 3 つの Viseme なのか {#why-3-visemes}
 
 VRChat の簡略化されたシステムが 3 つの viseme を使用する理由:
 - リアルタイムのリップシンクに効率的です
@@ -233,25 +233,25 @@ VRChat の簡略化されたシステムが 3 つの viseme を使用する理�
 - 完全な音素システムよりも設定が簡単です
 - 音声認識と相性が良いです
 
-### VRChat での動作
+### VRChat での動作 {#how-it-works-in-vrchat}
 
 1. VRChat が音声入力を分析します
 2. どの音を発しているかを判断します
 3. 適切な viseme シェイプキーを有効にします
 4. 滑らかなアニメーションのために形状間をブレンドします
 
-## Oculus Viseme リファレンス
+## Oculus Viseme リファレンス {#oculus-viseme-reference}
 
 viseme の実装に関するより詳細な情報:
 - [Oculus 公式 Viseme リファレンス](https://developer.oculus.com/documentation/unreal/audio-ovrlipsync-viseme-reference/)
 
 ---
 
-## 他のツールとの統合
+## 他のツールとの統合 {#integration-with-other-tools}
 
-### マテリアルの結合後
+### マテリアルの結合後 {#after-material-combining}
 
-> ⚠ **重要:** マテリアルを結合してアトラスを作成した**後**に visemes を設定してください。旧 Material Combiner アドオンは、viseme 設定後に実行するとシェイプキーがずれる可能性がありました。内蔵の [Atlas Generator](Optimization#atlas-generator) はマテリアルと UV のみを変更しますが、同じ順序を守ってください。
+> ⚠ **重要:** マテリアルを結合してアトラスを作成した**後**に visemes を設定してください。旧 Material Combiner アドオンは、viseme 設定後に実行するとシェイプキーがずれる可能性がありました。内蔵の [Atlas Generator](./Optimization.md#atlas-generator) はマテリアルと UV のみを変更しますが、同じ順序を守ってください。
 
 **推奨する順序:**
 1. モデルをインポートします
@@ -261,9 +261,9 @@ viseme の実装に関するより詳細な情報:
 5. アイトラッキングを設定します
 6. エクスポートします
 
-### アイトラッキングとの関係
+### アイトラッキングとの関係 {#with-eye-tracking}
 
-visemes と [Eye Tracking](Eye-Tracking) は連携して動作します。
+visemes と [Eye Tracking](./Eye-Tracking.md) は連携して動作します。
 - どちらもシェイプキーを使用します
 - 独立して設定できます
 - 設定後に両方をテストします
@@ -272,10 +272,10 @@ visemes と [Eye Tracking](Eye-Tracking) は連携して動作します。
 ---
 
 **関連ページ:**
-- [Eye Tracking](Eye-Tracking) - 目の動きの設定
-- [Quick Access](Quick-Access) - インポート/エクスポート
-- [Shape Keys](Optimization#shape-keys) - シェイプキーツール
-- [Troubleshooting](Troubleshooting) - よくある問題
+- [Eye Tracking](./Eye-Tracking.md) - 目の動きの設定
+- [Quick Access](./Quick-Access.md) - インポート/エクスポート
+- [Shape Keys](./Optimization.md#shape-keys) - シェイプキーツール
+- [Troubleshooting](./Troubleshooting.md) - よくある問題
 
 ---
 

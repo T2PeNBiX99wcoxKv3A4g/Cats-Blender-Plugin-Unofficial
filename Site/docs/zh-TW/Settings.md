@@ -1,12 +1,12 @@
-# 設定
+# 設定 {#settings}
 
 設定與更新面板提供 Cats Blender Plugin 的組態選項與更新管理。
 
-## 一般設定
+## 一般設定 {#general-settings}
 
-### 匯出選項
+### 匯出選項 {#export-options}
 
-#### 內嵌貼圖
+#### 內嵌貼圖 {#embed-textures}
 - 將貼圖直接包含在匯出的檔案中
 - 增加檔案大小
 - 自包含的匯出檔
@@ -24,7 +24,7 @@
 - 在 Unity 中分開管理貼圖
 - 更好的資源組織
 
-#### 移除剛體／關節
+#### 移除剛體／關節 {#remove-rigidbodiesjoints}
 - 在匯出期間清理物理
 - 移除 MMD 物理資料
 - 降低檔案複雜度
@@ -39,7 +39,7 @@
 - 需要保留物理
 - 在目標應用程式中使用物理
 
-#### 匯出翻譯 CSV
+#### 匯出翻譯 CSV {#export-translation-csv}
 - 在匯出期間產生翻譯檔
 - 建立含名稱對應的 CSV
 - 自 `5.2.4.0` 起包含 **source** 欄位：字典、MMD 作者名稱或線上服務
@@ -55,7 +55,7 @@
 - 不需要翻譯紀錄
 - 縮短匯出時間
 
-#### 自訂匯出目錄
+#### 自訂匯出目錄 {#custom-export-directory}
 - 設定偏好的匯出儲存位置
 - 記住你的選擇
 - 更快的工作流程
@@ -69,20 +69,20 @@
 
 ---
 
-## 語言設定
+## 語言設定 {#language-settings}
 
-### 介面語言
+### 介面語言 {#interface-language}
 
 Cats 的介面支援多種語言。
 
-#### 可用語言
+#### 可用語言 {#available-languages}
 
 - **英文（en_US）** - 預設
 - **日文（ja_JP）**
 - **韓文（ko_KR）**
 - 其他社群提供翻譯的語言
 
-#### 變更語言
+#### 變更語言 {#changing-language}
 
 1. 從下拉選單選擇語言
 2. 約兩秒後 Cats 會重新載入自己（僅 Cats，不會影響你的其他外掛）
@@ -90,7 +90,7 @@ Cats 的介面支援多種語言。
 
 不需要重新啟動 Blender。若標籤沒有改變，請重新啟動 Blender。
 
-#### 自訂語言檔
+#### 自訂語言檔 {#custom-language-files}
 
 Cats 支援自訂翻譯檔：
 - 內附的檔案位於擴充功能內的 `resources/translations/`；**Download Latest Translations** 會將較新的副本存到 Cats [使用者資料資料夾](#settings-file-location)中的 `translations` 資料夾，且會優先使用這些檔案
@@ -99,7 +99,7 @@ Cats 支援自訂翻譯檔：
 - 社群可以貢獻翻譯
 - 輕鬆加入新語言
 
-### 翻譯管理
+### 翻譯管理 {#translation-management}
 
 **翻譯檔結構：**
 - 每種語言有一個 JSON 檔
@@ -109,11 +109,11 @@ Cats 支援自訂翻譯檔：
 
 ---
 
-## 除錯選項
+## 除錯選項 {#debug-options}
 
-### 維護工具
+### 維護工具 {#maintenance-tools}
 
-#### 重設 Google 字典
+#### 重設 Google 字典 {#reset-google-dictionary}
 - 清除快取的 Google 翻譯資料
 - 若翻譯不正確時很有用
 - 強制重新翻譯
@@ -130,13 +130,13 @@ Cats 支援自訂翻譯檔：
 2. 確認動作
 3. 字典快取已清除
 
-#### 翻譯除錯（開發分支）
+#### 翻譯除錯（開發分支） {#translation-debugging-dev-branch}
 - 在開發分支中提供
 - 顯示翻譯過程的細節
 - 有助於找出翻譯問題
 - 供進階使用者／開發者使用
 
-#### 系統快取清理
+#### 系統快取清理 {#system-cache-cleanup}
 - 清除各種快取資料
 - 重設暫存檔案
 - 可協助解決奇怪的狀況
@@ -147,7 +147,7 @@ Cats 支援自訂翻譯檔：
 - 更新之後
 - 疑難排解無法解釋的問題
 
-#### 組態重設選項
+#### 組態重設選項 {#configuration-reset-options}
 - 還原預設設定
 - 清除自訂組態
 - 回到全新安裝的狀態
@@ -157,11 +157,11 @@ Cats 支援自訂翻譯檔：
 
 ---
 
-## 更新管理
+## 更新管理 {#update-management}
 
-### 版本控制
+### 版本控制 {#version-control}
 
-#### 更新通知
+#### 更新通知 {#update-notifications}
 - 自動檢查新版本
 - 有更新可用時顯示
 - 顯示於外掛介面中
@@ -172,7 +172,7 @@ Cats 支援自訂翻譯檔：
 - 設定檢查頻率
 - 選擇通知樣式
 
-#### 自動更新檢查
+#### 自動更新檢查 {#automatic-update-checks}
 - Cats 載入時在背景執行一次
 - 檢查 [GitHub](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/releases) 上的發行版
 - 與已安裝的版本進行比對
@@ -188,28 +188,28 @@ Cats 支援自訂翻譯檔：
 
 > **需要 Blender 的線上存取。** Cats 只在 **Edit > Preferences > System > Network > Allow Online Access** 開啟時才會檢查更新。關閉時，自動檢查會被無聲略過，而 **Check for Updates** 會顯示訊息告知你線上存取已停用。
 
-#### 版本相容性資訊
+#### 版本相容性資訊 {#version-compatibility-info}
 - 顯示 Blender 版本是否受支援
 - 對不相容的版本提出警告
 - 建議正確的版本
 - 避免安裝問題
 
-#### 發行說明存取
+#### 發行說明存取 {#release-notes-access}
 - 檢視更新的變更紀錄
 - 查看新功能
 - 了解錯誤修正
 - 從更新通知中存取
 
-### 管理更新
+### 管理更新 {#managing-updates}
 
-#### 手動檢查更新
+#### 手動檢查更新 {#checking-for-updates-manually}
 
 1. 開啟設定面板
 2. 點擊 **Check for Updates**
 3. 等待檢查完成
 4. 若有更新可用，依照提示操作
 
-#### 安裝更新
+#### 安裝更新 {#installing-updates}
 
 1. 從提供的連結下載新版本
 2. 關閉 Blender
@@ -223,7 +223,7 @@ Cats 支援自訂翻譯檔：
 
 > 📝 **注意：** 在移除舊版本與安裝新版本之間，務必重新啟動 Blender，以獲得最乾淨的安裝。
 
-#### 瞭解版本號
+#### 瞭解版本號 {#understanding-version-numbers}
 
 Cats 使用三部分的語意化版本編號：
 
@@ -237,13 +237,13 @@ Cats 使用三部分的語意化版本編號：
 - `5.4.0` - 加入文件網站的發行版
 - `5.5.0` - 在網站上加入所有 UI 語言的發行版
 
-各發行版支援哪些 Blender 版本，請見[版本支援](Version-Support)。
+各發行版支援哪些 Blender 版本，請見[版本支援](./Version-Support.md)。
 
 ---
 
-## 設定最佳實務
+## 設定最佳實務 {#settings-best-practices}
 
-### 匯出設定
+### 匯出設定 {#export-settings}
 
 **建議用於 VRChat：**
 - ❌ 內嵌貼圖：關閉（在 Unity 中處理）
@@ -257,7 +257,7 @@ Cats 使用三部分的語意化版本編號：
 - ✅ 匯出翻譯 CSV：開啟（文件紀錄）
 - ✅ 自訂匯出目錄：設為匯出資料夾
 
-### 更新設定
+### 更新設定 {#update-settings}
 
 **建議：**
 - ✅ 啟用自動更新檢查
@@ -265,7 +265,7 @@ Cats 使用三部分的語意化版本編號：
 - ✅ 更新前閱讀發行說明
 - ✅ 重大更新前保留備份
 
-### 語言設定
+### 語言設定 {#language-settings-1}
 
 **獲得最佳體驗：**
 - 若你覺得自在就使用英文（大多數文件為英文）
@@ -275,9 +275,9 @@ Cats 使用三部分的語意化版本編號：
 
 ---
 
-## 設定疑難排解
+## 設定疑難排解 {#troubleshooting-settings}
 
-### 設定沒有儲存
+### 設定沒有儲存 {#settings-not-saving}
 
 **可能原因：**
 - 權限問題
@@ -290,7 +290,7 @@ Cats 使用三部分的語意化版本編號：
 - 手動儲存 Blender 偏好設定
 - 必要時重新安裝
 
-### 更新沒有顯示
+### 更新沒有顯示 {#updates-not-showing}
 
 **可能原因：**
 - Blender 的 **Allow Online Access** 已關閉
@@ -308,7 +308,7 @@ Cats 使用三部分的語意化版本編號：
 - 暫時停用 VPN
 - 檢查系統主控台：`URL ERROR` 表示 Cats 無法連上更新伺服器，或其憑證不受信任
 
-### 語言沒有改變
+### 語言沒有改變 {#language-not-changing}
 
 **可能原因：**
 - Cats 的自動重新載入失敗（請在系統主控台檢查 `Cats reload failed`）
@@ -321,7 +321,7 @@ Cats 使用三部分的語意化版本編號：
 - 再次點擊 **Download Latest Translations**，或視需要重新安裝
 
 ---
-## 設定檔位置
+## 設定檔位置 {#settings-file-location}
 
 Cats 會將設定保存在自己的使用者資料資料夾中，在 Cats 更新後仍會保留。它是 Blender `extensions/.user` 目錄下的擴充功能資料夾（從磁碟安裝時，儲存庫部分通常是 `user_default`）：
 - Windows：`%APPDATA%\Blender Foundation\Blender\5.x\extensions\.user\user_default\cats_blender_plugin\`
@@ -339,7 +339,7 @@ Cats 會將設定保存在自己的使用者資料資料夾中，在 Cats 更新
 
 ---
 
-## 與 Blender 偏好設定的整合
+## 與 Blender 偏好設定的整合 {#integration-with-blender-preferences}
 
 Cats 會遵循 Blender 的偏好設定：
 - 檔案路徑
@@ -351,7 +351,7 @@ Cats 載入時**不會**變更你的 Blender 偏好設定。較舊的版本會�
 
 ---
 
-## 需要重新啟動的變更
+## 需要重新啟動的變更 {#changes-requiring-restart}
 
 有些設定需要重新啟動 Blender：
 - ❌ 語言變更（Cats 會重新載入自己）
@@ -362,10 +362,10 @@ Cats 載入時**不會**變更你的 Blender 偏好設定。較舊的版本會�
 ---
 
 **相關頁面：**
-- [安裝](Installation) - 安裝 Cats
-- [快速存取](Quick-Access) - 使用匯出功能
-- [疑難排解](Troubleshooting) - 常見問題
-- [常見問題](FAQ) - 常見問答
+- [安裝](./Installation.md) - 安裝 Cats
+- [快速存取](./Quick-Access.md) - 使用匯出功能
+- [疑難排解](./Troubleshooting.md) - 常見問題
+- [常見問題](./FAQ.md) - 常見問答
 
 ---
 

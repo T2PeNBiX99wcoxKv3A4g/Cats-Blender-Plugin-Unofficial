@@ -1,10 +1,10 @@
-# 縮放
+# 縮放 {#scaling}
 
 縮放面板會為 VRChat 等 VR 平台重新縮放虛擬角色的比例與身高。它內建於 Cats，因此不需要額外安裝任何東西。
 
 > 📝 **取代 Immersive Scaler。** 較早版本的 Cats 需要另外安裝 Immersive Scaler 外掛。外部的 Immersive Scaler 已不再維護，因此 Cats 現在內建以它為基礎的縮放工具。工具、設定與結果都與 Immersive Scaler 相同。如果你仍安裝著 Immersive Scaler，可以將它移除：Cats 已不再使用它。
 
-## 概觀
+## 概觀 {#overview}
 
 正確的虛擬角色縮放對 VR 體驗至關重要：
 - 確保在 VR 中觀看舒適
@@ -14,7 +14,7 @@
 
 有別於單純調整模型大小，此縮放工具調整的是**比例**：它把需要的變化量分攤到手臂與腿之間、控制肢體粗細、把虛擬角色移到地板上，然後縮放到你的目標身高。骨架與網格會一起改變，包含形態鍵。
 
-## 需求
+## 需求 {#requirements}
 
 - 在 Cats 的骨架下拉選單中選取的人形骨架（或設為作用中的物件）
 - 可辨識的肩膀、手臂、手肘、手腕、腿、膝蓋、腳踝與眼睛骨骼。常見的命名方式（VRChat／Unity、**Fix Model** 後的 MMD、`Left arm`、`UpperArm.L`、`Thigh_R` 等）會自動偵測。若找不到某根骨骼，請用[骨骼覆寫](#bone-overrides)手動設定。
@@ -23,7 +23,7 @@
 
 ---
 
-## 虛擬角色重新縮放
+## 虛擬角色重新縮放 {#avatar-rescale}
 
 主要區塊。設定數值後，點擊 **Rescale Armature**。
 
@@ -41,7 +41,7 @@
 
 這在你想保持某個數值不變、只改變其他數值時很方便。
 
-### 自訂
+### 自訂 {#customization}
 
 展開 **Customization** 以進行更細部的控制：
 
@@ -54,7 +54,7 @@
 | **Scale to Eyes** | Off | 讓 **Target Height** 變成眼睛高度，而非頭頂高度。 |
 | **Show bone mapping** | Off | 顯示[骨骼覆寫](#bone-overrides)區塊。 |
 
-### 核心功能切換
+### 核心功能切換 {#core-functionality-toggle}
 
 展開 **Core functionality toggle** 可關閉個別步驟。主要用於疑難排解：
 
@@ -66,7 +66,7 @@
 
 ---
 
-## 手指張開
+## 手指張開 {#finger-spreading}
 
 旋轉手指骨骼使它們從手腕向外張開，搭配 VRChat 的手指追蹤與手勢時能讓手看起來更好。
 
@@ -78,13 +78,13 @@
 
 ---
 
-## 髖部修正（beta）
+## 髖部修正（beta） {#hip-fix-beta}
 
 **Shrink Hip bone** 會把髖部骨骼移得離脊椎近得多。有些模型的髖部骨骼非常長，在全身追蹤時會嚴重彎折。這是 beta 功能，匯出前請檢查結果。
 
 ---
 
-## 骨骼覆寫
+## 骨骼覆寫 {#bone-overrides}
 
 當在自訂中勾選 **Show bone mapping** 時顯示。每一列是縮放工具會使用的一根骨骼：雙側的肩膀、手臂、手肘、手腕、腿、膝蓋、腳踝、腳趾與眼睛，以及頸部、頭部、髖部、脊椎、胸部與上胸部，再加上每根手指骨骼（供[手指張開](#finger-spreading)使用）。點擊某一列上的按鈕，即可從可搜尋的清單中挑選對應的骨骼。
 
@@ -92,7 +92,7 @@
 
 ---
 
-## 比例比對
+## 比例比對 {#scale-matching}
 
 僅在場景中有**超過一個骨架**時顯示。它會將一個骨架的比例縮放成與另一個相符，例如讓服裝骨架與身體相符：
 
@@ -102,9 +102,9 @@
 
 ---
 
-## 基本工作流程
+## 基本工作流程 {#basic-workflow}
 
-1. 使用[快速存取](Quick-Access)**匯入你的模型**
+1. 使用[快速存取](./Quick-Access.md)**匯入你的模型**
 2. 若為 MMD／VRM 模型則**修復模型**
 3. 開啟**縮放**面板
 4. 設定 **Target Height**（或點擊箭頭以保持目前身高）
@@ -116,9 +116,9 @@
 
 ---
 
-## 最佳實務
+## 最佳實務 {#best-practices}
 
-### 建議的虛擬角色身高
+### 建議的虛擬角色身高 {#recommended-avatar-heights}
 
 **適用於 VRChat：**
 
@@ -137,7 +137,7 @@
 - 平均：社交互動最舒適
 - 請考量你的虛擬角色類型與使用情境
 
-### 何時該縮放
+### 何時該縮放 {#when-to-scale}
 
 **在下列事項之前縮放：**
 - 設定眼動追蹤
@@ -151,7 +151,7 @@
 - 修復 MMD 模型
 - 基本網格清理
 
-### 測試縮放
+### 測試縮放 {#testing-scale}
 
 **在 VRChat 中：**
 - 在定案前先於遊戲中測試
@@ -161,17 +161,17 @@
 
 ---
 
-## 常見縮放問題
+## 常見縮放問題 {#common-scale-issues}
 
-### 按鈕呈現灰色
+### 按鈕呈現灰色 {#buttons-are-greyed-out}
 
 找不到骨架。請在 Cats 的骨架下拉選單中選取虛擬角色的骨架，或在視埠中點擊它使其成為作用中的物件。
 
-### 回報某根骨骼遺失，或結果看起來扭曲
+### 回報某根骨骼遺失，或結果看起來扭曲 {#a-bone-is-reported-missing-or-the-result-looks-twisted}
 
 縮放工具找不到某根骨骼，或挑到了錯誤的骨骼。請在自訂中勾選 **Show bone mapping**，並在[骨骼覆寫](#bone-overrides)中設定該骨骼。
 
-### 虛擬角色在 VRChat 中大小不對
+### 虛擬角色在 VRChat 中大小不對 {#avatar-appears-wrong-size-in-vrchat}
 
 **可能原因：**
 - 在 Blender 中縮放錯誤
@@ -183,7 +183,7 @@
 - 在 Cats 中使用正確的匯出設定
 - 檢查 Unity 的匯入縮放（FBX 應為 1.0）
 
-### 縮放後比例看起來不對
+### 縮放後比例看起來不對 {#proportions-look-wrong-after-scaling}
 
 **可能原因：**
 - 在使用縮放工具前已手動調整過模型大小
@@ -197,18 +197,18 @@
 
 ---
 
-## 整合注意事項
+## 整合注意事項 {#integration-notes}
 
-### 與最佳化的搭配
+### 與最佳化的搭配 {#with-optimization}
 
 在最佳化之前或之後縮放皆可：
-- 不會顯著影響[最佳化](Optimization)工具
+- 不會顯著影響[最佳化](./Optimization.md)工具
 - 骨骼合併在任何縮放下都能運作
 - 圖集建立在任何縮放下都能運作
 
-### 與匯出的搭配
+### 與匯出的搭配 {#with-export}
 
-使用[快速存取](Quick-Access)匯出：
+使用[快速存取](./Quick-Access.md)匯出：
 - Cats 會正確處理縮放
 - FBX 匯出會維持縮放
 - 不需要額外設定
@@ -216,9 +216,9 @@
 ---
 
 **相關頁面：**
-- [快速存取](Quick-Access) - 匯入／匯出
-- [合併與附加](Merge-and-Attach) - 合併模型
-- [疑難排解](Troubleshooting) - 縮放問題
+- [快速存取](./Quick-Access.md) - 匯入／匯出
+- [合併與附加](./Merge-and-Attach.md) - 合併模型
+- [疑難排解](./Troubleshooting.md) - 縮放問題
 
 **外部資源：**
 - [VRChat Avatar Scaling Guidelines](https://docs.vrchat.com/docs/avatar-scaling)

@@ -1,4 +1,4 @@
-# Optimization
+# Optimization {#optimization}
 
 The **Optimization** panel provides tools for reducing your model's complexity and improving performance. It's a container with sub-panels grouped by what they act on:
 
@@ -12,7 +12,7 @@ The **Optimization** panel provides tools for reducing your model's complexity a
 
 > 📝 **Since `5.3.1.0` the Material Combiner integration is gone.** The *Atlas Generator (Legacy)* sub-panel has been removed and the built-in tool, previously *Atlas Generator (New)*, is now simply **Atlas Generator**.
 
-## Table of Contents
+## Table of Contents {#table-of-contents}
 - [Materials](#materials)
 - [Mesh Cleanup](#mesh-cleanup)
 - [Shape Keys](#shape-keys)
@@ -23,11 +23,11 @@ The **Optimization** panel provides tools for reducing your model's complexity a
 
 ---
 
-## Materials
+## Materials {#materials}
 
 Tools for optimizing the materials and textures on your model.
 
-### Combine Materials
+### Combine Materials {#combine-materials}
 Merges multiple materials into fewer materials:
 - Reduces draw calls
 - Improves performance
@@ -40,7 +40,7 @@ Merges multiple materials into fewer materials:
 2. Click **Combine Materials**
 3. Materials with the same properties will be merged
 
-### Convert All to PNG
+### Convert All to PNG {#convert-all-to-png}
 Converts all textures in your model to PNG format:
 - Ensures maximum compatibility across platforms
 - Maintains alpha channels
@@ -54,11 +54,11 @@ Converts all textures in your model to PNG format:
 
 ---
 
-## Mesh Cleanup
+## Mesh Cleanup {#mesh-cleanup}
 
 Everything that reshapes or tidies up mesh objects.
 
-### Join Meshes
+### Join Meshes {#join-meshes}
 
 **All:**
 - Combines all meshes into one object
@@ -77,7 +77,7 @@ Everything that reshapes or tidies up mesh objects.
 2. Click the appropriate join button
 3. Meshes will be combined
 
-### Separate By
+### Separate By {#separate-by}
 
 Split a mesh into multiple objects.
 
@@ -87,7 +87,7 @@ Split a mesh into multiple objects.
 
 > ⚠ Separation isn't always easy to undo, save first.
 
-### Remove Doubles
+### Remove Doubles {#remove-doubles}
 Eliminates duplicate vertices in your mesh:
 - Adjustable threshold for precise control
 - Reduces vertex count
@@ -100,12 +100,12 @@ Eliminates duplicate vertices in your mesh:
 3. Click **Remove Doubles**
 4. Duplicate vertices within the threshold will be merged
 
-### Normals
+### Normals {#normals}
 
 - **Recalculate** - fixes inside-out faces and shading issues by making face directions consistent. This is the one you usually want (after mesh edits, boolean ops, or import shading problems).
 - **Flip** - inverts *all* normals. Only use this if the entire mesh is inside-out.
 
-### Transforms
+### Transforms {#transforms}
 
 **Apply Transformations** bakes an object's position, rotation and scale into the mesh and resets the transform to defaults. Important **before merging models** and **before creating shape keys** and after scaling.
 
@@ -113,7 +113,7 @@ The small button beside it applies transforms to **all** objects at once.
 
 > ⚠ Applying transforms can't be easily undone, save first.
 
-### When to Use Each Feature
+### When to Use Each Feature {#when-to-use-each-feature}
 
 - **Join Meshes:** For final optimization before export
 - **Separate By:** When you need to isolate part of a model
@@ -125,13 +125,13 @@ The small button beside it applies transforms to **all** objects at once.
 
 ---
 
-## Shape Keys
+## Shape Keys {#shape-keys}
 
 - **Remove Unused Shapekeys** - removes shape keys that don't actually deform the mesh, reducing file size.
 - **Repair Broken Shapekeys** - undoes a bogus offset that some Blender operations bake into *every* shape key at once. See below.
 - **Optimize Static Shapekeys** - keeps only the vertices a shape key actually moves, significantly reducing file size. Safe and recommended before export.
 
-### Repair Broken Shapekeys, in detail
+### Repair Broken Shapekeys, in detail {#repair-broken-shapekeys-in-detail}
 
 Certain Blender operations leave every non-basis shape key displaced by the same wrong amount, so the mesh jumps to a strange pose the moment *any* key is dialled above zero.
 
@@ -143,7 +143,7 @@ The tool works out that common offset by comparing all the non-basis keys vertex
 
 > 💡 It needs at least one non-basis shape key to compare against. On a mesh with only a Basis it does nothing and says so.
 
-### Preparing for VRChat upload
+### Preparing for VRChat upload {#preparing-for-vrchat-upload}
 
 1. Remove Unused Shapekeys
 2. Optimize Static Shapekeys
@@ -152,13 +152,13 @@ The tool works out that common offset by comparing all the non-basis keys vertex
 
 ---
 
-## Bones & Weights
+## Bones & Weights {#bones-weights}
 
 The Bones & Weights sub-panel (formerly "Mesh & Bone Cleanup" and "Bone Merging" before that) provides advanced tools for optimizing your avatar's armature and reducing bone count.
 
-### Merge Bones
+### Merge Bones {#merge-bones}
 
-#### Merge Options
+#### Merge Options {#merge-options}
 
 **Merge Mesh:**
 - Available when multiple meshes are present
@@ -176,7 +176,7 @@ The Bones & Weights sub-panel (formerly "Mesh & Bone Cleanup" and "Bone Merging"
 - Lower values are more conservative
 - Recommended: Start with 0.5 and adjust
 
-#### Primary Actions
+#### Primary Actions {#primary-actions}
 
 **Refresh Root:**
 - Updates root bone references
@@ -190,7 +190,7 @@ The Bones & Weights sub-panel (formerly "Mesh & Bone Cleanup" and "Bone Merging"
 - Redistributes weights intelligently
 - Reduces overall bone count
 
-### Merge Weights
+### Merge Weights {#merge-weights}
 
 **To Parents:**
 - Combines all weight groups
@@ -204,7 +204,7 @@ The Bones & Weights sub-panel (formerly "Mesh & Bone Cleanup" and "Bone Merging"
 - Maintains weight influence
 - Use for selective optimization
 
-#### Additional Options
+#### Additional Options {#additional-options}
 
 **Keep Merged Bones:**
 - Retains merged bones as backup
@@ -218,7 +218,7 @@ The Bones & Weights sub-panel (formerly "Mesh & Bone Cleanup" and "Bone Merging"
 - Maintains hidden backups
 - Good for iterative workflow
 
-### Delete
+### Delete {#delete}
 
 **Zero Weight Bones:**
 - Deletes bones with no weight influence
@@ -256,7 +256,7 @@ The Bones & Weights sub-panel (formerly "Mesh & Bone Cleanup" and "Bone Merging"
 - Ensures hidden bones remain unaffected
 - Use when you have helper bones
 
-### Bone Tools
+### Bone Tools {#bone-tools}
 
 **Duplicate Bones:**
 - Creates copies of selected bones
@@ -272,9 +272,9 @@ The Bones & Weights sub-panel (formerly "Mesh & Bone Cleanup" and "Bone Merging"
 
 > ⚠ Connecting a bone is **not** cosmetic. Blender snaps the bone's head onto its parent's tail, which moves the bone. That is why Cats only connects the cases where nothing has to move, connecting everything would drag both arms and both legs into the middle of the spine.
 
-> The digitigrade-leg and twist-bone *generation* tools are not here, they have their own [Bone Tools](Bone-Tools) panel.
+> The digitigrade-leg and twist-bone *generation* tools are not here, they have their own [Bone Tools](./Bone-Tools.md) panel.
 
-### Best Practices
+### Best Practices {#best-practices}
 
 1. **Always start with a backup** - Bone merging significantly modifies your armature
 2. **Test merge ratios** - Try different values on a copy first
@@ -283,7 +283,7 @@ The Bones & Weights sub-panel (formerly "Mesh & Bone Cleanup" and "Bone Merging"
 5. **Keep twist bones** - Unless you're absolutely sure you don't need them
 6. **Refresh root after changes** - Keep bone hierarchy up to date
 
-### Workflow Example
+### Workflow Example {#workflow-example}
 
 1. Start with **Merge Ratio** at 0.5
 2. Enable **Keep Merged Bones** for safety
@@ -297,7 +297,7 @@ The Bones & Weights sub-panel (formerly "Mesh & Bone Cleanup" and "Bone Merging"
 
 ---
 
-## Atlas Generation
+## Atlas Generation {#atlas-generation}
 
 A texture atlas combines many textures into one larger texture so that many materials can become one. That:
 - Reduces draw calls significantly
@@ -320,7 +320,7 @@ Cats has one atlas sub-panel under Optimization, the built-in **Atlas Generator*
 
 > 🧪 **The tool is still marked alpha.** It works end to end and is tested, but check the result before you export, keep a backup and please report anything odd. Undo works and the original materials stay in the file.
 
-### Atlas Generator
+### Atlas Generator {#atlas-generator}
 
 The built-in atlas tool. It needs no extra add-ons and no Pillow: everything runs on numpy, which ships with Blender, so there is no installer, no admin prompt and no restart.
 
@@ -330,7 +330,7 @@ Every build gets names nothing in the file uses yet. If `Cats_Atlas_01` already 
 
 Objects that share one mesh (linked duplicates made with Alt+D) are handled once per mesh, so their shared UVs are only rewritten once.
 
-#### Materials
+#### Materials {#materials-1}
 
 Click **Generate Material List** (later **Update Material List**) to list every mesh in the scene with its materials. Each material row has:
 
@@ -346,7 +346,7 @@ Click a row to see its per-material settings below the list:
 
 Refreshing the list keeps your ticks and layers. A previous run's `Cats_Atlas_Mat_*` material is listed but unticked by default, so rebuilding does not atlas the last atlas.
 
-#### Atlas Settings
+#### Atlas Settings {#atlas-settings}
 
 - **Atlas Size**: how the packed size is rounded. **Power of 2** (default, what VRChat and Unity want), **Quadratic** (square), **Automatic** (exact packed size), **Custom** and **Strict Custom**
 - **Max Width** / **Max Height**: the atlas never exceeds this. Cells are shrunk proportionally to fit. Default 4096
@@ -358,7 +358,7 @@ Refreshing the list keeps your ticks and layers. A previous run's `Cats_Atlas_Ma
 - **Remap All UV Maps**: rewrite every UV map, not only the one the texture samples. Off by default, secondary UV maps on an avatar usually carry something else
 - **Remove Original Materials**: drop the material slots the atlas made unused. On by default. The material datablocks stay in the file until you purge, so a wrong build is recoverable by hand as well as by Undo
 
-#### Maps
+#### Maps {#maps}
 
 Albedo is always generated. Tick any of **Normal**, **Emission**, **Roughness**, **Metallic**, **Ambient Occlusion** and **Height** to generate those too, from the same layout, each with the correct colour space (sRGB for albedo and emission, Non-Color for the rest). Normal and emission are on by default.
 
@@ -375,7 +375,7 @@ In the generated material, normal is wired through a Normal Map node, emission g
 
 The material copies the surface settings (roughness, metallic, specular, IOR, coat and sheen) of the first included material that uses a Principled BSDF, so the atlassed model shades like the original. If none does (MMD, toon or MToon shaders), it is diffuse-only with no specular, which matches how those shaders look and how Fix MMD Model sets up its export shader.
 
-#### Baking
+#### Baking {#baking}
 
 For materials whose **Bake** toggle is on, Cats renders each enabled map with Cycles instead of copying a texture. A procedural, layered or vertex-coloured material has no single image to copy, but it can be rendered.
 
@@ -392,34 +392,34 @@ Every render setting the bake touches (engine, bake output target, samples, devi
 
 > ⚠ **Baking uses the material's existing UV layout.** Mirrored geometry is fine: overlapping islands mean last-write-wins, which is what you want there. Genuinely overlapping but *different* islands will fight over the same pixels; the panel shows this caveat whenever any material has Bake on.
 
-#### Output
+#### Output {#output}
 
 - **Save Atlas**: **Pack into .blend** (default) or **Save to Folder**, which writes each map as PNG into **Folder**. An existing file is never overwritten, a `_2`, `_3`… suffix is added instead. If the folder is empty or cannot be written the build still succeeds and warns; the images are packed into the .blend instead so they are not lost
 - **Import Material Combiner Settings**: shown only while the Material Combiner add-on is still installed, to help you move over. Copies its atlas size, dimensions, crop, pixel-art, colour size and save path, plus its per-material settings and your material ticks and layers, into the Atlas Generator. Its packer choice is not carried (there is one packer) and its **Gaps** value is copied into **Padding** even though the two mean different things; the operator reports both
 
-#### Building
+#### Building {#building}
 
 - **Preview Result**: packs without writing anything and reports, per layer, how many materials went into how many cells, the atlas size and the fill percentage
 - **Create Atlas**: builds. The report line reads, for example, `Layer 1: 10 materials packed into 3 cells, 2048x1024, 96% filled, 2 maps`
 
 If every ticked material on a layer turns out to share one texture, there is nothing to pack, so Cats simply merges them into one material at the texture's own size and says so. A layer with only one ticked material is an error: there is nothing to combine.
 
-#### Known Limitations (alpha)
+#### Known Limitations (alpha) {#known-limitations-alpha}
 
 - The output is always a plain Principled BSDF. MMD toon and sphere shading, MToon and other shader-specific looks are not preserved; the atlas is meant to go to Unity through FBX
 - Out-of-range UVs are handled per material, not per island: a material with one island at 0–1 and another at 5–6 gets a six-tile-wide cell. Rare and **Max Tiling** caps it
 - The **Custom** size mode currently behaves the same as **Automatic**
 - The preview does not account for **Bake Size**
 
-#### Ordering
+#### Ordering {#ordering}
 
-Atlas **before** eye tracking and visemes. Atlassing changes materials and UVs, not shape keys, but the workflow in the [FAQ](FAQ) still applies.
+Atlas **before** eye tracking and visemes. Atlassing changes materials and UVs, not shape keys, but the workflow in the [FAQ](./FAQ.md) still applies.
 
 ---
 
-## Optimization Workflow
+## Optimization Workflow {#optimization-workflow}
 
-### Recommended Order
+### Recommended Order {#recommended-order}
 
 1. **Mesh Cleanup:**
    - Apply transformations
@@ -446,7 +446,7 @@ Atlas **before** eye tracking and visemes. Atlassing changes materials and UVs, 
    - Verify materials
    - Check vertex counts
 
-### Performance Tips
+### Performance Tips {#performance-tips}
 
 - Atlasing gives the biggest performance boost
 - Bone merging helps with platform limits
@@ -456,11 +456,11 @@ Atlas **before** eye tracking and visemes. Atlassing changes materials and UVs, 
 ---
 
 **Related Pages:**
-- [Quick Access](Quick-Access) - Basic model operations
-- [Merge & Attach](Merge-and-Attach) - Merging multiple models
-- [Bone Tools](Bone-Tools) - Digitigrade legs and twist bone generation
-- [Translation](Translation) - Translate names before optimizing
-- [Troubleshooting](Troubleshooting) - Common optimization issues
+- [Quick Access](./Quick-Access.md) - Basic model operations
+- [Merge & Attach](./Merge-and-Attach.md) - Merging multiple models
+- [Bone Tools](./Bone-Tools.md) - Digitigrade legs and twist bone generation
+- [Translation](./Translation.md) - Translate names before optimizing
+- [Troubleshooting](./Troubleshooting.md) - Common optimization issues
 
 ---
 

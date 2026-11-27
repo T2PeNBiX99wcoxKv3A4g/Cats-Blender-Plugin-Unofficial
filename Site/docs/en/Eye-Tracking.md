@@ -1,23 +1,23 @@
-# Eye Tracking
+# Eye Tracking {#eye-tracking}
 
 The Eye Tracking panel provides tools for setting up eye movement and blinking animations on your avatars for VRChat.
 
-## Overview
+## Overview {#overview}
 
 Eye tracking allows your avatar's eyes to follow your real-world eye movements in VR, and set up blinking animations. This feature is essential for natural-looking avatars in VRChat.
 
-## Mode Selection
+## Mode Selection {#mode-selection}
 
 The Eye Tracking panel offers two modes:
 
-### SDK3 Mode
+### SDK3 Mode {#sdk3-mode}
 - Simplified setup for VRChat SDK3
 - Automatic bone rotation configuration
 - Direct eye bone assignment
 - **Recommended for most users**
 - Faster setup process
 
-### Legacy Mode
+### Legacy Mode {#legacy-mode}
 - Complete eye tracking setup
 - Customizable eye movement
 - Advanced blinking controls
@@ -28,16 +28,16 @@ The Eye Tracking panel offers two modes:
 
 ---
 
-## SDK3 Mode Setup
+## SDK3 Mode Setup {#sdk3-mode-setup}
 
 SDK3 Mode provides a streamlined setup process.
 
-### Requirements
+### Requirements {#requirements}
 - Eye bones in your armature
 - Head bone in your armature
 - Properly weighted eyes
 
-### Step-by-Step Setup
+### Step-by-Step Setup {#step-by-step-setup}
 
 1. **Select Mode:**
    - Choose **SDK3 Mode** in the panel
@@ -59,18 +59,18 @@ That's it, not you have to set the rest up in Unity.
 
 ---
 
-## Legacy Mode Setup
+## Legacy Mode Setup {#legacy-mode-setup}
 
 Legacy Mode provides more control and options for other games or software like ChilloutVR.
 
-### Bone Selection
+### Bone Selection {#bone-selection}
 
-#### Head Bone
+#### Head Bone {#head-bone}
 - Select the main head bone
 - Used as reference for eye rotation
 - Usually named "Head" or "head"
 
-#### Eye Bones
+#### Eye Bones {#eye-bones}
 - **Left Eye Bone:** Left eye control bone
 - **Right Eye Bone:** Right eye control bone
 - These bones should be parented to the head
@@ -78,22 +78,22 @@ Legacy Mode provides more control and options for other games or software like C
 
 > 📝 **Note:** Cats can auto-detect bones with common names.
 
-### Shape Key Configuration
+### Shape Key Configuration {#shape-key-configuration}
 
 For blinking and eye animations:
 
-#### Wink Shape Keys
+#### Wink Shape Keys {#wink-shape-keys}
 - **Wink Left:** Shape key for left eye closed
 - **Wink Right:** Shape key for right eye closed
 - Used for blinking and winking expressions
 
-#### Lower Lid Controls
+#### Lower Lid Controls {#lower-lid-controls}
 - **Lower Lid Left:** Shape key for left lower lid
 - **Lower Lid Right:** Shape key for right lower lid
 - Creates more natural blink animations
 - Optional but recommended
 
-### Eye Movement Settings
+### Eye Movement Settings {#eye-movement-settings}
 
 **Distance Adjustment:**
 - Controls how far eyes can move
@@ -106,7 +106,7 @@ For blinking and eye animations:
 - Y Axis: Vertical movement (up/down)
 - Adjust these during testing
 
-### Additional Options
+### Additional Options {#additional-options}
 
 **Disable Eye Blinking:**
 - Prevents automatic blinking
@@ -130,11 +130,11 @@ For blinking and eye animations:
 
 ---
 
-## Testing Mode
+## Testing Mode {#testing-mode}
 
 Both modes include testing features.
 
-### Eye Movement Testing
+### Eye Movement Testing {#eye-movement-testing}
 
 **Real-Time Preview:**
 - Test eye rotation in Blender
@@ -155,7 +155,7 @@ Both modes include testing features.
 - Clear all test rotations
 - Start fresh
 
-### Blinking Controls
+### Blinking Controls {#blinking-controls}
 
 **Blink Shape Testing:**
 - Test wink shape keys
@@ -173,9 +173,9 @@ Both modes include testing features.
 
 ---
 
-## Workflow
+## Workflow {#workflow}
 
-### Basic Eye Tracking Setup
+### Basic Eye Tracking Setup {#basic-eye-tracking-setup}
 
 1. **Choose your mode** (SDK3 for VRChat, Legacy for other games that need it)
 2. **Select bones:**
@@ -192,7 +192,7 @@ Both modes include testing features.
    - Adjust if needed
 6. **Export your model**
 
-### Advanced Setup (Legacy Mode)
+### Advanced Setup (Legacy Mode) {#advanced-setup-legacy-mode}
 
 1. **Select Legacy Mode**
 2. **Configure bones** as above
@@ -216,9 +216,9 @@ Both modes include testing features.
 
 ---
 
-## Tips and Best Practices
+## Tips and Best Practices {#tips-and-best-practices}
 
-### Bone Setup
+### Bone Setup {#bone-setup}
 
 **Eye Bone Position:**
 - Should be centered in the eyeball
@@ -230,7 +230,7 @@ Both modes include testing features.
 - Z-axis pointing forward (usually)
 - Test in multiple directions
 
-### Weight Painting
+### Weight Painting {#weight-painting}
 
 **Eye Mesh Weights:**
 - Eyes should be 100% weighted to their eye bones
@@ -242,7 +242,7 @@ Both modes include testing features.
 - Depends on desired deformation
 - Test blinking to verify
 
-### Shape Key Creation
+### Shape Key Creation {#shape-key-creation}
 
 **Good Wink Shape Keys:**
 - Eyes fully closed
@@ -256,7 +256,7 @@ Both modes include testing features.
 - Natural squint appearance
 - Optional but adds realism
 
-### Testing
+### Testing {#testing}
 
 **In Blender:**
 - Test all directions
@@ -272,9 +272,9 @@ Both modes include testing features.
 
 ---
 
-## Common Issues
+## Common Issues {#common-issues}
 
-### Eyes Don't Move
+### Eyes Don't Move {#eyes-dont-move}
 
 **Possible causes:**
 - Eye bones not selected
@@ -286,7 +286,7 @@ Both modes include testing features.
 - Check weight painting on eye meshes
 - Ensure "Disable Eye Movement" is off
 
-### Eyes Look Weird When Moving
+### Eyes Look Weird When Moving {#eyes-look-weird-when-moving}
 
 **Possible causes:**
 - Incorrect bone rotation
@@ -298,7 +298,7 @@ Both modes include testing features.
 - Verify bone is centered in eye mesh
 - Fix weight painting on eyes
 
-### Blinking Doesn't Work
+### Blinking Doesn't Work {#blinking-doesnt-work}
 
 **Possible causes:**
 - Shape keys not assigned
@@ -310,7 +310,7 @@ Both modes include testing features.
 - Select correct mesh in panel
 - Check "Disable Eye Blinking" is off
 
-### Eyes Cross or Diverge Incorrectly
+### Eyes Cross or Diverge Incorrectly {#eyes-cross-or-diverge-incorrectly}
 
 **Possible causes:**
 - Eye distance setting wrong
@@ -321,7 +321,7 @@ Both modes include testing features.
 - Verify eye bones are positioned correctly
 - Test with different distance values
 
-### Eyelids Clip Through Eyes
+### Eyelids Clip Through Eyes {#eyelids-clip-through-eyes}
 
 **Possible causes:**
 - Shape keys too extreme
@@ -334,11 +334,11 @@ Both modes include testing features.
 
 ---
 
-## Integration Notes
+## Integration Notes {#integration-notes}
 
-### With Material Combining and Atlassing
+### With Material Combining and Atlassing {#with-material-combining-and-atlassing}
 
-> ⚠ **Important:** Set up eye tracking **AFTER** combining materials and creating an atlas. The old Material Combiner add-on could misalign shape keys if run after eye tracking setup; the built-in [Atlas Generator](Optimization#atlas-generator) only changes materials and UVs, but keep the same order.
+> ⚠ **Important:** Set up eye tracking **AFTER** combining materials and creating an atlas. The old Material Combiner add-on could misalign shape keys if run after eye tracking setup; the built-in [Atlas Generator](./Optimization.md#atlas-generator) only changes materials and UVs, but keep the same order.
 
 **Recommended order:**
 1. Import model
@@ -350,10 +350,10 @@ Both modes include testing features.
 ---
 
 **Related Pages:**
-- [Visemes](Visemes) - Setting up lip sync
-- [Quick Access](Quick-Access) - Import/Export
-- [Shape Keys](Optimization#shape-keys) - Shape key tools
-- [Troubleshooting](Troubleshooting) - Common issues
+- [Visemes](./Visemes.md) - Setting up lip sync
+- [Quick Access](./Quick-Access.md) - Import/Export
+- [Shape Keys](./Optimization.md#shape-keys) - Shape key tools
+- [Troubleshooting](./Troubleshooting.md) - Common issues
 
 **External Resources:**
 - [VRChat Eye Tracking Documentation](https://docs.vrchat.com/docs/eye-tracking)

@@ -1,8 +1,8 @@
-# 문제 해결
+# 문제 해결 {#troubleshooting}
 
 Cats Blender Plugin의 일반적인 문제와 해결 방법입니다.
 
-## 빠른 문제 해결
+## 빠른 문제 해결 {#quick-troubleshooting}
 
 > 💡 **첫 단계:** 특정 문제를 파고들기 전에:
 > 1. **Blender 4.2 LTS 이상**을 사용하고 있는지 확인하세요
@@ -12,9 +12,9 @@ Cats Blender Plugin의 일반적인 문제와 해결 방법입니다.
 
 ---
 
-## 설치 문제
+## 설치 문제 {#installation-issues}
 
-### 설치 후 확장 기능이 나타나지 않음
+### 설치 후 확장 기능이 나타나지 않음 {#extension-doesnt-appear-after-installation}
 
 **증상:**
 - Cats를 설치했지만 찾을 수 없음
@@ -45,7 +45,7 @@ Cats Blender Plugin의 일반적인 문제와 해결 방법입니다.
 
 5: **N을 눌러 사이드바가 열려 있는지 확인하세요**
 
-### 설치 중 오류 발생
+### 설치 중 오류 발생 {#installation-gives-errors}
 
 **가능한 원인:**
 - Blender 버전에 맞지 않는 Cats 버전
@@ -57,7 +57,7 @@ Cats Blender Plugin의 일반적인 문제와 해결 방법입니다.
 
 1. **버전 일치 확인:**
    - Blender 4.2 LTS부터 5.4까지 모두 현재 Cats 릴리스를 실행할 수 있으며, Blender 4.1 이하는 확장 기능을 로드할 수 없음
-   - Cats 버전을 Blender 버전에 맞추세요 ([버전 지원](Version-Support) 참조)
+   - Cats 버전을 Blender 버전에 맞추세요 ([버전 지원](./Version-Support.md) 참조)
 
 2. **다시 다운로드:**
    - 부분 다운로드 삭제
@@ -74,7 +74,7 @@ Cats Blender Plugin의 일반적인 문제와 해결 방법입니다.
    - 호환되지 않는 애드온 (MMD Tools 같은 것. Cats에는 최신 MMD Tools가 포함되어 있어 서로 충돌합니다)
    - 제거 후 재시작
 
-### 사이드바에 Cats 탭이 보이지 않음
+### 사이드바에 Cats 탭이 보이지 않음 {#cats-tab-not-visible-in-sidebar}
 
 **해결 방법:**
 
@@ -94,9 +94,9 @@ Cats Blender Plugin의 일반적인 문제와 해결 방법입니다.
 
 ---
 
-## 가져오기/내보내기 문제
+## 가져오기/내보내기 문제 {#importexport-issues}
 
-### 모델을 가져올 수 없음
+### 모델을 가져올 수 없음 {#model-wont-import}
 
 **증상:**
 - 가져오기 버튼이 아무 동작도 하지 않음
@@ -126,9 +126,9 @@ Cats Blender Plugin의 일반적인 문제와 해결 방법입니다.
 
 ---
 
-## 모델 표시 문제
+## 모델 표시 문제 {#model-display-issues}
 
-### 모델이 검게 보이거나 텍스처가 없음
+### 모델이 검게 보이거나 텍스처가 없음 {#model-appears-black-or-no-textures}
 
 **증상:**
 - 모델이 전부 검은색
@@ -158,7 +158,7 @@ Cats Blender Plugin의 일반적인 문제와 해결 방법입니다.
    - Unity에서 머티리얼을 올바르게 설정
    - [아틀라스 생성기 문제](#atlas-generator-issues) 참조
 
-### 모델이 뒤집혀 있음/안쪽이 바깥으로
+### 모델이 뒤집혀 있음/안쪽이 바깥으로 {#model-is-invertedinside-out}
 
 **증상:**
 - 메시가 뒤집혀 보임
@@ -168,7 +168,7 @@ Cats Blender Plugin의 일반적인 문제와 해결 방법입니다.
 **해결 방법:**
 
 1. **노멀 재계산:**
-   - [최적화 → 메시 정리](Optimization#mesh-cleanup) 패널
+   - [최적화 → 메시 정리](./Optimization.md#mesh-cleanup) 패널
    - "Recalculate Normals" 클릭
 
 2. **편집 모드에서 확인:**
@@ -181,7 +181,7 @@ Cats Blender Plugin의 일반적인 문제와 해결 방법입니다.
    - 메시 정리의 "Flip Normals" 사용
    - 메시 전체가 뒤집힌 경우에만
 
-### VRChat/Unity에서 잘못된 스케일
+### VRChat/Unity에서 잘못된 스케일 {#wrong-scale-in-vrchatunity}
 
 **증상:**
 - 아바타가 너무 크거나 작음
@@ -191,12 +191,12 @@ Cats Blender Plugin의 일반적인 문제와 해결 방법입니다.
 **해결 방법:**
 
 1. **Blender에서 스케일 확인:**
-   - [스케일링](Scaling) 패널 사용
+   - [스케일링](./Scaling.md) 패널 사용
    - 실제 키 측정
    - 올바른 크기로 스케일링 (160-180cm 권장)
 
 2. **변형 적용:**
-   - [최적화 → 메시 정리](Optimization#mesh-cleanup)
+   - [최적화 → 메시 정리](./Optimization.md#mesh-cleanup)
    - "Apply Transformations"
    - 내보내기 전에
 
@@ -207,9 +207,9 @@ Cats Blender Plugin의 일반적인 문제와 해결 방법입니다.
 
 ---
 
-## 기능별 문제
+## 기능별 문제 {#feature-specific-issues}
 
-### 눈 추적이 작동하지 않음
+### 눈 추적이 작동하지 않음 {#eye-tracking-not-working}
 
 **증상:**
 - 눈이 움직이지 않음
@@ -219,7 +219,7 @@ Cats Blender Plugin의 일반적인 문제와 해결 방법입니다.
 **해결 방법:**
 
 1. **본 선택 확인:**
-   - [눈 추적](Eye-Tracking) 패널
+   - [눈 추적](./Eye-Tracking.md) 패널
    - 머리, 왼쪽 눈, 오른쪽 눈 본이 선택되었는지 확인
    - 올바른 본 사용
 
@@ -238,7 +238,7 @@ Cats Blender Plugin의 일반적인 문제와 해결 방법입니다.
    - 머티리얼 결합과 아틀라스 작업 **후에** 눈 추적을 설정하세요
    - 설정을 다시 해야 할 수 있음
 
-### 입 모양이 작동하지 않음
+### 입 모양이 작동하지 않음 {#visemes-dont-work}
 
 **증상:**
 - 립싱크에서 입이 움직이지 않음
@@ -248,7 +248,7 @@ Cats Blender Plugin의 일반적인 문제와 해결 방법입니다.
 **해결 방법:**
 
 1. **셰이프 키 할당 확인:**
-   - [입 모양](Visemes) 패널
+   - [입 모양](./Visemes.md) 패널
    - Mouth A, O, CH가 할당되었는지 확인
    - 올바른 셰이프 키 사용
 
@@ -267,7 +267,7 @@ Cats Blender Plugin의 일반적인 문제와 해결 방법입니다.
    - 설정 후에는 번역하지 마세요
    - 참조가 깨질 수 있음
 
-### 본 병합이 문제를 일으킴
+### 본 병합이 문제를 일으킴 {#bone-merging-causes-issues}
 
 **증상:**
 - 본 병합 후 모델이 깨짐
@@ -277,7 +277,7 @@ Cats Blender Plugin의 일반적인 문제와 해결 방법입니다.
 **해결 방법:**
 
 1. **병합 설정 확인:**
-   - [최적화](Optimization) 패널
+   - [최적화](./Optimization.md) 패널
    - 낮은 병합 비율로 시작 (0.5)
    - 안전을 위해 "병합된 본 유지" 활성화
 
@@ -298,15 +298,15 @@ Cats Blender Plugin의 일반적인 문제와 해결 방법입니다.
 
 ---
 
-## 아틀라스 생성기 문제
+## 아틀라스 생성기 문제 {#atlas-generator-issues}
 
-> 💡 이전 **아틀라스 생성기 (레거시)** 패널(Material Combiner)은 **`5.3.1.0`에서 제거**되었으며, 그에 따른 모든 Pillow 및 Material Combiner 설치 문제도 사라졌습니다. 내장 [아틀라스 생성기](Optimization#atlas-generator)는 아무것도 설치할 필요가 없습니다. 여전히 알파로 표시되어 있으므로 문제가 발생하면 Blender Info 로그에 출력된 줄과 함께 알려 주세요.
+> 💡 이전 **아틀라스 생성기 (레거시)** 패널(Material Combiner)은 **`5.3.1.0`에서 제거**되었으며, 그에 따른 모든 Pillow 및 Material Combiner 설치 문제도 사라졌습니다. 내장 [아틀라스 생성기](./Optimization.md#atlas-generator)는 아무것도 설치할 필요가 없습니다. 여전히 알파로 표시되어 있으므로 문제가 발생하면 Blender Info 로그에 출력된 줄과 함께 알려 주세요.
 
-### 아틀라스 생성기 (레거시) / Material Combiner를 찾을 수 없음
+### 아틀라스 생성기 (레거시) / Material Combiner를 찾을 수 없음 {#i-cant-find-atlas-generator-legacy-material-combiner}
 
 레거시 패널은 더 이상 존재하지 않습니다. 대신 **최적화 > 아틀라스 생성기**를 사용하세요. Material Combiner가 여전히 설치되어 있다면 **Import Material Combiner Settings** 버튼이 이전 아틀라스 설정, 머티리얼 체크, 레이어를 복사합니다. Material Combiner 자체는 타사 애드온이며 Cats는 더 이상 이를 지원하지 않습니다.
 
-### 아틀라스에서 텍스처가 누락되거나 잘못됨
+### 아틀라스에서 텍스처가 누락되거나 잘못됨 {#textures-missing-or-wrong-in-the-atlas}
 
 **가능한 원인:**
 - Cats가 셰이더를 통해 머티리얼의 텍스처를 찾지 못함 (행에 ⚠ 아이콘 표시)
@@ -318,19 +318,19 @@ Cats Blender Plugin의 일반적인 문제와 해결 방법입니다.
 2. 누락된 텍스처 다시 연결 (File > External Data > Find Missing Files)
 3. **Preview Result**로 빌드 전에 무엇이 패킹될지 확인
 
-### 아틀라스 색상이 너무 어둡게 보임
+### 아틀라스 색상이 너무 어둡게 보임 {#atlas-colours-look-too-dark}
 
 `5.3.1.0` 이전 빌드는 단색 및 색조가 적용된 머티리얼을 너무 어둡게 기록했습니다. Cats를 업데이트하고 아틀라스를 다시 빌드하세요. 이제 색상이 뷰포트와 일치합니다.
 
-### 두 번째 아틀라스를 빌드하니 첫 번째가 변경됨
+### 두 번째 아틀라스를 빌드하니 첫 번째가 변경됨 {#building-a-second-atlas-changed-my-first-one}
 
 `5.3.1.0` 이전 빌드는 `Cats_Atlas_01` / `Cats_Atlas_Mat_01` 이름을 재사용했으므로 같은 파일에서 두 번째 아바타를 아틀라스 처리하면 첫 번째가 덮어쓰였습니다. 이제 각 빌드는 고유한 이름(`Cats_Atlas_01_2` 등)을 받습니다. 업데이트 후 영향을 받은 아틀라스를 다시 빌드하세요.
 
-### 파일을 다시 열자 아틀라스가 사라짐
+### 파일을 다시 열자 아틀라스가 사라짐 {#atlas-disappeared-after-reopening-the-file}
 
 **Save to Folder**와 비어 있거나 쓸 수 없는 폴더를 사용하면 `5.3.1.0` 이전 빌드는 아틀라스를 저장하지도 패킹하지도 않아 다시 로드할 때 사라졌습니다. 이제 저장에 실패하면 아틀라스가 `.blend`에 패킹되고 빌드가 경고합니다. PNG 파일을 얻으려면 쓸 수 있는 **Folder**를 설정하세요.
 
-### 베이킹 문제
+### 베이킹 문제 {#baking-problems}
 
 - **"cannot be baked" 오류:** 오브젝트가 현재 뷰 레이어에 없습니다. 예를 들어 제외된 컬렉션에 있습니다. 컬렉션을 포함하거나 해당 오브젝트의 머티리얼 체크를 해제하세요
 - **버텍스 컬러가 덮어써짐:** Blender의 베이크 출력이 Color Attributes로 설정되어 있을 때 `5.3.1.0` 이전 빌드는 컬러 속성으로 베이크했습니다. 이제 베이킹은 항상 이미지 텍스처를 대상으로 합니다. 버텍스 컬러를 실행 취소하거나 백업에서 복원하세요
@@ -338,9 +338,9 @@ Cats Blender Plugin의 일반적인 문제와 해결 방법입니다.
 
 ---
 
-## 성능 문제
+## 성능 문제 {#performance-issues}
 
-### Cats 작업이 매우 느림
+### Cats 작업이 매우 느림 {#cats-operations-very-slow}
 
 **증상:**
 - 도구 완료에 몇 분이 걸림
@@ -370,37 +370,37 @@ Cats Blender Plugin의 일반적인 문제와 해결 방법입니다.
 
 ---
 
-## 오류 메시지
+## 오류 메시지 {#error-messages}
 
-### "No Armature Selected"
+### "No Armature Selected" {#no-armature-selected}
 
 **해결 방법:**
 - 아마추어 오브젝트를 선택하세요
 - 메시가 아닌 아마추어를 선택해야 함
 - 오브젝트 모드에서
 
-### "No Mesh Found"
+### "No Mesh Found" {#no-mesh-found}
 
 **해결 방법:**
 - 메시가 있는지 확인
 - 메시가 아마추어에 페어런팅되어 있어야 함
 - 오브젝트 가시성 확인
 
-### "Shape Keys Not Found"
+### "Shape Keys Not Found" {#shape-keys-not-found}
 
 **해결 방법:**
 - 메시에 셰이프 키가 있는지 확인
 - 올바른 메시가 선택되었는지 확인
 - 입 모양/눈 추적에는 셰이프 키가 있어야 함
 
-### "Bone Not Found"
+### "Bone Not Found" {#bone-not-found}
 
 **해결 방법:**
 - 본 이름 확인
 - 본 목록 새로 고침
 - 아마추어에 본이 있는지 확인
 
-### 정책 위반 경고 (Blender 5.2 / 5.3)
+### 정책 위반 경고 (Blender 5.2 / 5.3) {#policy-violation-warnings-blender-52-53}
 
 **증상:**
 - 확장 기능 정책에 대한 경고
@@ -414,16 +414,16 @@ Cats Blender Plugin의 일반적인 문제와 해결 방법입니다.
 
 ---
 
-## 추가 도움 받기
+## 추가 도움 받기 {#getting-additional-help}
 
-### 도움을 요청하기 전에
+### 도움을 요청하기 전에 {#before-asking-for-help}
 
 1. **이 페이지 확인:** 많은 문제가 여기에 다루어져 있음
 2. **관련 위키 페이지 읽기:** 기능별 가이드
 3. **검색 시도:** 저장소의 기존 이슈
 4. **버전 확인:** 지원되는 Blender 5.2+ 사용 중인지
 
-### 도움을 요청할 때
+### 도움을 요청할 때 {#when-asking-for-help}
 
 다음을 포함하세요:
 - Blender 버전 (정확히)
@@ -434,13 +434,13 @@ Cats Blender Plugin의 일반적인 문제와 해결 방법입니다.
 - 관련된 경우 스크린샷
 - 가능하면 콘솔 출력
 
-### 도움을 받을 수 있는 곳
+### 도움을 받을 수 있는 곳 {#where-to-get-help}
 
 - **저장소 이슈:** 버그 보고 및 질문
 - **GitHub Issues:** 버그 보고 및 기능 요청
 - **이 위키:** 문서 및 가이드
 
-### 보고하지 말아야 할 것
+### 보고하지 말아야 할 것 {#what-not-to-report}
 
 - 지원되지 않는 Blender 버전 또는 blender.org나 Steam 버전이 아닌 Blender 버전 관련 문제 (5.2 이전은 지원되지 않음)
 - 타사 확장 기능 문제 (Material Combiner 등. Cats는 더 이상 Material Combiner와 통합되지 않음)
@@ -449,9 +449,9 @@ Cats Blender Plugin의 일반적인 문제와 해결 방법입니다.
 
 ---
 
-## 일반적인 워크플로 문제
+## 일반적인 워크플로 문제 {#common-workflow-issues}
 
-### 작업 순서가 잘못됨
+### 작업 순서가 잘못됨 {#order-of-operations-wrong}
 
 **많은 문제가 잘못된 순서에서 비롯됩니다:**
 
@@ -468,7 +468,7 @@ Cats Blender Plugin의 일반적인 문제와 해결 방법입니다.
 
 **핵심:** 눈 추적과 입 모양 **전에** 머티리얼을 결합하고 아틀라스를 생성하세요!
 
-### 백업 관리
+### 백업 관리 {#backup-management}
 
 **항상 백업 보관:**
 - 주요 작업 전
@@ -488,9 +488,9 @@ my_model_05_final.blend
 ---
 
 **관련 페이지:**
-- [FAQ](FAQ) - 자주 묻는 질문
-- [설치](Installation) - 설정 도움말
-- [버전 지원](Version-Support) - 호환성 정보
+- [FAQ](./FAQ.md) - 자주 묻는 질문
+- [설치](./Installation.md) - 설정 도움말
+- [버전 지원](./Version-Support.md) - 호환성 정보
 - 특정 도구에 대한 모든 기능 페이지
 
 ---

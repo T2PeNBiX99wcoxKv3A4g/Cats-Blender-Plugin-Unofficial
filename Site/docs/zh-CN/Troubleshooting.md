@@ -1,8 +1,8 @@
-# 疑难解答
+# 疑难解答 {#troubleshooting}
 
 Cats Blender Plugin 的常见问题与解决方案。
 
-## 快速疑难解答
+## 快速疑难解答 {#quick-troubleshooting}
 
 > 💡 **第一步：** 在深入具体问题之前：
 > 1. 确认你使用的是 **Blender 4.2 LTS 或更新版本**
@@ -12,9 +12,9 @@ Cats Blender Plugin 的常见问题与解决方案。
 
 ---
 
-## 安装问题
+## 安装问题 {#installation-issues}
 
-### 安装后扩展不出现
+### 安装后扩展不出现 {#extension-doesnt-appear-after-installation}
 
 **症状：**
 - 安装了 Cats 但找不到它
@@ -45,7 +45,7 @@ Cats Blender Plugin 的常见问题与解决方案。
 
 5: **按 N 确保侧栏已打开**
 
-### 安装时出现错误
+### 安装时出现错误 {#installation-gives-errors}
 
 **可能原因：**
 - Cats 版本与你的 Blender 不匹配
@@ -57,7 +57,7 @@ Cats Blender Plugin 的常见问题与解决方案。
 
 1. **确认版本匹配：**
    - Blender 4.2 LTS 至 5.4 都运行当前的 Cats 发行版；Blender 4.1 及更旧版本无法加载该扩展
-   - 让你的 Cats 版本与你的 Blender 版本匹配（见[版本支持](Version-Support)）
+   - 让你的 Cats 版本与你的 Blender 版本匹配（见[版本支持](./Version-Support.md)）
 
 2. **重新下载：**
    - 删除不完整的下载
@@ -74,7 +74,7 @@ Cats Blender Plugin 的常见问题与解决方案。
    - 不兼容的插件（例如 MMD Tools —— cats 自带最新的 MMD Tools，它们会互相冲突）
    - 移除后重启
 
-### 侧栏中看不到 Cats 选项卡
+### 侧栏中看不到 Cats 选项卡 {#cats-tab-not-visible-in-sidebar}
 
 **解决方案：**
 
@@ -94,9 +94,9 @@ Cats Blender Plugin 的常见问题与解决方案。
 
 ---
 
-## 导入/导出问题
+## 导入/导出问题 {#importexport-issues}
 
-### 模型无法导入
+### 模型无法导入 {#model-wont-import}
 
 **症状：**
 - 导入按钮没有任何反应
@@ -126,9 +126,9 @@ Cats Blender Plugin 的常见问题与解决方案。
 
 ---
 
-## 模型显示问题
+## 模型显示问题 {#model-display-issues}
 
-### 模型显示为黑色或没有贴图
+### 模型显示为黑色或没有贴图 {#model-appears-black-or-no-textures}
 
 **症状：**
 - 模型全是黑的
@@ -158,7 +158,7 @@ Cats Blender Plugin 的常见问题与解决方案。
    - 在 Unity 中正确设置材质
    - 见[图集生成器问题](#atlas-generator-issues)
 
-### 模型内外翻转
+### 模型内外翻转 {#model-is-invertedinside-out}
 
 **症状：**
 - 网格看起来里外颠倒
@@ -168,7 +168,7 @@ Cats Blender Plugin 的常见问题与解决方案。
 **解决方案：**
 
 1. **重新计算法向：**
-   - [优化 → 网格清理](Optimization#mesh-cleanup)面板
+   - [优化 → 网格清理](./Optimization.md#mesh-cleanup)面板
    - 点击「重新计算法向」
 
 2. **在编辑模式中检查：**
@@ -181,7 +181,7 @@ Cats Blender Plugin 的常见问题与解决方案。
    - 使用网格清理中的「翻转法向」
    - 仅当整个网格都翻转时使用
 
-### VRChat/Unity 中缩放错误
+### VRChat/Unity 中缩放错误 {#wrong-scale-in-vrchatunity}
 
 **症状：**
 - 虚拟形象太大或太小
@@ -191,12 +191,12 @@ Cats Blender Plugin 的常见问题与解决方案。
 **解决方案：**
 
 1. **在 Blender 中检查缩放：**
-   - 使用[缩放](Scaling)面板
+   - 使用[缩放](./Scaling.md)面板
    - 测量实际身高
    - 缩放到正确尺寸（推荐 160-180cm）
 
 2. **应用变换：**
-   - [优化 → 网格清理](Optimization#mesh-cleanup)
+   - [优化 → 网格清理](./Optimization.md#mesh-cleanup)
    - 「应用变换」
    - 在导出前执行
 
@@ -207,9 +207,9 @@ Cats Blender Plugin 的常见问题与解决方案。
 
 ---
 
-## 特定功能问题
+## 特定功能问题 {#feature-specific-issues}
 
-### 眼动追踪不工作
+### 眼动追踪不工作 {#eye-tracking-not-working}
 
 **症状：**
 - 眼睛不动
@@ -219,7 +219,7 @@ Cats Blender Plugin 的常见问题与解决方案。
 **解决方案：**
 
 1. **确认骨骼选择：**
-   - [眼动追踪](Eye-Tracking)面板
+   - [眼动追踪](./Eye-Tracking.md)面板
    - 检查头部、左眼、右眼骨骼是否已选择
    - 使用正确的骨骼
 
@@ -238,7 +238,7 @@ Cats Blender Plugin 的常见问题与解决方案。
    - 请在材质合并和图集化**之后**设置眼动追踪
    - 可能需要重做设置
 
-### 口型同步不工作
+### 口型同步不工作 {#visemes-dont-work}
 
 **症状：**
 - 唇形同步时嘴巴不动
@@ -248,7 +248,7 @@ Cats Blender Plugin 的常见问题与解决方案。
 **解决方案：**
 
 1. **检查形态键指定：**
-   - [口型同步](Visemes)面板
+   - [口型同步](./Visemes.md)面板
    - 确认已指定 Mouth A、O、CH
    - 使用正确的形态键
 
@@ -267,7 +267,7 @@ Cats Blender Plugin 的常见问题与解决方案。
    - 不要在设置之后翻译
    - 可能会破坏引用
 
-### 骨骼合并导致问题
+### 骨骼合并导致问题 {#bone-merging-causes-issues}
 
 **症状：**
 - 骨骼合并后模型损坏
@@ -277,7 +277,7 @@ Cats Blender Plugin 的常见问题与解决方案。
 **解决方案：**
 
 1. **检查合并设置：**
-   - [优化](Optimization)面板
+   - [优化](./Optimization.md)面板
    - 从较低的合并比例（0.5）开始
    - 为安全起见启用「保留合并的骨骼」
 
@@ -298,15 +298,15 @@ Cats Blender Plugin 的常见问题与解决方案。
 
 ---
 
-## 图集生成器问题
+## 图集生成器问题 {#atlas-generator-issues}
 
-> 💡 旧的 **图集生成器（传统版）** 面板（Material Combiner）已在 `5.3.1.0` 中**移除**，随之消失的还有所有 Pillow 和 Material Combiner 安装问题。内置的[图集生成器](Optimization#atlas-generator)无需安装任何东西。它仍标记为 alpha，因此如果它行为异常，请连同它在 Blender 信息日志中打印的那一行一起报告。
+> 💡 旧的 **图集生成器（传统版）** 面板（Material Combiner）已在 `5.3.1.0` 中**移除**，随之消失的还有所有 Pillow 和 Material Combiner 安装问题。内置的[图集生成器](./Optimization.md#atlas-generator)无需安装任何东西。它仍标记为 alpha，因此如果它行为异常，请连同它在 Blender 信息日志中打印的那一行一起报告。
 
-### 我找不到图集生成器（传统版）/ Material Combiner
+### 我找不到图集生成器（传统版）/ Material Combiner {#i-cant-find-atlas-generator-legacy-material-combiner}
 
 传统面板已不存在。请改用 **优化 > 图集生成器**。如果仍安装了 Material Combiner，它的**导入 Material Combiner 设置**按钮会把你的旧图集设置、材质勾选和层复制过来。Material Combiner 本身是第三方插件，Cats 已不再支持它。
 
-### 图集中的贴图缺失或错误
+### 图集中的贴图缺失或错误 {#textures-missing-or-wrong-in-the-atlas}
 
 **可能原因：**
 - Cats 无法通过着色器找到材质的贴图（该行显示 ⚠ 图标）
@@ -318,19 +318,19 @@ Cats Blender Plugin 的常见问题与解决方案。
 2. 重新链接缺失的贴图（文件 > 外部数据 > 查找缺失文件）
 3. 使用**预览结果**在构建前检查将要打包的内容
 
-### 图集颜色看起来太暗
+### 图集颜色看起来太暗 {#atlas-colours-look-too-dark}
 
 `5.3.1.0` 之前的构建会把纯色和带色调的材质写得太暗。更新 Cats 并重新构建图集；颜色现在会与视口一致。
 
-### 构建第二个图集改变了我第一个图集
+### 构建第二个图集改变了我第一个图集 {#building-a-second-atlas-changed-my-first-one}
 
 `5.3.1.0` 之前的构建会复用名称 `Cats_Atlas_01` / `Cats_Atlas_Mat_01`，因此在同一文件中为第二个虚拟形象做图集时会覆盖第一个。现在每次构建都有各自的名称（`Cats_Atlas_01_2` 等）。更新后请重新构建受影响的图集。
 
-### 重新打开文件后图集消失了
+### 重新打开文件后图集消失了 {#atlas-disappeared-after-reopening-the-file}
 
 使用**保存到文件夹**且文件夹为空或不可写时，`5.3.1.0` 之前的构建既没有保存也没有打包图集，因此重新加载后就没了。现在保存失败时图集会被打包进 `.blend`，构建也会警告你。请设置一个可写的**文件夹**以获取 PNG 文件。
 
-### 烘焙问题
+### 烘焙问题 {#baking-problems}
 
 - **「无法烘焙」错误：** 对象不在当前视图层中，例如位于被排除的集合中。请包含该集合，或取消勾选该对象的材质
 - **顶点色被覆盖：** 当 Blender 的烘焙输出设置为颜色属性时，`5.3.1.0` 之前的构建会烘焙到颜色属性中。烘焙现在始终针对图像贴图；请撤销或从备份恢复顶点色
@@ -338,9 +338,9 @@ Cats Blender Plugin 的常见问题与解决方案。
 
 ---
 
-## 性能问题
+## 性能问题 {#performance-issues}
 
-### Cats 操作非常慢
+### Cats 操作非常慢 {#cats-operations-very-slow}
 
 **症状：**
 - 工具需要数分钟才能完成
@@ -370,37 +370,37 @@ Cats Blender Plugin 的常见问题与解决方案。
 
 ---
 
-## 错误信息
+## 错误信息 {#error-messages}
 
-### 「未选择骨架」（No Armature Selected）
+### 「未选择骨架」（No Armature Selected） {#no-armature-selected}
 
 **解决方案：**
 - 选中你的骨架对象
 - 必须选择骨架，而不是网格
 - 在物体模式下
 
-### 「未找到网格」（No Mesh Found）
+### 「未找到网格」（No Mesh Found） {#no-mesh-found}
 
 **解决方案：**
 - 确保存在网格
 - 网格必须父级到骨架
 - 检查对象的可见性
 
-### 「未找到形态键」（Shape Keys Not Found）
+### 「未找到形态键」（Shape Keys Not Found） {#shape-keys-not-found}
 
 **解决方案：**
 - 确认网格有形态键
 - 检查是否选中了正确的网格
 - 口型同步/眼动追踪必须存在形态键
 
-### 「未找到骨骼」（Bone Not Found）
+### 「未找到骨骼」（Bone Not Found） {#bone-not-found}
 
 **解决方案：**
 - 确认骨骼名称
 - 刷新骨骼列表
 - 检查骨架中是否存在该骨骼
 
-### 策略违规警告（Blender 5.2 / 5.3）
+### 策略违规警告（Blender 5.2 / 5.3） {#policy-violation-warnings-blender-52-53}
 
 **症状：**
 - 关于扩展策略的警告
@@ -414,16 +414,16 @@ Cats Blender Plugin 的常见问题与解决方案。
 
 ---
 
-## 获取更多帮助
+## 获取更多帮助 {#getting-additional-help}
 
-### 在寻求帮助之前
+### 在寻求帮助之前 {#before-asking-for-help}
 
 1. **查看本页：** 这里涵盖了许多问题
 2. **阅读相关的 Wiki 页面：** 功能特定的指南
 3. **尝试搜索：** 仓库中已有的 issue
 4. **确认版本：** 使用受支持的 Blender 5.2+
 
-### 寻求帮助时
+### 寻求帮助时 {#when-asking-for-help}
 
 请包含：
 - Blender 版本（精确）
@@ -434,13 +434,13 @@ Cats Blender Plugin 的常见问题与解决方案。
 - 如相关的截图
 - 如可用的控制台输出
 
-### 在哪里获取帮助
+### 在哪里获取帮助 {#where-to-get-help}
 
 - **仓库 issues：** 缺陷报告和问题
 - **GitHub Issues：** 缺陷报告和功能请求
 - **本 Wiki：** 文档和指南
 
-### 不应报告的内容
+### 不应报告的内容 {#what-not-to-report}
 
 - 使用不受支持的 Blender 版本，或非 blender.org / Steam 版本 Blender 的问题（5.2 之前的任何版本都不受支持）
 - 第三方扩展问题（Material Combiner 等；Cats 不再与 Material Combiner 集成）
@@ -449,9 +449,9 @@ Cats Blender Plugin 的常见问题与解决方案。
 
 ---
 
-## 常见工作流程问题
+## 常见工作流程问题 {#common-workflow-issues}
 
-### 操作顺序错误
+### 操作顺序错误 {#order-of-operations-wrong}
 
 **许多问题都源于顺序错误：**
 
@@ -468,7 +468,7 @@ Cats Blender Plugin 的常见问题与解决方案。
 
 **要点：** 在眼动追踪和口型同步**之前**合并材质 / 创建图集！
 
-### 备份管理
+### 备份管理 {#backup-management}
 
 **始终保留备份：**
 - 在重大操作之前
@@ -488,9 +488,9 @@ my_model_05_final.blend
 ---
 
 **相关页面：**
-- [常见问题](FAQ) - 常见问题解答
-- [安装](Installation) - 安装帮助
-- [版本支持](Version-Support) - 兼容性信息
+- [常见问题](./FAQ.md) - 常见问题解答
+- [安装](./Installation.md) - 安装帮助
+- [版本支持](./Version-Support.md) - 兼容性信息
 - 各功能页面，了解具体工具
 
 ---

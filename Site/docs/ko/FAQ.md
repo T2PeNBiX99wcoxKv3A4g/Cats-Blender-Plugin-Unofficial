@@ -1,40 +1,40 @@
-# 자주 묻는 질문 (FAQ)
+# 자주 묻는 질문 (FAQ) {#frequently-asked-questions-faq}
 
 Blender 4.2 LTS부터 5.4까지의 Cats Blender Plugin에 관한 일반적인 질문들입니다.
 
-## 일반적인 질문
+## 일반적인 질문 {#general-questions}
 
-### Cats Blender Plugin이란 무엇인가요?
+### Cats Blender Plugin이란 무엇인가요? {#what-is-cats-blender-plugin}
 
 Cats는 VRChat용 모델을 가져오고 최적화하는 데 필요한 단계를 줄이도록 설계된 도구입니다. MMD, XNALara, Source Engine, VRM 등 다양한 모델 포맷을 지원합니다.
 
-### 이것이 공식 Cats 플러그인인가요?
+### 이것이 공식 Cats 플러그인인가요? {#is-this-the-official-cats-plugin}
 
 이것은 커뮤니티가 유지 관리하는 **비공식 Cats 플러그인**입니다. 원래의 공식 Cats 플러그인은 2022년 이후로 방치되었습니다. 이 버전은 최신 Blender 버전을 지원하며 활발히 개발을 이어가고 있습니다.
 
 자세한 내용은 [공식 Cats의 상태는 어떤가요?](#what-is-the-status-of-official-cats)를 참조하세요.
 
-### 어떤 Blender 버전이 필요한가요?
+### 어떤 Blender 버전이 필요한가요? {#what-blender-version-do-i-need}
 
-Cats는 **Blender 4.2 LTS 이상**이 필요하며, 4.2 LTS부터 5.4까지 지원합니다. Blender 4.1 이하에서는 확장 기능을 로드할 수 없습니다. 자세한 내용은 [버전 지원](Version-Support)을 참조하세요.
+Cats는 **Blender 4.2 LTS 이상**이 필요하며, 4.2 LTS부터 5.4까지 지원합니다. Blender 4.1 이하에서는 확장 기능을 로드할 수 없습니다. 자세한 내용은 [버전 지원](./Version-Support.md)을 참조하세요.
 
 또한 Steam 버전과 blender.org 버전만 지원합니다. Windows Store 버전, Linux 패키지 관리자 버전, snap 스토어 버전, flatpak 버전의 Blender는 지원하지 않습니다.
 
-### Cats는 무료인가요?
+### Cats는 무료인가요? {#is-cats-free}
 
 네, Cats는 MIT 라이선스로 완전히 무료이며 오픈 소스입니다.
 
-### Cats는 어디서 다운로드할 수 있나요?
+### Cats는 어디서 다운로드할 수 있나요? {#where-can-i-download-cats}
 
 - **저장소 및 릴리스:** [GitHub](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/releases)
 
 ---
 
-## 설치 관련 질문
+## 설치 관련 질문 {#installation-questions}
 
-### Cats는 어떻게 설치하나요?
+### Cats는 어떻게 설치하나요? {#how-do-i-install-cats}
 
-전체 [설치](Installation) 가이드를 참조하세요. 요약하면:
+전체 [설치](./Installation.md) 가이드를 참조하세요. 요약하면:
 1. ZIP 파일을 다운로드합니다 (압축을 풀지 마세요)
 2. Blender 5.2+를 엽니다
 3. Edit > Preferences > Extensions
@@ -42,31 +42,31 @@ Cats는 **Blender 4.2 LTS 이상**이 필요하며, 4.2 LTS부터 5.4까지 지�
 5. ZIP 파일을 선택합니다
 6. 확장 기능을 활성화합니다
 
-### 설치 후 Blender를 재시작해야 하나요?
+### 설치 후 Blender를 재시작해야 하나요? {#do-i-need-to-restart-blender-after-installation}
 
 네, Cats를 설치하거나 업데이트한 후 최상의 결과를 위해 Blender를 재시작하는 것이 좋습니다.
 
-### Cats의 여러 버전을 동시에 설치할 수 있나요?
+### Cats의 여러 버전을 동시에 설치할 수 있나요? {#can-i-have-multiple-versions-of-cats-installed}
 
 아니요, Cats는 한 버전만 설치하세요. 새 버전을 설치하기 전에 이전 버전을 제거하세요.
 
-### 설정은 어디에 저장되나요?
+### 설정은 어디에 저장되나요? {#where-are-my-settings-saved}
 
-설정은 `.blend` 파일이 아닌 Cats 자체의 사용자 데이터 폴더에 저장되므로 Cats 업데이트 후에도 유지됩니다. 정확한 위치는 [설정](Settings#settings-file-location)을 참조하세요.
+설정은 `.blend` 파일이 아닌 Cats 자체의 사용자 데이터 폴더에 저장되므로 Cats 업데이트 후에도 유지됩니다. 정확한 위치는 [설정](./Settings.md#settings-file-location)을 참조하세요.
 
 ---
 
-## 호환성 관련 질문
+## 호환성 관련 질문 {#compatibility-questions}
 
-### Cats는 Blender 4.x에서 작동하나요?
+### Cats는 Blender 4.x에서 작동하나요? {#does-cats-work-on-blender-4x}
 
 Cats는 Blender 4.2 LTS부터 5.4까지 작동합니다. Blender 4.1 이하에서는 확장 기능을 로드할 수 없으며, 해당 버전용 대체 빌드는 없습니다.
 
-### Blender 5.2 / 5.3 파일을 이전 Blender 버전에서 열 수 있나요?
+### Blender 5.2 / 5.3 파일을 이전 Blender 버전에서 열 수 있나요? {#can-i-open-blender-52-53-files-in-older-blender-versions}
 
 권장하지 않습니다. Blender 5.2 / 5.3에서 저장한 파일은 이전 버전에서 제대로 열리지 않을 수 있으며, 데이터 손실이나 충돌이 발생할 수 있습니다.
 
-### Cats는 어떤 모델 포맷을 지원하나요?
+### Cats는 어떤 모델 포맷을 지원하나요? {#what-model-formats-does-cats-support}
 
 **가져오기 포맷:**
 - MMD: `.pmx`, `.pmd`
@@ -83,40 +83,40 @@ Cats는 Blender 4.2 LTS부터 5.4까지 작동합니다. Blender 4.1 이하에�
 
 ---
 
-## 기능 관련 질문
+## 기능 관련 질문 {#feature-questions}
 
-### 포즈 모드를 볼 수 있나요?
+### 포즈 모드를 볼 수 있나요? {#can-i-see-pose-mode}
 
-포즈 모드는 다음의 경우에만 [빠른 액세스](Quick-Access) 패널에 나타납니다.
+포즈 모드는 다음의 경우에만 [빠른 액세스](./Quick-Access.md) 패널에 나타납니다.
 - 모델을 가져온 상태일 때
 - 모델에 유효한 아마추어가 있을 때
 
 먼저 모델을 가져오면 포즈 모드 옵션이 나타납니다.
 
-### 아틀라스 기능을 사용할 수 없는 이유는 무엇인가요?
+### 아틀라스 기능을 사용할 수 없는 이유는 무엇인가요? {#why-cant-i-use-the-atlas-feature}
 
-[아틀라스 생성기](Optimization#atlas-generator)는 Cats에 내장되어 있으며 아무것도 설치할 필요가 없습니다. 여전히 **알파**로 표시되어 있습니다. 작동은 하지만 내보내기 전에 결과를 확인하세요.
+[아틀라스 생성기](./Optimization.md#atlas-generator)는 Cats에 내장되어 있으며 아무것도 설치할 필요가 없습니다. 여전히 **알파**로 표시되어 있습니다. 작동은 하지만 내보내기 전에 결과를 확인하세요.
 
 Shotariya Material Combiner 애드온이 필요했던 이전 **아틀라스 생성기 (레거시)** 패널은 **`5.3.1.0`에서 제거되었습니다**. 이를 찾고 있었다면 대신 아틀라스 생성기를 사용하세요. Material Combiner가 여전히 설치되어 있으면 **Import Material Combiner Settings** 버튼으로 이전 설정을 복사할 수 있습니다.
 
-### 스케일링 기능을 사용할 수 없는 이유는 무엇인가요?
+### 스케일링 기능을 사용할 수 없는 이유는 무엇인가요? {#why-cant-i-use-the-scaling-feature}
 
-스케일링은 Cats에 내장되어 있으며 더 이상 Immersive Scaler나 다른 애드온이 필요하지 않습니다. 버튼이 회색으로 표시되면 Cats가 아마추어를 찾지 못한 것입니다. Cats 아마추어 드롭다운에서 아바타의 아마추어를 선택하거나 활성 오브젝트로 지정하세요. [스케일링](Scaling#common-scale-issues)을 참조하세요.
+스케일링은 Cats에 내장되어 있으며 더 이상 Immersive Scaler나 다른 애드온이 필요하지 않습니다. 버튼이 회색으로 표시되면 Cats가 아마추어를 찾지 못한 것입니다. Cats 아마추어 드롭다운에서 아바타의 아마추어를 선택하거나 활성 오브젝트로 지정하세요. [스케일링](./Scaling.md#common-scale-issues)을 참조하세요.
 
-### Booth 아바타에 MMD 모델 수정을 사용해야 하나요?
+### Booth 아바타에 MMD 모델 수정을 사용해야 하나요? {#should-i-use-fix-mmd-model-on-my-booth-avatar}
 
 **아니요!** MMD 모델 수정은 **오직** 새롭고 처리되지 않은 MMD/VRM 파일에만 사용해야 합니다. 다음에는 사용하지 마세요:
 - 스토어에서 구매한 모델 (Booth, Gumroad 등)
 - 이미 Unity용으로 설정된 모델
 - 직접 만드는 사용자 지정 모델
 
-자세한 내용은 [변환기](Converters)를 참조하세요.
+자세한 내용은 [변환기](./Converters.md)를 참조하세요.
 
 ---
 
-## 워크플로 관련 질문
+## 워크플로 관련 질문 {#workflow-questions}
 
-### 어떤 순서로 작업해야 하나요?
+### 어떤 순서로 작업해야 하나요? {#what-order-should-i-do-things-in}
 
 권장 워크플로:
 
@@ -133,7 +133,7 @@ Shotariya Material Combiner 애드온이 필요했던 이전 **아틀라스 생�
 
 **중요:** 눈 추적과 입 모양 **전에** 머티리얼을 결합하고 아틀라스를 생성하세요!
 
-### 눈 추적과 입 모양 전에 아틀라스를 만들어야 하는 이유는 무엇인가요?
+### 눈 추적과 입 모양 전에 아틀라스를 만들어야 하는 이유는 무엇인가요? {#why-should-i-atlas-before-eye-tracking-and-visemes}
 
 다음을 설정하기 **전에** 머티리얼 결합과 아틀라스 작업을 하세요:
 - 눈 추적
@@ -142,7 +142,7 @@ Shotariya Material Combiner 애드온이 필요했던 이전 **아틀라스 생�
 
 구형 Material Combiner 애드온은 이러한 작업 후에 실행하면 셰이프 키가 어긋날 수 있었습니다. 내장 아틀라스 생성기는 머티리얼과 UV만 변경하지만, 머티리얼 작업을 먼저 하는 것이 워크플로를 예측 가능하게 유지합니다. 항상 머티리얼을 먼저 처리하세요!
 
-### VRChat용 모델은 어떻게 준비하나요?
+### VRChat용 모델은 어떻게 준비하나요? {#how-do-i-prepare-a-model-for-vrchat}
 
 1. Cats로 가져오기
 2. MMD 모델 수정 (VRM 또는 MMD 모델인 경우에만 해당)
@@ -156,9 +156,9 @@ Shotariya Material Combiner 애드온이 필요했던 이전 **아틀라스 생�
 
 ---
 
-## 문제 해결 관련 질문
+## 문제 해결 관련 질문 {#troubleshooting-questions}
 
-### 설치 후 Cats가 나타나지 않는 이유는 무엇인가요?
+### 설치 후 Cats가 나타나지 않는 이유는 무엇인가요? {#why-doesnt-cats-show-up-after-installation}
 
 일반적인 원인:
 - 확장 기능이 활성화되지 않음 (Preferences > Extensions 확인)
@@ -166,55 +166,55 @@ Shotariya Material Combiner 애드온이 필요했던 이전 **아틀라스 생�
 - Blender 버전에 맞지 않는 Cats 버전
 - 사이드바가 숨겨짐 (3D 뷰포트에서 N 키 누르기)
 
-자세한 해결 방법은 [문제 해결](Troubleshooting#extension-doesnt-appear-after-installation)을 참조하세요.
+자세한 해결 방법은 [문제 해결](./Troubleshooting.md#extension-doesnt-appear-after-installation)을 참조하세요.
 
-### 모델이 검게 보이거나 텍스처가 없는 이유는 무엇인가요?
+### 모델이 검게 보이거나 텍스처가 없는 이유는 무엇인가요? {#why-is-my-model-blackhas-no-textures}
 
 일반적인 원인:
 - 잘못된 뷰포트 셰이딩 모드 (Z를 누르고 Material Preview 선택)
 - 텍스처가 올바르게 연결되지 않음
 - 아틀라스 작업 후: 아틀라스 머티리얼이 단순한 Principled BSDF임 (대신 Unity에서 머티리얼을 설정하세요)
 
-해결 방법은 [문제 해결](Troubleshooting#model-appears-black-or-no-textures)을 참조하세요.
+해결 방법은 [문제 해결](./Troubleshooting.md#model-appears-black-or-no-textures)을 참조하세요.
 
-### VRChat에서 아바타가 너무 크거나 작게 보이는 이유는 무엇인가요?
+### VRChat에서 아바타가 너무 크거나 작게 보이는 이유는 무엇인가요? {#why-does-my-avatar-look-too-bigsmall-in-vrchat}
 
-- [스케일링](Scaling) 패널로 Blender에서 스케일을 확인하세요
+- [스케일링](./Scaling.md) 패널로 Blender에서 스케일을 확인하세요
 - 권장 키: 160-180cm
 - 내보내기 전에 변형을 적용하세요
 - Unity 가져오기 스케일이 1.0인지 확인하세요
 
-### 이 정책 위반 경고는 무엇인가요?
+### 이 정책 위반 경고는 무엇인가요? {#what-are-these-policy-violation-warnings}
 
 이 경고는 MMD Tools 같은 타사 애드온을 로드하기 위해 Cats가 레거시 방식을 사용하기 때문에 Blender 5.2 / 5.3에서 나타납니다. **이 경고는 예상된 것이며 무시해도 안전합니다** - 모든 것이 정상적으로 작동합니다.
 
 ---
 
-## 최적화 관련 질문
+## 최적화 관련 질문 {#optimization-questions}
 
-### 아바타의 폴리곤 수를 줄이려면 어떻게 하나요?
+### 아바타의 폴리곤 수를 줄이려면 어떻게 하나요? {#how-do-i-reduce-my-avatars-polygon-count}
 
-1. [최적화](Optimization) 패널의 중복 버텍스 제거 사용
+1. [최적화](./Optimization.md) 패널의 중복 버텍스 제거 사용
 2. 디시메이션에는 Tuxedo Blender Plugin 사용
 3. 메시 결합
 4. 불필요한 메시 디테일을 수동으로 제거
 
-### 드로우 콜을 줄이려면 어떻게 하나요?
+### 드로우 콜을 줄이려면 어떻게 하나요? {#how-do-i-reduce-draw-calls}
 
-1. [최적화](Optimization)에서 **머티리얼 결합**
-2. 내장 [아틀라스 생성기](Optimization#atlas-generator)로 **텍스처 아틀라스 생성**
+1. [최적화](./Optimization.md)에서 **머티리얼 결합**
+2. 내장 [아틀라스 생성기](./Optimization.md#atlas-generator)로 **텍스처 아틀라스 생성**
 3. **메시 결합**
 4. 개별 머티리얼 수 줄이기
 
-### 본 개수를 줄이려면 어떻게 하나요?
+### 본 개수를 줄이려면 어떻게 하나요? {#how-do-i-reduce-bone-count}
 
-최적화 패널의 [본 및 웨이트](Optimization#bones-weights)를 사용하세요:
+최적화 패널의 [본 및 웨이트](./Optimization.md#bones-weights)를 사용하세요:
 - 병합 비율 0.5로 시작
 - 안전을 위해 "병합된 본 유지" 활성화
 - 정리 작업을 실행하기 전에 테스트
 - 병합 후 제로 웨이트 본 제거
 
-### 머티리얼 결합과 아틀라스 생성의 차이는 무엇인가요?
+### 머티리얼 결합과 아틀라스 생성의 차이는 무엇인가요? {#whats-the-difference-between-combining-materials-and-creating-an-atlas}
 
 - **머티리얼 결합:** 동일한 속성을 가진 머티리얼을 하나로 병합합니다
 - **아틀라스 생성:** 여러 텍스처를 하나의 큰 텍스처로 결합합니다
@@ -223,16 +223,16 @@ Shotariya Material Combiner 애드온이 필요했던 이전 **아틀라스 생�
 
 ---
 
-## 기술 관련 질문
+## 기술 관련 질문 {#technical-questions}
 
-### Cats는 Steam/Microsoft Store Blender와 함께 작동하나요?
+### Cats는 Steam/Microsoft Store Blender와 함께 작동하나요? {#does-cats-work-with-steammicrosoft-store-blender}
 
 Cats가 작동할 수는 있지만, 대신 **blender.org에서 Blender를 다운로드하는 것을 권장합니다**:
 - Steam 버전: 일부 사용자가 문제를 보고함
 - Microsoft Store 버전: 알려진 권한 문제
 - 공식 다운로드: 가장 안정적
 
-### Cats를 오프라인에서 사용할 수 있나요?
+### Cats를 오프라인에서 사용할 수 있나요? {#can-i-use-cats-offline}
 
 네, 다음을 제외하고 가능합니다:
 - 온라인 번역 서비스 (Google, DeepL, LibreTranslate, MyMemory). 내부 사전은 오프라인에서 작동합니다.
@@ -242,28 +242,28 @@ Cats가 작동할 수는 있지만, 대신 **blender.org에서 Blender를 다운
 
 Cats는 Blender의 **Edit > Preferences > System > Network > Allow Online Access** 설정을 따릅니다. 이 설정이 꺼져 있으면 Cats는 네트워크 연결을 전혀 하지 않습니다. 업데이트 확인이 건너뛰어지고, 번역 다운로드가 거부되며, 번역은 내부 사전으로 대체됩니다.
 
-### Cats가 데이터를 수집하나요?
+### Cats가 데이터를 수집하나요? {#does-cats-collect-any-data}
 
 아니요. Cats는 사용자 데이터를 수집, 전송 또는 저장하지 않습니다. 유일한 네트워크 연결은 다음과 같습니다:
-- 선택한 온라인 번역 서비스 (번역 기능을 사용할 때만) - [번역](Translation) 참조
+- 선택한 온라인 번역 서비스 (번역 기능을 사용할 때만) - [번역](./Translation.md) 참조
 - 업데이트 서버 (업데이트를 확인할 때)
 - 이 저장소의 번역 파일 (최신 번역 다운로드를 클릭할 때만)
 
 Blender의 **Allow Online Access**가 꺼져 있는 동안에는 이 중 어느 것도 발생하지 않습니다.
 
-### 번역 API 키가 .blend 파일에 저장되나요?
+### 번역 API 키가 .blend 파일에 저장되나요? {#are-my-translation-api-keys-saved-in-my-blend-files}
 
 아니요. `5.3.1.0` 이후로 DeepL / LibreTranslate API 키, LibreTranslate URL, MyMemory 이메일은 Cats 자체 설정 파일에만 저장되며 `.blend` 파일에는 절대 저장되지 않으므로, 파일을 공유해도 키가 공유되지 않습니다. 이전 버전에서 파일에 저장했던 키는 파일을 열 때 제거됩니다. 계속 유지하려면 파일을 다시 저장하세요. 이전 버전으로 만든 파일을 이미 공유했다면 API 키를 교체하는 것을 고려하세요.
 
-### Cats는 여전히 유지 관리되나요?
+### Cats는 여전히 유지 관리되나요? {#is-cats-still-maintained}
 
 네. Cats는 커뮤니티가 유지 관리하며 **Blender 4.2 LTS부터 5.4까지** 지원합니다 (5.2 LTS 권장). 개발은 [저장소](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial)에서 진행됩니다.
 
 ---
 
-## 업데이트 관련 질문
+## 업데이트 관련 질문 {#update-questions}
 
-### Cats는 어떻게 업데이트하나요?
+### Cats는 어떻게 업데이트하나요? {#how-do-i-update-cats}
 
 1. [저장소 릴리스](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/releases)에서 새 버전을 다운로드합니다
 2. Blender를 종료합니다
@@ -272,9 +272,9 @@ Blender의 **Allow Online Access**가 꺼져 있는 동안에는 이 중 어느 
 5. 새 버전을 설치합니다
 6. 확장 기능을 활성화합니다
 
-자세한 내용은 [설정](Settings#installing-updates)을 참조하세요.
+자세한 내용은 [설정](./Settings.md#installing-updates)을 참조하세요.
 
-### 얼마나 자주 업데이트해야 하나요?
+### 얼마나 자주 업데이트해야 하나요? {#how-often-should-i-update}
 
 다음의 경우 업데이트하세요:
 - 원하는 새 기능이 출시되었을 때
@@ -282,7 +282,7 @@ Blender의 **Allow Online Access**가 꺼져 있는 동안에는 이 중 어느 
 - 주요 Blender 업데이트 시
 - 보안 업데이트 시 (저장소에 공지됨)
 
-### 업데이트하면 기존 프로젝트가 망가지나요?
+### 업데이트하면 기존 프로젝트가 망가지나요? {#will-updating-break-my-existing-projects}
 
 보통은 아니지만:
 - 업데이트 전에 항상 프로젝트를 백업하세요
@@ -292,9 +292,9 @@ Blender의 **Allow Online Access**가 꺼져 있는 동안에는 이 중 어느 
 
 ---
 
-## 원본 Cats 관련 질문
+## 원본 Cats 관련 질문 {#original-cats-questions}
 
-### 공식 Cats의 상태는 어떤가요?
+### 공식 Cats의 상태는 어떤가요? {#what-is-the-status-of-official-cats}
 
 **공식 Cats Blender Plugin은 방치되었습니다.** 타임라인:
 
@@ -315,7 +315,7 @@ Blender의 **Allow Online Access**가 꺼져 있는 동안에는 이 중 어느 
 - 정기적인 업데이트와 버그 수정
 - 활발한 커뮤니티 지원
 
-### 오래된 튜토리얼 영상을 사용해야 하나요?
+### 오래된 튜토리얼 영상을 사용해야 하나요? {#should-i-use-old-tutorial-videos}
 
 오래된 튜토리얼은 주의하세요:
 - 많은 튜토리얼이 구식 공식 Cats를 사용합니다
@@ -329,7 +329,7 @@ Blender의 **Allow Online Access**가 꺼져 있는 동안에는 이 중 어느 
 - 호환되지 않는 Cats 버전 사용
 - 구식 워크플로
 
-### 인지도를 높이는 데 어떻게 도울 수 있나요?
+### 인지도를 높이는 데 어떻게 도울 수 있나요? {#how-can-i-help-spread-awareness}
 
 1. **YouTube 영상에 댓글 달기:**
    - 영상이 구식 Cats를 사용하는지 언급
@@ -348,9 +348,9 @@ Blender의 **Allow Online Access**가 꺼져 있는 동안에는 이 중 어느 
 
 ---
 
-## 플랫폼별 질문
+## 플랫폼별 질문 {#platform-specific-questions}
 
-### Cats는 VRChat 이외의 플랫폼에서도 작동하나요?
+### Cats는 VRChat 이외의 플랫폼에서도 작동하나요? {#does-cats-work-for-platforms-other-than-vrchat}
 
 네! Cats는 다음에 사용할 수 있습니다:
 - **VRChat** - 주요 대상
@@ -359,7 +359,7 @@ Blender의 **Allow Online Access**가 꺼져 있는 동안에는 이 중 어느 
 - **기타 VR 플랫폼** - 일반적으로 호환됨
 - **일반 3D 용도** - 최적화 도구는 어디서나 유용함
 
-### Cats는 Quest 아바타와 함께 작동하나요?
+### Cats는 Quest 아바타와 함께 작동하나요? {#does-cats-work-with-quest-avatars}
 
 네, 최적화 도구는 Quest에 특히 유용합니다:
 - 머티리얼 결합 및 아틀라스 작업
@@ -367,7 +367,7 @@ Blender의 **Allow Online Access**가 꺼져 있는 동안에는 이 중 어느 
 - 폴리곤 감소 (다른 도구 사용)
 - 모두 Quest 제한을 충족하는 데 도움이 됩니다
 
-### 비 VR 모델에도 Cats를 사용할 수 있나요?
+### 비 VR 모델에도 Cats를 사용할 수 있나요? {#can-i-use-cats-for-non-vr-models}
 
 네! 많은 기능이 모든 3D 워크플로에 유용합니다:
 - 모델 가져오기
@@ -378,9 +378,9 @@ Blender의 **Allow Online Access**가 꺼져 있는 동안에는 이 중 어느 
 
 ---
 
-## 고급 질문
+## 고급 질문 {#advanced-questions}
 
-### Cats를 수정할 수 있나요?
+### Cats를 수정할 수 있나요? {#can-i-modify-cats}
 
 네! Cats는 오픈 소스입니다 (MIT 라이선스):
 - GitHub에서 소스 확인
@@ -388,9 +388,9 @@ Blender의 **Allow Online Access**가 꺼져 있는 동안에는 이 중 어느 
 - 개선 사항 기여
 - 사용자 지정 버전을 위한 포크
 
-### 버그는 어떻게 보고하나요?
+### 버그는 어떻게 보고하나요? {#how-do-i-report-bugs}
 
-1. 먼저 [문제 해결](Troubleshooting)을 확인합니다
+1. 먼저 [문제 해결](./Troubleshooting.md)을 확인합니다
 2. GitHub 이슈에서 유사한 보고를 검색합니다
 3. 새 버그라면 다음을 포함하여 GitHub 이슈를 엽니다:
    - Cats 버전
@@ -399,7 +399,7 @@ Blender의 **Allow Online Access**가 꺼져 있는 동안에는 이 중 어느 
    - 예상 동작과 실제 동작
    - 오류 메시지/스크린샷
 
-### 어떻게 기여할 수 있나요?
+### 어떻게 기여할 수 있나요? {#how-can-i-contribute}
 
 기여 방법은 여러 가지입니다:
 - 버그 보고
@@ -410,7 +410,7 @@ Blender의 **Allow Online Access**가 꺼져 있는 동안에는 이 중 어느 
 
 모든 것은 [저장소](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial)에서 이루어집니다.
 
-### 어디에서 기능을 요청할 수 있나요?
+### 어디에서 기능을 요청할 수 있나요? {#where-can-i-request-features}
 
 1. [저장소](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/issues)에 이슈를 엽니다
 2. 해당 기능이 이미 계획되어 있는지 확인합니다
@@ -419,16 +419,16 @@ Blender의 **Allow Online Access**가 꺼져 있는 동안에는 이 중 어느 
 
 ---
 
-## 도움 받기
+## 도움 받기 {#getting-help}
 
-### 어디에서 질문할 수 있나요?
+### 어디에서 질문할 수 있나요? {#where-can-i-ask-questions}
 
 - **이 위키** - 기능 가이드 및 문제 해결
 - **[저장소 이슈](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/issues)** - 버그 보고 및 질문
 
 > 더 이상 Discord 서버나 웹사이트를 운영하지 않습니다. 모든 지원은 저장소에서 이루어집니다.
 
-### 도움을 요청할 때 어떤 정보를 포함해야 하나요?
+### 도움을 요청할 때 어떤 정보를 포함해야 하나요? {#what-information-should-i-include-when-asking-for-help}
 
 - Blender 버전 (정확히)
 - Cats 버전 (정확히)
@@ -438,20 +438,20 @@ Blender의 **Allow Online Access**가 꺼져 있는 동안에는 이 중 어느 
 - 관련된 경우 스크린샷
 - 재현 단계
 
-### 제 질문에 대한 답이 여기에 없습니다
+### 제 질문에 대한 답이 여기에 없습니다 {#my-question-isnt-answered-here}
 
 다음을 확인하세요:
 1. 이 위키의 관련 기능 페이지
-2. [문제 해결](Troubleshooting) 페이지
+2. [문제 해결](./Troubleshooting.md) 페이지
 3. [저장소](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/issues)의 기존 이슈 검색
 4. 아직 문서화되지 않았다면 새 이슈 열기
 
 ---
 
 **관련 페이지:**
-- [설치](Installation) - 설정 가이드
-- [문제 해결](Troubleshooting) - 문제 해결
-- [버전 지원](Version-Support) - 호환성 정보
+- [설치](./Installation.md) - 설정 가이드
+- [문제 해결](./Troubleshooting.md) - 문제 해결
+- [버전 지원](./Version-Support.md) - 호환성 정보
 - 특정 도구에 대한 모든 기능 페이지
 
 ---

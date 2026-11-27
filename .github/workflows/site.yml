@@ -6,7 +6,11 @@ on:
     branches:
       - main
     paths:
+      # The site lives in Site/; the home page is generated from the repository README and
+      # the logo from resources/, so a change to those rebuilds it too.
       - "Site/**"
+      - "README.md"
+      - "resources/icons/other/cats1.png"
       - ".github/workflows/site.yml"
 
 permissions:
@@ -20,9 +24,7 @@ concurrency:
 
 jobs:
   deploy:
-    uses: T2PeNBiX99wcoxKv3A4g/Release-Workflows/.github/workflows/web_pages.yml@main
+    uses: T2PeNBiX99wcoxKv3A4g/Release-Workflows/.github/workflows/vitepress_pages.yml@main
     with:
       working_directory: Site
-      # The site shows each page's last commit date, so the history is needed.
-      fetch_depth: 0
     secrets: inherit

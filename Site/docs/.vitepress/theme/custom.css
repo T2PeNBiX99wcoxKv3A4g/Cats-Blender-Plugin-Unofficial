@@ -1,0 +1,49 @@
+/**
+ * The default theme, in the add-on's colours, with a wider reading column: these pages are
+ * mostly tables and long lists, which the 688px default breaks apart.
+ */
+:root {
+    --vp-layout-max-width: 1600px;
+
+    --vp-c-brand-1: #b45309;
+    --vp-c-brand-2: #d97706;
+    --vp-c-brand-3: #f59e0b;
+    --vp-c-brand-soft: rgba(245, 158, 11, 0.14);
+
+    --vp-home-hero-name-color: transparent;
+    --vp-home-hero-name-background: linear-gradient(120deg, #fbbf24 20%, #f59e0b);
+}
+
+.dark {
+    --vp-c-brand-1: #f59e0b;
+    --vp-c-brand-2: #fbbf24;
+    --vp-c-brand-3: #fcd34d;
+}
+
+/**
+ * Wider reading column than the 688/784px default. The theme's own rule is scoped
+ * (`.VPDoc.has-aside .content-container[data-v-…]`), so the class is repeated here to match
+ * its specificity without `!important`.
+ */
+.VPDoc .content-container.content-container,
+.VPDoc.has-aside .content-container.content-container {
+    max-width: 860px;
+}
+
+/* The home page's README body lines up with the hero instead of the 1280px default. */
+.VPHomeContent .container {
+    max-width: 1152px;
+}
+
+/* The default theme hides the footer on pages that have a sidebar; this site wants the
+   "unofficial continuation" line on every page. */
+.VPFooter.has-sidebar {
+    display: block !important;
+}
+
+/* The logo is the add-on's 32px pixel-art icon; keep it sharp instead of smoothing it. */
+.VPHero .VPImage.image-src {
+    width: 96px;
+    height: 96px;
+    image-rendering: pixelated;
+}

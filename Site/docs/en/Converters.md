@@ -1,4 +1,4 @@
-# Converters
+# Converters {#converters}
 
 The **Converters** panel (formerly "MMD Options") is the home for tools that convert models from one rig/format to another, plus MMD-specific cleanup. It's where you prepare a freshly imported model for Unity/VRChat.
 
@@ -10,7 +10,7 @@ It contains three areas:
 
 ---
 
-## Rigify → Cats
+## Rigify → Cats {#rigify-→-cats}
 
 The **Convert Rigify to Cats** button is always visible, but is **greyed out until a Rigify or Metarig armature is active**. When Cats detects one, an info box appears and the button becomes available.
 
@@ -26,9 +26,9 @@ Fix MMD Model can't process a Rigify rig directly, so convert it first, then con
 
 ---
 
-## Platform Conversion
+## Platform Conversion {#platform-conversion}
 
-### Convert Bones To Valve
+### Convert Bones To Valve {#convert-bones-to-valve}
 
 Renames the armature's main bones to the **ValveBiped** convention used by the Source engine (Source Filmmaker, GMod, etc.), for example `hips` becomes `ValveBiped.Bip01_Pelvis`. Finger bones are renamed too, since the GMod conversion script needs them.
 
@@ -44,19 +44,19 @@ This only renames bones, it does not change the hierarchy or the rest pose.
 >
 > Re-run the converter on a **fresh copy** of the model to fix it. It can't repair an FBX you already exported, and re-running it on an armature that is already mis-named won't help either, because the ValveBiped names no longer match anything it looks for.
 
-### Fix Koikatsu Shapekeys
+### Fix Koikatsu Shapekeys {#fix-koikatsu-shapekeys}
 
 Cleans up the split shape keys that **Koikatsu / Illusion** exports produce. Koikatsu spreads one expression across several keys (`eye_face.fXX` plus `eye_siroL`/`eye_line_u`, and `kuti_face.fXX` plus `kuti_ha`/`kuti_sita`), which makes them unusable on their own.
 
 The tool merges each matching group into a single `eyes_XX` or `mouth_XX` shape key, caps the sliders at sensible maximums, and removes the originals it consumed.
 
-**When to use:** on a freshly imported Koikatsu model, before setting up [visemes](Visemes).
+**When to use:** on a freshly imported Koikatsu model, before setting up [visemes](./Visemes.md).
 
 ---
 
-## MMD Cleanup
+## MMD Cleanup {#mmd-cleanup}
 
-### Fix MMD Model
+### Fix MMD Model {#fix-mmd-model}
 
 This is the main tool for converting a fresh MMD/VRM model into a Unity/VRChat-ready rig.
 
@@ -67,32 +67,32 @@ This is the main tool for converting a fresh MMD/VRM model into a Unity/VRChat-r
 > - Your model has already been set up for Unity/VRChat
 > - You are building your own custom model from scratch
 >
-> Fix Model was never a "fix anything" button. it's a converter for specific import formats. The same warning is shown in [Quick Access](Quick-Access), where the button also lives.
+> Fix Model was never a "fix anything" button. it's a converter for specific import formats. The same warning is shown in [Quick Access](./Quick-Access.md), where the button also lives.
 
 > 🚫 **Ignore these warnings at your own risk.** If you run Fix MMD Model on anything other than a fresh MMD/VRM import, after all the warnings Cats and this wiki give you, that is entirely on you. **Do not open an issue about it** you will be pointed straight back to these warnings and it will be closed immediately.
 
-> 💡 The **⚙ settings gear** next to the button opens **Model Settings** (keep end bones, keep twist bones, join meshes, connect bones, remove zero-weight, protected bones, etc.). See [Settings](Settings) for details.
+> 💡 The **⚙ settings gear** next to the button opens **Model Settings** (keep end bones, keep twist bones, join meshes, connect bones, remove zero-weight, protected bones, etc.). See [Settings](./Settings.md) for details.
 
-#### What it does
+#### What it does {#what-it-does}
 
 1. **Reparents bones** - reorganizes the hierarchy for Unity
 2. **Removes unnecessary bones** - strips MMD-specific/unused bones
-3. **Renames & translates** - Japanese → English, standardized names ([Translation](Translation)). Since `5.2.4.0` shape keys and materials can use the **author's English names** from the PMX file; the shape-key setting is in ⚙ Model Settings
+3. **Renames & translates** - Japanese → English, standardized names ([Translation](./Translation.md)). Since `5.2.4.0` shape keys and materials can use the **author's English names** from the PMX file; the shape-key setting is in ⚙ Model Settings
 4. **Merges weight paints** - redistributes vertex weights
 5. **Rotates hips** - corrects hip rotation for Unity
 6. **Removes constraints** - clears MMD-specific constraints/IK
 7. **Deletes unused vertex groups** - cleans empty weight groups
 8. **Converts morphs to shape keys**
 
-#### How to use
+#### How to use {#how-to-use}
 
-1. Import your fresh MMD or VRM model via [Quick Access](Quick-Access).
+1. Import your fresh MMD or VRM model via [Quick Access](./Quick-Access.md).
 2. Select the armature.
 3. Click **Fix MMD Model** (in Converters or Quick Access).
 4. Wait for it to finish (complex models can take a minute).
 5. Review the result.
 
-### Remove Rigid Bodies and Joints
+### Remove Rigid Bodies and Joints {#remove-rigid-bodies-and-joints}
 
 Removes MMD physics components (rigid bodies + joint constraints). VRChat uses Unity's physics, so MMD physics aren't compatible and should be removed.
 
@@ -100,35 +100,35 @@ Removes MMD physics components (rigid bodies + joint constraints). VRChat uses U
 
 **What it matches:** any object under your model whose name contains `rigidbodies` or `joints`, in any capitalisation — `Rigidbodies`, `RIGIDBODIES` and `rigidbodies` are all caught. Matching runs one and two levels below the model's top-level parent, and deleting a match takes its whole sub-tree with it, so nested physics groups go in one pass.
 
-> 💡 **This is not the same as the global setting, and you still need it.** **Remove Rigidbodies + Joints** in [Settings](Settings) is on by default and runs whenever you press a Cats button, but it deletes whole *collections* named `rigidbody` — it does not look at joints, and it does not look at loose objects. This button works on *objects* parented under your model and does catch joints. Keep using it on MMD imports.
+> 💡 **This is not the same as the global setting, and you still need it.** **Remove Rigidbodies + Joints** in [Settings](./Settings.md) is on by default and runs whenever you press a Cats button, but it deletes whole *collections* named `rigidbody` — it does not look at joints, and it does not look at loose objects. This button works on *objects* parented under your model and does catch joints. Keep using it on MMD imports.
 
 ---
 
-## Typical MMD → VRChat Workflow
+## Typical MMD → VRChat Workflow {#typical-mmd-→-vrchat-workflow}
 
-1. **Import** your `.pmx`/`.pmd`/`.vrm` via [Quick Access](Quick-Access).
+1. **Import** your `.pmx`/`.pmd`/`.vrm` via [Quick Access](./Quick-Access.md).
 2. **Fix MMD Model** (Converters or Quick Access).
 3. **Remove Rigid Bodies and Joints**.
-4. **Combine Materials** and other cleanup ([Optimization](Optimization)).
+4. **Combine Materials** and other cleanup ([Optimization](./Optimization.md)).
 5. **Optimize** - atlas, bone merging, remove doubles.
-6. Set up [Eye Tracking](Eye-Tracking) and [Visemes](Visemes).
-7. **Export** an FBX for Unity via [Quick Access](Quick-Access), and set up materials in Unity.
+6. Set up [Eye Tracking](./Eye-Tracking.md) and [Visemes](./Visemes.md).
+7. **Export** an FBX for Unity via [Quick Access](./Quick-Access.md), and set up materials in Unity.
 
 ---
 
-## Common Issues
+## Common Issues {#common-issues}
 
 **Model looks broken after Fix MMD Model** it was probably already Unity-ready. Undo (Ctrl+Z), re-import the original, and don't run Fix MMD Model on it.
 
 **Bones have odd/English names** this is expected; names are translated and standardized for VRChat.
 
-**Some materials are black** usually fine; set materials up in Unity. You can also try **Convert All to PNG** in [Optimization](Optimization).
+**Some materials are black** usually fine; set materials up in Unity. You can also try **Convert All to PNG** in [Optimization](./Optimization.md).
 
 **Model looks rotated in Blender** Blender and Unity use different coordinate systems; export handles this and it'll be correct in Unity.
 
 ---
 
-## VRM Notes
+## VRM Notes {#vrm-notes}
 
 VRM models generally need the same treatment as MMD models:
 - Run **Fix MMD Model** on fresh VRM files (VRoid exports, etc.)
@@ -141,10 +141,10 @@ Cats works alongside the **VRM Add-on for Blender** use it to import `.vrm`, the
 ---
 
 **Related Pages:**
-- [Quick Access](Quick-Access) - Import/Export, and the other Fix MMD Model button
-- [Optimization](Optimization) - Post-conversion optimization
-- [Translation](Translation) - Name translation
-- [Visemes](Visemes) / [Eye Tracking](Eye-Tracking) - Avatar feature setup
+- [Quick Access](./Quick-Access.md) - Import/Export, and the other Fix MMD Model button
+- [Optimization](./Optimization.md) - Post-conversion optimization
+- [Translation](./Translation.md) - Name translation
+- [Visemes](./Visemes.md) / [Eye Tracking](./Eye-Tracking.md) - Avatar feature setup
 
 ---
 

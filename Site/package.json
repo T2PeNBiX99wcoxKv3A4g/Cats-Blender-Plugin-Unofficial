@@ -1,27 +1,13 @@
 {
-  "name": "cats-blender-plugin-site",
-  "version": "0.1.0",
+  "name": "cats-blender-plugin-docs",
   "private": true,
   "type": "module",
   "scripts": {
-    "sync": "node scripts/sync-content.mjs",
-    "dev": "npm run sync && vite",
-    "build": "npm run sync && tsc --noEmit && vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-markdown": "^10.1.0",
-    "remark-gfm": "^4.0.1",
-    "styled-components": "^6.7.0"
+    "docs:dev": "node scripts/prepare.mjs && vitepress dev docs",
+    "docs:build": "node scripts/prepare.mjs && vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "devDependencies": {
-    "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0",
-    "@vitejs/plugin-react": "^6.3.0",
-    "sass": "^1.108.2",
-    "typescript": "^7.0.2",
-    "vite": "^8.3.7"
+    "vitepress": "^1.6.4"
   }
 }

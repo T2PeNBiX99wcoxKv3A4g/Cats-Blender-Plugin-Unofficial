@@ -1,10 +1,10 @@
-# Scaling
+# Scaling {#scaling}
 
 The Scaling panel rescales your avatar's proportions and height for VR platforms such as VRChat. It is built into Cats, so there is nothing extra to install.
 
 > 📝 **Replaces Immersive Scaler.** Earlier versions of Cats needed the separate Immersive Scaler add-on. The external Immersive Scaler is no longer maintained, so Cats now ships its own scaler based on it. The tools, settings and results are the same as Immersive Scaler's. If you still have Immersive Scaler installed, you can remove it: Cats no longer uses it.
 
-## Overview
+## Overview {#overview}
 
 Proper avatar scaling is crucial for VR experiences:
 - Ensures comfortable viewing in VR
@@ -14,7 +14,7 @@ Proper avatar scaling is crucial for VR experiences:
 
 Unlike simply resizing the model, the scaler adjusts **proportions**: it splits the required change between arms and legs, keeps limb thickness under control, moves the avatar onto the floor and then scales it to your target height. Armature and meshes are changed together, shape keys included.
 
-## Requirements
+## Requirements {#requirements}
 
 - A humanoid armature selected in Cats' armature dropdown (or set as the active object)
 - Recognisable bones for shoulders, arms, elbows, wrists, legs, knees, ankles and eyes. Common naming schemes (VRChat/Unity, MMD after **Fix Model**, `Left arm`, `UpperArm.L`, `Thigh_R` and so on) are detected automatically. If a bone isn't found, set it by hand with [Bone Overrides](#bone-overrides).
@@ -23,7 +23,7 @@ If no armature is found, the buttons are greyed out and hovering them explains w
 
 ---
 
-## Avatar Rescale
+## Avatar Rescale {#avatar-rescale}
 
 The main section. Set the values, then click **Rescale Armature**.
 
@@ -41,7 +41,7 @@ The small arrow button next to a value **reads it from the current avatar**:
 
 This is handy for keeping one value as it is while changing the others.
 
-### Customization
+### Customization {#customization}
 
 Expand **Customization** for finer control:
 
@@ -54,7 +54,7 @@ Expand **Customization** for finer control:
 | **Scale to Eyes** | Off | Makes **Target Height** the eye height instead of the top of the head. |
 | **Show bone mapping** | Off | Shows the [Bone Overrides](#bone-overrides) section. |
 
-### Core functionality toggle
+### Core functionality toggle {#core-functionality-toggle}
 
 Expand **Core functionality toggle** to turn individual steps off. Mostly useful for troubleshooting:
 
@@ -66,7 +66,7 @@ Expand **Core functionality toggle** to turn individual steps off. Mostly useful
 
 ---
 
-## Finger Spreading
+## Finger Spreading {#finger-spreading}
 
 Rotates the finger bones so they spread out from the wrist, which gives better-looking hands with VRChat's finger tracking and gestures.
 
@@ -78,13 +78,13 @@ Click **Spread Fingers** to apply.
 
 ---
 
-## Hip fix (beta)
+## Hip fix (beta) {#hip-fix-beta}
 
 **Shrink Hip bone** moves the hip bone much closer to the spine. Some models have a very long hip bone, which bends badly in full-body tracking. This is beta, check the result before exporting.
 
 ---
 
-## Bone Overrides
+## Bone Overrides {#bone-overrides}
 
 Shown when **Show bone mapping** is ticked under Customization. Each row is one bone the scaler uses: shoulders, arms, elbows, wrists, legs, knees, ankles, toes and eyes on both sides, the neck, head, hips, spine, chest and upper chest, plus every finger bone (used by [Finger Spreading](#finger-spreading)). Click the button on a row to pick the matching bone from a searchable list.
 
@@ -92,7 +92,7 @@ Only use overrides when a bone isn't detected automatically, or the wrong bone w
 
 ---
 
-## Scale Matching
+## Scale Matching {#scale-matching}
 
 Shown only when the scene has **more than one armature**. It scales one armature's proportions to match another, e.g. to make an outfit armature match the body:
 
@@ -102,9 +102,9 @@ Shown only when the scene has **more than one armature**. It scales one armature
 
 ---
 
-## Basic Workflow
+## Basic Workflow {#basic-workflow}
 
-1. **Import your model** using [Quick Access](Quick-Access)
+1. **Import your model** using [Quick Access](./Quick-Access.md)
 2. **Fix Model** if it's an MMD/VRM model
 3. Open the **Scaling** panel
 4. Set **Target Height** (or click the arrow to keep the current height)
@@ -116,9 +116,9 @@ Every scaler button can be undone with **Ctrl+Z**.
 
 ---
 
-## Best Practices
+## Best Practices {#best-practices}
 
-### Recommended Avatar Heights
+### Recommended Avatar Heights {#recommended-avatar-heights}
 
 **For VRChat:**
 
@@ -137,7 +137,7 @@ Every scaler button can be undone with **Ctrl+Z**.
 - Average: Most comfortable for social interaction
 - Consider your avatar type and use case
 
-### When to Scale
+### When to Scale {#when-to-scale}
 
 **Scale BEFORE:**
 - Setting up eye tracking
@@ -151,7 +151,7 @@ Every scaler button can be undone with **Ctrl+Z**.
 - Fixing MMD model
 - Basic mesh cleanup
 
-### Testing Scale
+### Testing Scale {#testing-scale}
 
 **In VRChat:**
 - Test in-game before finalizing
@@ -161,17 +161,17 @@ Every scaler button can be undone with **Ctrl+Z**.
 
 ---
 
-## Common Scale Issues
+## Common Scale Issues {#common-scale-issues}
 
-### Buttons are greyed out
+### Buttons are greyed out {#buttons-are-greyed-out}
 
 No armature was found. Select your avatar's armature in Cats' armature dropdown, or click it in the viewport so it is the active object.
 
-### A bone is reported missing, or the result looks twisted
+### A bone is reported missing, or the result looks twisted {#a-bone-is-reported-missing-or-the-result-looks-twisted}
 
 The scaler couldn't find a bone, or picked the wrong one. Tick **Show bone mapping** under Customization and set that bone in [Bone Overrides](#bone-overrides).
 
-### Avatar Appears Wrong Size in VRChat
+### Avatar Appears Wrong Size in VRChat {#avatar-appears-wrong-size-in-vrchat}
 
 **Possible causes:**
 - Scaled incorrectly in Blender
@@ -183,7 +183,7 @@ The scaler couldn't find a bone, or picked the wrong one. Tick **Show bone mappi
 - Use correct export settings in Cats
 - Check Unity import scale (should be 1.0 for FBX)
 
-### Proportions Look Wrong After Scaling
+### Proportions Look Wrong After Scaling {#proportions-look-wrong-after-scaling}
 
 **Possible causes:**
 - Model was resized manually before using the scaler
@@ -197,18 +197,18 @@ The scaler couldn't find a bone, or picked the wrong one. Tick **Show bone mappi
 
 ---
 
-## Integration Notes
+## Integration Notes {#integration-notes}
 
-### With Optimization
+### With Optimization {#with-optimization}
 
 Scale before or after optimization:
-- Doesn't significantly affect [Optimization](Optimization) tools
+- Doesn't significantly affect [Optimization](./Optimization.md) tools
 - Bone merging works at any scale
 - Atlas creation works at any scale
 
-### With Export
+### With Export {#with-export}
 
-Using [Quick Access](Quick-Access) export:
+Using [Quick Access](./Quick-Access.md) export:
 - Cats handles scale correctly
 - FBX export maintains scale
 - No additional settings needed
@@ -216,9 +216,9 @@ Using [Quick Access](Quick-Access) export:
 ---
 
 **Related Pages:**
-- [Quick Access](Quick-Access) - Import/Export
-- [Merge & Attach](Merge-and-Attach) - Merging models
-- [Troubleshooting](Troubleshooting) - Scale issues
+- [Quick Access](./Quick-Access.md) - Import/Export
+- [Merge & Attach](./Merge-and-Attach.md) - Merging models
+- [Troubleshooting](./Troubleshooting.md) - Scale issues
 
 **External Resources:**
 - [VRChat Avatar Scaling Guidelines](https://docs.vrchat.com/docs/avatar-scaling)

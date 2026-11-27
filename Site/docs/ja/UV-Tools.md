@@ -1,8 +1,8 @@
-# UV ツール
+# UV ツール {#uv-tools}
 
 **UV Tools** は `5.2.3.0` で追加された新しいパネルで、UV 編集のための補助機能を提供します。**Align UV Edges to Target** と **Find Shortest Seam Path** の 2 つのツールが含まれます。
 
-## 場所
+## 場所 {#where-to-find-it}
 
 - パネル全体は **UV / Image Editor** のサイドパネル（N パネル）の **CATS** タブにあります。表示するには UV エディターを開いてください。
 - **Find Shortest Seam Path** は **3D View** の CATS タブ（"UV Tools" の下）にも表示されます。実際に頂点を選択するのはそちらだからです。
@@ -11,13 +11,13 @@
 
 ---
 
-## Align UV Edges to Target
+## Align UV Edges to Target {#align-uv-edges-to-target}
 
 選択した各メッシュ上の UV 点の列を、**アクティブ**なメッシュ上の選択した UV 点の列に沿うように変形します。これは**キットバッシュ**に最適で、あるモデルの UV レイアウトを別のモデルに合わせてテクスチャを揃えられます。
 
 **2D カーソル**は各列のどちらの端が「始点」かを示すため、点がターゲットに沿って補間される前に、すべての列が同じ方向にたどられます。
 
-### 使用方法
+### 使用方法 {#how-to-use}
 
 1. UV エディターで **UV Sync Selection をオフ**にします。
 2. 関係するすべてのメッシュを選択します。**アクティブ**なものが*ターゲット*です。
@@ -29,13 +29,13 @@
 
 ---
 
-## Find Shortest Seam Path
+## Find Shortest Seam Path {#find-shortest-seam-path}
 
 選択した 2 つの頂点を結ぶ、**シーム**エッジの最短の連なりを選択します。作業対象のシームループをすばやく選択するのに便利です。
 
 シームとしてマークされたエッジのみをたどる（幅優先探索）ため、結果は常に 2 点間の最小エッジ数の経路になります。
 
-### 使用方法
+### 使用方法 {#how-to-use-1}
 
 1. メッシュの**編集モード**に入ります。
 2. それぞれシーム上にある**ちょうど 2 つの頂点**を選択します。
@@ -46,9 +46,9 @@
 ---
 
 **関連ページ:**
-- [Optimization](Optimization) - アトラスの生成とマテリアルツール
-- [Mesh Cleanup](Optimization#mesh-cleanup) - 一般的なメッシュの準備
-- [Troubleshooting](Troubleshooting) - よくある問題
+- [Optimization](./Optimization.md) - アトラスの生成とマテリアルツール
+- [Mesh Cleanup](./Optimization.md#mesh-cleanup) - 一般的なメッシュの準備
+- [Troubleshooting](./Troubleshooting.md) - よくある問題
 
 ---
 

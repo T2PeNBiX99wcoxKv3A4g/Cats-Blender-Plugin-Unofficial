@@ -1,8 +1,8 @@
-# Troubleshooting
+# Troubleshooting {#troubleshooting}
 
 Common issues and solutions for Cats Blender Plugin.
 
-## Quick Troubleshooting
+## Quick Troubleshooting {#quick-troubleshooting}
 
 > 💡 **First Steps:** Before diving into specific issues:
 > 1. Make sure you're using **Blender 4.2 LTS or newer**
@@ -12,9 +12,9 @@ Common issues and solutions for Cats Blender Plugin.
 
 ---
 
-## Installation Issues
+## Installation Issues {#installation-issues}
 
-### Extension Doesn't Appear After Installation
+### Extension Doesn't Appear After Installation {#extension-doesnt-appear-after-installation}
 
 **Symptoms:**
 - Installed Cats but can't find it
@@ -45,7 +45,7 @@ Common issues and solutions for Cats Blender Plugin.
 
 5: **Ensure the sidebar is open by pressing N**
 
-### Installation Gives Errors
+### Installation Gives Errors {#installation-gives-errors}
 
 **Possible Causes:**
 - Wrong Cats version for your Blender
@@ -57,7 +57,7 @@ Common issues and solutions for Cats Blender Plugin.
 
 1. **Verify Version Match:**
    - Blender 4.2 LTS through 5.4 all run the current Cats release; Blender 4.1 and older cannot load the extension
-   - Match your Cats version to your Blender version (see [Version Support](Version-Support))
+   - Match your Cats version to your Blender version (see [Version Support](./Version-Support.md))
 
 2. **Re-download:**
    - Delete partial download
@@ -74,7 +74,7 @@ Common issues and solutions for Cats Blender Plugin.
    - Incompatible add-ons (Like MMD Tools, cats comes with the latest MMD Tools, there will conflict with each other)
    - Restart after removal
 
-### Cats Tab Not Visible in Sidebar
+### Cats Tab Not Visible in Sidebar {#cats-tab-not-visible-in-sidebar}
 
 **Solutions:**
 
@@ -94,9 +94,9 @@ Common issues and solutions for Cats Blender Plugin.
 
 ---
 
-## Import/Export Issues
+## Import/Export Issues {#importexport-issues}
 
-### Model Won't Import
+### Model Won't Import {#model-wont-import}
 
 **Symptoms:**
 - Import button does nothing
@@ -126,9 +126,9 @@ Common issues and solutions for Cats Blender Plugin.
 
 ---
 
-## Model Display Issues
+## Model Display Issues {#model-display-issues}
 
-### Model Appears Black or No Textures
+### Model Appears Black or No Textures {#model-appears-black-or-no-textures}
 
 **Symptoms:**
 - Model is all black
@@ -158,7 +158,7 @@ Common issues and solutions for Cats Blender Plugin.
    - Set up materials properly in Unity
    - See [Atlas Generator Issues](#atlas-generator-issues)
 
-### Model is Inverted/Inside Out
+### Model is Inverted/Inside Out {#model-is-invertedinside-out}
 
 **Symptoms:**
 - Mesh appears inside-out
@@ -168,7 +168,7 @@ Common issues and solutions for Cats Blender Plugin.
 **Solutions:**
 
 1. **Recalculate Normals:**
-   - [Optimization → Mesh Cleanup](Optimization#mesh-cleanup) panel
+   - [Optimization → Mesh Cleanup](./Optimization.md#mesh-cleanup) panel
    - Click "Recalculate Normals"
 
 2. **Check in Edit Mode:**
@@ -181,7 +181,7 @@ Common issues and solutions for Cats Blender Plugin.
    - Use "Flip Normals" in Mesh Cleanup
    - Only if entire mesh is inverted
 
-### Wrong Scale in VRChat/Unity
+### Wrong Scale in VRChat/Unity {#wrong-scale-in-vrchatunity}
 
 **Symptoms:**
 - Avatar too big or too small
@@ -191,12 +191,12 @@ Common issues and solutions for Cats Blender Plugin.
 **Solutions:**
 
 1. **Check Scale in Blender:**
-   - Use [Scaling](Scaling) panel
+   - Use [Scaling](./Scaling.md) panel
    - Measure actual height
    - Scale to correct size (160-180cm recommended)
 
 2. **Apply Transformations:**
-   - [Optimization → Mesh Cleanup](Optimization#mesh-cleanup)
+   - [Optimization → Mesh Cleanup](./Optimization.md#mesh-cleanup)
    - "Apply Transformations"
    - Before export
 
@@ -207,9 +207,9 @@ Common issues and solutions for Cats Blender Plugin.
 
 ---
 
-## Feature-Specific Issues
+## Feature-Specific Issues {#feature-specific-issues}
 
-### Eye Tracking Not Working
+### Eye Tracking Not Working {#eye-tracking-not-working}
 
 **Symptoms:**
 - Eyes don't move
@@ -219,7 +219,7 @@ Common issues and solutions for Cats Blender Plugin.
 **Solutions:**
 
 1. **Verify Bone Selection:**
-   - [Eye Tracking](Eye-Tracking) panel
+   - [Eye Tracking](./Eye-Tracking.md) panel
    - Check head, left eye, right eye bones selected
    - Use correct bones
 
@@ -238,7 +238,7 @@ Common issues and solutions for Cats Blender Plugin.
    - Set up eye tracking **after** material combining and atlassing
    - May need to redo setup
 
-### Visemes Don't Work
+### Visemes Don't Work {#visemes-dont-work}
 
 **Symptoms:**
 - Mouth doesn't move for lip sync
@@ -248,7 +248,7 @@ Common issues and solutions for Cats Blender Plugin.
 **Solutions:**
 
 1. **Check Shape Key Assignment:**
-   - [Visemes](Visemes) panel
+   - [Visemes](./Visemes.md) panel
    - Verify Mouth A, O, CH assigned
    - Use correct shape keys
 
@@ -267,7 +267,7 @@ Common issues and solutions for Cats Blender Plugin.
    - Don't translate after setup
    - May break references
 
-### Bone Merging Causes Issues
+### Bone Merging Causes Issues {#bone-merging-causes-issues}
 
 **Symptoms:**
 - Model breaks after bone merging
@@ -277,7 +277,7 @@ Common issues and solutions for Cats Blender Plugin.
 **Solutions:**
 
 1. **Check Merge Settings:**
-   - [Optimization](Optimization) panel
+   - [Optimization](./Optimization.md) panel
    - Start with lower merge ratio (0.5)
    - Enable "Keep Merged Bones" for safety
 
@@ -298,15 +298,15 @@ Common issues and solutions for Cats Blender Plugin.
 
 ---
 
-## Atlas Generator Issues
+## Atlas Generator Issues {#atlas-generator-issues}
 
-> 💡 The old **Atlas Generator (Legacy)** panel (Material Combiner) was **removed in `5.3.1.0`**, and with it every Pillow and Material Combiner install problem. The built-in [Atlas Generator](Optimization#atlas-generator) needs nothing installed. It is still marked alpha, so if it misbehaves please report it with the line it printed in the Blender Info log.
+> 💡 The old **Atlas Generator (Legacy)** panel (Material Combiner) was **removed in `5.3.1.0`**, and with it every Pillow and Material Combiner install problem. The built-in [Atlas Generator](./Optimization.md#atlas-generator) needs nothing installed. It is still marked alpha, so if it misbehaves please report it with the line it printed in the Blender Info log.
 
-### I Can't Find Atlas Generator (Legacy) / Material Combiner
+### I Can't Find Atlas Generator (Legacy) / Material Combiner {#i-cant-find-atlas-generator-legacy-material-combiner}
 
 The legacy panel no longer exists. Use **Optimization > Atlas Generator** instead. If Material Combiner is still installed, its **Import Material Combiner Settings** button copies your old atlas settings, material ticks and layers across. Material Combiner itself is a third-party add-on and is not supported by Cats any more.
 
-### Textures Missing or Wrong in the Atlas
+### Textures Missing or Wrong in the Atlas {#textures-missing-or-wrong-in-the-atlas}
 
 **Possible Causes:**
 - Cats couldn't find the material's texture through its shader (the row shows a ⚠ icon)
@@ -318,19 +318,19 @@ The legacy panel no longer exists. Use **Optimization > Atlas Generator** instea
 2. Relink missing textures (File > External Data > Find Missing Files)
 3. Use **Preview Result** to check what will be packed before building
 
-### Atlas Colours Look Too Dark
+### Atlas Colours Look Too Dark {#atlas-colours-look-too-dark}
 
 Builds before `5.3.1.0` wrote flat-colour and tinted materials too dark. Update Cats and rebuild the atlas; colours now match the viewport.
 
-### Building a Second Atlas Changed My First One
+### Building a Second Atlas Changed My First One {#building-a-second-atlas-changed-my-first-one}
 
 Builds before `5.3.1.0` reused the names `Cats_Atlas_01` / `Cats_Atlas_Mat_01`, so atlassing a second avatar in the same file overwrote the first. Each build now gets its own names (`Cats_Atlas_01_2` and so on). Rebuild the affected atlas after updating.
 
-### Atlas Disappeared After Reopening the File
+### Atlas Disappeared After Reopening the File {#atlas-disappeared-after-reopening-the-file}
 
 With **Save to Folder** and an empty or unwritable folder, builds before `5.3.1.0` neither saved nor packed the atlas, so it was gone on reload. The atlas is now packed into the `.blend` when saving fails, and the build warns you. Set a writable **Folder** to get PNG files.
 
-### Baking Problems
+### Baking Problems {#baking-problems}
 
 - **"cannot be baked" error:** the object is not in the current view layer, for example it is in an excluded collection. Include the collection, or untick that object's materials
 - **Vertex colours were overwritten:** builds before `5.3.1.0` baked into colour attributes when Blender's bake output was set to Color Attributes. Baking now always targets image textures; undo or restore the vertex colours from a backup
@@ -338,9 +338,9 @@ With **Save to Folder** and an empty or unwritable folder, builds before `5.3.1.
 
 ---
 
-## Performance Issues
+## Performance Issues {#performance-issues}
 
-### Cats Operations Very Slow
+### Cats Operations Very Slow {#cats-operations-very-slow}
 
 **Symptoms:**
 - Tools take minutes to complete
@@ -370,37 +370,37 @@ With **Save to Folder** and an empty or unwritable folder, builds before `5.3.1.
 
 ---
 
-## Error Messages
+## Error Messages {#error-messages}
 
-### "No Armature Selected"
+### "No Armature Selected" {#no-armature-selected}
 
 **Solution:**
 - Select your armature object
 - Must select armature, not mesh
 - In Object Mode
 
-### "No Mesh Found"
+### "No Mesh Found" {#no-mesh-found}
 
 **Solution:**
 - Ensure meshes are present
 - Meshes must be parented to armature
 - Check object visibility
 
-### "Shape Keys Not Found"
+### "Shape Keys Not Found" {#shape-keys-not-found}
 
 **Solution:**
 - Verify mesh has shape keys
 - Check correct mesh is selected
 - Shape keys must exist for viseme/eye tracking
 
-### "Bone Not Found"
+### "Bone Not Found" {#bone-not-found}
 
 **Solution:**
 - Verify bone names
 - Refresh bone list
 - Check bone exists in armature
 
-### Policy Violation Warnings (Blender 5.2 / 5.3)
+### Policy Violation Warnings (Blender 5.2 / 5.3) {#policy-violation-warnings-blender-52-53}
 
 **Symptoms:**
 - Warnings about extension policies
@@ -414,16 +414,16 @@ With **Save to Folder** and an empty or unwritable folder, builds before `5.3.1.
 
 ---
 
-## Getting Additional Help
+## Getting Additional Help {#getting-additional-help}
 
-### Before Asking for Help
+### Before Asking for Help {#before-asking-for-help}
 
 1. **Check This Page:** Many issues covered here
 2. **Read Relevant Wiki Pages:** Feature-specific guides
 3. **Try Search:** existing issues on the repository
 4. **Verify Version:** Using supported Blender 5.2+
 
-### When Asking for Help
+### When Asking for Help {#when-asking-for-help}
 
 Include:
 - Blender version (exact)
@@ -434,13 +434,13 @@ Include:
 - Screenshots if relevant
 - Console output if available
 
-### Where to Get Help
+### Where to Get Help {#where-to-get-help}
 
 - **Repository issues:** Bug reports and questions
 - **GitHub Issues:** Bug reports and feature requests
 - **This Wiki:** Documentation and guides
 
-### What NOT to Report
+### What NOT to Report {#what-not-to-report}
 
 - Issues with unsupported Blender versions or blender versions which are not the blender.org or steam version (anything before 5.2 is not supported)
 - Third-party extension problems (Material Combiner, etc.; Cats no longer integrates with Material Combiner)
@@ -449,9 +449,9 @@ Include:
 
 ---
 
-## Common Workflow Issues
+## Common Workflow Issues {#common-workflow-issues}
 
-### Order of Operations Wrong
+### Order of Operations Wrong {#order-of-operations-wrong}
 
 **Many issues stem from wrong order:**
 
@@ -468,7 +468,7 @@ Include:
 
 **Key Point:** Combine materials / create the atlas **BEFORE** eye tracking and visemes!
 
-### Backup Management
+### Backup Management {#backup-management}
 
 **Always Keep Backups:**
 - Before major operations
@@ -488,9 +488,9 @@ my_model_05_final.blend
 ---
 
 **Related Pages:**
-- [FAQ](FAQ) - Frequently asked questions
-- [Installation](Installation) - Setup help
-- [Version Support](Version-Support) - Compatibility info
+- [FAQ](./FAQ.md) - Frequently asked questions
+- [Installation](./Installation.md) - Setup help
+- [Version Support](./Version-Support.md) - Compatibility info
 - All feature pages for specific tools
 
 ---

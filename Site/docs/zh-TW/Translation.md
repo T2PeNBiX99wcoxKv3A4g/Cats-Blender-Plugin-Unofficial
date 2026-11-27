@@ -1,8 +1,8 @@
-# 翻譯
+# 翻譯 {#translation}
 
 **翻譯**（Translation）面板會將日文（以及其他）名稱翻譯成英文，讓你的模型能在英文工具、Unity 與 VRChat 中順利運作。在 `5.2.3.0` 中它有了專屬面板，以及**可外掛的多服務後端**。
 
-## 運作方式
+## 運作方式 {#how-it-works}
 
 翻譯一律分為兩個階段進行：
 
@@ -13,7 +13,7 @@
 
 自 `5.2.4.0` 起，對 MMD 模型還多了中間的一個步驟：**模型作者儲存在 PMX 檔案中的英文名稱**（MMD Tools 會將它們顯示為 *Name(Eng)*）。請見下方的[作者名稱](#author-names-mmd)。
 
-## 選擇服務
+## 選擇服務 {#choosing-a-service}
 
 **Translation Service** 下拉選單提供：
 
@@ -30,13 +30,13 @@
 - **LibreTranslate** → LibreTranslate URL 與選用的 API Key
 - **MyMemory** → 選用的電子郵件
 
-> 🔒 你的服務選擇與憑證會儲存在 Cats 的**全域設定**中（請見[設定](Settings#settings-file-location)），而不是在 `.blend` 檔案內，因此 API 金鑰永遠不會隨你的模型一起流通。在 `5.3.1.0` 之前，API 金鑰、LibreTranslate URL 與 MyMemory 電子郵件也會被存進每個 `.blend`；用 `5.3.1.0` 或更新版本開啟這類檔案時會將它們移除（儲存檔案以讓此變更生效）。如果你分享過以舊版本製作的檔案，建議更換你的 API 金鑰。
+> 🔒 你的服務選擇與憑證會儲存在 Cats 的**全域設定**中（請見[設定](./Settings.md#settings-file-location)），而不是在 `.blend` 檔案內，因此 API 金鑰永遠不會隨你的模型一起流通。在 `5.3.1.0` 之前，API 金鑰、LibreTranslate URL 與 MyMemory 電子郵件也會被存進每個 `.blend`；用 `5.3.1.0` 或更新版本開啟這類檔案時會將它們移除（儲存檔案以讓此變更生效）。如果你分享過以舊版本製作的檔案，建議更換你的 API 金鑰。
 
 > 💡 若線上服務無法使用（沒有金鑰、離線或被限流），翻譯會**平順地降級**為內部字典所能做到的範圍，而不是直接失敗。
 
 > 線上服務只在 Blender 的 **Edit > Preferences > System > Network > Allow Online Access** 開啟時才會執行。關閉時，Cats 僅使用內部字典，並顯示警告說明線上存取已停用。**僅內部字典** 則兩種情況下都能運作。
 
-## 翻譯按鈕
+## 翻譯按鈕 {#translate-buttons}
 
 - **Translate All** 一鍵翻譯下方所有項目
 - **形態鍵**
@@ -44,7 +44,7 @@
 - **骨骼**
 - **材質**
 
-## 作者名稱（MMD）
+## 作者名稱（MMD） {#author-names-mmd}
 
 PMX 檔案為每根骨骼、每個形態鍵與每個材質都帶有選用的英文名稱，由模型的作者所撰寫。從 `5.2.4.0` 起，Cats 可以使用它們，這通常比任何字典或線上服務都好，因為作者知道該鍵*實際的作用*。
 
@@ -56,16 +56,16 @@ PMX 檔案為每根骨骼、每個形態鍵與每個材質都帶有選用的英�
 
 **骨骼與物件永遠不使用作者名稱。** Fix MMD Model 依賴字典的骨骼名稱來辨識骨架，因此骨骼翻譯維持不變。
 
-形態鍵的設定也會反映在 **Fix MMD Model** 的 ⚙ 模型設定中，而 Fix MMD Model 會在刪除 MMD 根之前記錄這些名稱，因此之後仍可使用。翻譯報告會告訴你有多少名稱來自作者，而[匯出翻譯 CSV](Settings#export-translation-csv) 則新增了 *source* 欄位，說明每個名稱的來源。
+形態鍵的設定也會反映在 **Fix MMD Model** 的 ⚙ 模型設定中，而 Fix MMD Model 會在刪除 MMD 根之前記錄這些名稱，因此之後仍可使用。翻譯報告會告訴你有多少名稱來自作者，而[匯出翻譯 CSV](./Settings.md#export-translation-csv) 則新增了 *source* 欄位，說明每個名稱的來源。
 
 > 🧪 **全新且經過輕度測試。** 它在開發時所依據的模型上可以運作，但還需要更多帶有英文名稱的 MMD 模型來測試。如果某個形態鍵或材質出現你沒預期的名稱，請將設定切換為 **Off**，並請回報該模型。
 
-## 選項
+## 選項 {#options}
 
 - **Skip Dictionary for Shape Keys** *（僅線上）* 舊有行為：形態鍵忽略內部字典，完全使用所選的線上服務翻譯。僅在你依賴 Cats 0.9.0 及更早版本的確切形態鍵名稱時才需要。
 - **Skip Locked Shape Keys** 已鎖定的形態鍵會保持未翻譯（適合保護刻意命名的鍵）。
 
-## 最佳實務
+## 最佳實務 {#best-practices}
 
 **應該：**
 - ✅ 匯入／Fix MMD Model 之後盡早翻譯
@@ -76,22 +76,22 @@ PMX 檔案為每根骨骼、每個形態鍵與每個材質都帶有選用的英�
 - ❌ 在設定視素／眼動追蹤*之後*再次翻譯（可能會破壞參照）
 - ❌ 反覆翻譯同一個模型（可能造成詞彙重複）
 
-### 何時翻譯
+### 何時翻譯 {#when-to-translate}
 
 **在下列事項之前：** 視素、眼動追蹤、自訂形態鍵、與其他模型合併。
 **在下列事項之後：** 匯入模型、執行 Fix MMD Model。
 
-## 重設快取
+## 重設快取 {#resetting-the-cache}
 
-線上翻譯的快取可以從[設定](Settings)面板清除（**Reset Google Dictionary**）。當錯誤的翻譯被快取住，或你切換服務並想要全新的結果時，這很方便。
+線上翻譯的快取可以從[設定](./Settings.md)面板清除（**Reset Google Dictionary**）。當錯誤的翻譯被快取住，或你切換服務並想要全新的結果時，這很方便。
 
 ---
 
 **相關頁面：**
-- [快速存取](Quick-Access) - 先匯入你的模型
-- [轉換器](Converters) - Fix MMD Model 會在其流程中進行翻譯
-- [設定](Settings) - 重設翻譯快取
-- [視素](Visemes) ／ [眼動追蹤](Eye-Tracking) - 在翻譯*之後*再做這些
+- [快速存取](./Quick-Access.md) - 先匯入你的模型
+- [轉換器](./Converters.md) - Fix MMD Model 會在其流程中進行翻譯
+- [設定](./Settings.md) - 重設翻譯快取
+- [視素](./Visemes.md) ／ [眼動追蹤](./Eye-Tracking.md) - 在翻譯*之後*再做這些
 
 ---
 

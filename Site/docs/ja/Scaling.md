@@ -1,10 +1,10 @@
-# スケーリング
+# スケーリング {#scaling}
 
 スケーリングパネルは、VRChat などの VR プラットフォーム向けにアバターのプロポーションと身長を再スケーリングします。Cats に内蔵されているため、追加でインストールするものはありません。
 
 > 📝 **Immersive Scaler の代替です。** 以前の Cats のバージョンでは、別の Immersive Scaler アドオンが必要でした。外部の Immersive Scaler はメンテナンスされなくなったため、Cats はそれを基にした独自のスケーラーを同梱するようになりました。ツール、設定、結果は Immersive Scaler と同じです。Immersive Scaler がまだインストールされている場合は削除できます。Cats はもう使用しません。
 
-## 概要
+## 概要 {#overview}
 
 適切なアバターのスケーリングは VR 体験に不可欠です。
 - VR での快適な視界を確保します
@@ -14,7 +14,7 @@
 
 単にモデルのサイズを変更するのとは異なり、スケーラーは**プロポーション**を調整します。必要な変化を腕と脚に分割し、四肢の太さを制御下に保ち、アバターを床の上に移動させ、それから目標の身長にスケーリングします。アーマチュアとメッシュはシェイプキーも含めて一緒に変更されます。
 
-## 必要条件
+## 必要条件 {#requirements}
 
 - Cats のアーマチュアドロップダウンで選択されている（またはアクティブオブジェクトに設定されている）ヒューマノイドアーマチュア
 - 肩、腕、肘、手首、脚、膝、足首、目の認識可能なボーン。一般的な命名規則（VRChat/Unity、**Fix Model** 後の MMD、`Left arm`、`UpperArm.L`、`Thigh_R` など）は自動的に検出されます。ボーンが見つからない場合は [Bone Overrides](#bone-overrides) で手動で設定してください。
@@ -23,7 +23,7 @@
 
 ---
 
-## アバターの再スケーリング
+## アバターの再スケーリング {#avatar-rescale}
 
 メインのセクションです。値を設定してから **Rescale Armature** をクリックします。
 
@@ -41,7 +41,7 @@
 
 これは、他の値を変更しながら 1 つの値をそのまま維持するのに便利です。
 
-### カスタマイズ
+### カスタマイズ {#customization}
 
 より細かい制御には **Customization** を展開します。
 
@@ -54,7 +54,7 @@
 | **Scale to Eyes** | オフ | **Target Height** を頭頂ではなく目の高さにします。 |
 | **Show bone mapping** | オフ | [Bone Overrides](#bone-overrides) セクションを表示します。 |
 
-### コア機能の切り替え
+### コア機能の切り替え {#core-functionality-toggle}
 
 **Core functionality toggle** を展開すると、個々のステップをオフにできます。主にトラブルシューティングに役立ちます。
 
@@ -66,7 +66,7 @@
 
 ---
 
-## 指の開き
+## 指の開き {#finger-spreading}
 
 指のボーンを回転させて手首から広げ、VRChat の指トラッキングやジェスチャーでより見栄えの良い手にします。
 
@@ -78,13 +78,13 @@
 
 ---
 
-## 腰の修正（ベータ）
+## 腰の修正（ベータ） {#hip-fix-beta}
 
 **Shrink Hip bone** は腰のボーンを脊椎にはるかに近づけます。一部のモデルは腰のボーンが非常に長く、フルボディトラッキングでひどく曲がります。これはベータ版なので、エクスポート前に結果を確認してください。
 
 ---
 
-## ボーンオーバーライド
+## ボーンオーバーライド {#bone-overrides}
 
 Customization の下で **Show bone mapping** がチェックされている場合に表示されます。各行はスケーラーが使用する 1 つのボーンです。両側の肩、腕、肘、手首、脚、膝、足首、足先、目、および首、頭、腰、脊椎、胸、上胸、さらにすべての指のボーン（[Finger Spreading](#finger-spreading) で使用）です。行のボタンをクリックすると、検索可能な一覧から対応するボーンを選べます。
 
@@ -92,7 +92,7 @@ Customization の下で **Show bone mapping** がチェックされている場�
 
 ---
 
-## スケールのマッチング
+## スケールのマッチング {#scale-matching}
 
 シーンに**複数のアーマチュア**がある場合にのみ表示されます。あるアーマチュアのプロポーションを別のものに合わせてスケーリングします。たとえば、衣装のアーマチュアを体に合わせる場合です。
 
@@ -102,9 +102,9 @@ Customization の下で **Show bone mapping** がチェックされている場�
 
 ---
 
-## 基本的なワークフロー
+## 基本的なワークフロー {#basic-workflow}
 
-1. [Quick Access](Quick-Access) を使用して**モデルをインポート**します
+1. [Quick Access](./Quick-Access.md) を使用して**モデルをインポート**します
 2. MMD/VRM モデルの場合は **Fix Model** を実行します
 3. **Scaling** パネルを開きます
 4. **Target Height** を設定します（または矢印をクリックして現在の身長を維持します）
@@ -116,9 +116,9 @@ Customization の下で **Show bone mapping** がチェックされている場�
 
 ---
 
-## ベストプラクティス
+## ベストプラクティス {#best-practices}
 
-### 推奨されるアバターの身長
+### 推奨されるアバターの身長 {#recommended-avatar-heights}
 
 **VRChat の場合:**
 
@@ -137,7 +137,7 @@ Customization の下で **Show bone mapping** がチェックされている場�
 - 平均的: 社会的交流に最も快適
 - アバターの種類とユースケースを考慮してください
 
-### スケーリングのタイミング
+### スケーリングのタイミング {#when-to-scale}
 
 **次の前にスケーリングします。**
 - アイトラッキングの設定
@@ -151,7 +151,7 @@ Customization の下で **Show bone mapping** がチェックされている場�
 - MMD モデルの修正
 - 基本的なメッシュのクリーンアップ
 
-### スケールのテスト
+### スケールのテスト {#testing-scale}
 
 **VRChat 内:**
 - 完成させる前にゲーム内でテストします
@@ -161,17 +161,17 @@ Customization の下で **Show bone mapping** がチェックされている場�
 
 ---
 
-## よくあるスケールの問題
+## よくあるスケールの問題 {#common-scale-issues}
 
-### ボタンがグレー表示される
+### ボタンがグレー表示される {#buttons-are-greyed-out}
 
 アーマチュアが見つかりませんでした。Cats のアーマチュアドロップダウンでアバターのアーマチュアを選択するか、ビューポートでクリックしてアクティブオブジェクトにしてください。
 
-### ボーンが見つからないと報告される、または結果がねじれて見える
+### ボーンが見つからないと報告される、または結果がねじれて見える {#a-bone-is-reported-missing-or-the-result-looks-twisted}
 
 スケーラーがボーンを見つけられなかったか、間違ったボーンを選択しました。Customization の下の **Show bone mapping** をチェックし、[Bone Overrides](#bone-overrides) でそのボーンを設定してください。
 
-### VRChat でアバターが間違ったサイズに見える
+### VRChat でアバターが間違ったサイズに見える {#avatar-appears-wrong-size-in-vrchat}
 
 **考えられる原因:**
 - Blender で正しくスケーリングされていません
@@ -183,7 +183,7 @@ Customization の下で **Show bone mapping** がチェックされている場�
 - Cats で正しいエクスポート設定を使用します
 - Unity のインポートスケールを確認します（FBX では 1.0 が適切です）
 
-### スケーリング後にプロポーションがおかしく見える
+### スケーリング後にプロポーションがおかしく見える {#proportions-look-wrong-after-scaling}
 
 **考えられる原因:**
 - スケーラーを使用する前にモデルを手動でサイズ変更しました
@@ -197,18 +197,18 @@ Customization の下で **Show bone mapping** がチェックされている場�
 
 ---
 
-## 統合に関する注意
+## 統合に関する注意 {#integration-notes}
 
-### 最適化との関係
+### 最適化との関係 {#with-optimization}
 
 最適化の前後どちらでもスケーリングできます。
-- [Optimization](Optimization) ツールに大きな影響はありません
+- [Optimization](./Optimization.md) ツールに大きな影響はありません
 - ボーンの結合はどのスケールでも動作します
 - アトラスの作成はどのスケールでも動作します
 
-### エクスポートとの関係
+### エクスポートとの関係 {#with-export}
 
-[Quick Access](Quick-Access) のエクスポートを使用する場合:
+[Quick Access](./Quick-Access.md) のエクスポートを使用する場合:
 - Cats がスケールを正しく処理します
 - FBX のエクスポートでスケールが維持されます
 - 追加の設定は不要です
@@ -216,9 +216,9 @@ Customization の下で **Show bone mapping** がチェックされている場�
 ---
 
 **関連ページ:**
-- [Quick Access](Quick-Access) - インポート/エクスポート
-- [Merge & Attach](Merge-and-Attach) - モデルの結合
-- [Troubleshooting](Troubleshooting) - スケールの問題
+- [Quick Access](./Quick-Access.md) - インポート/エクスポート
+- [Merge & Attach](./Merge-and-Attach.md) - モデルの結合
+- [Troubleshooting](./Troubleshooting.md) - スケールの問題
 
 **外部リソース:**
 - [VRChat アバタースケーリングのガイドライン](https://docs.vrchat.com/docs/avatar-scaling)

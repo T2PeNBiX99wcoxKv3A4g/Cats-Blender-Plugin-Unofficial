@@ -1,12 +1,12 @@
-# 安裝指南
+# 安裝指南 {#installation-guide}
 
 本指南說明如何為 **Blender 4.2 LTS 到 5.4**（建議使用 5.2 LTS）安裝 Cats Blender Plugin。
 
 > #### 如果有人請你依照這些指示操作，而你明顯沒有照做，你的問題將會被直接關閉，沒有例外，沒有但是。
 
-## 需求
+## 需求 {#requirements}
 
-### 必要軟體
+### 必要軟體 {#required-software}
 - **Blender 4.2 LTS 或更新版本**（到 5.4；我們建議 **Blender 5.2 LTS**）
   - 從 [blender.org](https://www.blender.org/download/) 下載
   - 請使用 blender.org 的官方版本或 Steam 版本。其他版本不支援。
@@ -14,7 +14,7 @@
 > ⚠ **不支援 Blender 4.1 及更舊版本。** 此外掛以 Blender 擴充功能的形式提供，而擴充功能系統從 4.2 起才存在。
 
 
-### Python 相依套件
+### Python 相依套件 {#python-dependencies}
 - 如果 Blender 使用自訂的 Python 安裝，請確保 **NumPy** 可用。
 
 > ⚠ **Windows Store 使用者：** Cats 或許可以在 Windows Store 版本的 Blender 上運作，但並未獲得官方支援。請使用 [blender.org](https://www.blender.org/) 的官方版本。
@@ -27,9 +27,9 @@
 >
 > 任何因使用不受支援的發行版、Snap、Flatpak 或其他重新打包版本所造成的問題，都會被立即關閉。我們對此的立場很明確。
 
-## 安裝步驟
+## 安裝步驟 {#installation-steps}
 
-### 步驟 1：下載 Cats
+### 步驟 1：下載 Cats {#step-1-download-cats}
 
 從儲存庫取得最新發行版：
 - **發行版：** [GitHub](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial/releases)
@@ -38,7 +38,7 @@
 
 > 📝 請確認你**沒有**已經安裝原始／官方版本的 Cats；兩者會衝突。如果你曾安裝其他版本，請重新啟動 Blender。
 
-### 步驟 2：透過 Blender 的擴充功能系統安裝
+### 步驟 2：透過 Blender 的擴充功能系統安裝 {#step-2-install-via-blenders-extension-system}
 
 1. 開啟 **Blender 5.2 或 5.3**。
 2. 前往 **Edit > Preferences**。
@@ -46,27 +46,27 @@
 4. 點擊 **Install from Disk**（右上角的下箭頭圖示）。
 5. 選擇 Cats 的 ZIP 檔並點擊 **Install from Disk**。
 
-### 步驟 3：啟用擴充功能
+### 步驟 3：啟用擴充功能 {#step-3-enable-the-extension}
 
 Cats 通常會自動啟用。若沒有，請在擴充功能清單中搜尋「cats」並勾選它旁邊的方塊。
 
-### 步驟 4：確認安裝
+### 步驟 4：確認安裝 {#step-4-verify-installation}
 
 1. 開啟 **3D 視埠**。
 2. 按 **N** 開啟側邊欄。
 3. 點擊 **Cats** 分頁。
 
-## 選用相依項目
+## 選用相依項目 {#optional-dependencies}
 
 有些功能以前需要額外的外掛。現在都不再需要了：
 
-### Material Combiner（貼圖圖集製作）
-已不再需要或支援。自 `5.3.1.0` 起，Cats 只保留內建的[圖集產生器](Optimization#atlas-generator)，而驅動 Material Combiner 的舊 *Atlas Generator (Legacy)* 面板已經移除。若仍安裝 Material Combiner，你可以使用一次 **Import Material Combiner Settings** 把設定帶過來，然後將它移除。
+### Material Combiner（貼圖圖集製作） {#material-combiner-texture-atlasing}
+已不再需要或支援。自 `5.3.1.0` 起，Cats 只保留內建的[圖集產生器](./Optimization.md#atlas-generator)，而驅動 Material Combiner 的舊 *Atlas Generator (Legacy)* 面板已經移除。若仍安裝 Material Combiner，你可以使用一次 **Import Material Combiner Settings** 把設定帶過來，然後將它移除。
 
-### 縮放工具
-已不再需要。[縮放](Scaling)面板以前需要另外安裝 Immersive Scaler 外掛。Cats 現在內建自己的縮放工具。如果你仍安裝著 Immersive Scaler，可以將它移除。
+### 縮放工具 {#scaling-tools}
+已不再需要。[縮放](./Scaling.md)面板以前需要另外安裝 Immersive Scaler 外掛。Cats 現在內建自己的縮放工具。如果你仍安裝著 Immersive Scaler，可以將它移除。
 
-## 安裝疑難排解
+## 安裝疑難排解 {#troubleshooting-installation}
 
 **擴充功能沒有出現** - 檢查它是否已在擴充功能偏好設定中啟用，確認你的 Blender 版本受支援（4.2 LTS 到 5.4），並且**完全重新啟動 Blender**。
 
@@ -78,15 +78,15 @@ Cats 通常會自動啟用。若沒有，請在擴充功能清單中搜尋「cat
 
 **先前安裝過舊版本** - 請將它移除，**重新啟動 Blender**，然後再安裝新版本。
 
-## 後續步驟
+## 後續步驟 {#next-steps}
 
-- 閱讀[快速存取](Quick-Access)指南以了解基礎知識。
-- 瀏覽[介面指南](Home#interface-guides)。
-- 若遇到問題，請查看[常見問題](FAQ)與[疑難排解](Troubleshooting)。
+- 閱讀[快速存取](./Quick-Access.md)指南以了解基礎知識。
+- 瀏覽[介面指南](./Overview.md#interface-guides)。
+- 若遇到問題，請查看[常見問題](./FAQ.md)與[疑難排解](./Troubleshooting.md)。
 
 ---
 
-**需要協助嗎？** 請見[疑難排解](Troubleshooting)頁面，或在[儲存庫](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial)開一個 issue。
+**需要協助嗎？** 請見[疑難排解](./Troubleshooting.md)頁面，或在[儲存庫](https://github.com/T2PeNBiX99wcoxKv3A4g/Cats-Blender-Plugin-Unofficial)開一個 issue。
 
 ---
 

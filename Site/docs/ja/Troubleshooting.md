@@ -1,8 +1,8 @@
-# トラブルシューティング
+# トラブルシューティング {#troubleshooting}
 
 Cats Blender Plugin のよくある問題と解決策です。
 
-## クイックトラブルシューティング
+## クイックトラブルシューティング {#quick-troubleshooting}
 
 > 💡 **最初のステップ:** 特定の問題に踏み込む前に:
 > 1. **Blender 4.2 LTS 以降**を使用していることを確認してください
@@ -12,9 +12,9 @@ Cats Blender Plugin のよくある問題と解決策です。
 
 ---
 
-## インストールの問題
+## インストールの問題 {#installation-issues}
 
-### インストール後に拡張機能が表示されない
+### インストール後に拡張機能が表示されない {#extension-doesnt-appear-after-installation}
 
 **症状:**
 - Cats をインストールしたが見つからない
@@ -45,7 +45,7 @@ Cats Blender Plugin のよくある問題と解決策です。
 
 5: **N を押してサイドバーが開いていることを確認します**
 
-### インストール時にエラーが出る
+### インストール時にエラーが出る {#installation-gives-errors}
 
 **考えられる原因:**
 - Blender に対して間違った Cats のバージョン
@@ -57,7 +57,7 @@ Cats Blender Plugin のよくある問題と解決策です。
 
 1. **バージョンの一致を確認する:**
    - Blender 4.2 LTS から 5.4 はすべて現在の Cats リリースを実行できます。Blender 4.1 以前は拡張機能を読み込めません
-   - Cats のバージョンを Blender のバージョンに合わせます（[Version Support](Version-Support) を参照）
+   - Cats のバージョンを Blender のバージョンに合わせます（[Version Support](./Version-Support.md) を参照）
 
 2. **再ダウンロードする:**
    - 途中までのダウンロードを削除します
@@ -74,7 +74,7 @@ Cats Blender Plugin のよくある問題と解決策です。
    - 互換性のないアドオン（MMD Tools など。cats には最新の MMD Tools が同梱されており、互いに競合します）
    - 削除後に再起動します
 
-### サイドバーに Cats タブが表示されない
+### サイドバーに Cats タブが表示されない {#cats-tab-not-visible-in-sidebar}
 
 **解決策:**
 
@@ -94,9 +94,9 @@ Cats Blender Plugin のよくある問題と解決策です。
 
 ---
 
-## インポート/エクスポートの問題
+## インポート/エクスポートの問題 {#importexport-issues}
 
-### モデルがインポートされない
+### モデルがインポートされない {#model-wont-import}
 
 **症状:**
 - インポートボタンを押しても何も起きない
@@ -126,9 +126,9 @@ Cats Blender Plugin のよくある問題と解決策です。
 
 ---
 
-## モデルの表示の問題
+## モデルの表示の問題 {#model-display-issues}
 
-### モデルが黒く表示される、またはテクスチャがない
+### モデルが黒く表示される、またはテクスチャがない {#model-appears-black-or-no-textures}
 
 **症状:**
 - モデルが全体に黒い
@@ -158,7 +158,7 @@ Cats Blender Plugin のよくある問題と解決策です。
    - Unity でマテリアルを適切に設定します
    - [Atlas Generator の問題](#atlas-generator-issues)を参照してください
 
-### モデルが反転している/裏返っている
+### モデルが反転している/裏返っている {#model-is-invertedinside-out}
 
 **症状:**
 - メッシュが裏返って見える
@@ -168,7 +168,7 @@ Cats Blender Plugin のよくある問題と解決策です。
 **解決策:**
 
 1. **法線を再計算する:**
-   - [Optimization → Mesh Cleanup](Optimization#mesh-cleanup) パネル
+   - [Optimization → Mesh Cleanup](./Optimization.md#mesh-cleanup) パネル
    - "Recalculate Normals" をクリックします
 
 2. **編集モードで確認する:**
@@ -181,7 +181,7 @@ Cats Blender Plugin のよくある問題と解決策です。
    - Mesh Cleanup の "Flip Normals" を使用します
    - メッシュ全体が反転している場合のみ
 
-### VRChat/Unity でスケールが間違っている
+### VRChat/Unity でスケールが間違っている {#wrong-scale-in-vrchatunity}
 
 **症状:**
 - アバターが大きすぎる、または小さすぎる
@@ -191,12 +191,12 @@ Cats Blender Plugin のよくある問題と解決策です。
 **解決策:**
 
 1. **Blender でスケールを確認する:**
-   - [Scaling](Scaling) パネルを使用します
+   - [Scaling](./Scaling.md) パネルを使用します
    - 実際の身長を測定します
    - 正しいサイズにスケーリングします（160-180cm を推奨）
 
 2. **トランスフォームを適用する:**
-   - [Optimization → Mesh Cleanup](Optimization#mesh-cleanup)
+   - [Optimization → Mesh Cleanup](./Optimization.md#mesh-cleanup)
    - "Apply Transformations"
    - エクスポートの前に
 
@@ -207,9 +207,9 @@ Cats Blender Plugin のよくある問題と解決策です。
 
 ---
 
-## 機能別の問題
+## 機能別の問題 {#feature-specific-issues}
 
-### アイトラッキングが動作しない
+### アイトラッキングが動作しない {#eye-tracking-not-working}
 
 **症状:**
 - 目が動かない
@@ -219,7 +219,7 @@ Cats Blender Plugin のよくある問題と解決策です。
 **解決策:**
 
 1. **ボーンの選択を確認する:**
-   - [Eye Tracking](Eye-Tracking) パネル
+   - [Eye Tracking](./Eye-Tracking.md) パネル
    - 頭、左目、右目のボーンが選択されているか確認します
    - 正しいボーンを使用します
 
@@ -238,7 +238,7 @@ Cats Blender Plugin のよくある問題と解決策です。
    - マテリアルの結合とアトラス化の**後に**アイトラッキングを設定してください
    - セットアップをやり直す必要がある場合があります
 
-### Visemes が動作しない
+### Visemes が動作しない {#visemes-dont-work}
 
 **症状:**
 - リップシンクで口が動かない
@@ -248,7 +248,7 @@ Cats Blender Plugin のよくある問題と解決策です。
 **解決策:**
 
 1. **シェイプキーの割り当てを確認する:**
-   - [Visemes](Visemes) パネル
+   - [Visemes](./Visemes.md) パネル
    - Mouth A、O、CH が割り当てられているか確認します
    - 正しいシェイプキーを使用します
 
@@ -267,7 +267,7 @@ Cats Blender Plugin のよくある問題と解決策です。
    - 設定後に翻訳しないでください
    - 参照が壊れる可能性があります
 
-### ボーンの結合で問題が発生する
+### ボーンの結合で問題が発生する {#bone-merging-causes-issues}
 
 **症状:**
 - ボーンの結合後にモデルが壊れる
@@ -277,7 +277,7 @@ Cats Blender Plugin のよくある問題と解決策です。
 **解決策:**
 
 1. **結合の設定を確認する:**
-   - [Optimization](Optimization) パネル
+   - [Optimization](./Optimization.md) パネル
    - 低い結合比率（0.5）から始めます
    - 安全のため "Keep Merged Bones" を有効にします
 
@@ -298,15 +298,15 @@ Cats Blender Plugin のよくある問題と解決策です。
 
 ---
 
-## Atlas Generator の問題
+## Atlas Generator の問題 {#atlas-generator-issues}
 
-> 💡 旧 **Atlas Generator (Legacy)** パネル（Material Combiner）は **`5.3.1.0` で削除**され、Pillow と Material Combiner のインストールに関するあらゆる問題も一緒になくなりました。内蔵の [Atlas Generator](Optimization#atlas-generator) は何もインストールする必要がありません。まだアルファ版とされているため、動作がおかしい場合は Blender の Info ログに出力された行とともに報告してください。
+> 💡 旧 **Atlas Generator (Legacy)** パネル（Material Combiner）は **`5.3.1.0` で削除**され、Pillow と Material Combiner のインストールに関するあらゆる問題も一緒になくなりました。内蔵の [Atlas Generator](./Optimization.md#atlas-generator) は何もインストールする必要がありません。まだアルファ版とされているため、動作がおかしい場合は Blender の Info ログに出力された行とともに報告してください。
 
-### Atlas Generator (Legacy) / Material Combiner が見つからない
+### Atlas Generator (Legacy) / Material Combiner が見つからない {#i-cant-find-atlas-generator-legacy-material-combiner}
 
 レガシーパネルはもう存在しません。代わりに **Optimization > Atlas Generator** を使用してください。Material Combiner がまだインストールされている場合、その **Import Material Combiner Settings** ボタンで古いアトラス設定、マテリアルのチェック、レイヤーを引き継げます。Material Combiner 自体はサードパーティのアドオンであり、Cats はもうサポートしていません。
 
-### アトラスでテクスチャが欠落している、または間違っている
+### アトラスでテクスチャが欠落している、または間違っている {#textures-missing-or-wrong-in-the-atlas}
 
 **考えられる原因:**
 - Cats がシェーダーを通じてマテリアルのテクスチャを見つけられなかった（行に ⚠ アイコンが表示されます）
@@ -318,19 +318,19 @@ Cats Blender Plugin のよくある問題と解決策です。
 2. 欠落したテクスチャを再リンクします（File > External Data > Find Missing Files）
 3. ビルド前に **Preview Result** で何がパックされるか確認します
 
-### アトラスの色が暗すぎる
+### アトラスの色が暗すぎる {#atlas-colours-look-too-dark}
 
 `5.3.1.0` 以前のビルドは、フラットカラーやティントされたマテリアルを暗すぎる状態で書き出していました。Cats を更新してアトラスを再ビルドしてください。色はビューポートと一致するようになりました。
 
-### 2 つ目のアトラスをビルドしたら 1 つ目が変わった
+### 2 つ目のアトラスをビルドしたら 1 つ目が変わった {#building-a-second-atlas-changed-my-first-one}
 
 `5.3.1.0` 以前のビルドは `Cats_Atlas_01` / `Cats_Atlas_Mat_01` という名前を再利用していたため、同じファイル内で 2 つ目のアバターをアトラス化すると 1 つ目が上書きされました。各ビルドは独自の名前（`Cats_Atlas_01_2` など）を持つようになりました。更新後に影響を受けたアトラスを再ビルドしてください。
 
-### ファイルを開き直したらアトラスが消えた
+### ファイルを開き直したらアトラスが消えた {#atlas-disappeared-after-reopening-the-file}
 
 **Save to Folder** でフォルダーが空または書き込み不可の場合、`5.3.1.0` 以前のビルドはアトラスを保存もパックもせず、再読み込み時に失われていました。保存に失敗した場合はアトラスが `.blend` にパックされるようになり、ビルド時に警告が表示されます。PNG ファイルを取得するには書き込み可能な **Folder** を設定してください。
 
-### ベイクの問題
+### ベイクの問題 {#baking-problems}
 
 - **"cannot be baked" エラー:** オブジェクトが現在のビューレイヤーにありません。たとえば除外されたコレクション内にあります。コレクションを含めるか、そのオブジェクトのマテリアルのチェックを外してください
 - **頂点カラーが上書きされた:** `5.3.1.0` 以前のビルドは、Blender のベイク出力が Color Attributes に設定されているとカラー属性にベイクしていました。ベイクは常に画像テクスチャを対象とするようになりました。頂点カラーを元に戻すか、バックアップから復元してください
@@ -338,9 +338,9 @@ Cats Blender Plugin のよくある問題と解決策です。
 
 ---
 
-## パフォーマンスの問題
+## パフォーマンスの問題 {#performance-issues}
 
-### Cats の操作が非常に遅い
+### Cats の操作が非常に遅い {#cats-operations-very-slow}
 
 **症状:**
 - ツールの完了に数分かかる
@@ -370,37 +370,37 @@ Cats Blender Plugin のよくある問題と解決策です。
 
 ---
 
-## エラーメッセージ
+## エラーメッセージ {#error-messages}
 
-### "No Armature Selected"
+### "No Armature Selected" {#no-armature-selected}
 
 **解決策:**
 - アーマチュアオブジェクトを選択します
 - メッシュではなくアーマチュアを選択する必要があります
 - オブジェクトモードで行います
 
-### "No Mesh Found"
+### "No Mesh Found" {#no-mesh-found}
 
 **解決策:**
 - メッシュが存在することを確認します
 - メッシュはアーマチュアにペアレントされている必要があります
 - オブジェクトの可視性を確認します
 
-### "Shape Keys Not Found"
+### "Shape Keys Not Found" {#shape-keys-not-found}
 
 **解決策:**
 - メッシュにシェイプキーがあることを確認します
 - 正しいメッシュが選択されているか確認します
 - viseme/アイトラッキングにはシェイプキーが存在する必要があります
 
-### "Bone Not Found"
+### "Bone Not Found" {#bone-not-found}
 
 **解決策:**
 - ボーン名を確認します
 - ボーン一覧を更新します
 - ボーンがアーマチュアに存在するか確認します
 
-### ポリシー違反の警告（Blender 5.2 / 5.3）
+### ポリシー違反の警告（Blender 5.2 / 5.3） {#policy-violation-warnings-blender-52-53}
 
 **症状:**
 - 拡張機能のポリシーに関する警告
@@ -414,16 +414,16 @@ Cats Blender Plugin のよくある問題と解決策です。
 
 ---
 
-## 追加のサポートを受ける
+## 追加のサポートを受ける {#getting-additional-help}
 
-### 助けを求める前に
+### 助けを求める前に {#before-asking-for-help}
 
 1. **このページを確認する:** 多くの問題はここで扱っています
 2. **関連する Wiki ページを読む:** 機能別のガイドです
 3. **検索を試す:** リポジトリの既存の issue です
 4. **バージョンを確認する:** サポート対象の Blender 5.2 以降を使用しているか
 
-### 助けを求めるとき
+### 助けを求めるとき {#when-asking-for-help}
 
 次の情報を含めてください。
 - Blender のバージョン（正確に）
@@ -434,13 +434,13 @@ Cats Blender Plugin のよくある問題と解決策です。
 - 関連する場合はスクリーンショット
 - 可能であればコンソール出力
 
-### サポートを受ける場所
+### サポートを受ける場所 {#where-to-get-help}
 
 - **リポジトリの issue:** バグ報告と質問
 - **GitHub Issues:** バグ報告と機能リクエスト
 - **この Wiki:** ドキュメントとガイド
 
-### 報告すべきでないもの
+### 報告すべきでないもの {#what-not-to-report}
 
 - サポートされていない Blender バージョン、または blender.org や Steam 版ではない Blender バージョンでの問題（5.2 より前はサポートされません）
 - サードパーティ拡張機能の問題（Material Combiner など。Cats はもう Material Combiner と統合していません）
@@ -449,9 +449,9 @@ Cats Blender Plugin のよくある問題と解決策です。
 
 ---
 
-## よくあるワークフローの問題
+## よくあるワークフローの問題 {#common-workflow-issues}
 
-### 操作の順序が間違っている
+### 操作の順序が間違っている {#order-of-operations-wrong}
 
 **多くの問題は順序の誤りに起因します:**
 
@@ -468,7 +468,7 @@ Cats Blender Plugin のよくある問題と解決策です。
 
 **重要なポイント:** アイトラッキングと visemes の**前に**マテリアルを結合/アトラスを作成してください!
 
-### バックアップの管理
+### バックアップの管理 {#backup-management}
 
 **常にバックアップを保持します:**
 - 大きな操作の前
@@ -488,9 +488,9 @@ my_model_05_final.blend
 ---
 
 **関連ページ:**
-- [FAQ](FAQ) - よくある質問
-- [Installation](Installation) - セットアップのヘルプ
-- [Version Support](Version-Support) - 互換性の情報
+- [FAQ](./FAQ.md) - よくある質問
+- [Installation](./Installation.md) - セットアップのヘルプ
+- [Version Support](./Version-Support.md) - 互換性の情報
 - 特定のツールの各機能ページ
 
 ---

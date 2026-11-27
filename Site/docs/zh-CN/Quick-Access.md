@@ -1,8 +1,8 @@
-# 快速访问
+# 快速访问 {#quick-access}
 
 **快速访问**（Quick Access）面板是最顶部的面板，也是你的起点。它汇集了最常用的操作：快捷网格操作、导入/导出、**修复 MMD 模型**以及姿态模式。
 
-## 面板布局（从上到下）
+## 面板布局（从上到下） {#panel-layout-top-to-bottom}
 
 1. **更新 / 版本提示**（仅在相关时显示）
 2. **快捷操作** —— 合并材质、合并所有网格
@@ -13,7 +13,7 @@
 
 ---
 
-## 快捷操作
+## 快捷操作 {#quick-actions}
 
 保持在最顶部的快速一键操作：
 
@@ -24,11 +24,11 @@
 
 ---
 
-## 导入模型
+## 导入模型 {#import-model}
 
 以适合 VRChat 工作流程的合理设置导入模型。
 
-### 支持的格式
+### 支持的格式 {#supported-formats}
 
 - **MMD：** `.pmx`、`.pmd`
 - **XNALara：** `.xps`、`.mesh`、`.ascii`
@@ -45,7 +45,7 @@
 
 ---
 
-## 导出模型
+## 导出模型 {#export-model}
 
 - **用于 Unity 的 FBX** - 以适合 Unity/VRChat 的缩放、旋转和骨架设置导出。
 - **Resonite（glTF）** - 为 Resonite 导出 glTF 2.0。
@@ -54,7 +54,7 @@
 
 ---
 
-## 修复 MMD 模型
+## 修复 MMD 模型 {#fix-mmd-model}
 
 **修复 MMD 模型**按钮（旁边有 **⚙ 设置齿轮**）放在顶部以便于发现。它把**全新的** MMD/VRM 导入转换为 Unity/VRChat 可用的绑定。
 
@@ -62,11 +62,11 @@
 
 > 🚫 **无视这些警告，后果自负。** 如果在 Cats 和本 wiki 给出所有这些警告之后，你仍然对非刚导入的 MMD/VRM 模型运行修复 MMD 模型，那完全是你自己的责任。**不要为此提交 issue**，你只会被直接指回这些警告，并且 issue 会被立即关闭。
 
-完整细节，包括该按钮所做的一切以及齿轮后的设置，都在[转换器](Converters)页面（修复 MMD 模型也出现在那里，位于 MMD 清理部分）。
+完整细节，包括该按钮所做的一切以及齿轮后的设置，都在[转换器](./Converters.md)页面（修复 MMD 模型也出现在那里，位于 MMD 清理部分）。
 
 ---
 
-## 姿态模式
+## 姿态模式 {#pose-mode}
 
 进入姿态模式来操作你的骨架。
 
@@ -80,20 +80,20 @@
 
 ---
 
-## 典型工作流程
+## 典型工作流程 {#typical-workflow}
 
 1. **导入**你的模型。
 2. 如果是刚导入的 MMD/VRM，运行**修复 MMD 模型**。
-3. **翻译**名称（[翻译](Translation)）。
-4. 优化（[优化](Optimization)），设置[眼动追踪](Eye-Tracking)和[口型同步](Visemes)。
+3. **翻译**名称（[翻译](./Translation.md)）。
+4. 优化（[优化](./Optimization.md)），设置[眼动追踪](./Eye-Tracking.md)和[口型同步](./Visemes.md)。
 5. 为你的目标平台**导出**。
 
 ---
 
 **相关页面：**
-- [转换器](Converters) - 修复 MMD 模型详情、Rigify/Valve/VRM 转换
-- [优化](Optimization) - 减少材质、骨骼和顶点
-- [合并与附加](Merge-and-Attach) - 合并模型
-- [设置](Settings) - 导出与模型修复行为
+- [转换器](./Converters.md) - 修复 MMD 模型详情、Rigify/Valve/VRM 转换
+- [优化](./Optimization.md) - 减少材质、骨骼和顶点
+- [合并与附加](./Merge-and-Attach.md) - 合并模型
+- [设置](./Settings.md) - 导出与模型修复行为
 
 ---

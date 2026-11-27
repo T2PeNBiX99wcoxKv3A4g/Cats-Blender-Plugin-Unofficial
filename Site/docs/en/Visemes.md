@@ -1,8 +1,8 @@
-# Visemes
+# Visemes {#visemes}
 
 The Visemes panel helps you set up viseme shape keys for lip sync and facial animations in VRChat.
 
-## What Are Visemes?
+## What Are Visemes? {#what-are-visemes}
 
 Visemes are mouth shapes that correspond to different speech sounds. They allow your avatar to lip sync automatically in VRChat when you speak.
 
@@ -11,21 +11,21 @@ VRChat uses three main viseme shapes:
 - **Mouth O ('oh'):** Rounded lips for 'o' and 'u' sounds  
 - **Mouth CH:** Closed, forward lips for 'ch' and 'sh' sounds
 
-## Requirements
+## Requirements {#requirements}
 
 - A mesh with shape keys for mouth movements
 - Properly named shape keys (or ability to assign them)
 
-## Mesh Selection
+## Mesh Selection {#mesh-selection}
 
 When you have multiple meshes in your scene:
 - **Select the target mesh** that contains your face/mouth
 - This is usually the body or head mesh
 - The mesh must have shape keys
 
-## Viseme Settings
+## Viseme Settings {#viseme-settings}
 
-### Preview Controls
+### Preview Controls {#preview-controls}
 
 **Preview Visemes:**
 - Test viseme shapes in real-time
@@ -42,11 +42,11 @@ When you have multiple meshes in your scene:
 - Test Mouth A, Mouth O, or Mouth CH individually
 - Useful for fine-tuning each shape
 
-### Shape Key Assignment
+### Shape Key Assignment {#shape-key-assignment}
 
 Cats needs to know which shape keys correspond to each viseme.
 
-#### Mouth A ('ah' sound)
+#### Mouth A ('ah' sound) {#mouth-a-ah-sound}
 - Select the shape key for open mouth
 - Used for vowel sounds like 'a', 'e'
 - Usually the widest mouth opening
@@ -57,7 +57,7 @@ Cats needs to know which shape keys correspond to each viseme.
 2. Select the appropriate shape key from your mesh
 3. Test with Preview
 
-#### Mouth O ('oh' sound)
+#### Mouth O ('oh' sound) {#mouth-o-oh-sound}
 - Select the shape key for rounded lips
 - Used for 'o' and 'u' sounds
 - Lips form an O shape
@@ -68,7 +68,7 @@ Cats needs to know which shape keys correspond to each viseme.
 2. Select the appropriate shape key
 3. Test with Preview
 
-#### Mouth CH
+#### Mouth CH {#mouth-ch}
 - Select the shape key for closed, forward lips
 - Used for 'ch', 'sh' sounds
 - Lips pushed forward but mostly closed
@@ -79,7 +79,7 @@ Cats needs to know which shape keys correspond to each viseme.
 2. Select the appropriate shape key
 3. Test with Preview
 
-### Shape Intensity
+### Shape Intensity {#shape-intensity}
 
 - Adjusts the strength/multiplier of viseme shapes
 - Range: 0.0 to 2.0 (typically)
@@ -93,7 +93,7 @@ Cats needs to know which shape keys correspond to each viseme.
 3. Find a natural-looking intensity
 4. Recommended range: 0.8 to 1.2
 
-## Auto Viseme Setup
+## Auto Viseme Setup {#auto-viseme-setup}
 
 The **Auto Viseme Setup** feature attempts to automatically configure visemes:
 
@@ -116,11 +116,11 @@ The **Auto Viseme Setup** feature attempts to automatically configure visemes:
 
 > 💡 **Tip:** Even if Auto Setup doesn't get everything right, it's a good starting point. You can manually adjust assignments afterward.
 
-## Workflow
+## Workflow {#workflow}
 
-### Basic Viseme Setup
+### Basic Viseme Setup {#basic-viseme-setup}
 
-1. **Import your model** using [Quick Access](Quick-Access)
+1. **Import your model** using [Quick Access](./Quick-Access.md)
 2. **Open the Visemes panel**
 3. **Select your mesh** (if you have multiple)
 4. **Try Auto Viseme Setup** first
@@ -132,7 +132,7 @@ The **Auto Viseme Setup** feature attempts to automatically configure visemes:
    - Adjust intensity
 7. **Export your model**
 
-### Manual Viseme Setup
+### Manual Viseme Setup {#manual-viseme-setup}
 
 If Auto Setup doesn't work or you need more control:
 
@@ -147,9 +147,9 @@ If Auto Setup doesn't work or you need more control:
    - Use Preview to verify
    - Adjust intensity as needed
 
-## Tips and Best Practices
+## Tips and Best Practices {#tips-and-best-practices}
 
-### Creating Good Visemes
+### Creating Good Visemes {#creating-good-visemes}
 
 If creating shape keys from scratch:
 
@@ -171,7 +171,7 @@ If creating shape keys from scratch:
 - Like the ending of 'much' or 'ssh'
 - Slight pucker
 
-### Testing Visemes
+### Testing Visemes {#testing-visemes}
 
 1. **Test in Blender first:**
    - Use Preview feature
@@ -182,7 +182,7 @@ If creating shape keys from scratch:
    - Ask others how it looks
    - Adjust if needed
 
-### Common Issues
+### Common Issues {#common-issues}
 
 **Visemes too subtle:**
 - Increase Shape Intensity
@@ -204,9 +204,9 @@ If creating shape keys from scratch:
 - Verify shape key names
 - Re-assign manually if needed
 
-## Advanced Options
+## Advanced Options {#advanced-options}
 
-### Multiple Meshes
+### Multiple Meshes {#multiple-meshes}
 
 If your avatar has separate meshes:
 - Body mesh with visemes
@@ -214,7 +214,7 @@ If your avatar has separate meshes:
 - Only one mesh can have active visemes
 - Choose the mesh that should animate
 
-### Custom Viseme Systems
+### Custom Viseme Systems {#custom-viseme-systems}
 
 Some models use different viseme systems:
 - Standard 3-viseme (VRChat default)
@@ -223,9 +223,9 @@ Some models use different viseme systems:
 
 Cats supports the standard 3-viseme system.
 
-## Viseme Systems Explained
+## Viseme Systems Explained {#viseme-systems-explained}
 
-### Why 3 Visemes?
+### Why 3 Visemes? {#why-3-visemes}
 
 VRChat's simplified system uses 3 visemes because:
 - Efficient for real-time lip sync
@@ -233,25 +233,25 @@ VRChat's simplified system uses 3 visemes because:
 - Easier to set up than full phoneme systems
 - Works well with voice recognition
 
-### How It Works in VRChat
+### How It Works in VRChat {#how-it-works-in-vrchat}
 
 1. VRChat analyzes your voice input
 2. Determines which sounds you're making
 3. Activates appropriate viseme shape keys
 4. Blends between shapes for smooth animation
 
-## Oculus Viseme Reference
+## Oculus Viseme Reference {#oculus-viseme-reference}
 
 For more detailed information about viseme implementation:
 - [Official Oculus Viseme Reference](https://developer.oculus.com/documentation/unreal/audio-ovrlipsync-viseme-reference/)
 
 ---
 
-## Integration with Other Tools
+## Integration with Other Tools {#integration-with-other-tools}
 
-### After Material Combining
+### After Material Combining {#after-material-combining}
 
-> ⚠ **Important:** Set up visemes **AFTER** combining materials and creating an atlas. The old Material Combiner add-on could misalign shape keys if run after viseme setup; the built-in [Atlas Generator](Optimization#atlas-generator) only changes materials and UVs, but keep the same order.
+> ⚠ **Important:** Set up visemes **AFTER** combining materials and creating an atlas. The old Material Combiner add-on could misalign shape keys if run after viseme setup; the built-in [Atlas Generator](./Optimization.md#atlas-generator) only changes materials and UVs, but keep the same order.
 
 **Recommended order:**
 1. Import model
@@ -261,9 +261,9 @@ For more detailed information about viseme implementation:
 5. Set up eye tracking
 6. Export
 
-### With Eye Tracking
+### With Eye Tracking {#with-eye-tracking}
 
-Visemes and [Eye Tracking](Eye-Tracking) work together:
+Visemes and [Eye Tracking](./Eye-Tracking.md) work together:
 - Both use shape keys
 - Can be set up independently
 - Test both after setup
@@ -272,10 +272,10 @@ Visemes and [Eye Tracking](Eye-Tracking) work together:
 ---
 
 **Related Pages:**
-- [Eye Tracking](Eye-Tracking) - Setting up eye movement
-- [Quick Access](Quick-Access) - Import/Export
-- [Shape Keys](Optimization#shape-keys) - Shape key tools
-- [Troubleshooting](Troubleshooting) - Common issues
+- [Eye Tracking](./Eye-Tracking.md) - Setting up eye movement
+- [Quick Access](./Quick-Access.md) - Import/Export
+- [Shape Keys](./Optimization.md#shape-keys) - Shape key tools
+- [Troubleshooting](./Troubleshooting.md) - Common issues
 
 ---
 

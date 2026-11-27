@@ -1,10 +1,10 @@
-# Bone Tools
+# Bone Tools {#bone-tools}
 
-**Bone Tools** is a panel for *generating* new bone structures on your armature. These tools were previously buried in "Other Options" and now have their own home (they aren't cleanup/optimization, so they don't belong under [Optimization](Optimization)).
+**Bone Tools** is a panel for *generating* new bone structures on your armature. These tools were previously buried in "Other Options" and now have their own home (they aren't cleanup/optimization, so they don't belong under [Optimization](./Optimization.md)).
 
 ---
 
-## Create Digitigrade Legs
+## Create Digitigrade Legs {#create-digitigrade-legs}
 
 Converts a standard humanoid leg setup into a **digitigrade** (animal-style) configuration the reverse-jointed legs used on many furry/creature avatars.
 
@@ -13,7 +13,7 @@ Converts a standard humanoid leg setup into a **digitigrade** (animal-style) con
 
 **Requirements:** a properly rigged humanoid leg to start from, and an understanding of digitigrade anatomy.
 
-### Tutorial
+### Tutorial {#tutorial}
 
 Generating the bones is only half the job, you also need aim constraints set up for the legs to behave correctly.
 
@@ -25,7 +25,7 @@ Neither the tutorial nor its author are affiliated with Cats, we link it because
 
 ---
 
-## Generate Twist Bones
+## Generate Twist Bones {#generate-twist-bones}
 
 Adds a **twist-bone** system for smoother arm/leg deformation. Twist bones sit between joints and distribute rotation, which reduces the "candy-wrapper" pinching you get on wrists and upper arms.
 
@@ -33,7 +33,7 @@ Adds a **twist-bone** system for smoother arm/leg deformation. Twist bones sit b
 
 **Consider:** twist bones increase the bone count and require correct weight painting to be useful.
 
-### Tutorial
+### Tutorial {#tutorial-1}
 
 The generated bones need constraints set up before they do anything.
 
@@ -45,7 +45,7 @@ Neither the tutorial nor its author are affiliated with Cats, we link it because
 
 ---
 
-## When to use these
+## When to use these {#when-to-use-these}
 
 - You want higher-quality deformation and have bone budget to spare (twist bones).
 - You're building an animal/creature avatar that needs reverse-jointed legs (digitigrade).
@@ -55,10 +55,10 @@ Run these **after** your rig is fixed and translated, and **before** final weigh
 ---
 
 **Related Pages:**
-- [Optimization](Optimization) - Mesh & bone cleanup lives here
-- [Mesh Cleanup](Optimization#mesh-cleanup) - General mesh preparation
-- [Bone Parenting](Bone-Parenting) - Root bone management
-- [Troubleshooting](Troubleshooting) - Common rigging issues
+- [Optimization](./Optimization.md) - Mesh & bone cleanup lives here
+- [Mesh Cleanup](./Optimization.md#mesh-cleanup) - General mesh preparation
+- [Bone Parenting](./Bone-Parenting.md) - Root bone management
+- [Troubleshooting](./Troubleshooting.md) - Common rigging issues
 
 ---
 

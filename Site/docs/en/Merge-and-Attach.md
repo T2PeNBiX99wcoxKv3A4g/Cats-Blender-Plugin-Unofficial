@@ -1,8 +1,8 @@
-# Merge & Attach
+# Merge & Attach {#merge-attach}
 
 The **Merge & Attach** panel (formerly "Custom Model Creation") provides tools for merging armatures and attaching meshes to build combined or customized models.
 
-## Overview
+## Overview {#overview}
 
 This panel has two main modes:
 - **Armature Mode** - merge two complete armatures together
@@ -12,15 +12,15 @@ A tutorial button at the top walks you through the process step by step.
 
 ---
 
-## Armature Mode
+## Armature Mode {#armature-mode}
 
 Use Armature Mode to combine two rigged models into one.
 
-### Requirements
+### Requirements {#requirements}
 - At least two armatures in your scene
 - Both armatures should have meshes attached
 
-### Main Settings
+### Main Settings {#main-settings}
 
 - **Merge Same Bones** - automatically combines bones with matching names. Ideal when both models share a similar skeleton (e.g. two VRChat-standard models).
 - **Apply Transforms** - applies current transforms before merging. Recommended, prevents scale/rotation issues.
@@ -28,7 +28,7 @@ Use Armature Mode to combine two rigged models into one.
 - **Remove Zero Weight Bones** - cleans up unused bones after the merge.
 - **Cleanup Shape Keys** - removes duplicate/unused shape keys during the merge.
 
-### Merge Selection
+### Merge Selection {#merge-selection}
 
 - **Merge Into** - the target (base) armature that receives the merged content (usually your main character).
 - **To Merge** - the armature to combine in (usually clothing, accessories or extra parts).
@@ -36,9 +36,9 @@ Use Armature Mode to combine two rigged models into one.
 
 **What "Attach to Bone" actually does:** only the **root** bones of the merged armature are reparented onto your chosen bone. Everything below them keeps its own hierarchy, so a tail rig attached to `Spine` stays a tail, it just hangs off the spine now. Bones in the merged armature whose names clash with the base armature are folded into the base bone of the same name, and their weights are merged into the matching vertex group.
 
-**Physics is cleaned up for you:** merging strips rigid-body and joint objects from **both** armatures first, including nested physics groups, so you don't need to run [Remove Rigid Bodies and Joints](Converters#remove-rigid-bodies-and-joints) beforehand.
+**Physics is cleaned up for you:** merging strips rigid-body and joint objects from **both** armatures first, including nested physics groups, so you don't need to run [Remove Rigid Bodies and Joints](./Converters.md#remove-rigid-bodies-and-joints) beforehand.
 
-### How to Use
+### How to Use {#how-to-use}
 
 1. Import both models into your scene.
 2. Select the **Merge Into** armature (your base model).
@@ -54,22 +54,22 @@ Use Armature Mode to combine two rigged models into one.
 
 ---
 
-## Mesh Mode
+## Mesh Mode {#mesh-mode}
 
 Use Mesh Mode to attach a standalone mesh to an existing armature.
 
-### Requirements
+### Requirements {#requirements-1}
 - At least one armature in your scene
 - At least one unrigged mesh object
 
-### Settings & Selection
+### Settings & Selection {#settings-selection}
 
 - **Join Meshes** - combine the attached mesh with existing meshes.
 - **Merge Into** - the target armature.
 - **Attach Mesh** - the (unrigged) mesh to attach.
 - **Attach to Bone** - the bone the mesh will follow (e.g. a hat to the head bone).
 
-### How to Use
+### How to Use {#how-to-use-1}
 
 1. Ensure you have an armature and an unrigged mesh.
 2. Switch to **Mesh Mode**.
@@ -83,15 +83,15 @@ Use Mesh Mode to attach a standalone mesh to an existing armature.
 
 ---
 
-## Tips & Best Practices
+## Tips & Best Practices {#tips-best-practices}
 
 **Before merging:** position models correctly, match scale, save a backup, and name bones clearly (helps "Merge Same Bones").
 
 **During merging:** start with **Apply Transforms** enabled, prefer **Merge Same Bones** when possible, and keep **Join Meshes** off initially so issues are easier to fix.
 
-**After merging:** check weight painting, test animations, review the bone hierarchy, and optimize via [Optimization](Optimization) if needed.
+**After merging:** check weight painting, test animations, review the bone hierarchy, and optimize via [Optimization](./Optimization.md) if needed.
 
-### Troubleshooting
+### Troubleshooting {#troubleshooting}
 
 - **Mesh in wrong location** → enable **Apply Transforms** and retry.
 - **Bones don't merge** → verify names match exactly (case-sensitive) and positions are similar.
@@ -102,7 +102,7 @@ Use Mesh Mode to attach a standalone mesh to an existing armature.
 
 ---
 
-## Limitations
+## Limitations {#limitations}
 
 - Armature Mode needs at least 2 armatures; Mesh Mode needs at least 1 armature and 1 mesh.
 - Very complex merges take time; some custom constraints may need manual fixing.
@@ -112,9 +112,9 @@ Use Mesh Mode to attach a standalone mesh to an existing armature.
 ---
 
 **Related Pages:**
-- [Optimization](Optimization) - Post-merge optimization
-- [Bone Parenting](Bone-Parenting) - Managing bone hierarchy
-- [Troubleshooting](Troubleshooting) - Common merge issues
+- [Optimization](./Optimization.md) - Post-merge optimization
+- [Bone Parenting](./Bone-Parenting.md) - Managing bone hierarchy
+- [Troubleshooting](./Troubleshooting.md) - Common merge issues
 
 ---
 

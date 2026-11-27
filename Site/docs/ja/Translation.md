@@ -1,8 +1,8 @@
-# 翻訳
+# 翻訳 {#translation}
 
 **Translation** パネルは、日本語（およびその他の言語）の名前を英語に翻訳し、モデルが英語のツール、Unity、VRChat で問題なく動作するようにします。`5.2.3.0` では専用のパネルと、**プラグイン可能なマルチサービスバックエンド**を備えています。
 
-## 仕組み
+## 仕組み {#how-it-works}
 
 翻訳は常に 2 つのフェーズで行われます。
 
@@ -13,7 +13,7 @@
 
 `5.2.4.0` 以降、MMD モデルにはその間のステップがあります。**モデルの作者が PMX ファイルに保存した英語名**です（MMD Tools では *Name(Eng)* として表示されます）。以下を参照してください [Author Names](#author-names-mmd)。
 
-## サービスの選択
+## サービスの選択 {#choosing-a-service}
 
 **Translation Service** ドロップダウンには次のものがあります。
 
@@ -30,13 +30,13 @@
 - **LibreTranslate** → LibreTranslate URL と任意の API Key
 - **MyMemory** → 任意のメールアドレス
 
-> 🔒 サービスの選択と認証情報は、`.blend` ファイル内ではなく Cats の**グローバル設定**に保存されるため（[Settings](Settings#settings-file-location) を参照）、API キーがモデルと一緒に移動することはありません。`5.3.1.0` 以前は、API キー、LibreTranslate URL、MyMemory のメールも各 `.blend` に保存されていました。`5.3.1.0` 以降でそのようなファイルを開くとそれらは削除されます（確実にするにはファイルを保存してください）。古いバージョンで作成したファイルを共有した場合は、API キーの変更を検討してください。
+> 🔒 サービスの選択と認証情報は、`.blend` ファイル内ではなく Cats の**グローバル設定**に保存されるため（[Settings](./Settings.md#settings-file-location) を参照）、API キーがモデルと一緒に移動することはありません。`5.3.1.0` 以前は、API キー、LibreTranslate URL、MyMemory のメールも各 `.blend` に保存されていました。`5.3.1.0` 以降でそのようなファイルを開くとそれらは削除されます（確実にするにはファイルを保存してください）。古いバージョンで作成したファイルを共有した場合は、API キーの変更を検討してください。
 
 > 💡 オンラインサービスが利用できない場合（キーがない、オフライン、レート制限中）、翻訳は失敗するのではなく、内部辞書でできる範囲に**適切にフォールバック**します。
 
 > オンラインサービスは、Blender の **Edit > Preferences > System > Network > Allow Online Access** がオンの場合にのみ実行されます。オフの場合、Cats は内部辞書のみを使用し、オンラインアクセスが無効であることを示す警告を表示します。**Internal Dictionary Only** はどちらの場合でも動作します。
 
-## 翻訳ボタン
+## 翻訳ボタン {#translate-buttons}
 
 - **Translate All** は以下のすべてをワンクリックで翻訳します
 - **Shape Keys**
@@ -44,7 +44,7 @@
 - **Bones**
 - **Materials**
 
-## 作者名（MMD）
+## 作者名（MMD） {#author-names-mmd}
 
 PMX ファイルには、モデルの作者が記述した任意の英語名が、すべてのボーン、シェイプキー、マテリアルに含まれています。`5.2.4.0` 以降、Cats はそれらを使用できます。作者はそのキーが*何をするか*を知っていたため、多くの場合、どの辞書やオンラインサービスよりも優れています。
 
@@ -56,16 +56,16 @@ PMX ファイルには、モデルの作者が記述した任意の英語名が�
 
 **ボーンとオブジェクトは作者名を決して使用しません。** Fix MMD Model はリグを認識するために辞書のボーン名に依存しているため、ボーンの翻訳は変更されません。
 
-シェイプキーの設定は **Fix MMD Model** の ⚙ Model Settings にも反映され、Fix MMD Model は MMD ルートを削除する前に名前を記録するため、その後も利用できます。翻訳レポートには作者由来の名前の数が表示され、[Export Translation CSV](Settings#export-translation-csv) には各名前の出所を示す *source* 列が追加されます。
+シェイプキーの設定は **Fix MMD Model** の ⚙ Model Settings にも反映され、Fix MMD Model は MMD ルートを削除する前に名前を記録するため、その後も利用できます。翻訳レポートには作者由来の名前の数が表示され、[Export Translation CSV](./Settings.md#export-translation-csv) には各名前の出所を示す *source* 列が追加されます。
 
 > 🧪 **新機能で、テストは限定的です。** 開発の基準となったモデルでは動作しますが、英語名を持つより多くの MMD モデルで試す必要があります。シェイプキーやマテリアルが想定外の名前になった場合は、設定を **Off** に切り替え、そのモデルを報告してください。
 
-## オプション
+## オプション {#options}
 
 - **Skip Dictionary for Shape Keys** *（オンライン時のみ）* 従来の動作: シェイプキーでは内部辞書を無視し、選択したオンラインサービスだけで完全に翻訳します。Cats 0.9.0 以前の正確なシェイプキー名に依存している場合にのみ必要です。
 - **Skip Locked Shape Keys** ロックされたシェイプキーは翻訳されません（意図的に名前を付けたキーを保護するのに便利です）。
 
-## ベストプラクティス
+## ベストプラクティス {#best-practices}
 
 **すべきこと:**
 - ✅ インポート / Fix MMD Model の直後に早めに翻訳します
@@ -76,22 +76,22 @@ PMX ファイルには、モデルの作者が記述した任意の英語名が�
 - ❌ visemes/アイトラッキングを設定した*後に*再度翻訳します（参照が壊れる可能性があります）
 - ❌ 同じモデルを繰り返し翻訳します（単語が重複する可能性があります）
 
-### 翻訳のタイミング
+### 翻訳のタイミング {#when-to-translate}
 
 **次の前:** visemes、アイトラッキング、カスタムシェイプキー、他のモデルとの結合。
 **次の後:** モデルのインポート、Fix MMD Model の実行。
 
-## キャッシュのリセット
+## キャッシュのリセット {#resetting-the-cache}
 
-オンライン翻訳のキャッシュは [Settings](Settings) パネルからクリアできます（**Reset Google Dictionary**）。誤った翻訳がキャッシュされた場合や、サービスを切り替えて新しい結果を得たい場合に便利です。
+オンライン翻訳のキャッシュは [Settings](./Settings.md) パネルからクリアできます（**Reset Google Dictionary**）。誤った翻訳がキャッシュされた場合や、サービスを切り替えて新しい結果を得たい場合に便利です。
 
 ---
 
 **関連ページ:**
-- [Quick Access](Quick-Access) - まずモデルをインポートしてください
-- [Converters](Converters) - Fix MMD Model は処理の一部として翻訳します
-- [Settings](Settings) - 翻訳キャッシュのリセット
-- [Visemes](Visemes) / [Eye Tracking](Eye-Tracking) - これらは翻訳の*後*に行ってください
+- [Quick Access](./Quick-Access.md) - まずモデルをインポートしてください
+- [Converters](./Converters.md) - Fix MMD Model は処理の一部として翻訳します
+- [Settings](./Settings.md) - 翻訳キャッシュのリセット
+- [Visemes](./Visemes.md) / [Eye Tracking](./Eye-Tracking.md) - これらは翻訳の*後*に行ってください
 
 ---
 
