@@ -1,7 +1,7 @@
 // Writes the pages that are not written by hand:
 //
-//   ../README.md        -> docs/<language>/index.md   (home: hero from site.config + README body)
-//   the language list   -> docs/index.md              (redirect, keeps the old `#/docs/<page>` links working)
+//   site.config.mjs + labels.mjs -> docs/<language>/index.md  (hero + feature cards)
+//   the language list            -> docs/index.md             (redirect, keeps the old hash routes)
 //
 // Run automatically by `docs:dev` and `docs:build`.
 import {copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync} from "node:fs";
@@ -14,33 +14,41 @@ import {labels} from "../docs/.vitepress/labels.mjs";
 const here = dirname(fileURLToPath(import.meta.url));
 const siteRoot = resolve(here, "..");
 const docsRoot = join(siteRoot, "docs");
-const readmePath = resolve(siteRoot, "..", "README.md");
-
-if (!existsSync(readmePath)) throw new Error(`README.md not found at ${readmePath}`);
-
-/** The README opens with the project title, which the hero already shows. */
-const readme = readFileSync(readmePath, "utf8")
-    .replace(/^#\s+.*(\r?\n)+/, "")
-    // The README links the license file in the repository; the site has no copy of it.
-    .replaceAll("](LICENSE)", `](${site.repository}/blob/main/LICENSE)`)
-    .trim();
 
 const yaml = (text) => JSON.stringify(text);
 
+/** The page's H1, without the anchor the wiki pages carry (`## 目次 {#contents}`). */
+function titleOf(language, slug) {
+    const path = join(docsRoot, language, `${slug}.md`);
+    if (!existsSync(path)) return slug;
+
+    const heading = readFileSync(path, "utf8").split("\n").find((line) => /^#\s+\S/.test(line));
+    return heading ? heading.replace(/^#\s+/, "").replace(/\s*\{#[^}]*\}\s*$/, "").trim() : slug;
+}
+
+/** Hero plus one card per feature; the card titles are the page titles, so they stay translated. */
 function home(language) {
     const label = labels[language];
     const prefix = `/${language}`;
-    const note = label.homeNote ? `> ${label.homeNote}\n\n` : "";
+
+    const features = (label.home?.features ?? [])
+        .map(
+            ({slug, details}) =>
+                `  - title: ${yaml(titleOf(language, slug))}\n` +
+                `    details: ${yaml(details)}\n` +
+                `    link: ${yaml(`${prefix}/${slug}`)}`
+        )
+        .join("\n");
 
     return `---
 layout: home
 hero:
   image:
-    src: "/cats.png"
+    src: "/cats-cream.svg"
     alt: ${yaml(`${site.name} ${site.suffix}`)}
   name: ${yaml(site.name)}
   text: ${yaml(site.suffix.toUpperCase())}
-  tagline: ${yaml(site.tagline)}
+  tagline: ${yaml(label.home?.tagline ?? site.tagline)}
   actions:
     - theme: brand
       text: ${yaml(label.nav.docs)}
@@ -48,9 +56,8 @@ hero:
     - theme: alt
       text: ${yaml(label.nav.releases)}
       link: ${yaml(site.releases)}
----
-
-${note}${readme}
+features:
+${features}
 `;
 }
 
@@ -84,7 +91,7 @@ for (const language of site.languages) {
     writeFileSync(join(directory, "index.md"), home(language), "utf8");
 }
 
-// The navigation bar and the tab both use the add-on's own icon.
+// The add-on's own PNG stays as the favicon fallback for old browsers.
 const icon = resolve(siteRoot, "..", "resources", "icons", "other", "cats1.png");
 if (existsSync(icon)) {
     mkdirSync(join(docsRoot, "public"), {recursive: true});

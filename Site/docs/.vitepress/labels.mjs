@@ -1,7 +1,9 @@
 // Labels the theme needs, one block per language. The page text itself lives in the markdown.
 //
-// `theme` holds the strings of the default theme (outline, footer, search, buttons); VitePress does not translate
-// them by itself, so every language carries its own copy here.
+// `home.features` becomes the cards on the landing page: the card title is taken from the page
+// itself, so only the slug and the one-line description are written here.
+// `theme` holds the strings of the default theme (outline, footer, search, buttons); VitePress
+// does not translate them by itself, so every language carries its own copy.
 const groups = {
     en: {"getting-started": "Getting started", workflow: "Workflow", help: "Help"},
     ja: {"getting-started": "はじめに", workflow: "ワークフロー", help: "ヘルプ"},
@@ -15,7 +17,17 @@ export const labels = {
         language: "English",
         nav: {docs: "Documentation", releases: "Releases", github: "GitHub"},
         group: groups.en,
-        homeNote: "This page is generated from the repository README.",
+        home: {
+            tagline: "Shorten the steps to import and optimize models for VRChat.",
+            features: [
+                {slug: "Installation", details: "Install through Blender's extension system, or from the release zip."},
+                {slug: "Version-Support", details: "Blender 4.2 LTS through 5.4, and which builds are actually tested."},
+                {slug: "Quick-Access", details: "Import, fix and export from one panel, with the tools you use on every model."},
+                {slug: "Optimization", details: "Merge materials, repair shape keys, combine bones, bake a texture atlas."},
+                {slug: "Bone-Tools", details: "Rename, merge and connect bones, with helpers for pose mode."},
+                {slug: "Translation", details: "The interface in English, Japanese, Korean and both Chinese scripts."},
+            ],
+        },
         footer: {
             message: "Unofficial continuation, not affiliated with the original Cats developers.",
             copyright: "Released under the MIT License.",
@@ -35,7 +47,17 @@ export const labels = {
         language: "日本語",
         nav: {docs: "ドキュメント", releases: "リリース", github: "GitHub"},
         group: groups.ja,
-        homeNote: "このページはリポジトリの README から生成されています。",
+        home: {
+            tagline: "VRChat 向けモデルのインポートと最適化の手順を短くします。",
+            features: [
+                {slug: "Installation", details: "Blender の拡張機能システム、またはリリースの zip から導入できます。"},
+                {slug: "Version-Support", details: "Blender 4.2 LTS から 5.4 まで。実際に検証したビルドも記載しています。"},
+                {slug: "Quick-Access", details: "インポート・修正・エクスポートを 1 つのパネルにまとめています。"},
+                {slug: "Optimization", details: "マテリアルの統合、シェイプキーの修復、ボーンの結合、テクスチャアトラスの作成。"},
+                {slug: "Bone-Tools", details: "ボーンの名前変更・結合・接続と、ポーズモード向けの補助機能。"},
+                {slug: "Translation", details: "UI は英語・日本語・韓国語・中国語（簡体字／繁体字）に対応しています。"},
+            ],
+        },
         footer: {
             message: "非公式の継続版です。元の Cats 開発者とは関係ありません。",
             copyright: "MIT ライセンスで公開されています。",
@@ -62,7 +84,17 @@ export const labels = {
         language: "한국어",
         nav: {docs: "문서", releases: "릴리스", github: "GitHub"},
         group: groups.ko,
-        homeNote: "이 페이지는 저장소의 README에서 생성됩니다.",
+        home: {
+            tagline: "VRChat용 모델의 가져오기와 최적화 단계를 줄여 줍니다.",
+            features: [
+                {slug: "Installation", details: "Blender 확장 시스템이나 릴리스 zip으로 설치합니다."},
+                {slug: "Version-Support", details: "Blender 4.2 LTS부터 5.4까지, 실제로 검증한 빌드도 정리해 두었습니다."},
+                {slug: "Quick-Access", details: "가져오기, 수정, 내보내기를 한 패널에서 처리합니다."},
+                {slug: "Optimization", details: "머티리얼 병합, 셰이프 키 복구, 본 결합, 텍스처 아틀라스 생성."},
+                {slug: "Bone-Tools", details: "본 이름 변경·병합·연결과 포즈 모드 보조 기능."},
+                {slug: "Translation", details: "UI는 영어, 일본어, 한국어, 중국어(간체·번체)를 지원합니다."},
+            ],
+        },
         footer: {
             message: "비공식 후속 버전이며 원래 Cats 개발자와 관련이 없습니다.",
             copyright: "MIT 라이선스로 배포됩니다.",
@@ -89,7 +121,17 @@ export const labels = {
         language: "简体中文",
         nav: {docs: "文档", releases: "版本发布", github: "GitHub"},
         group: groups["zh-CN"],
-        homeNote: "此页面由项目 README 自动生成。",
+        home: {
+            tagline: "缩短为 VRChat 导入和优化模型的步骤。",
+            features: [
+                {slug: "Installation", details: "通过 Blender 扩展系统安装，或直接使用发布页的 zip。"},
+                {slug: "Version-Support", details: "支持 Blender 4.2 LTS 至 5.4，并列出实际验证过的版本。"},
+                {slug: "Quick-Access", details: "导入、修复、导出集中在一个面板。"},
+                {slug: "Optimization", details: "合并材质、修复形态键、合并骨骼、生成贴图图集。"},
+                {slug: "Bone-Tools", details: "重命名、合并与连接骨骼，并提供姿态模式辅助。"},
+                {slug: "Translation", details: "界面支持英语、日语、韩语和简体／繁体中文。"},
+            ],
+        },
         footer: {
             message: "非官方延续版本，与原始 Cats 开发者无关。",
             copyright: "以 MIT 授权发布。",
@@ -116,7 +158,17 @@ export const labels = {
         language: "繁體中文",
         nav: {docs: "文件", releases: "版本發佈", github: "GitHub"},
         group: groups["zh-TW"],
-        homeNote: "此頁由專案 README 自動產生。",
+        home: {
+            tagline: "縮短為 VRChat 匯入與最佳化模型的步驟。",
+            features: [
+                {slug: "Installation", details: "透過 Blender 擴充功能系統安裝，或直接使用發佈頁的 zip。"},
+                {slug: "Version-Support", details: "支援 Blender 4.2 LTS 至 5.4，並列出實際驗證過的版本。"},
+                {slug: "Quick-Access", details: "匯入、修復、匯出集中在同一個面板。"},
+                {slug: "Optimization", details: "合併材質、修復形態鍵、合併骨骼、產生貼圖圖集。"},
+                {slug: "Bone-Tools", details: "重新命名、合併與連接骨骼，並提供姿態模式輔助。"},
+                {slug: "Translation", details: "介面支援英語、日語、韓語與簡體／繁體中文。"},
+            ],
+        },
         footer: {
             message: "非官方延續版本，與原始 Cats 開發者無隸屬關係。",
             copyright: "以 MIT 授權發佈。",

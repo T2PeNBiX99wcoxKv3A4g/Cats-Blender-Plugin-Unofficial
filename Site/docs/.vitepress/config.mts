@@ -61,8 +61,9 @@ function sidebar(language) {
 }
 
 function nav(language) {
+    // No "Documentation" entry: the reader is usually already in the docs, and the landing
+    // page links into them from its cards.
     return [
-        {text: labels[language].nav.docs, link: `${prefixOf(language)}/Overview`},
         {text: labels[language].nav.releases, link: site.releases},
         {text: labels[language].nav.github, link: site.repository},
     ];
@@ -96,6 +97,8 @@ export default defineConfig({
     // GitHub Pages serves files, not routes: links keep their .html suffix.
     cleanUrls: false,
     head: [
+        // The amber cat stays visible on a light tab bar; the add-on's own PNG is the fallback.
+        ["link", {rel: "icon", type: "image/svg+xml", href: `${site.base}cats-amber.svg`}],
         ["link", {rel: "icon", type: "image/png", href: `${site.base}cats.png`}],
     ],
     // The generated home pages are not in git, so they show no date.
@@ -105,7 +108,8 @@ export default defineConfig({
         pageData.lastUpdated = date ? +new Date(date) : undefined;
     },
     themeConfig: {
-        logo: {src: "/cats.png", alt: site.name, width: 28, height: 28},
+        // Cream is the add-on's own colour and disappears on white, so the light theme gets amber.
+        logo: {light: "/cats-amber.svg", dark: "/cats-cream.svg", alt: site.name, width: 32, height: 32},
         ...languageConfig(site.defaultLanguage),
     },
     locales: Object.fromEntries(

@@ -6,10 +6,9 @@ on:
     branches:
       - main
     paths:
-      # The site lives in Site/; the home page is generated from the repository README and
-      # the logo from resources/, so a change to those rebuilds it too.
+      # The site lives in Site/; the favicon fallback is the add-on's own icon, so a change
+      # to that rebuilds it too.
       - "Site/**"
-      - "README.md"
       - "resources/icons/other/cats1.png"
       - ".github/workflows/site.yml"
 
